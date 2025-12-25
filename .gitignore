@@ -1,13 +1,9 @@
 # Environment
 .env
+.env.local
 
-# Repositories (cloned separately)
-repos/
-
-# Generated outputs (can be regenerated)
-knowledge-base/raw/
-knowledge-base/processed/
-outputs/
+# Build outputs
+dist/
 
 # Docker volumes
 .docker/
@@ -29,5 +25,12 @@ logs/
 # Node
 node_modules/
 
-# Rust
+# Rust (in submodules)
 target/
+
+# Test coverage
+coverage/
+
+# Temporary files
+tmp/
+*.tmp
