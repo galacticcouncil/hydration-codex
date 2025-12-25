@@ -1,0 +1,24 @@
+[submodule "repos/hydration-node"]
+	path = repos/hydration-node
+	url = https://github.com/galacticcouncil/hydration-node.git
+	branch = master
+
+[submodule "repos/sdk"]
+	path = repos/sdk
+	url = https://github.com/galacticcouncil/sdk.git
+	branch = main
+
+[submodule "repos/indexer"]
+	path = repos/indexer
+	url = https://github.com/galacticcouncil/hydration-data-lake.git
+	branch = develop
+
+[submodule "repos/hydration-ui"]
+	path = repos/hydration-ui
+	url = https://github.com/galacticcouncil/hydration-ui.git
+	branch = next
+
+[submodule "repos/hydration-wasm"]
+	path = repos/hydration-wasm
+	url = https://github.com/galacticcouncil/hydration-wasm.git
+	branch = main
