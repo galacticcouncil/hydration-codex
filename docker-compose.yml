@@ -1,0 +1,87 @@
+version: '3.8'
+
+services:
+  # ===================
+  # RUST TOOLCHAIN
+  # ===================
+  rust-env:
+    build:
+      context: ./docker/rust
+      dockerfile: Dockerfile
+    volumes:
+      - ./repos/hydration-node:/workspace/hydration-node
+      - ./knowledge-base/raw/runtime:/output
+      - ./tools:/tools
+      - cargo-cache:/usr/local/cargo/registry
+      - target-cache:/workspace/hydration-node/target
+    environment:
+      - CARGO_HOME=/usr/local/cargo
+    working_dir: /workspace/hydration-node
+    command: tail -f /dev/null
+
+  # ===================
+  # NODE.JS TOOLCHAIN
+  # ===================
+  node-env:
+    build:
+      context: ./docker/node
+      dockerfile: Dockerfile
+    volumes:
+      - ./repos/sdk:/workspace/sdk
+      - ./repos/hydration-ui:/workspace/ui
+      - ./repos/indexer:/workspace/indexer
+      - ./knowledge-base/raw:/output
+      - ./tools:/tools
+      - node-modules-sdk:/workspace/sdk/node_modules
+      - node-modules-ui:/workspace/ui/node_modules
+      - node-modules-indexer:/workspace/indexer/node_modules
+    working_dir: /workspace
+    command: tail -f /dev/null
+
+  # ===================
+  # HYDRATION NODE (for live metadata extraction)
+  # Uses GHCR image: https://github.com/galacticcouncil/hydration-node/pkgs/container/hydra-dx
+  # ===================
+  hydration-node:
+    image: ghcr.io/galacticcouncil/hydra-dx:latest
+    ports:
+      - "9944:9944"
+      - "9933:9933"
+    command: --dev --rpc-external --rpc-cors=all
+    profiles:
+      - with-node
+
+  # ===================
+  # MERMAID RENDERER
+  # ===================
+  mermaid:
+    image: minlag/mermaid-cli:latest
+    volumes:
+      - ./outputs/mermaid:/data
+    working_dir: /data
+
+  # ===================
+  # DOCUMENTATION SERVER
+  # ===================
+  docs:
+    image: node:20-alpine
+    volumes:
+      - ./outputs:/docs
+    ports:
+      - "3000:3000"
+    working_dir: /docs
+    command: npx serve -l 3000
+    profiles:
+      - preview
+
+volumes:
+  cargo-cache:
+  target-cache:
+  node-modules-sdk:
+  node-modules-ui:
+  node-modules-indexer:
+
+# Architecture: L1:Runtime → L2:SDK → L3:Indexer → L4:UI
+# Indexer endpoints:
+#   - Production: https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphql
+#   - Explorer: https://explorer.hydradx.cloud/graphql

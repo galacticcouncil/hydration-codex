@@ -1,0 +1,33 @@
+# Environment
+.env
+
+# Repositories (cloned separately)
+repos/
+
+# Generated outputs (can be regenerated)
+knowledge-base/raw/
+knowledge-base/processed/
+outputs/
+
+# Docker volumes
+.docker/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Node
+node_modules/
+
+# Rust
+target/

@@ -1,0 +1,391 @@
+name: Extract and Analyze Hydration Ecosystem
+
+on:
+  # Manual trigger
+  workflow_dispatch:
+    inputs:
+      layers:
+        description: 'Layers to extract (comma-separated: L1,L2,L3,L4 or "all")'
+        required: false
+        default: 'all'
+
+  # Scheduled daily extraction
+  schedule:
+    - cron: '0 6 * * *'  # 6 AM UTC daily
+
+  # Webhook from ecosystem repos (requires setup in each repo)
+  repository_dispatch:
+    types: [hydration-node-update, sdk-update, indexer-update, ui-update]
+
+env:
+  HYDRATION_NODE_REPO: galacticcouncil/hydration-node
+  SDK_REPO: galacticcouncil/sdk
+  INDEXER_REPO: galacticcouncil/hydration-data-lake
+  UI_REPO: galacticcouncil/hydration-ui
+
+jobs:
+  # ===================
+  # DETECT CHANGES
+  # ===================
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      l1_changed: ${{ steps.check.outputs.l1_changed }}
+      l2_changed: ${{ steps.check.outputs.l2_changed }}
+      l3_changed: ${{ steps.check.outputs.l3_changed }}
+      l4_changed: ${{ steps.check.outputs.l4_changed }}
+    steps:
+      - name: Checkout codex
+        uses: actions/checkout@v4
+
+      - name: Check for changes
+        id: check
+        run: |
+          # Default: extract all on schedule or manual
+          if [[ "${{ github.event_name }}" == "schedule" ]] || [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "l1_changed=true" >> $GITHUB_OUTPUT
+            echo "l2_changed=true" >> $GITHUB_OUTPUT
+            echo "l3_changed=true" >> $GITHUB_OUTPUT
+            echo "l4_changed=true" >> $GITHUB_OUTPUT
+          fi
+
+          # Repository dispatch: only extract the changed layer
+          if [[ "${{ github.event_name }}" == "repository_dispatch" ]]; then
+            echo "l1_changed=${{ github.event.action == 'hydration-node-update' }}" >> $GITHUB_OUTPUT
+            echo "l2_changed=${{ github.event.action == 'sdk-update' }}" >> $GITHUB_OUTPUT
+            echo "l3_changed=${{ github.event.action == 'indexer-update' }}" >> $GITHUB_OUTPUT
+            echo "l4_changed=${{ github.event.action == 'ui-update' }}" >> $GITHUB_OUTPUT
+          fi
+
+  # ===================
+  # L1: RUNTIME EXTRACTION
+  # ===================
+  extract-l1-runtime:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.l1_changed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout codex
+        uses: actions/checkout@v4
+
+      - name: Clone hydration-node
+        run: |
+          git clone --depth 100 https://github.com/${{ env.HYDRATION_NODE_REPO }}.git repos/hydration-node
+
+      - name: Setup Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: Install cargo-expand
+        run: cargo install cargo-expand
+
+      - name: Run L1 Extraction
+        run: |
+          mkdir -p knowledge-base/raw/runtime/{pallets,node,runtime,evm,precompiles,math,traits}
+          cd repos/hydration-node
+
+          echo "=== Extracting L1 Runtime (CI Mode) ==="
+
+          # Get git info
+          COMMIT=$(git rev-parse HEAD)
+          BRANCH=$(git rev-parse --abbrev-ref HEAD)
+          TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          OUTPUT="../../knowledge-base/raw/runtime"
+
+          # Discover pallets dynamically
+          echo "Discovering pallets..."
+          PALLET_COUNT=0
+          for pallet_dir in pallets/*/; do
+            if [ -f "${pallet_dir}Cargo.toml" ]; then
+              pallet_name=$(basename "$pallet_dir")
+              mkdir -p "$OUTPUT/pallets/$pallet_name"
+              cp "${pallet_dir}Cargo.toml" "$OUTPUT/pallets/$pallet_name/" 2>/dev/null || true
+              cp "${pallet_dir}src/lib.rs" "$OUTPUT/pallets/$pallet_name/" 2>/dev/null || true
+              PALLET_COUNT=$((PALLET_COUNT + 1))
+            fi
+          done
+          echo "  Found $PALLET_COUNT pallets"
+
+          # Extract runtime configuration
+          cp runtime/hydradx/src/lib.rs "$OUTPUT/runtime/" 2>/dev/null || true
+          cp runtime/hydradx/src/system.rs "$OUTPUT/runtime/" 2>/dev/null || true
+          cp runtime/hydradx/src/assets.rs "$OUTPUT/runtime/" 2>/dev/null || true
+          cp runtime/hydradx/src/xcm.rs "$OUTPUT/runtime/" 2>/dev/null || true
+          grep -A 500 "construct_runtime!" runtime/hydradx/src/lib.rs | head -600 > "$OUTPUT/runtime/construct_runtime.txt"
+
+          # Extract EVM configuration
+          cp -r runtime/hydradx/src/evm/* "$OUTPUT/evm/" 2>/dev/null || true
+          for pc in precompiles/*/; do
+            pc_name=$(basename "$pc")
+            mkdir -p "$OUTPUT/precompiles/$pc_name"
+            cp "${pc}src/"*.rs "$OUTPUT/precompiles/$pc_name/" 2>/dev/null || true
+          done
+
+          # Extract node implementation
+          cp node/src/chain_spec.rs "$OUTPUT/node/" 2>/dev/null || true
+          cp -r node/src/service "$OUTPUT/node/" 2>/dev/null || true
+          cp -r node/src/rpc "$OUTPUT/node/" 2>/dev/null || true
+
+          # Extract math library
+          cp -r math/src "$OUTPUT/math/" 2>/dev/null || true
+
+          # Extract traits
+          cp -r traits/src "$OUTPUT/traits/" 2>/dev/null || true
+
+          # Extract storage/calls summary
+          grep -rn "#\[pallet::storage\]" pallets/ --include="*.rs" > "$OUTPUT/storage-items.txt" 2>/dev/null || true
+          STORAGE_COUNT=$(wc -l < "$OUTPUT/storage-items.txt" 2>/dev/null || echo "0")
+
+          # Generate metadata
+          cat > "$OUTPUT/extraction-meta.json" << EOF
+          {
+            "layer": "L1",
+            "name": "runtime",
+            "extracted_at": "$TIMESTAMP",
+            "source_repo": "hydration-node",
+            "source_branch": "$BRANCH",
+            "source_commit": "$COMMIT",
+            "statistics": {
+              "pallets_count": $PALLET_COUNT,
+              "storage_items": $STORAGE_COUNT
+            },
+            "ci_run": true
+          }
+          EOF
+          echo "L1 extraction complete: $PALLET_COUNT pallets, $STORAGE_COUNT storage items"
+
+      - name: Upload L1 artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: l1-runtime
+          path: knowledge-base/raw/runtime/
+
+  # ===================
+  # L2: SDK EXTRACTION
+  # ===================
+  extract-l2-sdk:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.l2_changed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout codex
+        uses: actions/checkout@v4
+
+      - name: Clone SDK
+        run: git clone --depth 100 https://github.com/${{ env.SDK_REPO }}.git repos/sdk
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run L2 Extraction
+        run: |
+          mkdir -p knowledge-base/raw/sdk
+          cd repos/sdk
+
+          COMMIT=$(git rev-parse HEAD)
+          BRANCH=$(git rev-parse --abbrev-ref HEAD)
+          VERSION=$(grep '"version"' packages/sdk/package.json | head -1 | cut -d'"' -f4)
+
+          # Extract API calls
+          grep -rn "api\.tx\." --include="*.ts" packages/ > ../../knowledge-base/raw/sdk/extrinsic-calls.txt 2>/dev/null || true
+          grep -rn "api\.query\." --include="*.ts" packages/ > ../../knowledge-base/raw/sdk/query-calls.txt 2>/dev/null || true
+
+          # Extract types
+          grep -rn "^export type\|^export interface" --include="*.ts" packages/ > ../../knowledge-base/raw/sdk/type-definitions.txt 2>/dev/null || true
+
+          # Generate metadata
+          cat > ../../knowledge-base/raw/sdk/extraction-meta.json << EOF
+          {
+            "layer": "L2",
+            "name": "sdk",
+            "extracted_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "source_repo": "sdk",
+            "source_branch": "$BRANCH",
+            "source_commit": "$COMMIT",
+            "sdk_version": "$VERSION",
+            "ci_run": true
+          }
+          EOF
+
+      - name: Upload L2 artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: l2-sdk
+          path: knowledge-base/raw/sdk/
+
+  # ===================
+  # L3: INDEXER EXTRACTION
+  # ===================
+  extract-l3-indexer:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.l3_changed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout codex
+        uses: actions/checkout@v4
+
+      - name: Clone Indexer
+        run: git clone --depth 100 --branch develop https://github.com/${{ env.INDEXER_REPO }}.git repos/indexer
+
+      - name: Run L3 Extraction
+        run: |
+          mkdir -p knowledge-base/raw/indexer
+          cd repos/indexer
+
+          COMMIT=$(git rev-parse HEAD)
+          BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+          # Copy schema
+          cp indexers/liquidity-pools/schema.graphql ../../knowledge-base/raw/indexer/ 2>/dev/null || true
+
+          # Extract handlers
+          find indexers/liquidity-pools/src/handlers -name "*.ts" -exec cat {} \; > ../../knowledge-base/raw/indexer/handlers.ts 2>/dev/null || true
+
+          # Generate metadata
+          ENTITIES=$(grep -c "^type [A-Z]" indexers/liquidity-pools/schema.graphql 2>/dev/null || echo "0")
+          cat > ../../knowledge-base/raw/indexer/extraction-meta.json << EOF
+          {
+            "layer": "L3",
+            "name": "indexer",
+            "extracted_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "source_repo": "hydration-data-lake",
+            "source_branch": "$BRANCH",
+            "source_commit": "$COMMIT",
+            "schema_entities": $ENTITIES,
+            "ci_run": true
+          }
+          EOF
+
+      - name: Upload L3 artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: l3-indexer
+          path: knowledge-base/raw/indexer/
+
+  # ===================
+  # L4: UI EXTRACTION
+  # ===================
+  extract-l4-ui:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.l4_changed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout codex
+        uses: actions/checkout@v4
+
+      - name: Clone UI
+        run: git clone --depth 100 --branch next https://github.com/${{ env.UI_REPO }}.git repos/hydration-ui
+
+      - name: Run L4 Extraction
+        run: |
+          mkdir -p knowledge-base/raw/ui
+          cd repos/hydration-ui
+
+          COMMIT=$(git rev-parse HEAD)
+          BRANCH=$(git rev-parse --abbrev-ref HEAD)
+          VERSION=$(grep '"version"' package.json | head -1 | cut -d'"' -f4 || echo "unknown")
+
+          # Extract component files
+          find . -name "*.tsx" -not -path "*/node_modules/*" | head -200 > ../../knowledge-base/raw/ui/component-files.txt
+
+          # Extract SDK usage
+          grep -rn "api\.tx\.\|api\.query\." --include="*.ts" --include="*.tsx" . 2>/dev/null | grep -v node_modules > ../../knowledge-base/raw/ui/sdk-usage.txt || true
+
+          # Extract indexer usage
+          grep -rn "useQuery\|gql\`\|SQUID_URL" --include="*.ts" --include="*.tsx" . 2>/dev/null | grep -v node_modules > ../../knowledge-base/raw/ui/indexer-usage.txt || true
+
+          # Generate metadata
+          COMPONENTS=$(wc -l < ../../knowledge-base/raw/ui/component-files.txt || echo "0")
+          cat > ../../knowledge-base/raw/ui/extraction-meta.json << EOF
+          {
+            "layer": "L4",
+            "name": "ui",
+            "extracted_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "source_repo": "hydration-ui",
+            "source_branch": "$BRANCH",
+            "source_commit": "$COMMIT",
+            "ui_version": "$VERSION",
+            "components_found": $COMPONENTS,
+            "ci_run": true
+          }
+          EOF
+
+      - name: Upload L4 artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: l4-ui
+          path: knowledge-base/raw/ui/
+
+  # ===================
+  # SYNTHESIZE & COMMIT
+  # ===================
+  synthesize:
+    needs: [extract-l1-runtime, extract-l2-sdk, extract-l3-indexer, extract-l4-ui]
+    if: always() && (needs.extract-l1-runtime.result == 'success' || needs.extract-l2-sdk.result == 'success' || needs.extract-l3-indexer.result == 'success' || needs.extract-l4-ui.result == 'success')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout codex
+        uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts/
+
+      - name: Merge extractions
+        run: |
+          # Merge artifacts into knowledge-base
+          for layer in l1-runtime l2-sdk l3-indexer l4-ui; do
+            if [ -d "artifacts/$layer" ]; then
+              target="knowledge-base/raw/$(echo $layer | sed 's/l[1-4]-//')"
+              mkdir -p "$target"
+              cp -r artifacts/$layer/* "$target/"
+              echo "Merged $layer"
+            fi
+          done
+
+      - name: Update CHANGELOG
+        run: |
+          mkdir -p knowledge-base/history
+          TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M UTC")
+
+          # Prepend to changelog
+          echo "## $TIMESTAMP" > /tmp/changelog_entry.md
+          echo "" >> /tmp/changelog_entry.md
+
+          for meta in knowledge-base/raw/*/extraction-meta.json; do
+            if [ -f "$meta" ]; then
+              layer=$(jq -r '.layer' "$meta")
+              commit=$(jq -r '.source_commit' "$meta" | cut -c1-7)
+              echo "- **$layer**: Updated (commit: $commit)" >> /tmp/changelog_entry.md
+            fi
+          done
+
+          echo "" >> /tmp/changelog_entry.md
+
+          if [ -f "knowledge-base/history/CHANGELOG.md" ]; then
+            cat knowledge-base/history/CHANGELOG.md >> /tmp/changelog_entry.md
+          fi
+
+          mv /tmp/changelog_entry.md knowledge-base/history/CHANGELOG.md
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add knowledge-base/
+          git diff --staged --quiet || git commit -m "chore: Update extractions $(date -u +%Y-%m-%d)
+
+          Layers updated:
+          $(for meta in knowledge-base/raw/*/extraction-meta.json; do
+            if [ -f "$meta" ]; then
+              echo "- $(jq -r '.layer' "$meta"): $(jq -r '.source_commit' "$meta" | cut -c1-7)"
+            fi
+          done)
+
+          [skip ci]"
+          git push
