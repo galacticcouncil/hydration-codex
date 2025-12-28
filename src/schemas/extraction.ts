@@ -180,6 +180,11 @@ export const EventHandlerSchema = z.object({
   createsEntities: z.array(z.string()),
 });
 
+export const EventToHandlerMapSchema = z.record(z.object({
+  handlers: z.array(z.string()),
+  entities: z.array(z.string()),
+}));
+
 export const IndexerExtractionSchema = z.object({
   meta: ExtractionMetaSchema,
   schema: z.object({
@@ -187,6 +192,8 @@ export const IndexerExtractionSchema = z.object({
     queries: z.array(z.string()),
   }),
   handlers: z.array(EventHandlerSchema),
+  runtimeEvents: z.array(z.string()).optional(),
+  eventToHandlerMap: EventToHandlerMapSchema.optional(),
   endpoints: z.object({
     production: z.string(),
     testnet: z.string().optional(),
@@ -194,6 +201,8 @@ export const IndexerExtractionSchema = z.object({
   statistics: z.object({
     entitiesCount: z.number(),
     handlersCount: z.number(),
+    runtimeEventsCount: z.number().optional(),
+    eventsWithHandlersCount: z.number().optional(),
   }),
 });
 
@@ -271,10 +280,11 @@ export const WASMBridgeExtractionSchema = z.object({
 // Combined Extraction Result
 // ===========================================
 
+// SDK extraction can be either the classic format or enhanced format
 export const FullExtractionSchema = z.object({
   extractedAt: z.string().datetime(),
   runtime: RuntimeExtractionSchema,
-  sdk: SDKExtractionSchema,
+  sdk: z.unknown(), // Allow either classic or enhanced SDK extraction format
   indexer: IndexerExtractionSchema,
   ui: UIExtractionSchema,
   wasmBridge: WASMBridgeExtractionSchema.optional(),

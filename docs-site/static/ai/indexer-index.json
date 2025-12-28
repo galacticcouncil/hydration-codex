@@ -1,0 +1,621 @@
+{
+  "version": "1.0.0",
+  "entityCount": 123,
+  "entities": [
+    {
+      "name": "AaveFacilitator",
+      "fieldCount": 3,
+      "isEvent": false
+    },
+    {
+      "name": "AaveFacilitatorHistoricalData",
+      "fieldCount": 8,
+      "isEvent": true
+    },
+    {
+      "name": "Aavepool",
+      "fieldCount": 6,
+      "isEvent": false
+    },
+    {
+      "name": "AavepoolHistoricalData",
+      "fieldCount": 14,
+      "isEvent": true
+    },
+    {
+      "name": "Account",
+      "fieldCount": 34,
+      "isEvent": false
+    },
+    {
+      "name": "AccountAssetBalanceHistoricalData",
+      "fieldCount": 10,
+      "isEvent": true
+    },
+    {
+      "name": "AccountAssetBalanceLatest",
+      "fieldCount": 10,
+      "isEvent": false
+    },
+    {
+      "name": "AccountAssetSwapFeeHistoricalData",
+      "fieldCount": 9,
+      "isEvent": true
+    },
+    {
+      "name": "AccountChainActivityTrace",
+      "fieldCount": 3,
+      "isEvent": false
+    },
+    {
+      "name": "AccountMmPositionHistoricalData",
+      "fieldCount": 13,
+      "isEvent": true
+    },
+    {
+      "name": "AccountSwapFeeHistoricalData",
+      "fieldCount": 7,
+      "isEvent": true
+    },
+    {
+      "name": "AccountTotalBalanceHistoricalData",
+      "fieldCount": 9,
+      "isEvent": true
+    },
+    {
+      "name": "Asset",
+      "fieldCount": 20,
+      "isEvent": false
+    },
+    {
+      "name": "AssetAssetsPairVolume",
+      "fieldCount": 4,
+      "isEvent": false
+    },
+    {
+      "name": "AssetDynamicFee",
+      "fieldCount": 3,
+      "isEvent": false
+    },
+    {
+      "name": "AssetHistoricalData",
+      "fieldCount": 14,
+      "isEvent": true
+    },
+    {
+      "name": "AssetMultiLocation",
+      "fieldCount": 3,
+      "isEvent": false
+    },
+    {
+      "name": "AssetMultiLocationsInterior",
+      "fieldCount": 15,
+      "isEvent": false
+    },
+    {
+      "name": "AssetsPairVolumeHistoricalData",
+      "fieldCount": 10,
+      "isEvent": true
+    },
+    {
+      "name": "AssetSpotPriceHistoricalData",
+      "fieldCount": 14,
+      "isEvent": true
+    },
+    {
+      "name": "AssetSwapFeeHistoricalData",
+      "fieldCount": 7,
+      "isEvent": true
+    },
+    {
+      "name": "AssetVolumeHistoricalData",
+      "fieldCount": 13,
+      "isEvent": true
+    },
+    {
+      "name": "BatchHsmpoolAssetHistVolsList",
+      "fieldCount": 4,
+      "isEvent": false
+    },
+    {
+      "name": "BatchLbppoolHistVolsList",
+      "fieldCount": 4,
+      "isEvent": false
+    },
+    {
+      "name": "BatchOmnipoolAssetHistVolsList",
+      "fieldCount": 5,
+      "isEvent": false
+    },
+    {
+      "name": "BatchStableswapHistVolsList",
+      "fieldCount": 4,
+      "isEvent": false
+    },
+    {
+      "name": "BatchXykpoolHistVolsList",
+      "fieldCount": 4,
+      "isEvent": false
+    },
+    {
+      "name": "Block",
+      "fieldCount": 9,
+      "isEvent": false
+    },
+    {
+      "name": "Call",
+      "fieldCount": 16,
+      "isEvent": false
+    },
+    {
+      "name": "ChainActivityTrace",
+      "fieldCount": 18,
+      "isEvent": false
+    },
+    {
+      "name": "ChainActivityTraceRelation",
+      "fieldCount": 6,
+      "isEvent": false
+    },
+    {
+      "name": "ConstantsHistoricalData",
+      "fieldCount": 29,
+      "isEvent": true
+    },
+    {
+      "name": "DcaSchedule",
+      "fieldCount": 27,
+      "isEvent": false
+    },
+    {
+      "name": "DcaScheduleEvent",
+      "fieldCount": 8,
+      "isEvent": true
+    },
+    {
+      "name": "DcaScheduleExecution",
+      "fieldCount": 6,
+      "isEvent": false
+    },
+    {
+      "name": "DcaScheduleExecutionEvent",
+      "fieldCount": 10,
+      "isEvent": true
+    },
+    {
+      "name": "DcaScheduleOrderRouteHop",
+      "fieldCount": 5,
+      "isEvent": false
+    },
+    {
+      "name": "DispatchError",
+      "fieldCount": 3,
+      "isEvent": false
+    },
+    {
+      "name": "DynamicFeesAssetFeeParameters",
+      "fieldCount": 4,
+      "isEvent": false
+    },
+    {
+      "name": "EmaOracleEntryHistoricalData",
+      "fieldCount": 19,
+      "isEvent": true
+    },
+    {
+      "name": "Event",
+      "fieldCount": 12,
+      "isEvent": true
+    },
+    {
+      "name": "Extrinsic",
+      "fieldCount": 7,
+      "isEvent": false
+    },
+    {
+      "name": "FarmLifeState",
+      "fieldCount": 4,
+      "isEvent": false
+    },
+    {
+      "name": "HsmCollateral",
+      "fieldCount": 5,
+      "isEvent": false
+    },
+    {
+      "name": "HsmCollateralConfigHistoricalData",
+      "fieldCount": 11,
+      "isEvent": true
+    },
+    {
+      "name": "Hsmpool",
+      "fieldCount": 5,
+      "isEvent": false
+    },
+    {
+      "name": "HsmpoolAssetHistoricalData",
+      "fieldCount": 22,
+      "isEvent": true
+    },
+    {
+      "name": "HsmpoolHistoricalData",
+      "fieldCount": 8,
+      "isEvent": true
+    },
+    {
+      "name": "Lbppool",
+      "fieldCount": 25,
+      "isEvent": false
+    },
+    {
+      "name": "LbppoolCreatedData",
+      "fieldCount": 5,
+      "isEvent": true
+    },
+    {
+      "name": "LbppoolDestroyedData",
+      "fieldCount": 3,
+      "isEvent": true
+    },
+    {
+      "name": "LbppoolHistoricalData",
+      "fieldCount": 19,
+      "isEvent": true
+    },
+    {
+      "name": "LbppoolLifeState",
+      "fieldCount": 2,
+      "isEvent": false
+    },
+    {
+      "name": "LbppoolPriceHistoricalData",
+      "fieldCount": 9,
+      "isEvent": true
+    },
+    {
+      "name": "LbppoolVolumeHistoricalData",
+      "fieldCount": 32,
+      "isEvent": true
+    },
+    {
+      "name": "MmBorrow",
+      "fieldCount": 12,
+      "isEvent": false
+    },
+    {
+      "name": "MmLiquidationCall",
+      "fieldCount": 12,
+      "isEvent": false
+    },
+    {
+      "name": "MmRepay",
+      "fieldCount": 10,
+      "isEvent": false
+    },
+    {
+      "name": "MmReserveConfigHistoricalData",
+      "fieldCount": 31,
+      "isEvent": true
+    },
+    {
+      "name": "MmReserveIndexesHistoricalData",
+      "fieldCount": 9,
+      "isEvent": true
+    },
+    {
+      "name": "MmReserveUsedAsCollateralDisabledEvent",
+      "fieldCount": 7,
+      "isEvent": true
+    },
+    {
+      "name": "MmReserveUsedAsCollateralEnabledEvent",
+      "fieldCount": 7,
+      "isEvent": true
+    },
+    {
+      "name": "MmSupply",
+      "fieldCount": 11,
+      "isEvent": false
+    },
+    {
+      "name": "MmUserEModeSet",
+      "fieldCount": 7,
+      "isEvent": false
+    },
+    {
+      "name": "MmWithdraw",
+      "fieldCount": 10,
+      "isEvent": false
+    },
+    {
+      "name": "MoneyMarketEvent",
+      "fieldCount": 20,
+      "isEvent": true
+    },
+    {
+      "name": "MoneyMarketReserve",
+      "fieldCount": 12,
+      "isEvent": false
+    },
+    {
+      "name": "NftAsset",
+      "fieldCount": 5,
+      "isEvent": false
+    },
+    {
+      "name": "NftCollection",
+      "fieldCount": 13,
+      "isEvent": false
+    },
+    {
+      "name": "Omnipool",
+      "fieldCount": 7,
+      "isEvent": false
+    },
+    {
+      "name": "OmnipoolAsset",
+      "fieldCount": 12,
+      "isEvent": false
+    },
+    {
+      "name": "OmnipoolAssetAddedData",
+      "fieldCount": 5,
+      "isEvent": true
+    },
+    {
+      "name": "OmnipoolAssetHistoricalData",
+      "fieldCount": 14,
+      "isEvent": true
+    },
+    {
+      "name": "OmnipoolAssetHistoricalDataLatest",
+      "fieldCount": 13,
+      "isEvent": false
+    },
+    {
+      "name": "OmnipoolAssetLifeState",
+      "fieldCount": 2,
+      "isEvent": false
+    },
+    {
+      "name": "OmnipoolAssetLiquidityEvent",
+      "fieldCount": 11,
+      "isEvent": true
+    },
+    {
+      "name": "OmnipoolAssetRemovedData",
+      "fieldCount": 5,
+      "isEvent": true
+    },
+    {
+      "name": "OmnipoolAssetVolumeHistoricalData",
+      "fieldCount": 17,
+      "isEvent": true
+    },
+    {
+      "name": "OmnipoolGlobalFarm",
+      "fieldCount": 23,
+      "isEvent": false
+    },
+    {
+      "name": "OmnipoolHistoricalData",
+      "fieldCount": 8,
+      "isEvent": true
+    },
+    {
+      "name": "OmnipoolLiquidityPosition",
+      "fieldCount": 15,
+      "isEvent": false
+    },
+    {
+      "name": "OmnipoolLiquidityPositionEvent",
+      "fieldCount": 11,
+      "isEvent": true
+    },
+    {
+      "name": "OmnipoolYieldFarm",
+      "fieldCount": 17,
+      "isEvent": false
+    },
+    {
+      "name": "OmnipoolYieldFarmDeposit",
+      "fieldCount": 11,
+      "isEvent": false
+    },
+    {
+      "name": "OmnipoolYieldFarmDepositEvent",
+      "fieldCount": 12,
+      "isEvent": true
+    },
+    {
+      "name": "OmnipoolYieldFarmEntry",
+      "fieldCount": 9,
+      "isEvent": false
+    },
+    {
+      "name": "OtcOrder",
+      "fieldCount": 14,
+      "isEvent": false
+    },
+    {
+      "name": "OtcOrderEvent",
+      "fieldCount": 13,
+      "isEvent": true
+    },
+    {
+      "name": "PreprocessedDataBucket",
+      "fieldCount": 5,
+      "isEvent": false
+    },
+    {
+      "name": "ProcessorStatus",
+      "fieldCount": 10,
+      "isEvent": false
+    },
+    {
+      "name": "RoutedTrade",
+      "fieldCount": 18,
+      "isEvent": false
+    },
+    {
+      "name": "RoutedTradeAssetBalance",
+      "fieldCount": 5,
+      "isEvent": false
+    },
+    {
+      "name": "Stableswap",
+      "fieldCount": 10,
+      "isEvent": false
+    },
+    {
+      "name": "StableswapAsset",
+      "fieldCount": 4,
+      "isEvent": false
+    },
+    {
+      "name": "StableswapAssetHistoricalData",
+      "fieldCount": 10,
+      "isEvent": true
+    },
+    {
+      "name": "StableswapAssetHistoricalDataLatest",
+      "fieldCount": 10,
+      "isEvent": false
+    },
+    {
+      "name": "StableswapAssetLiquidityAmount",
+      "fieldCount": 4,
+      "isEvent": false
+    },
+    {
+      "name": "StableswapAssetVolumeHistoricalData",
+      "fieldCount": 18,
+      "isEvent": true
+    },
+    {
+      "name": "StableswapCreatedData",
+      "fieldCount": 3,
+      "isEvent": true
+    },
+    {
+      "name": "StableswapDestroyedData",
+      "fieldCount": 3,
+      "isEvent": true
+    },
+    {
+      "name": "StableswapHistoricalData",
+      "fieldCount": 16,
+      "isEvent": true
+    },
+    {
+      "name": "StableswapLifeState",
+      "fieldCount": 2,
+      "isEvent": false
+    },
+    {
+      "name": "StableswapLiquidityEvent",
+      "fieldCount": 12,
+      "isEvent": true
+    },
+    {
+      "name": "StableswapPegsSource",
+      "fieldCount": 5,
+      "isEvent": false
+    },
+    {
+      "name": "StableswapVolumeHistoricalData",
+      "fieldCount": 13,
+      "isEvent": true
+    },
+    {
+      "name": "Swap",
+      "fieldCount": 23,
+      "isEvent": false
+    },
+    {
+      "name": "SwapAssetBalance",
+      "fieldCount": 5,
+      "isEvent": false
+    },
+    {
+      "name": "SwapFee",
+      "fieldCount": 6,
+      "isEvent": false
+    },
+    {
+      "name": "TransactionPaymentHistoricalData",
+      "fieldCount": 4,
+      "isEvent": true
+    },
+    {
+      "name": "Transfer",
+      "fieldCount": 12,
+      "isEvent": false
+    },
+    {
+      "name": "XykGlobalFarm",
+      "fieldCount": 23,
+      "isEvent": false
+    },
+    {
+      "name": "Xykpool",
+      "fieldCount": 19,
+      "isEvent": false
+    },
+    {
+      "name": "XykpoolCreatedData",
+      "fieldCount": 4,
+      "isEvent": true
+    },
+    {
+      "name": "XykpoolDestroyedData",
+      "fieldCount": 3,
+      "isEvent": true
+    },
+    {
+      "name": "XykpoolHistoricalData",
+      "fieldCount": 10,
+      "isEvent": true
+    },
+    {
+      "name": "XykpoolLifeState",
+      "fieldCount": 2,
+      "isEvent": false
+    },
+    {
+      "name": "XykpoolPriceHistoricalData",
+      "fieldCount": 9,
+      "isEvent": true
+    },
+    {
+      "name": "XykpoolVolumeHistoricalData",
+      "fieldCount": 32,
+      "isEvent": true
+    },
+    {
+      "name": "XykYieldFarm",
+      "fieldCount": 19,
+      "isEvent": false
+    },
+    {
+      "name": "XykYieldFarmDeposit",
+      "fieldCount": 11,
+      "isEvent": false
+    },
+    {
+      "name": "XykYieldFarmDepositEvent",
+      "fieldCount": 12,
+      "isEvent": true
+    },
+    {
+      "name": "XykYieldFarmEntry",
+      "fieldCount": 10,
+      "isEvent": false
+    },
+    {
+      "name": "YieldFarmLoyaltyCurve",
+      "fieldCount": 2,
+      "isEvent": false
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+/**
+ * Hydration Codex Custom CSS
+ * Brand colors based on Hydration Protocol
+ */
+
+:root {
+  /* Hydration pink/magenta primary */
+  --ifm-color-primary: #fc408b;
+  --ifm-color-primary-dark: #fb1877;
+  --ifm-color-primary-darker: #f5066c;
+  --ifm-color-primary-darkest: #c9045a;
+  --ifm-color-primary-light: #fd689f;
+  --ifm-color-primary-lighter: #fd7dab;
+  --ifm-color-primary-lightest: #fea8c5;
+
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(252, 64, 139, 0.1);
+
+  /* Layer colors for diagrams */
+  --layer-l1-bg: #fce7f3;
+  --layer-l1-border: #ec4899;
+  --layer-l2-bg: #dcfce7;
+  --layer-l2-border: #22c55e;
+  --layer-l3-bg: #dbeafe;
+  --layer-l3-border: #3b82f6;
+  --layer-l4-bg: #fef3c7;
+  --layer-l4-border: #f59e0b;
+}
+
+[data-theme='dark'] {
+  /* Hydration cyan/teal for dark mode */
+  --ifm-color-primary: #4fd1c5;
+  --ifm-color-primary-dark: #38c4b7;
+  --ifm-color-primary-darker: #2fb8ab;
+  --ifm-color-primary-darkest: #26978c;
+  --ifm-color-primary-light: #6edad0;
+  --ifm-color-primary-lighter: #7edfd6;
+  --ifm-color-primary-lightest: #9fe8e1;
+
+  --docusaurus-highlighted-code-line-bg: rgba(79, 209, 197, 0.2);
+
+  /* Darker layer colors for dark mode */
+  --layer-l1-bg: #4c1d3d;
+  --layer-l1-border: #ec4899;
+  --layer-l2-bg: #14532d;
+  --layer-l2-border: #22c55e;
+  --layer-l3-bg: #1e3a5f;
+  --layer-l3-border: #3b82f6;
+  --layer-l4-bg: #451a03;
+  --layer-l4-border: #f59e0b;
+}
+
+/* Custom component styles */
+.data-flow-diagram {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  border-radius: 8px;
+  background: var(--ifm-background-surface-color);
+}
+
+/* Source link styling */
+.source-link {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.85em;
+  color: var(--ifm-color-primary);
+}
+
+/* Layer badges */
+.layer-badge {
+  display: inline-block;
+  padding: 0.2em 0.6em;
+  border-radius: 4px;
+  font-size: 0.75em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.layer-badge--l1 {
+  background: var(--layer-l1-bg);
+  border: 1px solid var(--layer-l1-border);
+  color: var(--layer-l1-border);
+}
+
+.layer-badge--l2 {
+  background: var(--layer-l2-bg);
+  border: 1px solid var(--layer-l2-border);
+  color: var(--layer-l2-border);
+}
+
+.layer-badge--l3 {
+  background: var(--layer-l3-bg);
+  border: 1px solid var(--layer-l3-border);
+  color: var(--layer-l3-border);
+}
+
+.layer-badge--l4 {
+  background: var(--layer-l4-bg);
+  border: 1px solid var(--layer-l4-border);
+  color: var(--layer-l4-border);
+}
+
+/* AI-generated content indicator */
+.ai-generated {
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.ai-generated::before {
+  content: "AI";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 0.65em;
+  font-weight: 700;
+  color: var(--ifm-color-primary);
+  opacity: 0.6;
+}
+
+/* Cross-reference links */
+.xref-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.xref-link {
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  font-size: 0.85em;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.xref-link:hover {
+  border-color: var(--ifm-color-primary);
+  background: var(--ifm-color-primary-lightest);
+}
+
+/* Hide sidebar items marked with sidebar_class_name: hidden */
+.menu__list-item.hidden {
+  display: none;
+}

@@ -1,0 +1,536 @@
+{
+  "version": "1.0.0",
+  "connections": [
+    {
+      "hook": "useAcceptedFeePaymentAssets",
+      "category": "transactions",
+      "palletCalls": [],
+      "palletQueries": [
+        "MultiTransactionPayment.AcceptedCurrencies"
+      ]
+    },
+    {
+      "hook": "useAddableStablepoolTokens",
+      "category": "unknown",
+      "palletCalls": [],
+      "palletQueries": [
+        "Stableswap.AssetTradability"
+      ]
+    },
+    {
+      "hook": "useAddIsolatedLiquidity",
+      "category": "liquidity",
+      "palletCalls": [
+        "XYK.add_liquidity",
+        "XYKLiquidityMining.add_liquidity_and_join_farms"
+      ],
+      "palletQueries": [
+        "EmaOracle.Oracles"
+      ]
+    },
+    {
+      "hook": "useAddLiquidity",
+      "category": "liquidity",
+      "palletCalls": [
+        "Omnipool.add_liquidity_with_limit",
+        "OmnipoolLiquidityMining.add_liquidity_and_join_farms"
+      ],
+      "palletQueries": []
+    },
+    {
+      "hook": "useAddMoneyMarketLiquidity",
+      "category": "unknown",
+      "palletCalls": [
+        "Dispatcher.dispatch_with_extra_gas",
+        "Stableswap.add_assets_liquidity"
+      ],
+      "palletQueries": []
+    },
+    {
+      "hook": "useAddMoneyMarketLiquidityWrapper",
+      "category": "unknown",
+      "palletCalls": [],
+      "palletQueries": [
+        "Stableswap.AssetTradability"
+      ]
+    },
+    {
+      "hook": "useAddMoneyMarketOmnipoolLiquidity",
+      "category": "unknown",
+      "palletCalls": [
+        "Dispatcher.dispatch_with_extra_gas",
+        "Omnipool.add_liquidity_with_limit",
+        "OmnipoolLiquidityMining.add_liquidity_and_join_farms",
+        "Stableswap.add_assets_liquidity",
+        "Utility.batch_all"
+      ],
+      "palletQueries": [
+        "EmaOracle.Oracles"
+      ]
+    },
+    {
+      "hook": "useCheckJoinOmnipoolFarm",
+      "category": "liquidity",
+      "palletCalls": [],
+      "palletQueries": [
+        "EmaOracle.Oracles"
+      ]
+    },
+    {
+      "hook": "useClaimAllWalletRewards",
+      "category": "wallet",
+      "palletCalls": [
+        "OmnipoolLiquidityMining.claim_rewards",
+        "OmnipoolLiquidityMining.withdraw_shares",
+        "Referrals.claim_rewards",
+        "Utility.batch_all",
+        "XYKLiquidityMining.claim_rewards",
+        "XYKLiquidityMining.withdraw_shares"
+      ],
+      "palletQueries": [
+        "ParachainSystem.ValidationData",
+        "Referenda.ReferendumInfoFor",
+        "Referrals.ReferrerShares",
+        "Referrals.TotalShares",
+        "Referrals.TraderShares",
+        "System.Account",
+        "System.Number",
+        "Timestamp.Now",
+        "Tokens.Accounts"
+      ]
+    },
+    {
+      "hook": "useClaimFarmRewardsMutation",
+      "category": "liquidity",
+      "palletCalls": [
+        "Utility.batch_all"
+      ],
+      "palletQueries": []
+    },
+    {
+      "hook": "useClaimStaking",
+      "category": "staking",
+      "palletCalls": [],
+      "palletQueries": [
+        "ParachainSystem.ValidationData",
+        "Referenda.ReferendumInfoFor",
+        "Staking.ProcessedVotes",
+        "Staking.VotesRewarded",
+        "System.Number",
+        "Timestamp.Now"
+      ]
+    },
+    {
+      "hook": "useEstimateFee",
+      "category": "transactions",
+      "palletCalls": [],
+      "palletQueries": [
+        "MultiTransactionPayment.AcceptedCurrencies"
+      ]
+    },
+    {
+      "hook": "useExitDepositFarmsMutation",
+      "category": "liquidity",
+      "palletCalls": [
+        "OmnipoolLiquidityMining.withdraw_shares",
+        "Utility.batch_all",
+        "XYKLiquidityMining.withdraw_shares"
+      ],
+      "palletQueries": []
+    },
+    {
+      "hook": "useGetClaimAllBorrowRewardsTx",
+      "category": "borrow",
+      "palletCalls": [
+        "Dispatcher.dispatch_evm_call",
+        "EVM.call"
+      ],
+      "palletQueries": []
+    },
+    {
+      "hook": "useInsufficientTransferFee",
+      "category": "wallet",
+      "palletCalls": [],
+      "palletQueries": [
+        "System.Account",
+        "Tokens.Accounts"
+      ]
+    },
+    {
+      "hook": "useInvalidateOnBlock",
+      "category": "chain",
+      "palletCalls": [],
+      "palletQueries": [
+        "System.Number"
+      ]
+    },
+    {
+      "hook": "useMinOmnipoolFarmJoin",
+      "category": "liquidity",
+      "palletCalls": [],
+      "palletQueries": [
+        "EmaOracle.Oracles"
+      ]
+    },
+    {
+      "hook": "useNativeAssetLocks",
+      "category": "wallet",
+      "palletCalls": [],
+      "palletQueries": [
+        "Balances.Locks"
+      ]
+    },
+    {
+      "hook": "useOraclePrice",
+      "category": "omnipool",
+      "palletCalls": [],
+      "palletQueries": [
+        "EmaOracle.Oracles"
+      ]
+    },
+    {
+      "hook": "usePendingVotes",
+      "category": "staking",
+      "palletCalls": [],
+      "palletQueries": [
+        "Staking.PositionVotes",
+        "Staking.Votes"
+      ]
+    },
+    {
+      "hook": "useProcessedVotes",
+      "category": "staking",
+      "palletCalls": [],
+      "palletQueries": [
+        "Staking.ProcessedVotes",
+        "Staking.VotesRewarded"
+      ]
+    },
+    {
+      "hook": "useProviderMetadata",
+      "category": "chain",
+      "palletCalls": [],
+      "palletQueries": [
+        "System.LastRuntimeUpgrade"
+      ]
+    },
+    {
+      "hook": "useReferralRewards",
+      "category": "utils",
+      "palletCalls": [],
+      "palletQueries": [
+        "Referrals.ReferrerShares",
+        "Referrals.TotalShares",
+        "Referrals.TraderShares",
+        "System.Account",
+        "Tokens.Accounts"
+      ]
+    },
+    {
+      "hook": "useRemoveMoneyMarketLiquidity",
+      "category": "unknown",
+      "palletCalls": [
+        "Dispatcher.dispatch_with_extra_gas",
+        "Stableswap.remove_liquidity",
+        "Utility.batch_all"
+      ],
+      "palletQueries": []
+    },
+    {
+      "hook": "useRemoveMultipleOmnipoolPositions",
+      "category": "liquidity",
+      "palletCalls": [
+        "Omnipool.remove_liquidity_with_limit",
+        "OmnipoolLiquidityMining.withdraw_shares",
+        "Utility.batch_all"
+      ],
+      "palletQueries": []
+    },
+    {
+      "hook": "useRemoveMultipleXYKPositions",
+      "category": "unknown",
+      "palletCalls": [
+        "Utility.batch_all",
+        "XYK.remove_liquidity_with_limits",
+        "XYKLiquidityMining.withdraw_shares"
+      ],
+      "palletQueries": []
+    },
+    {
+      "hook": "useRemoveSingleOmnipoolPosition",
+      "category": "liquidity",
+      "palletCalls": [
+        "Omnipool.remove_liquidity_with_limit",
+        "OmnipoolLiquidityMining.withdraw_shares",
+        "Utility.batch_all"
+      ],
+      "palletQueries": []
+    },
+    {
+      "hook": "useRemoveSingleXYKPosition",
+      "category": "unknown",
+      "palletCalls": [
+        "Utility.batch_all",
+        "XYK.remove_liquidity_with_limits",
+        "XYKLiquidityMining.withdraw_shares"
+      ],
+      "palletQueries": []
+    },
+    {
+      "hook": "useRemoveXYKShares",
+      "category": "unknown",
+      "palletCalls": [
+        "XYK.remove_liquidity_with_limits"
+      ],
+      "palletQueries": []
+    },
+    {
+      "hook": "useRewardsCurveData",
+      "category": "staking",
+      "palletCalls": [],
+      "palletQueries": [
+        "ParachainSystem.ValidationData",
+        "Referenda.ReferendumInfoFor",
+        "Staking.Positions",
+        "System.Number",
+        "Timestamp.Now",
+        "Uniques.Account"
+      ]
+    },
+    {
+      "hook": "useSetFeePaymentAsset",
+      "category": "transactions",
+      "palletCalls": [
+        "MultiTransactionPayment.set_currency"
+      ],
+      "palletQueries": []
+    },
+    {
+      "hook": "useSignAndSubmit",
+      "category": "transactions",
+      "palletCalls": [
+        "EVM.call",
+        "MultiTransactionPayment.dispatch_permit"
+      ],
+      "palletQueries": []
+    },
+    {
+      "hook": "useStablepoolAddLiquidity",
+      "category": "liquidity",
+      "palletCalls": [
+        "OmnipoolLiquidityMining.add_liquidity_stableswap_omnipool_and_join_farms",
+        "Stableswap.add_assets_liquidity"
+      ],
+      "palletQueries": [
+        "EmaOracle.Oracles",
+        "Stableswap.AssetTradability"
+      ]
+    },
+    {
+      "hook": "useStablepoolRemoveLiquidity",
+      "category": "liquidity",
+      "palletCalls": [
+        "Stableswap.remove_liquidity",
+        "Stableswap.remove_liquidity_one_asset"
+      ],
+      "palletQueries": []
+    },
+    {
+      "hook": "useStableswap",
+      "category": "stableswap",
+      "palletCalls": [],
+      "palletQueries": [
+        "Stableswap.Pools"
+      ]
+    },
+    {
+      "hook": "useStableSwapTradability",
+      "category": "stableswap",
+      "palletCalls": [],
+      "palletQueries": [
+        "Stableswap.AssetTradability"
+      ]
+    },
+    {
+      "hook": "useStake",
+      "category": "staking",
+      "palletCalls": [
+        "ConvictionVoting.remove_vote",
+        "Democracy.remove_vote",
+        "Staking.increase_stake",
+        "Staking.stake",
+        "Utility.batch_all"
+      ],
+      "palletQueries": [
+        "Staking.ProcessedVotes",
+        "Staking.VotesRewarded"
+      ]
+    },
+    {
+      "hook": "useStakingAPR",
+      "category": "staking",
+      "palletCalls": [],
+      "palletQueries": [
+        "ParachainSystem.ValidationData",
+        "Referenda.ReferendumInfoFor",
+        "Staking.Positions",
+        "Staking.Staking",
+        "System.Number",
+        "Timestamp.Now",
+        "Uniques.Account"
+      ]
+    },
+    {
+      "hook": "useStakingRewards",
+      "category": "utils",
+      "palletCalls": [],
+      "palletQueries": [
+        "ParachainSystem.ValidationData",
+        "Referenda.ReferendumInfoFor",
+        "System.Number",
+        "Timestamp.Now"
+      ]
+    },
+    {
+      "hook": "useStakingSupply",
+      "category": "staking",
+      "palletCalls": [],
+      "palletQueries": [
+        "Staking.Staking"
+      ]
+    },
+    {
+      "hook": "useSubmitCancelOtcOrder",
+      "category": "trade",
+      "palletCalls": [
+        "OTC.cancel_order"
+      ],
+      "palletQueries": []
+    },
+    {
+      "hook": "useSubmitCreateIsolatedPool",
+      "category": "liquidity",
+      "palletCalls": [
+        "XYK.create_pool"
+      ],
+      "palletQueries": []
+    },
+    {
+      "hook": "useSubmitFillOrder",
+      "category": "trade",
+      "palletCalls": [
+        "Dispatcher.dispatch_with_extra_gas",
+        "OTC.fill_order",
+        "OTC.partial_fill_order"
+      ],
+      "palletQueries": []
+    },
+    {
+      "hook": "useSubmitPlaceOrder",
+      "category": "trade",
+      "palletCalls": [
+        "Dispatcher.dispatch_with_extra_gas",
+        "OTC.place_order"
+      ],
+      "palletQueries": []
+    },
+    {
+      "hook": "useSubmitTransferPosition",
+      "category": "wallet",
+      "palletCalls": [
+        "Currencies.transfer",
+        "Tokens.transfer"
+      ],
+      "palletQueries": []
+    },
+    {
+      "hook": "useTerminateDcaSchedule",
+      "category": "trade",
+      "palletCalls": [
+        "DCA.terminate"
+      ],
+      "palletQueries": []
+    },
+    {
+      "hook": "useTransferPaymentInfo",
+      "category": "wallet",
+      "palletCalls": [
+        "Currencies.transfer",
+        "Tokens.transfer"
+      ],
+      "palletQueries": []
+    },
+    {
+      "hook": "useUnlockableNativeTokens",
+      "category": "wallet",
+      "palletCalls": [],
+      "palletQueries": [
+        "Democracy.ReferendumInfoOf",
+        "Democracy.VotingOf",
+        "ParachainSystem.ValidationData",
+        "System.Number",
+        "Timestamp.Now"
+      ]
+    },
+    {
+      "hook": "useUnlockNativeLocks",
+      "category": "wallet",
+      "palletCalls": [
+        "Democracy.remove_vote",
+        "Democracy.unlock",
+        "Utility.batch_all"
+      ],
+      "palletQueries": [
+        "Balances.Locks"
+      ]
+    },
+    {
+      "hook": "useUnstake",
+      "category": "staking",
+      "palletCalls": [
+        "ConvictionVoting.remove_vote",
+        "Democracy.remove_vote",
+        "Staking.unstake",
+        "Utility.batch_all"
+      ],
+      "palletQueries": [
+        "Staking.PositionVotes",
+        "Staking.ProcessedVotes",
+        "Staking.Votes",
+        "Staking.VotesRewarded"
+      ]
+    },
+    {
+      "hook": "useWalletRewardsSectionData",
+      "category": "wallet",
+      "palletCalls": [],
+      "palletQueries": [
+        "ParachainSystem.ValidationData",
+        "Referenda.ReferendumInfoFor",
+        "Referrals.ReferrerShares",
+        "Referrals.TotalShares",
+        "Referrals.TraderShares",
+        "System.Account",
+        "System.Number",
+        "Timestamp.Now",
+        "Tokens.Accounts"
+      ]
+    },
+    {
+      "hook": "useXYKFarmMinShares",
+      "category": "liquidity",
+      "palletCalls": [],
+      "palletQueries": [
+        "EmaOracle.Oracles"
+      ]
+    },
+    {
+      "hook": "useXykShareTokenEntries",
+      "category": "xyk",
+      "palletCalls": [],
+      "palletQueries": [
+        "XYK.ShareToken"
+      ]
+    }
+  ]
+}

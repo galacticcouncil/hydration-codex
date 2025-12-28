@@ -1,0 +1,2138 @@
+{
+  "extractedAt": "2025-12-26T01:18:55.045Z",
+  "source": "mainnet",
+  "endpoint": "wss://rpc.hydradx.cloud",
+  "specName": "hydradx",
+  "specVersion": 360,
+  "blockNumber": 10665377,
+  "blockHash": "0x04d44418fec5e06b77e4a5810569fbf7ab945f5bf9ca97ddcb0f5d86d253bf36",
+  "pallets": [
+    {
+      "name": "System",
+      "index": 1,
+      "calls": [
+        "System.remark",
+        "System.set_heap_pages",
+        "System.set_code",
+        "System.set_code_without_checks",
+        "System.set_storage",
+        "System.kill_storage",
+        "System.kill_prefix",
+        "System.remark_with_event",
+        "System.authorize_upgrade",
+        "System.authorize_upgrade_without_checks",
+        "System.apply_authorized_upgrade"
+      ],
+      "events": [
+        "System.ExtrinsicSuccess",
+        "System.ExtrinsicFailed",
+        "System.CodeUpdated",
+        "System.NewAccount",
+        "System.KilledAccount",
+        "System.Remarked",
+        "System.UpgradeAuthorized"
+      ],
+      "storage": [
+        "System.Account",
+        "System.ExtrinsicCount",
+        "System.InherentsApplied",
+        "System.BlockWeight",
+        "System.AllExtrinsicsLen",
+        "System.BlockHash",
+        "System.ExtrinsicData",
+        "System.Number",
+        "System.ParentHash",
+        "System.Digest",
+        "System.Events",
+        "System.EventCount",
+        "System.EventTopics",
+        "System.LastRuntimeUpgrade",
+        "System.UpgradedToU32RefCount",
+        "System.UpgradedToTripleRefCount",
+        "System.ExecutionPhase",
+        "System.AuthorizedUpgrade"
+      ],
+      "constants": [
+        "System.BlockWeights",
+        "System.BlockLength",
+        "System.BlockHashCount",
+        "System.DbWeight",
+        "System.Version",
+        "System.SS58Prefix"
+      ]
+    },
+    {
+      "name": "Timestamp",
+      "index": 3,
+      "calls": [
+        "Timestamp.set"
+      ],
+      "events": [],
+      "storage": [
+        "Timestamp.Now",
+        "Timestamp.DidUpdate"
+      ],
+      "constants": [
+        "Timestamp.MinimumPeriod"
+      ]
+    },
+    {
+      "name": "Balances",
+      "index": 7,
+      "calls": [
+        "Balances.transfer_allow_death",
+        "Balances.force_transfer",
+        "Balances.transfer_keep_alive",
+        "Balances.transfer_all",
+        "Balances.force_unreserve",
+        "Balances.upgrade_accounts",
+        "Balances.force_set_balance",
+        "Balances.force_adjust_total_issuance",
+        "Balances.burn"
+      ],
+      "events": [
+        "Balances.Endowed",
+        "Balances.DustLost",
+        "Balances.Transfer",
+        "Balances.BalanceSet",
+        "Balances.Reserved",
+        "Balances.Unreserved",
+        "Balances.ReserveRepatriated",
+        "Balances.Deposit",
+        "Balances.Withdraw",
+        "Balances.Slashed",
+        "Balances.Minted",
+        "Balances.Burned",
+        "Balances.Suspended",
+        "Balances.Restored",
+        "Balances.Upgraded",
+        "Balances.Issued",
+        "Balances.Rescinded",
+        "Balances.Locked",
+        "Balances.Unlocked",
+        "Balances.Frozen",
+        "Balances.Thawed",
+        "Balances.TotalIssuanceForced"
+      ],
+      "storage": [
+        "Balances.TotalIssuance",
+        "Balances.InactiveIssuance",
+        "Balances.Account",
+        "Balances.Locks",
+        "Balances.Reserves",
+        "Balances.Holds",
+        "Balances.Freezes"
+      ],
+      "constants": [
+        "Balances.ExistentialDeposit",
+        "Balances.MaxLocks",
+        "Balances.MaxReserves",
+        "Balances.MaxFreezes"
+      ]
+    },
+    {
+      "name": "TransactionPayment",
+      "index": 9,
+      "calls": [],
+      "events": [
+        "TransactionPayment.TransactionFeePaid"
+      ],
+      "storage": [
+        "TransactionPayment.NextFeeMultiplier",
+        "TransactionPayment.StorageVersion"
+      ],
+      "constants": [
+        "TransactionPayment.OperationalFeeMultiplier"
+      ]
+    },
+    {
+      "name": "MultiTransactionPayment",
+      "index": 203,
+      "calls": [
+        "MultiTransactionPayment.set_currency",
+        "MultiTransactionPayment.add_currency",
+        "MultiTransactionPayment.remove_currency",
+        "MultiTransactionPayment.reset_payment_currency",
+        "MultiTransactionPayment.dispatch_permit"
+      ],
+      "events": [
+        "MultiTransactionPayment.CurrencySet",
+        "MultiTransactionPayment.CurrencyAdded",
+        "MultiTransactionPayment.CurrencyRemoved",
+        "MultiTransactionPayment.FeeWithdrawn"
+      ],
+      "storage": [
+        "MultiTransactionPayment.AccountCurrencyMap",
+        "MultiTransactionPayment.AcceptedCurrencies",
+        "MultiTransactionPayment.AcceptedCurrencyPrice",
+        "MultiTransactionPayment.TransactionCurrencyOverride"
+      ],
+      "constants": [
+        "MultiTransactionPayment.NativeAssetId",
+        "MultiTransactionPayment.PolkadotNativeAssetId",
+        "MultiTransactionPayment.EvmAssetId"
+      ]
+    },
+    {
+      "name": "Treasury",
+      "index": 11,
+      "calls": [
+        "Treasury.spend_local",
+        "Treasury.remove_approval",
+        "Treasury.spend",
+        "Treasury.payout",
+        "Treasury.check_status",
+        "Treasury.void_spend"
+      ],
+      "events": [
+        "Treasury.Spending",
+        "Treasury.Awarded",
+        "Treasury.Burnt",
+        "Treasury.Rollover",
+        "Treasury.Deposit",
+        "Treasury.SpendApproved",
+        "Treasury.UpdatedInactive",
+        "Treasury.AssetSpendApproved",
+        "Treasury.AssetSpendVoided",
+        "Treasury.Paid",
+        "Treasury.PaymentFailed",
+        "Treasury.SpendProcessed"
+      ],
+      "storage": [
+        "Treasury.ProposalCount",
+        "Treasury.Proposals",
+        "Treasury.Deactivated",
+        "Treasury.Approvals",
+        "Treasury.SpendCount",
+        "Treasury.Spends"
+      ],
+      "constants": [
+        "Treasury.SpendPeriod",
+        "Treasury.Burn",
+        "Treasury.PalletId",
+        "Treasury.MaxApprovals",
+        "Treasury.PayoutPeriod"
+      ]
+    },
+    {
+      "name": "Utility",
+      "index": 13,
+      "calls": [
+        "Utility.batch",
+        "Utility.as_derivative",
+        "Utility.batch_all",
+        "Utility.dispatch_as",
+        "Utility.force_batch",
+        "Utility.with_weight"
+      ],
+      "events": [
+        "Utility.BatchInterrupted",
+        "Utility.BatchCompleted",
+        "Utility.BatchCompletedWithErrors",
+        "Utility.ItemCompleted",
+        "Utility.ItemFailed",
+        "Utility.DispatchedAs"
+      ],
+      "storage": [],
+      "constants": [
+        "Utility.batched_calls_limit"
+      ]
+    },
+    {
+      "name": "Preimage",
+      "index": 15,
+      "calls": [
+        "Preimage.note_preimage",
+        "Preimage.unnote_preimage",
+        "Preimage.request_preimage",
+        "Preimage.unrequest_preimage",
+        "Preimage.ensure_updated"
+      ],
+      "events": [
+        "Preimage.Noted",
+        "Preimage.Requested",
+        "Preimage.Cleared"
+      ],
+      "storage": [
+        "Preimage.StatusFor",
+        "Preimage.RequestStatusFor",
+        "Preimage.PreimageFor"
+      ],
+      "constants": []
+    },
+    {
+      "name": "Identity",
+      "index": 17,
+      "calls": [
+        "Identity.add_registrar",
+        "Identity.set_identity",
+        "Identity.set_subs",
+        "Identity.clear_identity",
+        "Identity.request_judgement",
+        "Identity.cancel_request",
+        "Identity.set_fee",
+        "Identity.set_account_id",
+        "Identity.set_fields",
+        "Identity.provide_judgement",
+        "Identity.kill_identity",
+        "Identity.add_sub",
+        "Identity.rename_sub",
+        "Identity.remove_sub",
+        "Identity.quit_sub",
+        "Identity.add_username_authority",
+        "Identity.remove_username_authority",
+        "Identity.set_username_for",
+        "Identity.accept_username",
+        "Identity.remove_expired_approval",
+        "Identity.set_primary_username",
+        "Identity.remove_dangling_username"
+      ],
+      "events": [
+        "Identity.IdentitySet",
+        "Identity.IdentityCleared",
+        "Identity.IdentityKilled",
+        "Identity.JudgementRequested",
+        "Identity.JudgementUnrequested",
+        "Identity.JudgementGiven",
+        "Identity.RegistrarAdded",
+        "Identity.SubIdentityAdded",
+        "Identity.SubIdentityRemoved",
+        "Identity.SubIdentityRevoked",
+        "Identity.AuthorityAdded",
+        "Identity.AuthorityRemoved",
+        "Identity.UsernameSet",
+        "Identity.UsernameQueued",
+        "Identity.PreapprovalExpired",
+        "Identity.PrimaryUsernameSet",
+        "Identity.DanglingUsernameRemoved"
+      ],
+      "storage": [
+        "Identity.IdentityOf",
+        "Identity.SuperOf",
+        "Identity.SubsOf",
+        "Identity.Registrars",
+        "Identity.UsernameAuthorities",
+        "Identity.AccountOfUsername",
+        "Identity.PendingUsernames"
+      ],
+      "constants": [
+        "Identity.BasicDeposit",
+        "Identity.ByteDeposit",
+        "Identity.SubAccountDeposit",
+        "Identity.MaxSubAccounts",
+        "Identity.MaxRegistrars",
+        "Identity.PendingUsernameExpiration",
+        "Identity.MaxSuffixLength",
+        "Identity.MaxUsernameLength"
+      ]
+    },
+    {
+      "name": "Democracy",
+      "index": 19,
+      "calls": [
+        "Democracy.propose",
+        "Democracy.second",
+        "Democracy.vote",
+        "Democracy.emergency_cancel",
+        "Democracy.external_propose",
+        "Democracy.external_propose_majority",
+        "Democracy.external_propose_default",
+        "Democracy.fast_track",
+        "Democracy.veto_external",
+        "Democracy.cancel_referendum",
+        "Democracy.delegate",
+        "Democracy.undelegate",
+        "Democracy.clear_public_proposals",
+        "Democracy.unlock",
+        "Democracy.remove_vote",
+        "Democracy.remove_other_vote",
+        "Democracy.blacklist",
+        "Democracy.cancel_proposal",
+        "Democracy.set_metadata",
+        "Democracy.force_remove_vote"
+      ],
+      "events": [
+        "Democracy.Proposed",
+        "Democracy.Tabled",
+        "Democracy.ExternalTabled",
+        "Democracy.Started",
+        "Democracy.Passed",
+        "Democracy.NotPassed",
+        "Democracy.Cancelled",
+        "Democracy.Delegated",
+        "Democracy.Undelegated",
+        "Democracy.Vetoed",
+        "Democracy.Blacklisted",
+        "Democracy.Voted",
+        "Democracy.Seconded",
+        "Democracy.ProposalCanceled",
+        "Democracy.MetadataSet",
+        "Democracy.MetadataCleared",
+        "Democracy.MetadataTransferred"
+      ],
+      "storage": [
+        "Democracy.PublicPropCount",
+        "Democracy.PublicProps",
+        "Democracy.DepositOf",
+        "Democracy.ReferendumCount",
+        "Democracy.LowestUnbaked",
+        "Democracy.ReferendumInfoOf",
+        "Democracy.VotingOf",
+        "Democracy.LastTabledWasExternal",
+        "Democracy.NextExternal",
+        "Democracy.Blacklist",
+        "Democracy.Cancellations",
+        "Democracy.MetadataOf"
+      ],
+      "constants": [
+        "Democracy.EnactmentPeriod",
+        "Democracy.LaunchPeriod",
+        "Democracy.VotingPeriod",
+        "Democracy.VoteLockingPeriod",
+        "Democracy.MinimumDeposit",
+        "Democracy.InstantAllowed",
+        "Democracy.FastTrackVotingPeriod",
+        "Democracy.CooloffPeriod",
+        "Democracy.MaxVotes",
+        "Democracy.MaxProposals",
+        "Democracy.MaxDeposits",
+        "Democracy.MaxBlacklisted"
+      ]
+    },
+    {
+      "name": "TechnicalCommittee",
+      "index": 25,
+      "calls": [
+        "TechnicalCommittee.set_members",
+        "TechnicalCommittee.execute",
+        "TechnicalCommittee.propose",
+        "TechnicalCommittee.vote",
+        "TechnicalCommittee.disapprove_proposal",
+        "TechnicalCommittee.close"
+      ],
+      "events": [
+        "TechnicalCommittee.Proposed",
+        "TechnicalCommittee.Voted",
+        "TechnicalCommittee.Approved",
+        "TechnicalCommittee.Disapproved",
+        "TechnicalCommittee.Executed",
+        "TechnicalCommittee.MemberExecuted",
+        "TechnicalCommittee.Closed"
+      ],
+      "storage": [
+        "TechnicalCommittee.Proposals",
+        "TechnicalCommittee.ProposalOf",
+        "TechnicalCommittee.Voting",
+        "TechnicalCommittee.ProposalCount",
+        "TechnicalCommittee.Members",
+        "TechnicalCommittee.Prime"
+      ],
+      "constants": [
+        "TechnicalCommittee.MaxProposalWeight"
+      ]
+    },
+    {
+      "name": "Proxy",
+      "index": 29,
+      "calls": [
+        "Proxy.proxy",
+        "Proxy.add_proxy",
+        "Proxy.remove_proxy",
+        "Proxy.remove_proxies",
+        "Proxy.create_pure",
+        "Proxy.kill_pure",
+        "Proxy.announce",
+        "Proxy.remove_announcement",
+        "Proxy.reject_announcement",
+        "Proxy.proxy_announced"
+      ],
+      "events": [
+        "Proxy.ProxyExecuted",
+        "Proxy.PureCreated",
+        "Proxy.Announced",
+        "Proxy.ProxyAdded",
+        "Proxy.ProxyRemoved"
+      ],
+      "storage": [
+        "Proxy.Proxies",
+        "Proxy.Announcements"
+      ],
+      "constants": [
+        "Proxy.ProxyDepositBase",
+        "Proxy.ProxyDepositFactor",
+        "Proxy.MaxProxies",
+        "Proxy.MaxPending",
+        "Proxy.AnnouncementDepositBase",
+        "Proxy.AnnouncementDepositFactor"
+      ]
+    },
+    {
+      "name": "Multisig",
+      "index": 31,
+      "calls": [
+        "Multisig.as_multi_threshold_1",
+        "Multisig.as_multi",
+        "Multisig.approve_as_multi",
+        "Multisig.cancel_as_multi"
+      ],
+      "events": [
+        "Multisig.NewMultisig",
+        "Multisig.MultisigApproval",
+        "Multisig.MultisigExecuted",
+        "Multisig.MultisigCancelled"
+      ],
+      "storage": [
+        "Multisig.Multisigs"
+      ],
+      "constants": [
+        "Multisig.DepositBase",
+        "Multisig.DepositFactor",
+        "Multisig.MaxSignatories"
+      ]
+    },
+    {
+      "name": "Uniques",
+      "index": 32,
+      "calls": [
+        "Uniques.create",
+        "Uniques.force_create",
+        "Uniques.destroy",
+        "Uniques.mint",
+        "Uniques.burn",
+        "Uniques.transfer",
+        "Uniques.redeposit",
+        "Uniques.freeze",
+        "Uniques.thaw",
+        "Uniques.freeze_collection",
+        "Uniques.thaw_collection",
+        "Uniques.transfer_ownership",
+        "Uniques.set_team",
+        "Uniques.approve_transfer",
+        "Uniques.cancel_approval",
+        "Uniques.force_item_status",
+        "Uniques.set_attribute",
+        "Uniques.clear_attribute",
+        "Uniques.set_metadata",
+        "Uniques.clear_metadata",
+        "Uniques.set_collection_metadata",
+        "Uniques.clear_collection_metadata",
+        "Uniques.set_accept_ownership",
+        "Uniques.set_collection_max_supply",
+        "Uniques.set_price",
+        "Uniques.buy_item"
+      ],
+      "events": [
+        "Uniques.Created",
+        "Uniques.ForceCreated",
+        "Uniques.Destroyed",
+        "Uniques.Issued",
+        "Uniques.Transferred",
+        "Uniques.Burned",
+        "Uniques.Frozen",
+        "Uniques.Thawed",
+        "Uniques.CollectionFrozen",
+        "Uniques.CollectionThawed",
+        "Uniques.OwnerChanged",
+        "Uniques.TeamChanged",
+        "Uniques.ApprovedTransfer",
+        "Uniques.ApprovalCancelled",
+        "Uniques.ItemStatusChanged",
+        "Uniques.CollectionMetadataSet",
+        "Uniques.CollectionMetadataCleared",
+        "Uniques.MetadataSet",
+        "Uniques.MetadataCleared",
+        "Uniques.Redeposited",
+        "Uniques.AttributeSet",
+        "Uniques.AttributeCleared",
+        "Uniques.OwnershipAcceptanceChanged",
+        "Uniques.CollectionMaxSupplySet",
+        "Uniques.ItemPriceSet",
+        "Uniques.ItemPriceRemoved",
+        "Uniques.ItemBought"
+      ],
+      "storage": [
+        "Uniques.Class",
+        "Uniques.OwnershipAcceptance",
+        "Uniques.Account",
+        "Uniques.ClassAccount",
+        "Uniques.Asset",
+        "Uniques.ClassMetadataOf",
+        "Uniques.InstanceMetadataOf",
+        "Uniques.Attribute",
+        "Uniques.ItemPriceOf",
+        "Uniques.CollectionMaxSupply"
+      ],
+      "constants": [
+        "Uniques.CollectionDeposit",
+        "Uniques.ItemDeposit",
+        "Uniques.MetadataDepositBase",
+        "Uniques.AttributeDepositBase",
+        "Uniques.DepositPerByte",
+        "Uniques.StringLimit",
+        "Uniques.KeyLimit",
+        "Uniques.ValueLimit"
+      ]
+    },
+    {
+      "name": "StateTrieMigration",
+      "index": 35,
+      "calls": [
+        "StateTrieMigration.control_auto_migration",
+        "StateTrieMigration.continue_migrate",
+        "StateTrieMigration.migrate_custom_top",
+        "StateTrieMigration.migrate_custom_child",
+        "StateTrieMigration.set_signed_max_limits",
+        "StateTrieMigration.force_set_progress"
+      ],
+      "events": [
+        "StateTrieMigration.Migrated",
+        "StateTrieMigration.Slashed",
+        "StateTrieMigration.AutoMigrationFinished",
+        "StateTrieMigration.Halted"
+      ],
+      "storage": [
+        "StateTrieMigration.MigrationProcess",
+        "StateTrieMigration.AutoLimits",
+        "StateTrieMigration.SignedMigrationMaxLimits"
+      ],
+      "constants": [
+        "StateTrieMigration.MaxKeyLen"
+      ]
+    },
+    {
+      "name": "ConvictionVoting",
+      "index": 36,
+      "calls": [
+        "ConvictionVoting.vote",
+        "ConvictionVoting.delegate",
+        "ConvictionVoting.undelegate",
+        "ConvictionVoting.unlock",
+        "ConvictionVoting.remove_vote",
+        "ConvictionVoting.remove_other_vote",
+        "ConvictionVoting.force_remove_vote"
+      ],
+      "events": [
+        "ConvictionVoting.Delegated",
+        "ConvictionVoting.Undelegated",
+        "ConvictionVoting.Voted",
+        "ConvictionVoting.VoteRemoved"
+      ],
+      "storage": [
+        "ConvictionVoting.VotingFor",
+        "ConvictionVoting.ClassLocksFor"
+      ],
+      "constants": [
+        "ConvictionVoting.MaxVotes",
+        "ConvictionVoting.VoteLockingPeriod"
+      ]
+    },
+    {
+      "name": "Referenda",
+      "index": 37,
+      "calls": [
+        "Referenda.submit",
+        "Referenda.place_decision_deposit",
+        "Referenda.refund_decision_deposit",
+        "Referenda.cancel",
+        "Referenda.kill",
+        "Referenda.nudge_referendum",
+        "Referenda.one_fewer_deciding",
+        "Referenda.refund_submission_deposit",
+        "Referenda.set_metadata"
+      ],
+      "events": [
+        "Referenda.Submitted",
+        "Referenda.DecisionDepositPlaced",
+        "Referenda.DecisionDepositRefunded",
+        "Referenda.DepositSlashed",
+        "Referenda.DecisionStarted",
+        "Referenda.ConfirmStarted",
+        "Referenda.ConfirmAborted",
+        "Referenda.Confirmed",
+        "Referenda.Approved",
+        "Referenda.Rejected",
+        "Referenda.TimedOut",
+        "Referenda.Cancelled",
+        "Referenda.Killed",
+        "Referenda.SubmissionDepositRefunded",
+        "Referenda.MetadataSet",
+        "Referenda.MetadataCleared"
+      ],
+      "storage": [
+        "Referenda.ReferendumCount",
+        "Referenda.ReferendumInfoFor",
+        "Referenda.TrackQueue",
+        "Referenda.DecidingCount",
+        "Referenda.MetadataOf"
+      ],
+      "constants": [
+        "Referenda.SubmissionDeposit",
+        "Referenda.MaxQueued",
+        "Referenda.UndecidingTimeout",
+        "Referenda.AlarmInterval",
+        "Referenda.Tracks"
+      ]
+    },
+    {
+      "name": "Origins",
+      "index": 38,
+      "calls": [],
+      "events": [],
+      "storage": [],
+      "constants": []
+    },
+    {
+      "name": "Whitelist",
+      "index": 39,
+      "calls": [
+        "Whitelist.whitelist_call",
+        "Whitelist.remove_whitelisted_call",
+        "Whitelist.dispatch_whitelisted_call",
+        "Whitelist.dispatch_whitelisted_call_with_preimage"
+      ],
+      "events": [
+        "Whitelist.CallWhitelisted",
+        "Whitelist.WhitelistedCallRemoved",
+        "Whitelist.WhitelistedCallDispatched"
+      ],
+      "storage": [
+        "Whitelist.WhitelistedCall"
+      ],
+      "constants": []
+    },
+    {
+      "name": "Dispatcher",
+      "index": 40,
+      "calls": [
+        "Dispatcher.dispatch_as_treasury",
+        "Dispatcher.dispatch_as_aave_manager",
+        "Dispatcher.note_aave_manager",
+        "Dispatcher.dispatch_with_extra_gas",
+        "Dispatcher.dispatch_evm_call"
+      ],
+      "events": [
+        "Dispatcher.TreasuryManagerCallDispatched",
+        "Dispatcher.AaveManagerCallDispatched"
+      ],
+      "storage": [
+        "Dispatcher.AaveManagerAccount",
+        "Dispatcher.ExtraGas",
+        "Dispatcher.LastEvmCallExitReason"
+      ],
+      "constants": []
+    },
+    {
+      "name": "AssetRegistry",
+      "index": 51,
+      "calls": [
+        "AssetRegistry.register",
+        "AssetRegistry.update",
+        "AssetRegistry.register_external",
+        "AssetRegistry.ban_asset",
+        "AssetRegistry.unban_asset"
+      ],
+      "events": [
+        "AssetRegistry.ExistentialDepositPaid",
+        "AssetRegistry.Registered",
+        "AssetRegistry.Updated",
+        "AssetRegistry.LocationSet",
+        "AssetRegistry.AssetBanned",
+        "AssetRegistry.AssetUnbanned"
+      ],
+      "storage": [
+        "AssetRegistry.Assets",
+        "AssetRegistry.NextAssetId",
+        "AssetRegistry.AssetIds",
+        "AssetRegistry.AssetLocations",
+        "AssetRegistry.BannedAssets",
+        "AssetRegistry.LocationAssets",
+        "AssetRegistry.ExistentialDepositCounter"
+      ],
+      "constants": [
+        "AssetRegistry.SequentialIdStartAt",
+        "AssetRegistry.StringLimit",
+        "AssetRegistry.MinStringLimit",
+        "AssetRegistry.RegExternalWeightMultiplier"
+      ]
+    },
+    {
+      "name": "Claims",
+      "index": 53,
+      "calls": [
+        "Claims.claim"
+      ],
+      "events": [
+        "Claims.Claim"
+      ],
+      "storage": [
+        "Claims.Claims"
+      ],
+      "constants": []
+    },
+    {
+      "name": "GenesisHistory",
+      "index": 55,
+      "calls": [],
+      "events": [],
+      "storage": [
+        "GenesisHistory.PreviousChain"
+      ],
+      "constants": []
+    },
+    {
+      "name": "CollatorRewards",
+      "index": 57,
+      "calls": [],
+      "events": [
+        "CollatorRewards.CollatorRewarded"
+      ],
+      "storage": [
+        "CollatorRewards.Collators"
+      ],
+      "constants": [
+        "CollatorRewards.RewardPerCollator",
+        "CollatorRewards.RewardCurrencyId",
+        "CollatorRewards.RewardsBag"
+      ]
+    },
+    {
+      "name": "Omnipool",
+      "index": 59,
+      "calls": [
+        "Omnipool.add_token",
+        "Omnipool.add_liquidity",
+        "Omnipool.remove_liquidity",
+        "Omnipool.sacrifice_position",
+        "Omnipool.sell",
+        "Omnipool.buy",
+        "Omnipool.set_asset_tradable_state",
+        "Omnipool.refund_refused_asset",
+        "Omnipool.set_asset_weight_cap",
+        "Omnipool.withdraw_protocol_liquidity",
+        "Omnipool.remove_token",
+        "Omnipool.add_liquidity_with_limit",
+        "Omnipool.remove_liquidity_with_limit"
+      ],
+      "events": [
+        "Omnipool.TokenAdded",
+        "Omnipool.TokenRemoved",
+        "Omnipool.LiquidityAdded",
+        "Omnipool.LiquidityRemoved",
+        "Omnipool.ProtocolLiquidityRemoved",
+        "Omnipool.SellExecuted",
+        "Omnipool.BuyExecuted",
+        "Omnipool.PositionCreated",
+        "Omnipool.PositionDestroyed",
+        "Omnipool.PositionUpdated",
+        "Omnipool.TradableStateUpdated",
+        "Omnipool.AssetRefunded",
+        "Omnipool.AssetWeightCapUpdated"
+      ],
+      "storage": [
+        "Omnipool.Assets",
+        "Omnipool.HubAssetTradability",
+        "Omnipool.Positions",
+        "Omnipool.NextPositionId"
+      ],
+      "constants": [
+        "Omnipool.HdxAssetId",
+        "Omnipool.HubAssetId",
+        "Omnipool.MinWithdrawalFee",
+        "Omnipool.MinimumTradingLimit",
+        "Omnipool.MinimumPoolLiquidity",
+        "Omnipool.MaxInRatio",
+        "Omnipool.MaxOutRatio",
+        "Omnipool.NFTCollectionId",
+        "Omnipool.BurnProtocolFee"
+      ]
+    },
+    {
+      "name": "TransactionPause",
+      "index": 60,
+      "calls": [
+        "TransactionPause.pause_transaction",
+        "TransactionPause.unpause_transaction"
+      ],
+      "events": [
+        "TransactionPause.TransactionPaused",
+        "TransactionPause.TransactionUnpaused"
+      ],
+      "storage": [
+        "TransactionPause.PausedTransactions"
+      ],
+      "constants": []
+    },
+    {
+      "name": "Duster",
+      "index": 61,
+      "calls": [
+        "Duster.dust_account",
+        "Duster.whitelist_account",
+        "Duster.remove_from_whitelist"
+      ],
+      "events": [
+        "Duster.Dusted",
+        "Duster.Added",
+        "Duster.Removed"
+      ],
+      "storage": [
+        "Duster.AccountWhitelist"
+      ],
+      "constants": [
+        "Duster.TreasuryAccountId"
+      ]
+    },
+    {
+      "name": "OmnipoolWarehouseLM",
+      "index": 62,
+      "calls": [],
+      "events": [
+        "OmnipoolWarehouseLM.GlobalFarmAccRPZUpdated",
+        "OmnipoolWarehouseLM.YieldFarmAccRPVSUpdated",
+        "OmnipoolWarehouseLM.AllRewardsDistributed"
+      ],
+      "storage": [
+        "OmnipoolWarehouseLM.FarmSequencer",
+        "OmnipoolWarehouseLM.DepositSequencer",
+        "OmnipoolWarehouseLM.GlobalFarm",
+        "OmnipoolWarehouseLM.YieldFarm",
+        "OmnipoolWarehouseLM.Deposit",
+        "OmnipoolWarehouseLM.ActiveYieldFarm"
+      ],
+      "constants": [
+        "OmnipoolWarehouseLM.PalletId",
+        "OmnipoolWarehouseLM.TreasuryAccountId",
+        "OmnipoolWarehouseLM.MinTotalFarmRewards",
+        "OmnipoolWarehouseLM.MinPlannedYieldingPeriods",
+        "OmnipoolWarehouseLM.MaxFarmEntriesPerDeposit",
+        "OmnipoolWarehouseLM.MaxYieldFarmsPerGlobalFarm"
+      ]
+    },
+    {
+      "name": "OmnipoolLiquidityMining",
+      "index": 63,
+      "calls": [
+        "OmnipoolLiquidityMining.create_global_farm",
+        "OmnipoolLiquidityMining.terminate_global_farm",
+        "OmnipoolLiquidityMining.create_yield_farm",
+        "OmnipoolLiquidityMining.update_yield_farm",
+        "OmnipoolLiquidityMining.stop_yield_farm",
+        "OmnipoolLiquidityMining.resume_yield_farm",
+        "OmnipoolLiquidityMining.terminate_yield_farm",
+        "OmnipoolLiquidityMining.deposit_shares",
+        "OmnipoolLiquidityMining.redeposit_shares",
+        "OmnipoolLiquidityMining.claim_rewards",
+        "OmnipoolLiquidityMining.withdraw_shares",
+        "OmnipoolLiquidityMining.update_global_farm",
+        "OmnipoolLiquidityMining.join_farms",
+        "OmnipoolLiquidityMining.add_liquidity_and_join_farms",
+        "OmnipoolLiquidityMining.exit_farms",
+        "OmnipoolLiquidityMining.add_liquidity_stableswap_omnipool_and_join_farms"
+      ],
+      "events": [
+        "OmnipoolLiquidityMining.GlobalFarmCreated",
+        "OmnipoolLiquidityMining.GlobalFarmUpdated",
+        "OmnipoolLiquidityMining.GlobalFarmTerminated",
+        "OmnipoolLiquidityMining.YieldFarmCreated",
+        "OmnipoolLiquidityMining.YieldFarmUpdated",
+        "OmnipoolLiquidityMining.YieldFarmStopped",
+        "OmnipoolLiquidityMining.YieldFarmResumed",
+        "OmnipoolLiquidityMining.YieldFarmTerminated",
+        "OmnipoolLiquidityMining.SharesDeposited",
+        "OmnipoolLiquidityMining.SharesRedeposited",
+        "OmnipoolLiquidityMining.RewardClaimed",
+        "OmnipoolLiquidityMining.SharesWithdrawn",
+        "OmnipoolLiquidityMining.DepositDestroyed"
+      ],
+      "storage": [
+        "OmnipoolLiquidityMining.OmniPositionId"
+      ],
+      "constants": [
+        "OmnipoolLiquidityMining.NFTCollectionId",
+        "OmnipoolLiquidityMining.OracleSource",
+        "OmnipoolLiquidityMining.OraclePeriod"
+      ]
+    },
+    {
+      "name": "OTC",
+      "index": 64,
+      "calls": [
+        "OTC.place_order",
+        "OTC.partial_fill_order",
+        "OTC.fill_order",
+        "OTC.cancel_order"
+      ],
+      "events": [
+        "OTC.Cancelled",
+        "OTC.Filled",
+        "OTC.PartiallyFilled",
+        "OTC.Placed"
+      ],
+      "storage": [
+        "OTC.NextOrderId",
+        "OTC.Orders"
+      ],
+      "constants": [
+        "OTC.ExistentialDepositMultiplier",
+        "OTC.Fee",
+        "OTC.FeeReceiver"
+      ]
+    },
+    {
+      "name": "CircuitBreaker",
+      "index": 65,
+      "calls": [
+        "CircuitBreaker.set_trade_volume_limit",
+        "CircuitBreaker.set_add_liquidity_limit",
+        "CircuitBreaker.set_remove_liquidity_limit",
+        "CircuitBreaker.lockdown_asset",
+        "CircuitBreaker.force_lift_lockdown",
+        "CircuitBreaker.release_deposit"
+      ],
+      "events": [
+        "CircuitBreaker.TradeVolumeLimitChanged",
+        "CircuitBreaker.AddLiquidityLimitChanged",
+        "CircuitBreaker.RemoveLiquidityLimitChanged",
+        "CircuitBreaker.AssetLockdown",
+        "CircuitBreaker.AssetLockdownRemoved",
+        "CircuitBreaker.DepositReleased"
+      ],
+      "storage": [
+        "CircuitBreaker.TradeVolumeLimitPerAsset",
+        "CircuitBreaker.AllowedTradeVolumeLimitPerAsset",
+        "CircuitBreaker.LiquidityAddLimitPerAsset",
+        "CircuitBreaker.AllowedAddLiquidityAmountPerAsset",
+        "CircuitBreaker.AssetLockdownState",
+        "CircuitBreaker.LiquidityRemoveLimitPerAsset",
+        "CircuitBreaker.AllowedRemoveLiquidityAmountPerAsset"
+      ],
+      "constants": [
+        "CircuitBreaker.DefaultMaxNetTradeVolumeLimitPerBlock",
+        "CircuitBreaker.DefaultMaxAddLiquidityLimitPerBlock",
+        "CircuitBreaker.DefaultMaxRemoveLiquidityLimitPerBlock"
+      ]
+    },
+    {
+      "name": "Router",
+      "index": 67,
+      "calls": [
+        "Router.sell",
+        "Router.buy",
+        "Router.set_route",
+        "Router.force_insert_route",
+        "Router.sell_all"
+      ],
+      "events": [
+        "Router.Executed",
+        "Router.RouteUpdated"
+      ],
+      "storage": [
+        "Router.Routes"
+      ],
+      "constants": [
+        "Router.NativeAssetId",
+        "Router.OraclePeriod"
+      ]
+    },
+    {
+      "name": "DynamicFees",
+      "index": 68,
+      "calls": [
+        "DynamicFees.set_asset_fee",
+        "DynamicFees.remove_asset_fee"
+      ],
+      "events": [
+        "DynamicFees.AssetFeeConfigSet",
+        "DynamicFees.AssetFeeConfigRemoved"
+      ],
+      "storage": [
+        "DynamicFees.AssetFee",
+        "DynamicFees.AssetFeeConfiguration"
+      ],
+      "constants": [
+        "DynamicFees.AssetFeeParameters",
+        "DynamicFees.ProtocolFeeParameters"
+      ]
+    },
+    {
+      "name": "Staking",
+      "index": 69,
+      "calls": [
+        "Staking.initialize_staking",
+        "Staking.stake",
+        "Staking.increase_stake",
+        "Staking.claim",
+        "Staking.unstake"
+      ],
+      "events": [
+        "Staking.PositionCreated",
+        "Staking.StakeAdded",
+        "Staking.RewardsClaimed",
+        "Staking.Unstaked",
+        "Staking.StakingInitialized",
+        "Staking.AccumulatedRpsUpdated"
+      ],
+      "storage": [
+        "Staking.Staking",
+        "Staking.Positions",
+        "Staking.NextPositionId",
+        "Staking.Votes",
+        "Staking.VotesRewarded",
+        "Staking.PositionVotes",
+        "Staking.ProcessedVotes",
+        "Staking.SixSecBlocksSince"
+      ],
+      "constants": [
+        "Staking.PeriodLength",
+        "Staking.PalletId",
+        "Staking.NativeAssetId",
+        "Staking.MinStake",
+        "Staking.TimePointsWeight",
+        "Staking.ActionPointsWeight",
+        "Staking.TimePointsPerPeriod",
+        "Staking.UnclaimablePeriods",
+        "Staking.CurrentStakeWeight",
+        "Staking.MaxVotes",
+        "Staking.NFTCollectionId"
+      ]
+    },
+    {
+      "name": "Stableswap",
+      "index": 70,
+      "calls": [
+        "Stableswap.create_pool",
+        "Stableswap.update_pool_fee",
+        "Stableswap.update_amplification",
+        "Stableswap.add_liquidity",
+        "Stableswap.add_liquidity_shares",
+        "Stableswap.remove_liquidity_one_asset",
+        "Stableswap.withdraw_asset_amount",
+        "Stableswap.sell",
+        "Stableswap.buy",
+        "Stableswap.set_asset_tradable_state",
+        "Stableswap.remove_liquidity",
+        "Stableswap.create_pool_with_pegs",
+        "Stableswap.add_assets_liquidity",
+        "Stableswap.update_asset_peg_source",
+        "Stableswap.update_pool_max_peg_update"
+      ],
+      "events": [
+        "Stableswap.PoolCreated",
+        "Stableswap.FeeUpdated",
+        "Stableswap.LiquidityAdded",
+        "Stableswap.LiquidityRemoved",
+        "Stableswap.SellExecuted",
+        "Stableswap.BuyExecuted",
+        "Stableswap.TradableStateUpdated",
+        "Stableswap.AmplificationChanging",
+        "Stableswap.PoolDestroyed",
+        "Stableswap.PoolPegSourceUpdated",
+        "Stableswap.PoolMaxPegUpdateUpdated"
+      ],
+      "storage": [
+        "Stableswap.Pools",
+        "Stableswap.PoolPegs",
+        "Stableswap.AssetTradability",
+        "Stableswap.PoolSnapshots"
+      ],
+      "constants": [
+        "Stableswap.MinPoolLiquidity",
+        "Stableswap.MinTradingLimit",
+        "Stableswap.AmplificationRange"
+      ]
+    },
+    {
+      "name": "Bonds",
+      "index": 71,
+      "calls": [
+        "Bonds.issue",
+        "Bonds.redeem"
+      ],
+      "events": [
+        "Bonds.TokenCreated",
+        "Bonds.Issued",
+        "Bonds.Redeemed"
+      ],
+      "storage": [
+        "Bonds.BondIds",
+        "Bonds.Bonds"
+      ],
+      "constants": [
+        "Bonds.PalletId",
+        "Bonds.ProtocolFee",
+        "Bonds.FeeReceiver"
+      ]
+    },
+    {
+      "name": "OtcSettlements",
+      "index": 72,
+      "calls": [
+        "OtcSettlements.settle_otc_order"
+      ],
+      "events": [
+        "OtcSettlements.Executed"
+      ],
+      "storage": [],
+      "constants": [
+        "OtcSettlements.ProfitReceiver",
+        "OtcSettlements.MinProfitPercentage",
+        "OtcSettlements.PricePrecision",
+        "OtcSettlements.MinTradingLimit",
+        "OtcSettlements.MaxIterations"
+      ]
+    },
+    {
+      "name": "LBP",
+      "index": 73,
+      "calls": [
+        "LBP.create_pool",
+        "LBP.update_pool_data",
+        "LBP.add_liquidity",
+        "LBP.remove_liquidity",
+        "LBP.sell",
+        "LBP.buy"
+      ],
+      "events": [
+        "LBP.PoolCreated",
+        "LBP.PoolUpdated",
+        "LBP.LiquidityAdded",
+        "LBP.LiquidityRemoved",
+        "LBP.SellExecuted",
+        "LBP.BuyExecuted"
+      ],
+      "storage": [
+        "LBP.PoolData",
+        "LBP.FeeCollectorWithAsset"
+      ],
+      "constants": [
+        "LBP.MinTradingLimit",
+        "LBP.MinPoolLiquidity",
+        "LBP.MaxInRatio",
+        "LBP.MaxOutRatio",
+        "LBP.repay_fee"
+      ]
+    },
+    {
+      "name": "XYK",
+      "index": 74,
+      "calls": [
+        "XYK.create_pool",
+        "XYK.add_liquidity",
+        "XYK.remove_liquidity",
+        "XYK.sell",
+        "XYK.buy",
+        "XYK.add_liquidity_with_limits",
+        "XYK.remove_liquidity_with_limits"
+      ],
+      "events": [
+        "XYK.LiquidityAdded",
+        "XYK.LiquidityRemoved",
+        "XYK.PoolCreated",
+        "XYK.PoolDestroyed",
+        "XYK.SellExecuted",
+        "XYK.BuyExecuted"
+      ],
+      "storage": [
+        "XYK.ShareToken",
+        "XYK.TotalLiquidity",
+        "XYK.PoolAssets"
+      ],
+      "constants": [
+        "XYK.NativeAssetId",
+        "XYK.GetExchangeFee",
+        "XYK.MinTradingLimit",
+        "XYK.MinPoolLiquidity",
+        "XYK.MaxInRatio",
+        "XYK.MaxOutRatio",
+        "XYK.OracleSource"
+      ]
+    },
+    {
+      "name": "Referrals",
+      "index": 75,
+      "calls": [
+        "Referrals.register_code",
+        "Referrals.link_code",
+        "Referrals.convert",
+        "Referrals.claim_rewards",
+        "Referrals.set_reward_percentage"
+      ],
+      "events": [
+        "Referrals.CodeRegistered",
+        "Referrals.CodeLinked",
+        "Referrals.Converted",
+        "Referrals.Claimed",
+        "Referrals.AssetRewardsUpdated",
+        "Referrals.LevelUp"
+      ],
+      "storage": [
+        "Referrals.ReferralCodes",
+        "Referrals.ReferralAccounts",
+        "Referrals.LinkedAccounts",
+        "Referrals.ReferrerShares",
+        "Referrals.TraderShares",
+        "Referrals.TotalShares",
+        "Referrals.Referrer",
+        "Referrals.AssetRewards",
+        "Referrals.PendingConversions",
+        "Referrals.CounterForPendingConversions"
+      ],
+      "constants": [
+        "Referrals.RewardAsset",
+        "Referrals.PalletId",
+        "Referrals.RegistrationFee",
+        "Referrals.CodeLength",
+        "Referrals.MinCodeLength",
+        "Referrals.SeedNativeAmount"
+      ]
+    },
+    {
+      "name": "Liquidation",
+      "index": 76,
+      "calls": [
+        "Liquidation.liquidate",
+        "Liquidation.set_borrowing_contract"
+      ],
+      "events": [
+        "Liquidation.Liquidated"
+      ],
+      "storage": [
+        "Liquidation.BorrowingContract"
+      ],
+      "constants": [
+        "Liquidation.GasLimit",
+        "Liquidation.ProfitReceiver",
+        "Liquidation.HollarId"
+      ]
+    },
+    {
+      "name": "HSM",
+      "index": 82,
+      "calls": [
+        "HSM.add_collateral_asset",
+        "HSM.remove_collateral_asset",
+        "HSM.update_collateral_asset",
+        "HSM.sell",
+        "HSM.buy",
+        "HSM.execute_arbitrage",
+        "HSM.set_flash_minter"
+      ],
+      "events": [
+        "HSM.CollateralAdded",
+        "HSM.CollateralRemoved",
+        "HSM.CollateralUpdated",
+        "HSM.ArbitrageExecuted",
+        "HSM.FlashMinterSet"
+      ],
+      "storage": [
+        "HSM.Collaterals",
+        "HSM.HollarAmountReceived",
+        "HSM.FlashMinter"
+      ],
+      "constants": [
+        "HSM.HollarId",
+        "HSM.PalletId",
+        "HSM.MinArbitrageAmount",
+        "HSM.FlashLoanReceiver",
+        "HSM.GasLimit"
+      ]
+    },
+    {
+      "name": "Parameters",
+      "index": 83,
+      "calls": [],
+      "events": [],
+      "storage": [
+        "Parameters.IsTestnet"
+      ],
+      "constants": []
+    },
+    {
+      "name": "Tokens",
+      "index": 77,
+      "calls": [
+        "Tokens.transfer",
+        "Tokens.transfer_all",
+        "Tokens.transfer_keep_alive",
+        "Tokens.force_transfer",
+        "Tokens.set_balance"
+      ],
+      "events": [
+        "Tokens.Endowed",
+        "Tokens.DustLost",
+        "Tokens.Transfer",
+        "Tokens.Reserved",
+        "Tokens.Unreserved",
+        "Tokens.ReserveRepatriated",
+        "Tokens.BalanceSet",
+        "Tokens.TotalIssuanceSet",
+        "Tokens.Withdrawn",
+        "Tokens.Slashed",
+        "Tokens.Deposited",
+        "Tokens.LockSet",
+        "Tokens.LockRemoved",
+        "Tokens.Locked",
+        "Tokens.Unlocked",
+        "Tokens.Issued",
+        "Tokens.Rescinded"
+      ],
+      "storage": [
+        "Tokens.TotalIssuance",
+        "Tokens.Locks",
+        "Tokens.Accounts",
+        "Tokens.Reserves"
+      ],
+      "constants": [
+        "Tokens.MaxLocks",
+        "Tokens.MaxReserves"
+      ]
+    },
+    {
+      "name": "Currencies",
+      "index": 79,
+      "calls": [
+        "Currencies.transfer",
+        "Currencies.transfer_native_currency",
+        "Currencies.update_balance"
+      ],
+      "events": [
+        "Currencies.Transferred",
+        "Currencies.BalanceUpdated",
+        "Currencies.Deposited",
+        "Currencies.Withdrawn"
+      ],
+      "storage": [],
+      "constants": [
+        "Currencies.ReserveAccount",
+        "Currencies.GetNativeCurrencyId"
+      ]
+    },
+    {
+      "name": "Vesting",
+      "index": 81,
+      "calls": [
+        "Vesting.claim",
+        "Vesting.vested_transfer",
+        "Vesting.update_vesting_schedules",
+        "Vesting.claim_for"
+      ],
+      "events": [
+        "Vesting.VestingScheduleAdded",
+        "Vesting.Claimed",
+        "Vesting.VestingSchedulesUpdated"
+      ],
+      "storage": [
+        "Vesting.VestingSchedules"
+      ],
+      "constants": [
+        "Vesting.MinVestedTransfer"
+      ]
+    },
+    {
+      "name": "EVM",
+      "index": 90,
+      "calls": [
+        "EVM.withdraw",
+        "EVM.call",
+        "EVM.create",
+        "EVM.create2"
+      ],
+      "events": [
+        "EVM.Log",
+        "EVM.Created",
+        "EVM.CreatedFailed",
+        "EVM.Executed",
+        "EVM.ExecutedFailed"
+      ],
+      "storage": [
+        "EVM.AccountCodes",
+        "EVM.AccountCodesMetadata",
+        "EVM.AccountStorages",
+        "EVM.Suicided"
+      ],
+      "constants": []
+    },
+    {
+      "name": "EVMChainId",
+      "index": 91,
+      "calls": [],
+      "events": [],
+      "storage": [
+        "EVMChainId.ChainId"
+      ],
+      "constants": []
+    },
+    {
+      "name": "Ethereum",
+      "index": 92,
+      "calls": [
+        "Ethereum.transact"
+      ],
+      "events": [
+        "Ethereum.Executed"
+      ],
+      "storage": [
+        "Ethereum.Pending",
+        "Ethereum.CounterForPending",
+        "Ethereum.CurrentBlock",
+        "Ethereum.CurrentReceipts",
+        "Ethereum.CurrentTransactionStatuses",
+        "Ethereum.BlockHash"
+      ],
+      "constants": []
+    },
+    {
+      "name": "EVMAccounts",
+      "index": 93,
+      "calls": [
+        "EVMAccounts.bind_evm_address",
+        "EVMAccounts.add_contract_deployer",
+        "EVMAccounts.remove_contract_deployer",
+        "EVMAccounts.renounce_contract_deployer",
+        "EVMAccounts.approve_contract",
+        "EVMAccounts.disapprove_contract"
+      ],
+      "events": [
+        "EVMAccounts.Bound",
+        "EVMAccounts.DeployerAdded",
+        "EVMAccounts.DeployerRemoved",
+        "EVMAccounts.ContractApproved",
+        "EVMAccounts.ContractDisapproved"
+      ],
+      "storage": [
+        "EVMAccounts.AccountExtension",
+        "EVMAccounts.ContractDeployer",
+        "EVMAccounts.ApprovedContract"
+      ],
+      "constants": [
+        "EVMAccounts.FeeMultiplier"
+      ]
+    },
+    {
+      "name": "DynamicEvmFee",
+      "index": 94,
+      "calls": [],
+      "events": [],
+      "storage": [
+        "DynamicEvmFee.BaseFeePerGas"
+      ],
+      "constants": [
+        "DynamicEvmFee.WethAssetId"
+      ]
+    },
+    {
+      "name": "XYKLiquidityMining",
+      "index": 95,
+      "calls": [
+        "XYKLiquidityMining.create_global_farm",
+        "XYKLiquidityMining.update_global_farm",
+        "XYKLiquidityMining.terminate_global_farm",
+        "XYKLiquidityMining.create_yield_farm",
+        "XYKLiquidityMining.update_yield_farm",
+        "XYKLiquidityMining.stop_yield_farm",
+        "XYKLiquidityMining.resume_yield_farm",
+        "XYKLiquidityMining.terminate_yield_farm",
+        "XYKLiquidityMining.deposit_shares",
+        "XYKLiquidityMining.redeposit_shares",
+        "XYKLiquidityMining.claim_rewards",
+        "XYKLiquidityMining.withdraw_shares",
+        "XYKLiquidityMining.join_farms",
+        "XYKLiquidityMining.add_liquidity_and_join_farms",
+        "XYKLiquidityMining.exit_farms"
+      ],
+      "events": [
+        "XYKLiquidityMining.GlobalFarmCreated",
+        "XYKLiquidityMining.GlobalFarmUpdated",
+        "XYKLiquidityMining.YieldFarmCreated",
+        "XYKLiquidityMining.GlobalFarmTerminated",
+        "XYKLiquidityMining.SharesDeposited",
+        "XYKLiquidityMining.SharesRedeposited",
+        "XYKLiquidityMining.RewardClaimed",
+        "XYKLiquidityMining.SharesWithdrawn",
+        "XYKLiquidityMining.YieldFarmStopped",
+        "XYKLiquidityMining.YieldFarmResumed",
+        "XYKLiquidityMining.YieldFarmTerminated",
+        "XYKLiquidityMining.YieldFarmUpdated",
+        "XYKLiquidityMining.DepositDestroyed"
+      ],
+      "storage": [],
+      "constants": [
+        "XYKLiquidityMining.NFTCollectionId",
+        "XYKLiquidityMining.OracleSource",
+        "XYKLiquidityMining.OraclePeriod"
+      ]
+    },
+    {
+      "name": "XYKWarehouseLM",
+      "index": 96,
+      "calls": [],
+      "events": [
+        "XYKWarehouseLM.GlobalFarmAccRPZUpdated",
+        "XYKWarehouseLM.YieldFarmAccRPVSUpdated",
+        "XYKWarehouseLM.AllRewardsDistributed"
+      ],
+      "storage": [
+        "XYKWarehouseLM.FarmSequencer",
+        "XYKWarehouseLM.DepositSequencer",
+        "XYKWarehouseLM.GlobalFarm",
+        "XYKWarehouseLM.YieldFarm",
+        "XYKWarehouseLM.Deposit",
+        "XYKWarehouseLM.ActiveYieldFarm"
+      ],
+      "constants": [
+        "XYKWarehouseLM.PalletId",
+        "XYKWarehouseLM.TreasuryAccountId",
+        "XYKWarehouseLM.MinTotalFarmRewards",
+        "XYKWarehouseLM.MinPlannedYieldingPeriods",
+        "XYKWarehouseLM.MaxFarmEntriesPerDeposit",
+        "XYKWarehouseLM.MaxYieldFarmsPerGlobalFarm"
+      ]
+    },
+    {
+      "name": "RelayChainInfo",
+      "index": 201,
+      "calls": [],
+      "events": [
+        "RelayChainInfo.CurrentBlockNumbers"
+      ],
+      "storage": [],
+      "constants": []
+    },
+    {
+      "name": "DCA",
+      "index": 66,
+      "calls": [
+        "DCA.schedule",
+        "DCA.terminate",
+        "DCA.unlock_reserves"
+      ],
+      "events": [
+        "DCA.ExecutionStarted",
+        "DCA.Scheduled",
+        "DCA.ExecutionPlanned",
+        "DCA.TradeExecuted",
+        "DCA.TradeFailed",
+        "DCA.Terminated",
+        "DCA.Completed",
+        "DCA.RandomnessGenerationFailed",
+        "DCA.ReserveUnlocked"
+      ],
+      "storage": [
+        "DCA.ScheduleIdSequencer",
+        "DCA.Schedules",
+        "DCA.ScheduleOwnership",
+        "DCA.RemainingAmounts",
+        "DCA.RetriesOnError",
+        "DCA.ScheduleExecutionBlock",
+        "DCA.ScheduleIdsPerBlock"
+      ],
+      "constants": [
+        "DCA.MaxPriceDifferenceBetweenBlocks",
+        "DCA.MaxConfigurablePriceDifferenceBetweenBlocks",
+        "DCA.MaxSchedulePerBlock",
+        "DCA.MaxNumberOfRetriesOnError",
+        "DCA.MinimalPeriod",
+        "DCA.BumpChance",
+        "DCA.MinimumTradingLimit",
+        "DCA.NativeAssetId",
+        "DCA.PolkadotNativeAssetId",
+        "DCA.MinBudgetInNativeCurrency",
+        "DCA.FeeReceiver",
+        "DCA.NamedReserveId"
+      ]
+    },
+    {
+      "name": "Scheduler",
+      "index": 5,
+      "calls": [
+        "Scheduler.schedule",
+        "Scheduler.cancel",
+        "Scheduler.schedule_named",
+        "Scheduler.cancel_named",
+        "Scheduler.schedule_after",
+        "Scheduler.schedule_named_after",
+        "Scheduler.set_retry",
+        "Scheduler.set_retry_named",
+        "Scheduler.cancel_retry",
+        "Scheduler.cancel_retry_named"
+      ],
+      "events": [
+        "Scheduler.Scheduled",
+        "Scheduler.Canceled",
+        "Scheduler.Dispatched",
+        "Scheduler.RetrySet",
+        "Scheduler.RetryCancelled",
+        "Scheduler.CallUnavailable",
+        "Scheduler.PeriodicFailed",
+        "Scheduler.RetryFailed",
+        "Scheduler.PermanentlyOverweight"
+      ],
+      "storage": [
+        "Scheduler.IncompleteSince",
+        "Scheduler.Agenda",
+        "Scheduler.Retries",
+        "Scheduler.Lookup"
+      ],
+      "constants": [
+        "Scheduler.MaximumWeight",
+        "Scheduler.MaxScheduledPerBlock"
+      ]
+    },
+    {
+      "name": "ParachainSystem",
+      "index": 103,
+      "calls": [
+        "ParachainSystem.set_validation_data",
+        "ParachainSystem.sudo_send_upward_message"
+      ],
+      "events": [
+        "ParachainSystem.ValidationFunctionStored",
+        "ParachainSystem.ValidationFunctionApplied",
+        "ParachainSystem.ValidationFunctionDiscarded",
+        "ParachainSystem.DownwardMessagesReceived",
+        "ParachainSystem.DownwardMessagesProcessed",
+        "ParachainSystem.UpwardMessageSent"
+      ],
+      "storage": [
+        "ParachainSystem.UnincludedSegment",
+        "ParachainSystem.AggregatedUnincludedSegment",
+        "ParachainSystem.PendingValidationCode",
+        "ParachainSystem.NewValidationCode",
+        "ParachainSystem.ValidationData",
+        "ParachainSystem.DidSetValidationCode",
+        "ParachainSystem.LastRelayChainBlockNumber",
+        "ParachainSystem.UpgradeRestrictionSignal",
+        "ParachainSystem.UpgradeGoAhead",
+        "ParachainSystem.RelayStateProof",
+        "ParachainSystem.RelevantMessagingState",
+        "ParachainSystem.HostConfiguration",
+        "ParachainSystem.LastDmqMqcHead",
+        "ParachainSystem.LastHrmpMqcHeads",
+        "ParachainSystem.ProcessedDownwardMessages",
+        "ParachainSystem.HrmpWatermark",
+        "ParachainSystem.HrmpOutboundMessages",
+        "ParachainSystem.UpwardMessages",
+        "ParachainSystem.PendingUpwardMessages",
+        "ParachainSystem.UpwardDeliveryFeeFactor",
+        "ParachainSystem.AnnouncedHrmpMessagesPerCandidate",
+        "ParachainSystem.ReservedXcmpWeightOverride",
+        "ParachainSystem.ReservedDmpWeightOverride",
+        "ParachainSystem.CustomValidationHeadData"
+      ],
+      "constants": [
+        "ParachainSystem.SelfParaId"
+      ]
+    },
+    {
+      "name": "ParachainInfo",
+      "index": 105,
+      "calls": [],
+      "events": [],
+      "storage": [
+        "ParachainInfo.ParachainId"
+      ],
+      "constants": []
+    },
+    {
+      "name": "PolkadotXcm",
+      "index": 107,
+      "calls": [
+        "PolkadotXcm.send",
+        "PolkadotXcm.teleport_assets",
+        "PolkadotXcm.reserve_transfer_assets",
+        "PolkadotXcm.execute",
+        "PolkadotXcm.force_xcm_version",
+        "PolkadotXcm.force_default_xcm_version",
+        "PolkadotXcm.force_subscribe_version_notify",
+        "PolkadotXcm.force_unsubscribe_version_notify",
+        "PolkadotXcm.limited_reserve_transfer_assets",
+        "PolkadotXcm.limited_teleport_assets",
+        "PolkadotXcm.force_suspension",
+        "PolkadotXcm.transfer_assets",
+        "PolkadotXcm.claim_assets",
+        "PolkadotXcm.transfer_assets_using_type_and_then"
+      ],
+      "events": [
+        "PolkadotXcm.Attempted",
+        "PolkadotXcm.Sent",
+        "PolkadotXcm.UnexpectedResponse",
+        "PolkadotXcm.ResponseReady",
+        "PolkadotXcm.Notified",
+        "PolkadotXcm.NotifyOverweight",
+        "PolkadotXcm.NotifyDispatchError",
+        "PolkadotXcm.NotifyDecodeFailed",
+        "PolkadotXcm.InvalidResponder",
+        "PolkadotXcm.InvalidResponderVersion",
+        "PolkadotXcm.ResponseTaken",
+        "PolkadotXcm.AssetsTrapped",
+        "PolkadotXcm.VersionChangeNotified",
+        "PolkadotXcm.SupportedVersionChanged",
+        "PolkadotXcm.NotifyTargetSendFail",
+        "PolkadotXcm.NotifyTargetMigrationFail",
+        "PolkadotXcm.InvalidQuerierVersion",
+        "PolkadotXcm.InvalidQuerier",
+        "PolkadotXcm.VersionNotifyStarted",
+        "PolkadotXcm.VersionNotifyRequested",
+        "PolkadotXcm.VersionNotifyUnrequested",
+        "PolkadotXcm.FeesPaid",
+        "PolkadotXcm.AssetsClaimed",
+        "PolkadotXcm.VersionMigrationFinished"
+      ],
+      "storage": [
+        "PolkadotXcm.QueryCounter",
+        "PolkadotXcm.Queries",
+        "PolkadotXcm.AssetTraps",
+        "PolkadotXcm.SafeXcmVersion",
+        "PolkadotXcm.SupportedVersion",
+        "PolkadotXcm.VersionNotifiers",
+        "PolkadotXcm.VersionNotifyTargets",
+        "PolkadotXcm.VersionDiscoveryQueue",
+        "PolkadotXcm.CurrentMigration",
+        "PolkadotXcm.RemoteLockedFungibles",
+        "PolkadotXcm.LockedFungibles",
+        "PolkadotXcm.XcmExecutionSuspended",
+        "PolkadotXcm.ShouldRecordXcm",
+        "PolkadotXcm.RecordedXcm"
+      ],
+      "constants": []
+    },
+    {
+      "name": "CumulusXcm",
+      "index": 109,
+      "calls": [],
+      "events": [
+        "CumulusXcm.InvalidFormat",
+        "CumulusXcm.UnsupportedVersion",
+        "CumulusXcm.ExecutedDownward"
+      ],
+      "storage": [],
+      "constants": []
+    },
+    {
+      "name": "XcmpQueue",
+      "index": 111,
+      "calls": [],
+      "events": [
+        "XcmpQueue.XcmpMessageSent"
+      ],
+      "storage": [
+        "XcmpQueue.InboundXcmpSuspended",
+        "XcmpQueue.OutboundXcmpStatus",
+        "XcmpQueue.OutboundXcmpMessages",
+        "XcmpQueue.SignalMessages",
+        "XcmpQueue.QueueConfig",
+        "XcmpQueue.QueueSuspended",
+        "XcmpQueue.DeliveryFeeFactor"
+      ],
+      "constants": [
+        "XcmpQueue.MaxInboundSuspended",
+        "XcmpQueue.MaxActiveOutboundChannels",
+        "XcmpQueue.MaxPageSize"
+      ]
+    },
+    {
+      "name": "MessageQueue",
+      "index": 114,
+      "calls": [
+        "MessageQueue.reap_page",
+        "MessageQueue.execute_overweight"
+      ],
+      "events": [
+        "MessageQueue.ProcessingFailed",
+        "MessageQueue.Processed",
+        "MessageQueue.OverweightEnqueued",
+        "MessageQueue.PageReaped"
+      ],
+      "storage": [
+        "MessageQueue.BookStateFor",
+        "MessageQueue.ServiceHead",
+        "MessageQueue.Pages"
+      ],
+      "constants": [
+        "MessageQueue.HeapSize",
+        "MessageQueue.MaxStale",
+        "MessageQueue.ServiceWeight",
+        "MessageQueue.IdleMaxServiceWeight"
+      ]
+    },
+    {
+      "name": "OrmlXcm",
+      "index": 135,
+      "calls": [
+        "OrmlXcm.send_as_sovereign"
+      ],
+      "events": [
+        "OrmlXcm.Sent"
+      ],
+      "storage": [],
+      "constants": []
+    },
+    {
+      "name": "XTokens",
+      "index": 137,
+      "calls": [
+        "XTokens.transfer",
+        "XTokens.transfer_multiasset",
+        "XTokens.transfer_with_fee",
+        "XTokens.transfer_multiasset_with_fee",
+        "XTokens.transfer_multicurrencies",
+        "XTokens.transfer_multiassets"
+      ],
+      "events": [
+        "XTokens.TransferredAssets"
+      ],
+      "storage": [],
+      "constants": [
+        "XTokens.SelfLocation",
+        "XTokens.BaseXcmWeight",
+        "XTokens.RateLimiterId"
+      ]
+    },
+    {
+      "name": "UnknownTokens",
+      "index": 139,
+      "calls": [],
+      "events": [
+        "UnknownTokens.Deposited",
+        "UnknownTokens.Withdrawn"
+      ],
+      "storage": [
+        "UnknownTokens.ConcreteFungibleBalances",
+        "UnknownTokens.AbstractFungibleBalances"
+      ],
+      "constants": []
+    },
+    {
+      "name": "Authorship",
+      "index": 161,
+      "calls": [],
+      "events": [],
+      "storage": [
+        "Authorship.Author"
+      ],
+      "constants": []
+    },
+    {
+      "name": "CollatorSelection",
+      "index": 163,
+      "calls": [
+        "CollatorSelection.set_invulnerables",
+        "CollatorSelection.set_desired_candidates",
+        "CollatorSelection.set_candidacy_bond",
+        "CollatorSelection.register_as_candidate",
+        "CollatorSelection.leave_intent",
+        "CollatorSelection.add_invulnerable",
+        "CollatorSelection.remove_invulnerable",
+        "CollatorSelection.update_bond",
+        "CollatorSelection.take_candidate_slot"
+      ],
+      "events": [
+        "CollatorSelection.NewInvulnerables",
+        "CollatorSelection.InvulnerableAdded",
+        "CollatorSelection.InvulnerableRemoved",
+        "CollatorSelection.NewDesiredCandidates",
+        "CollatorSelection.NewCandidacyBond",
+        "CollatorSelection.CandidateAdded",
+        "CollatorSelection.CandidateBondUpdated",
+        "CollatorSelection.CandidateRemoved",
+        "CollatorSelection.CandidateReplaced",
+        "CollatorSelection.InvalidInvulnerableSkipped"
+      ],
+      "storage": [
+        "CollatorSelection.Invulnerables",
+        "CollatorSelection.CandidateList",
+        "CollatorSelection.LastAuthoredBlock",
+        "CollatorSelection.DesiredCandidates",
+        "CollatorSelection.CandidacyBond"
+      ],
+      "constants": []
+    },
+    {
+      "name": "Session",
+      "index": 165,
+      "calls": [
+        "Session.set_keys",
+        "Session.purge_keys"
+      ],
+      "events": [
+        "Session.NewSession"
+      ],
+      "storage": [
+        "Session.Validators",
+        "Session.CurrentIndex",
+        "Session.QueuedChanged",
+        "Session.QueuedKeys",
+        "Session.DisabledValidators",
+        "Session.NextKeys",
+        "Session.KeyOwner"
+      ],
+      "constants": []
+    },
+    {
+      "name": "Aura",
+      "index": 167,
+      "calls": [],
+      "events": [],
+      "storage": [
+        "Aura.Authorities",
+        "Aura.CurrentSlot"
+      ],
+      "constants": [
+        "Aura.SlotDuration"
+      ]
+    },
+    {
+      "name": "AuraExt",
+      "index": 169,
+      "calls": [],
+      "events": [],
+      "storage": [
+        "AuraExt.Authorities",
+        "AuraExt.SlotInfo"
+      ],
+      "constants": []
+    },
+    {
+      "name": "Ismp",
+      "index": 180,
+      "calls": [
+        "Ismp.handle_unsigned",
+        "Ismp.create_consensus_client",
+        "Ismp.update_consensus_state",
+        "Ismp.fund_message"
+      ],
+      "events": [
+        "Ismp.StateMachineUpdated",
+        "Ismp.StateCommitmentVetoed",
+        "Ismp.ConsensusClientCreated",
+        "Ismp.ConsensusClientFrozen",
+        "Ismp.Response",
+        "Ismp.Request",
+        "Ismp.Errors",
+        "Ismp.PostRequestHandled",
+        "Ismp.PostResponseHandled",
+        "Ismp.GetRequestHandled",
+        "Ismp.PostRequestTimeoutHandled",
+        "Ismp.PostResponseTimeoutHandled",
+        "Ismp.GetRequestTimeoutHandled"
+      ],
+      "storage": [
+        "Ismp.StateCommitments",
+        "Ismp.ConsensusStates",
+        "Ismp.ConsensusStateClient",
+        "Ismp.UnbondingPeriod",
+        "Ismp.ChallengePeriod",
+        "Ismp.FrozenConsensusClients",
+        "Ismp.LatestStateMachineHeight",
+        "Ismp.ConsensusClientUpdateTime",
+        "Ismp.StateMachineUpdateTime",
+        "Ismp.Responded",
+        "Ismp.Nonce",
+        "Ismp.ChildTrieRoot"
+      ],
+      "constants": []
+    },
+    {
+      "name": "IsmpParachain",
+      "index": 181,
+      "calls": [
+        "IsmpParachain.update_parachain_consensus",
+        "IsmpParachain.add_parachain",
+        "IsmpParachain.remove_parachain"
+      ],
+      "events": [
+        "IsmpParachain.ParachainsAdded",
+        "IsmpParachain.ParachainsRemoved"
+      ],
+      "storage": [
+        "IsmpParachain.RelayChainStateCommitments",
+        "IsmpParachain.ConsensusUpdated",
+        "IsmpParachain.Parachains"
+      ],
+      "constants": []
+    },
+    {
+      "name": "Hyperbridge",
+      "index": 182,
+      "calls": [],
+      "events": [
+        "Hyperbridge.HostParamsUpdated",
+        "Hyperbridge.RelayerFeeWithdrawn",
+        "Hyperbridge.ProtocolRevenueWithdrawn"
+      ],
+      "storage": [
+        "Hyperbridge.HostParams"
+      ],
+      "constants": []
+    },
+    {
+      "name": "TokenGateway",
+      "index": 183,
+      "calls": [
+        "TokenGateway.teleport",
+        "TokenGateway.set_token_gateway_addresses",
+        "TokenGateway.create_erc6160_asset",
+        "TokenGateway.update_erc6160_asset",
+        "TokenGateway.update_asset_precision"
+      ],
+      "events": [
+        "TokenGateway.AssetTeleported",
+        "TokenGateway.AssetReceived",
+        "TokenGateway.AssetRefunded",
+        "TokenGateway.ERC6160AssetRegistrationDispatched"
+      ],
+      "storage": [
+        "TokenGateway.SupportedAssets",
+        "TokenGateway.NativeAssets",
+        "TokenGateway.LocalAssets",
+        "TokenGateway.Precisions",
+        "TokenGateway.TokenGatewayAddresses"
+      ],
+      "constants": [
+        "TokenGateway.Decimals"
+      ]
+    },
+    {
+      "name": "EmaOracle",
+      "index": 202,
+      "calls": [
+        "EmaOracle.add_oracle",
+        "EmaOracle.remove_oracle",
+        "EmaOracle.update_bifrost_oracle"
+      ],
+      "events": [
+        "EmaOracle.AddedToWhitelist",
+        "EmaOracle.RemovedFromWhitelist"
+      ],
+      "storage": [
+        "EmaOracle.Accumulator",
+        "EmaOracle.Oracles",
+        "EmaOracle.WhitelistedAssets"
+      ],
+      "constants": [
+        "EmaOracle.MaxAllowedPriceDifference",
+        "EmaOracle.MaxUniqueEntries"
+      ]
+    },
+    {
+      "name": "Broadcast",
+      "index": 204,
+      "calls": [],
+      "events": [
+        "Broadcast.Swapped3"
+      ],
+      "storage": [
+        "Broadcast.IncrementalId",
+        "Broadcast.ExecutionContext",
+        "Broadcast.Swapper"
+      ],
+      "constants": []
+    }
+  ],
+  "stats": {
+    "pallets": 76,
+    "calls": 371,
+    "events": 410,
+    "storage": 295
+  }
+}

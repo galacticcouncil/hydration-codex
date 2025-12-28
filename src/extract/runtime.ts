@@ -2,7 +2,7 @@ import { join } from 'path';
 import { existsSync, readdirSync } from 'fs';
 import * as TOML from 'toml';
 import { createLogger } from '../utils/logger.js';
-import { readFile, writeJSON, findFiles, grepFiles } from '../utils/files.js';
+import { readFile, writeJSON, writeFile, findFiles, grepFiles } from '../utils/files.js';
 import { getGitInfo, getChangedFiles, getChangedPallets } from '../utils/git.js';
 import type {
   RuntimeExtraction,
@@ -10,7 +10,6 @@ import type {
   StorageItem,
   Extrinsic,
   Event,
-  ErrorSchema,
 } from '../schemas/extraction.js';
 
 const log = createLogger('L1:runtime');
@@ -67,9 +66,6 @@ function discoverPallets(repoPath: string): Array<{ name: string; path: string; 
 // ===========================================
 
 function extractStorage(repoPath: string, palletName: string): StorageItem[] {
-  const pattern = /^pallets\/${palletName}\/src\/**\/*.rs$/;
-  const storagePattern = /#\[pallet::storage\]/;
-
   const matches = grepFiles(
     repoPath,
     `pallets/${palletName}/src/**/*.rs`,
@@ -86,8 +82,8 @@ function extractStorage(repoPath: string, palletName: string): StorageItem[] {
     const lines = content.split('\n');
     for (let i = match.line; i < Math.min(match.line + 10, lines.length); i++) {
       const line = lines[i];
-      // Look for: pub type StorageName = StorageValue<...> or StorageMap<...>
-      const storageMatch = line.match(/pub\s+type\s+(\w+)\s*=/);
+      // Look for: pub type StorageName or pub(super) type StorageName or pub(crate) type StorageName
+      const storageMatch = line.match(/pub(?:\s*\([^)]*\))?\s+type\s+(\w+)\s*</);
       if (storageMatch) {
         items.push({
           pallet: palletName,
@@ -198,7 +194,7 @@ function extractEvents(repoPath: string, palletName: string): Event[] {
       const line = lines[i];
 
       // Match event variant: EventName { field: Type, ... } or EventName(Type, ...)
-      const variantMatch = line.match(/^\s+(\w+)\s*[\{(]/);
+      const variantMatch = line.match(/^\s+(\w+)\s*[{(]/);
       if (variantMatch && /^[A-Z]/.test(variantMatch[1])) {
         events.push({
           pallet: palletName,
@@ -215,6 +211,66 @@ function extractEvents(repoPath: string, palletName: string): Event[] {
   }
 
   return events;
+}
+
+// ===========================================
+// Context Doc Generation
+// ===========================================
+
+function generateRuntimeContextDoc(result: RuntimeExtraction): string {
+  const { meta, pallets, statistics, evm, node } = result;
+
+  return `# L1: Runtime Context
+
+> **Auto-generated** - Do not edit manually.
+> Extracted: ${meta.extractedAt}
+> Commit: \`${meta.source.commit.slice(0, 7)}\` (${meta.source.branch})
+
+## Summary
+
+| Metric | Count |
+|--------|-------|
+| Pallets | ${statistics.palletsCount} |
+| Storage Items | ${statistics.storageItems} |
+| Extrinsics | ${statistics.extrinsics} |
+| Events | ${statistics.events} |
+| Node Files | ${node.files.length} |
+| Precompiles | ${evm.precompiles.length} |
+
+## Pallets
+
+${pallets.map(p => `### ${p.name}
+
+**Package:** \`${p.packageName}\`
+**Path:** \`${p.path}\`
+
+#### Storage (${p.storage.length})
+${p.storage.length > 0 ? p.storage.map(s => `- \`${s.name}\`: ${s.type}`).join('\n') : '_None_'}
+
+#### Extrinsics (${p.extrinsics.length})
+${p.extrinsics.length > 0 ? p.extrinsics.map(e => `- \`${e.name}(${e.params.map(p => p.name).join(', ')})\``).join('\n') : '_None_'}
+
+#### Events (${p.events.length})
+${p.events.length > 0 ? p.events.map(e => `- \`${e.name}\``).join('\n') : '_None_'}
+`).join('\n')}
+
+## EVM
+
+### Precompiles
+${evm.precompiles.map(p => `- ${p}`).join('\n')}
+
+## Node Implementation
+
+Files: ${node.files.length}
+${node.files.map(f => `- \`${f}\``).join('\n')}
+
+${result.changedPallets && result.changedPallets.length > 0 ? `
+## Recent Changes
+
+Changed pallets since last extraction:
+${result.changedPallets.map(p => `- ${p}`).join('\n')}
+` : ''}
+`;
 }
 
 // ===========================================
@@ -243,7 +299,7 @@ export async function extractRuntime(options: ExtractOptions): Promise<RuntimeEx
   let totalStorage = 0;
   let totalExtrinsics = 0;
   let totalEvents = 0;
-  let totalErrors = 0;
+  const totalErrors = 0;
 
   for (const info of palletInfos) {
     log.step(`${info.name}`);
@@ -332,6 +388,12 @@ export async function extractRuntime(options: ExtractOptions): Promise<RuntimeEx
   writeJSON(join(outputPath, 'extraction.json'), result);
   log.success(`Output written to ${outputPath}/extraction.json`);
 
+  // Generate L1 context doc
+  const contextDoc = generateRuntimeContextDoc(result);
+  const contextPath = join(process.cwd(), 'agents/contexts/L1-runtime.md');
+  writeFile(contextPath, contextDoc);
+  log.success('Updated agents/contexts/L1-runtime.md');
+
   // Summary
   log.section('Extraction Complete');
   console.log(`
@@ -350,7 +412,7 @@ export async function extractRuntime(options: ExtractOptions): Promise<RuntimeEx
 // CLI entry point
 if (import.meta.url === `file://${process.argv[1]}`) {
   const repoPath = process.env.REPO_PATH || './repos/hydration-node';
-  const outputPath = process.env.OUTPUT_PATH || './knowledge-base/raw/runtime';
+  const outputPath = process.env.OUTPUT_PATH || './extractions/runtime';
 
   extractRuntime({ repoPath, outputPath })
     .catch((err) => {

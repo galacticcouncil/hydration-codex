@@ -1,0 +1,72 @@
+{
+  "version": "1.0.0",
+  "generatedAt": "2025-12-28T02:06:21.118Z",
+  "tiers": [
+    {
+      "description": "Manifest - what files exist",
+      "targetTokens": "<500"
+    },
+    {
+      "description": "Layer indexes - summary per layer",
+      "targetTokens": "2-5K"
+    },
+    {
+      "description": "Domain detail - by category",
+      "targetTokens": "5-15K"
+    },
+    {
+      "description": "Cross-references - relationships",
+      "targetTokens": "5-10K"
+    }
+  ],
+  "files": [
+    {
+      "path": "ai/indexer-index.json",
+      "tier": 1,
+      "tokens": 3014,
+      "purpose": "All indexer entities with field counts",
+      "loadWhen": "Working with indexer/GraphQL"
+    },
+    {
+      "path": "ai/runtime-index.json",
+      "tier": 1,
+      "tokens": 2975,
+      "purpose": "All pallets with storage/call/event counts",
+      "loadWhen": "Working with runtime/pallets"
+    },
+    {
+      "path": "ai/sdk-index.json",
+      "tier": 1,
+      "tokens": 745,
+      "purpose": "All SDK packages with method counts",
+      "loadWhen": "Working with SDK"
+    },
+    {
+      "path": "ai/ui-index.json",
+      "tier": 1,
+      "tokens": 2073,
+      "purpose": "All hooks grouped by category",
+      "loadWhen": "Working with UI/React hooks"
+    },
+    {
+      "path": "ai/xref-edges.json",
+      "tier": 3,
+      "tokens": 10039,
+      "purpose": "All cross-layer relationships (calls, queries, handles)",
+      "loadWhen": "Finding connections between layers"
+    },
+    {
+      "path": "ai/xref-ui-runtime.json",
+      "tier": 3,
+      "tokens": 3213,
+      "purpose": "Which runtime calls each UI hook makes",
+      "loadWhen": "Tracing UI to runtime"
+    }
+  ],
+  "quickStart": [
+    "1. Load ai-manifest.json to see all available files",
+    "2. Load {layer}-index.json for the layer you need",
+    "3. Load specific domain files as needed",
+    "4. Use xref files to find cross-layer connections"
+  ]
+}

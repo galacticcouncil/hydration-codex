@@ -1,0 +1,124 @@
+{
+  "version": "1.0.0",
+  "packageCount": 20,
+  "packages": [
+    {
+      "name": "@galacticcouncil/common",
+      "shortName": "common",
+      "methodCount": 15
+    },
+    {
+      "name": "@galacticcouncil/descriptors",
+      "shortName": "descriptors",
+      "methodCount": 0,
+      "description": "Descriptors"
+    },
+    {
+      "name": "@galacticcouncil/math-ema",
+      "shortName": "math-ema",
+      "methodCount": 0,
+      "description": "EMA math"
+    },
+    {
+      "name": "@galacticcouncil/math-hsm",
+      "shortName": "math-hsm",
+      "methodCount": 0,
+      "description": "LBP math"
+    },
+    {
+      "name": "@galacticcouncil/math-lbp",
+      "shortName": "math-lbp",
+      "methodCount": 0,
+      "description": "LBP math"
+    },
+    {
+      "name": "@galacticcouncil/math-liquidity-mining",
+      "shortName": "math-liquidity-mining",
+      "methodCount": 0,
+      "description": "Liquidity mining math"
+    },
+    {
+      "name": "@galacticcouncil/math-omnipool",
+      "shortName": "math-omnipool",
+      "methodCount": 0,
+      "description": "Omnipool math"
+    },
+    {
+      "name": "@galacticcouncil/math-stableswap",
+      "shortName": "math-stableswap",
+      "methodCount": 0,
+      "description": "Stableswap math"
+    },
+    {
+      "name": "@galacticcouncil/math-staking",
+      "shortName": "math-staking",
+      "methodCount": 0,
+      "description": "Staking math"
+    },
+    {
+      "name": "@galacticcouncil/math-xyk",
+      "shortName": "math-xyk",
+      "methodCount": 0,
+      "description": "XYK math"
+    },
+    {
+      "name": "@galacticcouncil/sdk",
+      "shortName": "sdk",
+      "methodCount": 275,
+      "description": "Galactic SDK"
+    },
+    {
+      "name": "@galacticcouncil/sdk-next",
+      "shortName": "sdk-next",
+      "methodCount": 363,
+      "description": "Galactic SDK Next"
+    },
+    {
+      "name": "@galacticcouncil/xc",
+      "shortName": "xc",
+      "methodCount": 1,
+      "description": "Galactic XC"
+    },
+    {
+      "name": "@galacticcouncil/xc-cfg",
+      "shortName": "xc-cfg",
+      "methodCount": 86,
+      "description": "Galactic XC config"
+    },
+    {
+      "name": "@galacticcouncil/xc-core",
+      "shortName": "xc-core",
+      "methodCount": 88,
+      "description": "Galactic XC core"
+    },
+    {
+      "name": "@galacticcouncil/xc-sdk",
+      "shortName": "xc-sdk",
+      "methodCount": 101,
+      "description": "Galactic XC SDK"
+    },
+    {
+      "name": "@galacticcouncil/xcm-cfg",
+      "shortName": "xcm-cfg",
+      "methodCount": 79,
+      "description": "Galactic XCM config"
+    },
+    {
+      "name": "@galacticcouncil/xcm-core",
+      "shortName": "xcm-core",
+      "methodCount": 96,
+      "description": "Galactic XCM core"
+    },
+    {
+      "name": "@galacticcouncil/xcm-sdk",
+      "shortName": "xcm-sdk",
+      "methodCount": 101,
+      "description": "Galactic XCM SDK"
+    },
+    {
+      "name": "xc-scan",
+      "shortName": "xc-scan",
+      "methodCount": 27
+    }
+  ]
+}

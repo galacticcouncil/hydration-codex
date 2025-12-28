@@ -1,0 +1,614 @@
+{
+  "version": "1.0.0",
+  "palletCount": 76,
+  "pallets": [
+    {
+      "name": "AssetRegistry",
+      "index": 51,
+      "storageCount": 0,
+      "callCount": 7,
+      "eventCount": 6,
+      "constantCount": 4
+    },
+    {
+      "name": "Aura",
+      "index": 167,
+      "storageCount": 0,
+      "callCount": 0,
+      "eventCount": 0,
+      "constantCount": 1
+    },
+    {
+      "name": "AuraExt",
+      "index": 169,
+      "storageCount": 0,
+      "callCount": 0,
+      "eventCount": 0,
+      "constantCount": 0
+    },
+    {
+      "name": "Authorship",
+      "index": 161,
+      "storageCount": 0,
+      "callCount": 0,
+      "eventCount": 0,
+      "constantCount": 0
+    },
+    {
+      "name": "Balances",
+      "index": 7,
+      "storageCount": 0,
+      "callCount": 11,
+      "eventCount": 22,
+      "constantCount": 4
+    },
+    {
+      "name": "Bonds",
+      "index": 71,
+      "storageCount": 0,
+      "callCount": 2,
+      "eventCount": 3,
+      "constantCount": 3
+    },
+    {
+      "name": "Broadcast",
+      "index": 204,
+      "storageCount": 0,
+      "callCount": 0,
+      "eventCount": 1,
+      "constantCount": 0
+    },
+    {
+      "name": "CircuitBreaker",
+      "index": 65,
+      "storageCount": 0,
+      "callCount": 6,
+      "eventCount": 6,
+      "constantCount": 3
+    },
+    {
+      "name": "Claims",
+      "index": 53,
+      "storageCount": 0,
+      "callCount": 1,
+      "eventCount": 1,
+      "constantCount": 0
+    },
+    {
+      "name": "CollatorRewards",
+      "index": 57,
+      "storageCount": 0,
+      "callCount": 0,
+      "eventCount": 1,
+      "constantCount": 3
+    },
+    {
+      "name": "CollatorSelection",
+      "index": 163,
+      "storageCount": 0,
+      "callCount": 9,
+      "eventCount": 10,
+      "constantCount": 0
+    },
+    {
+      "name": "ConvictionVoting",
+      "index": 36,
+      "storageCount": 0,
+      "callCount": 20,
+      "eventCount": 4,
+      "constantCount": 2
+    },
+    {
+      "name": "CumulusXcm",
+      "index": 109,
+      "storageCount": 0,
+      "callCount": 0,
+      "eventCount": 3,
+      "constantCount": 0
+    },
+    {
+      "name": "Currencies",
+      "index": 79,
+      "storageCount": 0,
+      "callCount": 3,
+      "eventCount": 4,
+      "constantCount": 2
+    },
+    {
+      "name": "DCA",
+      "index": 66,
+      "storageCount": 0,
+      "callCount": 3,
+      "eventCount": 9,
+      "constantCount": 12
+    },
+    {
+      "name": "Democracy",
+      "index": 19,
+      "storageCount": 0,
+      "callCount": 20,
+      "eventCount": 17,
+      "constantCount": 12
+    },
+    {
+      "name": "Dispatcher",
+      "index": 40,
+      "storageCount": 0,
+      "callCount": 5,
+      "eventCount": 2,
+      "constantCount": 0
+    },
+    {
+      "name": "Duster",
+      "index": 61,
+      "storageCount": 0,
+      "callCount": 3,
+      "eventCount": 3,
+      "constantCount": 1
+    },
+    {
+      "name": "DynamicEvmFee",
+      "index": 94,
+      "storageCount": 0,
+      "callCount": 0,
+      "eventCount": 0,
+      "constantCount": 1
+    },
+    {
+      "name": "DynamicFees",
+      "index": 68,
+      "storageCount": 0,
+      "callCount": 2,
+      "eventCount": 2,
+      "constantCount": 2
+    },
+    {
+      "name": "EmaOracle",
+      "index": 202,
+      "storageCount": 0,
+      "callCount": 3,
+      "eventCount": 2,
+      "constantCount": 2
+    },
+    {
+      "name": "Ethereum",
+      "index": 92,
+      "storageCount": 0,
+      "callCount": 1,
+      "eventCount": 1,
+      "constantCount": 0
+    },
+    {
+      "name": "EVM",
+      "index": 90,
+      "storageCount": 0,
+      "callCount": 4,
+      "eventCount": 5,
+      "constantCount": 0
+    },
+    {
+      "name": "EVMAccounts",
+      "index": 93,
+      "storageCount": 0,
+      "callCount": 6,
+      "eventCount": 5,
+      "constantCount": 1
+    },
+    {
+      "name": "EVMChainId",
+      "index": 91,
+      "storageCount": 0,
+      "callCount": 0,
+      "eventCount": 0,
+      "constantCount": 0
+    },
+    {
+      "name": "GenesisHistory",
+      "index": 55,
+      "storageCount": 0,
+      "callCount": 0,
+      "eventCount": 0,
+      "constantCount": 0
+    },
+    {
+      "name": "HSM",
+      "index": 82,
+      "storageCount": 0,
+      "callCount": 7,
+      "eventCount": 5,
+      "constantCount": 5
+    },
+    {
+      "name": "Hyperbridge",
+      "index": 182,
+      "storageCount": 0,
+      "callCount": 0,
+      "eventCount": 3,
+      "constantCount": 0
+    },
+    {
+      "name": "Identity",
+      "index": 17,
+      "storageCount": 0,
+      "callCount": 22,
+      "eventCount": 17,
+      "constantCount": 8
+    },
+    {
+      "name": "Ismp",
+      "index": 180,
+      "storageCount": 0,
+      "callCount": 5,
+      "eventCount": 13,
+      "constantCount": 0
+    },
+    {
+      "name": "IsmpParachain",
+      "index": 181,
+      "storageCount": 0,
+      "callCount": 3,
+      "eventCount": 2,
+      "constantCount": 0
+    },
+    {
+      "name": "LBP",
+      "index": 73,
+      "storageCount": 0,
+      "callCount": 6,
+      "eventCount": 6,
+      "constantCount": 5
+    },
+    {
+      "name": "Liquidation",
+      "index": 76,
+      "storageCount": 0,
+      "callCount": 2,
+      "eventCount": 1,
+      "constantCount": 3
+    },
+    {
+      "name": "MessageQueue",
+      "index": 114,
+      "storageCount": 0,
+      "callCount": 2,
+      "eventCount": 4,
+      "constantCount": 4
+    },
+    {
+      "name": "Multisig",
+      "index": 31,
+      "storageCount": 0,
+      "callCount": 4,
+      "eventCount": 4,
+      "constantCount": 3
+    },
+    {
+      "name": "MultiTransactionPayment",
+      "index": 203,
+      "storageCount": 0,
+      "callCount": 5,
+      "eventCount": 4,
+      "constantCount": 3
+    },
+    {
+      "name": "Omnipool",
+      "index": 59,
+      "storageCount": 0,
+      "callCount": 15,
+      "eventCount": 13,
+      "constantCount": 9
+    },
+    {
+      "name": "OmnipoolLiquidityMining",
+      "index": 63,
+      "storageCount": 0,
+      "callCount": 17,
+      "eventCount": 13,
+      "constantCount": 3
+    },
+    {
+      "name": "OmnipoolWarehouseLM",
+      "index": 62,
+      "storageCount": 0,
+      "callCount": 0,
+      "eventCount": 3,
+      "constantCount": 6
+    },
+    {
+      "name": "Origins",
+      "index": 38,
+      "storageCount": 0,
+      "callCount": 0,
+      "eventCount": 0,
+      "constantCount": 0
+    },
+    {
+      "name": "OrmlXcm",
+      "index": 135,
+      "storageCount": 0,
+      "callCount": 1,
+      "eventCount": 1,
+      "constantCount": 0
+    },
+    {
+      "name": "OTC",
+      "index": 64,
+      "storageCount": 0,
+      "callCount": 4,
+      "eventCount": 4,
+      "constantCount": 3
+    },
+    {
+      "name": "OtcSettlements",
+      "index": 72,
+      "storageCount": 0,
+      "callCount": 1,
+      "eventCount": 1,
+      "constantCount": 5
+    },
+    {
+      "name": "ParachainInfo",
+      "index": 105,
+      "storageCount": 0,
+      "callCount": 0,
+      "eventCount": 0,
+      "constantCount": 0
+    },
+    {
+      "name": "ParachainSystem",
+      "index": 103,
+      "storageCount": 0,
+      "callCount": 2,
+      "eventCount": 6,
+      "constantCount": 1
+    },
+    {
+      "name": "Parameters",
+      "index": 83,
+      "storageCount": 0,
+      "callCount": 0,
+      "eventCount": 0,
+      "constantCount": 0
+    },
+    {
+      "name": "PolkadotXcm",
+      "index": 107,
+      "storageCount": 0,
+      "callCount": 14,
+      "eventCount": 24,
+      "constantCount": 0
+    },
+    {
+      "name": "Preimage",
+      "index": 15,
+      "storageCount": 0,
+      "callCount": 5,
+      "eventCount": 3,
+      "constantCount": 0
+    },
+    {
+      "name": "Proxy",
+      "index": 29,
+      "storageCount": 0,
+      "callCount": 10,
+      "eventCount": 5,
+      "constantCount": 6
+    },
+    {
+      "name": "Referenda",
+      "index": 37,
+      "storageCount": 0,
+      "callCount": 9,
+      "eventCount": 16,
+      "constantCount": 5
+    },
+    {
+      "name": "Referrals",
+      "index": 75,
+      "storageCount": 0,
+      "callCount": 5,
+      "eventCount": 6,
+      "constantCount": 6
+    },
+    {
+      "name": "RelayChainInfo",
+      "index": 201,
+      "storageCount": 0,
+      "callCount": 0,
+      "eventCount": 1,
+      "constantCount": 0
+    },
+    {
+      "name": "Router",
+      "index": 67,
+      "storageCount": 0,
+      "callCount": 5,
+      "eventCount": 2,
+      "constantCount": 2
+    },
+    {
+      "name": "Scheduler",
+      "index": 5,
+      "storageCount": 0,
+      "callCount": 10,
+      "eventCount": 9,
+      "constantCount": 2
+    },
+    {
+      "name": "Session",
+      "index": 165,
+      "storageCount": 0,
+      "callCount": 2,
+      "eventCount": 1,
+      "constantCount": 0
+    },
+    {
+      "name": "Stableswap",
+      "index": 70,
+      "storageCount": 0,
+      "callCount": 15,
+      "eventCount": 11,
+      "constantCount": 3
+    },
+    {
+      "name": "Staking",
+      "index": 69,
+      "storageCount": 0,
+      "callCount": 5,
+      "eventCount": 6,
+      "constantCount": 11
+    },
+    {
+      "name": "StateTrieMigration",
+      "index": 35,
+      "storageCount": 0,
+      "callCount": 6,
+      "eventCount": 4,
+      "constantCount": 1
+    },
+    {
+      "name": "System",
+      "index": 1,
+      "storageCount": 0,
+      "callCount": 12,
+      "eventCount": 7,
+      "constantCount": 6
+    },
+    {
+      "name": "TechnicalCommittee",
+      "index": 25,
+      "storageCount": 0,
+      "callCount": 7,
+      "eventCount": 7,
+      "constantCount": 1
+    },
+    {
+      "name": "Timestamp",
+      "index": 3,
+      "storageCount": 0,
+      "callCount": 1,
+      "eventCount": 0,
+      "constantCount": 1
+    },
+    {
+      "name": "TokenGateway",
+      "index": 183,
+      "storageCount": 0,
+      "callCount": 5,
+      "eventCount": 4,
+      "constantCount": 1
+    },
+    {
+      "name": "Tokens",
+      "index": 77,
+      "storageCount": 0,
+      "callCount": 5,
+      "eventCount": 17,
+      "constantCount": 2
+    },
+    {
+      "name": "TransactionPause",
+      "index": 60,
+      "storageCount": 0,
+      "callCount": 2,
+      "eventCount": 2,
+      "constantCount": 0
+    },
+    {
+      "name": "TransactionPayment",
+      "index": 9,
+      "storageCount": 0,
+      "callCount": 0,
+      "eventCount": 1,
+      "constantCount": 1
+    },
+    {
+      "name": "Treasury",
+      "index": 11,
+      "storageCount": 0,
+      "callCount": 9,
+      "eventCount": 12,
+      "constantCount": 5
+    },
+    {
+      "name": "Uniques",
+      "index": 32,
+      "storageCount": 0,
+      "callCount": 26,
+      "eventCount": 27,
+      "constantCount": 8
+    },
+    {
+      "name": "UnknownTokens",
+      "index": 139,
+      "storageCount": 0,
+      "callCount": 0,
+      "eventCount": 2,
+      "constantCount": 0
+    },
+    {
+      "name": "Utility",
+      "index": 13,
+      "storageCount": 0,
+      "callCount": 6,
+      "eventCount": 6,
+      "constantCount": 1
+    },
+    {
+      "name": "Vesting",
+      "index": 81,
+      "storageCount": 0,
+      "callCount": 4,
+      "eventCount": 3,
+      "constantCount": 1
+    },
+    {
+      "name": "Whitelist",
+      "index": 39,
+      "storageCount": 0,
+      "callCount": 4,
+      "eventCount": 3,
+      "constantCount": 0
+    },
+    {
+      "name": "XcmpQueue",
+      "index": 111,
+      "storageCount": 0,
+      "callCount": 0,
+      "eventCount": 1,
+      "constantCount": 3
+    },
+    {
+      "name": "XTokens",
+      "index": 137,
+      "storageCount": 0,
+      "callCount": 6,
+      "eventCount": 1,
+      "constantCount": 3
+    },
+    {
+      "name": "XYK",
+      "index": 74,
+      "storageCount": 0,
+      "callCount": 7,
+      "eventCount": 6,
+      "constantCount": 7
+    },
+    {
+      "name": "XYKLiquidityMining",
+      "index": 95,
+      "storageCount": 0,
+      "callCount": 15,
+      "eventCount": 13,
+      "constantCount": 3
+    },
+    {
+      "name": "XYKWarehouseLM",
+      "index": 96,
+      "storageCount": 0,
+      "callCount": 0,
+      "eventCount": 3,
+      "constantCount": 6
+    }
+  ]
+}

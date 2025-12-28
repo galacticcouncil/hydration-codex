@@ -1,22 +1,15 @@
 #!/bin/bash
 set -e
 
-REPOS_DIR="$(dirname "$0")/../repos"
-cd "$REPOS_DIR"
+echo "=== Updating Submodules to Latest ==="
 
-echo "=== Updating All Repositories ==="
+# Update all submodules to their tracking branch
+git submodule update --remote --merge
 
-for dir in hydration-node sdk hydration-ui squid; do
-    if [ -d "$dir" ]; then
-        echo "Updating $dir..."
-        cd "$dir"
-        git fetch origin
-        git pull origin main || git pull origin master || echo "  Warning: could not pull $dir"
-        cd ..
-    else
-        echo "  $dir not found, skipping"
-    fi
-done
+echo ""
+echo "=== Current Submodule Status ==="
+git submodule status
 
 echo ""
 echo "=== Update Complete ==="
+echo "Run 'git diff' to see changes, then commit if desired"

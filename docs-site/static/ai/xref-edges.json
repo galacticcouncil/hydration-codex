@@ -1,0 +1,1330 @@
+{
+  "version": "1.0.0",
+  "edgeCount": 329,
+  "byType": {
+    "queries": [
+      {
+        "from": "ui:hook:useInvalidateOnBlock",
+        "to": "runtime:pallet:System:storage:Number"
+      },
+      {
+        "from": "ui:hook:useOraclePrice",
+        "to": "runtime:pallet:EmaOracle:storage:Oracles"
+      },
+      {
+        "from": "ui:hook:useAcceptedFeePaymentAssets",
+        "to": "runtime:pallet:MultiTransactionPayment:storage:AcceptedCurrencies"
+      },
+      {
+        "from": "ui:hook:useProviderMetadata",
+        "to": "runtime:pallet:System:storage:LastRuntimeUpgrade"
+      },
+      {
+        "from": "ui:hook:useStableswap",
+        "to": "runtime:pallet:Stableswap:storage:Pools"
+      },
+      {
+        "from": "ui:hook:useStableSwapTradability",
+        "to": "runtime:pallet:Stableswap:storage:AssetTradability"
+      },
+      {
+        "from": "ui:hook:useXykShareTokenEntries",
+        "to": "runtime:pallet:XYK:storage:ShareToken"
+      },
+      {
+        "from": "ui:hook:useReferralRewards",
+        "to": "runtime:pallet:Referrals:storage:TotalShares"
+      },
+      {
+        "from": "ui:hook:useReferralRewards",
+        "to": "runtime:pallet:Referrals:storage:ReferrerShares"
+      },
+      {
+        "from": "ui:hook:useReferralRewards",
+        "to": "runtime:pallet:Referrals:storage:TraderShares"
+      },
+      {
+        "from": "ui:hook:useReferralRewards",
+        "to": "runtime:pallet:System:storage:Account"
+      },
+      {
+        "from": "ui:hook:useReferralRewards",
+        "to": "runtime:pallet:Tokens:storage:Accounts"
+      },
+      {
+        "from": "ui:hook:useStakingRewards",
+        "to": "runtime:pallet:ParachainSystem:storage:ValidationData"
+      },
+      {
+        "from": "ui:hook:useStakingRewards",
+        "to": "runtime:pallet:System:storage:Number"
+      },
+      {
+        "from": "ui:hook:useStakingRewards",
+        "to": "runtime:pallet:Timestamp:storage:Now"
+      },
+      {
+        "from": "ui:hook:useStakingRewards",
+        "to": "runtime:pallet:Referenda:storage:ReferendumInfoFor"
+      },
+      {
+        "from": "ui:hook:useAddableStablepoolTokens",
+        "to": "runtime:pallet:Stableswap:storage:AssetTradability"
+      },
+      {
+        "from": "ui:hook:useClaimStaking",
+        "to": "runtime:pallet:ParachainSystem:storage:ValidationData"
+      },
+      {
+        "from": "ui:hook:useClaimStaking",
+        "to": "runtime:pallet:System:storage:Number"
+      },
+      {
+        "from": "ui:hook:useClaimStaking",
+        "to": "runtime:pallet:Timestamp:storage:Now"
+      },
+      {
+        "from": "ui:hook:useClaimStaking",
+        "to": "runtime:pallet:Referenda:storage:ReferendumInfoFor"
+      },
+      {
+        "from": "ui:hook:useClaimStaking",
+        "to": "runtime:pallet:Staking:storage:VotesRewarded"
+      },
+      {
+        "from": "ui:hook:useClaimStaking",
+        "to": "runtime:pallet:Staking:storage:ProcessedVotes"
+      },
+      {
+        "from": "ui:hook:useStakingSupply",
+        "to": "runtime:pallet:Staking:storage:Staking"
+      },
+      {
+        "from": "ui:hook:useStakingAPR",
+        "to": "runtime:pallet:ParachainSystem:storage:ValidationData"
+      },
+      {
+        "from": "ui:hook:useStakingAPR",
+        "to": "runtime:pallet:System:storage:Number"
+      },
+      {
+        "from": "ui:hook:useStakingAPR",
+        "to": "runtime:pallet:Timestamp:storage:Now"
+      },
+      {
+        "from": "ui:hook:useStakingAPR",
+        "to": "runtime:pallet:Staking:storage:Staking"
+      },
+      {
+        "from": "ui:hook:useStakingAPR",
+        "to": "runtime:pallet:Uniques:storage:Account"
+      },
+      {
+        "from": "ui:hook:useStakingAPR",
+        "to": "runtime:pallet:Staking:storage:Positions"
+      },
+      {
+        "from": "ui:hook:useStakingAPR",
+        "to": "runtime:pallet:Referenda:storage:ReferendumInfoFor"
+      },
+      {
+        "from": "ui:hook:useRewardsCurveData",
+        "to": "runtime:pallet:Uniques:storage:Account"
+      },
+      {
+        "from": "ui:hook:useRewardsCurveData",
+        "to": "runtime:pallet:Staking:storage:Positions"
+      },
+      {
+        "from": "ui:hook:useRewardsCurveData",
+        "to": "runtime:pallet:Referenda:storage:ReferendumInfoFor"
+      },
+      {
+        "from": "ui:hook:useRewardsCurveData",
+        "to": "runtime:pallet:ParachainSystem:storage:ValidationData"
+      },
+      {
+        "from": "ui:hook:useRewardsCurveData",
+        "to": "runtime:pallet:System:storage:Number"
+      },
+      {
+        "from": "ui:hook:useRewardsCurveData",
+        "to": "runtime:pallet:Timestamp:storage:Now"
+      },
+      {
+        "from": "ui:hook:useProcessedVotes",
+        "to": "runtime:pallet:Staking:storage:VotesRewarded"
+      },
+      {
+        "from": "ui:hook:useProcessedVotes",
+        "to": "runtime:pallet:Staking:storage:ProcessedVotes"
+      },
+      {
+        "from": "ui:hook:usePendingVotes",
+        "to": "runtime:pallet:Staking:storage:Votes"
+      },
+      {
+        "from": "ui:hook:usePendingVotes",
+        "to": "runtime:pallet:Staking:storage:PositionVotes"
+      },
+      {
+        "from": "ui:hook:useStake",
+        "to": "runtime:pallet:Staking:storage:VotesRewarded"
+      },
+      {
+        "from": "ui:hook:useStake",
+        "to": "runtime:pallet:Staking:storage:ProcessedVotes"
+      },
+      {
+        "from": "ui:hook:useUnstake",
+        "to": "runtime:pallet:Staking:storage:Votes"
+      },
+      {
+        "from": "ui:hook:useUnstake",
+        "to": "runtime:pallet:Staking:storage:PositionVotes"
+      },
+      {
+        "from": "ui:hook:useUnstake",
+        "to": "runtime:pallet:Staking:storage:VotesRewarded"
+      },
+      {
+        "from": "ui:hook:useUnstake",
+        "to": "runtime:pallet:Staking:storage:ProcessedVotes"
+      },
+      {
+        "from": "ui:hook:useEstimateFee",
+        "to": "runtime:pallet:MultiTransactionPayment:storage:AcceptedCurrencies"
+      },
+      {
+        "from": "ui:hook:useAddIsolatedLiquidity",
+        "to": "runtime:pallet:EmaOracle:storage:Oracles"
+      },
+      {
+        "from": "ui:hook:useCheckJoinOmnipoolFarm",
+        "to": "runtime:pallet:EmaOracle:storage:Oracles"
+      },
+      {
+        "from": "ui:hook:useAddMoneyMarketLiquidityWrapper",
+        "to": "runtime:pallet:Stableswap:storage:AssetTradability"
+      },
+      {
+        "from": "ui:hook:useAddMoneyMarketOmnipoolLiquidity",
+        "to": "runtime:pallet:EmaOracle:storage:Oracles"
+      },
+      {
+        "from": "ui:hook:useStablepoolAddLiquidity",
+        "to": "runtime:pallet:Stableswap:storage:AssetTradability"
+      },
+      {
+        "from": "ui:hook:useStablepoolAddLiquidity",
+        "to": "runtime:pallet:EmaOracle:storage:Oracles"
+      },
+      {
+        "from": "ui:hook:useXYKFarmMinShares",
+        "to": "runtime:pallet:EmaOracle:storage:Oracles"
+      },
+      {
+        "from": "ui:hook:useMinOmnipoolFarmJoin",
+        "to": "runtime:pallet:EmaOracle:storage:Oracles"
+      },
+      {
+        "from": "ui:hook:useUnlockNativeLocks",
+        "to": "runtime:pallet:Balances:storage:Locks"
+      },
+      {
+        "from": "ui:hook:useNativeAssetLocks",
+        "to": "runtime:pallet:Balances:storage:Locks"
+      },
+      {
+        "from": "ui:hook:useUnlockableNativeTokens",
+        "to": "runtime:pallet:ParachainSystem:storage:ValidationData"
+      },
+      {
+        "from": "ui:hook:useUnlockableNativeTokens",
+        "to": "runtime:pallet:System:storage:Number"
+      },
+      {
+        "from": "ui:hook:useUnlockableNativeTokens",
+        "to": "runtime:pallet:Timestamp:storage:Now"
+      },
+      {
+        "from": "ui:hook:useUnlockableNativeTokens",
+        "to": "runtime:pallet:Democracy:storage:VotingOf"
+      },
+      {
+        "from": "ui:hook:useUnlockableNativeTokens",
+        "to": "runtime:pallet:Democracy:storage:ReferendumInfoOf"
+      },
+      {
+        "from": "ui:hook:useClaimAllWalletRewards",
+        "to": "runtime:pallet:ParachainSystem:storage:ValidationData"
+      },
+      {
+        "from": "ui:hook:useClaimAllWalletRewards",
+        "to": "runtime:pallet:System:storage:Number"
+      },
+      {
+        "from": "ui:hook:useClaimAllWalletRewards",
+        "to": "runtime:pallet:Timestamp:storage:Now"
+      },
+      {
+        "from": "ui:hook:useClaimAllWalletRewards",
+        "to": "runtime:pallet:Referenda:storage:ReferendumInfoFor"
+      },
+      {
+        "from": "ui:hook:useClaimAllWalletRewards",
+        "to": "runtime:pallet:Referrals:storage:TotalShares"
+      },
+      {
+        "from": "ui:hook:useClaimAllWalletRewards",
+        "to": "runtime:pallet:Referrals:storage:ReferrerShares"
+      },
+      {
+        "from": "ui:hook:useClaimAllWalletRewards",
+        "to": "runtime:pallet:Referrals:storage:TraderShares"
+      },
+      {
+        "from": "ui:hook:useClaimAllWalletRewards",
+        "to": "runtime:pallet:System:storage:Account"
+      },
+      {
+        "from": "ui:hook:useClaimAllWalletRewards",
+        "to": "runtime:pallet:Tokens:storage:Accounts"
+      },
+      {
+        "from": "ui:hook:useWalletRewardsSectionData",
+        "to": "runtime:pallet:ParachainSystem:storage:ValidationData"
+      },
+      {
+        "from": "ui:hook:useWalletRewardsSectionData",
+        "to": "runtime:pallet:System:storage:Number"
+      },
+      {
+        "from": "ui:hook:useWalletRewardsSectionData",
+        "to": "runtime:pallet:Timestamp:storage:Now"
+      },
+      {
+        "from": "ui:hook:useWalletRewardsSectionData",
+        "to": "runtime:pallet:Referenda:storage:ReferendumInfoFor"
+      },
+      {
+        "from": "ui:hook:useWalletRewardsSectionData",
+        "to": "runtime:pallet:Referrals:storage:TotalShares"
+      },
+      {
+        "from": "ui:hook:useWalletRewardsSectionData",
+        "to": "runtime:pallet:Referrals:storage:ReferrerShares"
+      },
+      {
+        "from": "ui:hook:useWalletRewardsSectionData",
+        "to": "runtime:pallet:Referrals:storage:TraderShares"
+      },
+      {
+        "from": "ui:hook:useWalletRewardsSectionData",
+        "to": "runtime:pallet:System:storage:Account"
+      },
+      {
+        "from": "ui:hook:useWalletRewardsSectionData",
+        "to": "runtime:pallet:Tokens:storage:Accounts"
+      },
+      {
+        "from": "ui:hook:useInsufficientTransferFee",
+        "to": "runtime:pallet:System:storage:Account"
+      },
+      {
+        "from": "ui:hook:useInsufficientTransferFee",
+        "to": "runtime:pallet:Tokens:storage:Accounts"
+      },
+      {
+        "from": "ui:hook:useInvalidateStakeData",
+        "to": "indexer:entity:Event"
+      },
+      {
+        "from": "ui:hook:useRoutedTradesData",
+        "to": "indexer:entity:RoutedTrade"
+      },
+      {
+        "from": "ui:hook:useRoutedTradesData",
+        "to": "indexer:entity:RoutedTradeAssetBalance"
+      },
+      {
+        "from": "ui:hook:useInitialOtcOfferAmount",
+        "to": "indexer:entity:OtcOrder"
+      },
+      {
+        "from": "ui:hook:useInitialOtcOfferAmount",
+        "to": "indexer:entity:OtcOrderEvent"
+      },
+      {
+        "from": "ui:hook:useInitialOtcOfferAmount",
+        "to": "indexer:entity:DcaScheduleOrderRouteHop"
+      },
+      {
+        "from": "ui:hook:useInitialOtcOfferAmount",
+        "to": "indexer:entity:ProcessorStatus"
+      }
+    ],
+    "uses": [
+      {
+        "from": "ui:hook:useAcceptedFeePaymentAssets",
+        "to": "runtime:pallet:Router"
+      },
+      {
+        "from": "ui:hook:useAcceptedFeePaymentAssets",
+        "to": "runtime:pallet:Omnipool"
+      },
+      {
+        "from": "ui:hook:useAcceptedFeePaymentAssets",
+        "to": "runtime:pallet:XYK"
+      },
+      {
+        "from": "ui:hook:useAcceptedFeePaymentAssets",
+        "to": "runtime:pallet:Stableswap"
+      },
+      {
+        "from": "ui:hook:useAcceptedFeePaymentAssets",
+        "to": "runtime:pallet:LBP"
+      },
+      {
+        "from": "ui:hook:useStakingRewards",
+        "to": "runtime:pallet:Staking"
+      },
+      {
+        "from": "ui:hook:useClaimStaking",
+        "to": "runtime:pallet:Staking"
+      },
+      {
+        "from": "ui:hook:useStakingAPR",
+        "to": "runtime:pallet:Staking"
+      },
+      {
+        "from": "ui:hook:useRewardsCurveData",
+        "to": "runtime:pallet:Staking"
+      },
+      {
+        "from": "ui:hook:useAddMoneyMarketOmnipoolLiquidity",
+        "to": "runtime:pallet:Router"
+      },
+      {
+        "from": "ui:hook:useAddMoneyMarketOmnipoolLiquidity",
+        "to": "runtime:pallet:Omnipool"
+      },
+      {
+        "from": "ui:hook:useAddMoneyMarketOmnipoolLiquidity",
+        "to": "runtime:pallet:XYK"
+      },
+      {
+        "from": "ui:hook:useAddMoneyMarketOmnipoolLiquidity",
+        "to": "runtime:pallet:Stableswap"
+      },
+      {
+        "from": "ui:hook:useAddMoneyMarketOmnipoolLiquidity",
+        "to": "runtime:pallet:LBP"
+      },
+      {
+        "from": "ui:hook:useAddMoneyMarketLiquidity",
+        "to": "runtime:pallet:Router"
+      },
+      {
+        "from": "ui:hook:useAddMoneyMarketLiquidity",
+        "to": "runtime:pallet:Omnipool"
+      },
+      {
+        "from": "ui:hook:useAddMoneyMarketLiquidity",
+        "to": "runtime:pallet:XYK"
+      },
+      {
+        "from": "ui:hook:useAddMoneyMarketLiquidity",
+        "to": "runtime:pallet:Stableswap"
+      },
+      {
+        "from": "ui:hook:useAddMoneyMarketLiquidity",
+        "to": "runtime:pallet:LBP"
+      },
+      {
+        "from": "ui:hook:useRemoveMoneyMarketLiquidity",
+        "to": "runtime:pallet:Router"
+      },
+      {
+        "from": "ui:hook:useRemoveMoneyMarketLiquidity",
+        "to": "runtime:pallet:Omnipool"
+      },
+      {
+        "from": "ui:hook:useRemoveMoneyMarketLiquidity",
+        "to": "runtime:pallet:XYK"
+      },
+      {
+        "from": "ui:hook:useRemoveMoneyMarketLiquidity",
+        "to": "runtime:pallet:Stableswap"
+      },
+      {
+        "from": "ui:hook:useRemoveMoneyMarketLiquidity",
+        "to": "runtime:pallet:LBP"
+      },
+      {
+        "from": "ui:hook:useClaimAllWalletRewards",
+        "to": "runtime:pallet:Staking"
+      },
+      {
+        "from": "ui:hook:useWalletRewardsSectionData",
+        "to": "runtime:pallet:Staking"
+      },
+      {
+        "from": "ui:hook:useMarketBuyData",
+        "to": "runtime:pallet:Router"
+      },
+      {
+        "from": "ui:hook:useMarketBuyData",
+        "to": "runtime:pallet:Omnipool"
+      },
+      {
+        "from": "ui:hook:useMarketBuyData",
+        "to": "runtime:pallet:XYK"
+      },
+      {
+        "from": "ui:hook:useMarketBuyData",
+        "to": "runtime:pallet:Stableswap"
+      },
+      {
+        "from": "ui:hook:useMarketBuyData",
+        "to": "runtime:pallet:LBP"
+      },
+      {
+        "from": "ui:hook:useMarketSellData",
+        "to": "runtime:pallet:Router"
+      },
+      {
+        "from": "ui:hook:useMarketSellData",
+        "to": "runtime:pallet:Omnipool"
+      },
+      {
+        "from": "ui:hook:useMarketSellData",
+        "to": "runtime:pallet:XYK"
+      },
+      {
+        "from": "ui:hook:useMarketSellData",
+        "to": "runtime:pallet:Stableswap"
+      },
+      {
+        "from": "ui:hook:useMarketSellData",
+        "to": "runtime:pallet:LBP"
+      },
+      {
+        "from": "ui:hook:useCalculateBuyAmount",
+        "to": "runtime:pallet:Router"
+      },
+      {
+        "from": "ui:hook:useCalculateBuyAmount",
+        "to": "runtime:pallet:Omnipool"
+      },
+      {
+        "from": "ui:hook:useCalculateBuyAmount",
+        "to": "runtime:pallet:XYK"
+      },
+      {
+        "from": "ui:hook:useCalculateBuyAmount",
+        "to": "runtime:pallet:Stableswap"
+      },
+      {
+        "from": "ui:hook:useCalculateBuyAmount",
+        "to": "runtime:pallet:LBP"
+      },
+      {
+        "from": "ui:hook:useCalculateSellAmount",
+        "to": "runtime:pallet:Router"
+      },
+      {
+        "from": "ui:hook:useCalculateSellAmount",
+        "to": "runtime:pallet:Omnipool"
+      },
+      {
+        "from": "ui:hook:useCalculateSellAmount",
+        "to": "runtime:pallet:XYK"
+      },
+      {
+        "from": "ui:hook:useCalculateSellAmount",
+        "to": "runtime:pallet:Stableswap"
+      },
+      {
+        "from": "ui:hook:useCalculateSellAmount",
+        "to": "runtime:pallet:LBP"
+      },
+      {
+        "from": "ui:hook:useSwitchAssets",
+        "to": "runtime:pallet:Router"
+      },
+      {
+        "from": "ui:hook:useSwitchAssets",
+        "to": "runtime:pallet:Omnipool"
+      },
+      {
+        "from": "ui:hook:useSwitchAssets",
+        "to": "runtime:pallet:XYK"
+      },
+      {
+        "from": "ui:hook:useSwitchAssets",
+        "to": "runtime:pallet:Stableswap"
+      },
+      {
+        "from": "ui:hook:useSwitchAssets",
+        "to": "runtime:pallet:LBP"
+      }
+    ],
+    "calls": [
+      {
+        "from": "ui:hook:useSetFeePaymentAsset",
+        "to": "runtime:pallet:MultiTransactionPayment:call:set_currency"
+      },
+      {
+        "from": "ui:hook:useGetClaimAllBorrowRewardsTx",
+        "to": "runtime:pallet:EVM:call:call"
+      },
+      {
+        "from": "ui:hook:useGetClaimAllBorrowRewardsTx",
+        "to": "runtime:pallet:Dispatcher:call:dispatch_evm_call"
+      },
+      {
+        "from": "ui:hook:useStake",
+        "to": "runtime:pallet:Staking:call:stake"
+      },
+      {
+        "from": "ui:hook:useStake",
+        "to": "runtime:pallet:Staking:call:increase_stake"
+      },
+      {
+        "from": "ui:hook:useStake",
+        "to": "runtime:pallet:Utility:call:batch_all"
+      },
+      {
+        "from": "ui:hook:useStake",
+        "to": "runtime:pallet:Democracy:call:remove_vote"
+      },
+      {
+        "from": "ui:hook:useStake",
+        "to": "runtime:pallet:ConvictionVoting:call:remove_vote"
+      },
+      {
+        "from": "ui:hook:useUnstake",
+        "to": "runtime:pallet:Staking:call:unstake"
+      },
+      {
+        "from": "ui:hook:useUnstake",
+        "to": "runtime:pallet:Utility:call:batch_all"
+      },
+      {
+        "from": "ui:hook:useUnstake",
+        "to": "runtime:pallet:Democracy:call:remove_vote"
+      },
+      {
+        "from": "ui:hook:useUnstake",
+        "to": "runtime:pallet:ConvictionVoting:call:remove_vote"
+      },
+      {
+        "from": "ui:hook:useSignAndSubmit",
+        "to": "runtime:pallet:MultiTransactionPayment:call:dispatch_permit"
+      },
+      {
+        "from": "ui:hook:useSignAndSubmit",
+        "to": "runtime:pallet:EVM:call:call"
+      },
+      {
+        "from": "ui:hook:useAddIsolatedLiquidity",
+        "to": "runtime:pallet:XYKLiquidityMining:call:add_liquidity_and_join_farms"
+      },
+      {
+        "from": "ui:hook:useAddIsolatedLiquidity",
+        "to": "runtime:pallet:XYK:call:add_liquidity"
+      },
+      {
+        "from": "ui:hook:useAddLiquidity",
+        "to": "runtime:pallet:OmnipoolLiquidityMining:call:add_liquidity_and_join_farms"
+      },
+      {
+        "from": "ui:hook:useAddLiquidity",
+        "to": "runtime:pallet:Omnipool:call:add_liquidity_with_limit"
+      },
+      {
+        "from": "ui:hook:useAddMoneyMarketOmnipoolLiquidity",
+        "to": "runtime:pallet:OmnipoolLiquidityMining:call:add_liquidity_and_join_farms"
+      },
+      {
+        "from": "ui:hook:useAddMoneyMarketOmnipoolLiquidity",
+        "to": "runtime:pallet:Omnipool:call:add_liquidity_with_limit"
+      },
+      {
+        "from": "ui:hook:useAddMoneyMarketOmnipoolLiquidity",
+        "to": "runtime:pallet:Dispatcher:call:dispatch_with_extra_gas"
+      },
+      {
+        "from": "ui:hook:useAddMoneyMarketOmnipoolLiquidity",
+        "to": "runtime:pallet:Stableswap:call:add_assets_liquidity"
+      },
+      {
+        "from": "ui:hook:useAddMoneyMarketOmnipoolLiquidity",
+        "to": "runtime:pallet:Utility:call:batch_all"
+      },
+      {
+        "from": "ui:hook:useAddMoneyMarketLiquidity",
+        "to": "runtime:pallet:Dispatcher:call:dispatch_with_extra_gas"
+      },
+      {
+        "from": "ui:hook:useAddMoneyMarketLiquidity",
+        "to": "runtime:pallet:Stableswap:call:add_assets_liquidity"
+      },
+      {
+        "from": "ui:hook:useStablepoolAddLiquidity",
+        "to": "runtime:pallet:Stableswap:call:add_assets_liquidity"
+      },
+      {
+        "from": "ui:hook:useStablepoolAddLiquidity",
+        "to": "runtime:pallet:OmnipoolLiquidityMining:call:add_liquidity_stableswap_omnipool_and_join_farms"
+      },
+      {
+        "from": "ui:hook:useSubmitCreateIsolatedPool",
+        "to": "runtime:pallet:XYK:call:create_pool"
+      },
+      {
+        "from": "ui:hook:useExitDepositFarmsMutation",
+        "to": "runtime:pallet:XYKLiquidityMining:call:withdraw_shares"
+      },
+      {
+        "from": "ui:hook:useExitDepositFarmsMutation",
+        "to": "runtime:pallet:OmnipoolLiquidityMining:call:withdraw_shares"
+      },
+      {
+        "from": "ui:hook:useExitDepositFarmsMutation",
+        "to": "runtime:pallet:Utility:call:batch_all"
+      },
+      {
+        "from": "ui:hook:useClaimFarmRewardsMutation",
+        "to": "runtime:pallet:Utility:call:batch_all"
+      },
+      {
+        "from": "ui:hook:useRemoveMultipleXYKPositions",
+        "to": "runtime:pallet:XYKLiquidityMining:call:withdraw_shares"
+      },
+      {
+        "from": "ui:hook:useRemoveMultipleXYKPositions",
+        "to": "runtime:pallet:XYK:call:remove_liquidity_with_limits"
+      },
+      {
+        "from": "ui:hook:useRemoveMultipleXYKPositions",
+        "to": "runtime:pallet:Utility:call:batch_all"
+      },
+      {
+        "from": "ui:hook:useRemoveSingleXYKPosition",
+        "to": "runtime:pallet:XYKLiquidityMining:call:withdraw_shares"
+      },
+      {
+        "from": "ui:hook:useRemoveSingleXYKPosition",
+        "to": "runtime:pallet:XYK:call:remove_liquidity_with_limits"
+      },
+      {
+        "from": "ui:hook:useRemoveSingleXYKPosition",
+        "to": "runtime:pallet:Utility:call:batch_all"
+      },
+      {
+        "from": "ui:hook:useRemoveXYKShares",
+        "to": "runtime:pallet:XYK:call:remove_liquidity_with_limits"
+      },
+      {
+        "from": "ui:hook:useRemoveMoneyMarketLiquidity",
+        "to": "runtime:pallet:Stableswap:call:remove_liquidity"
+      },
+      {
+        "from": "ui:hook:useRemoveMoneyMarketLiquidity",
+        "to": "runtime:pallet:Dispatcher:call:dispatch_with_extra_gas"
+      },
+      {
+        "from": "ui:hook:useRemoveMoneyMarketLiquidity",
+        "to": "runtime:pallet:Utility:call:batch_all"
+      },
+      {
+        "from": "ui:hook:useRemoveSingleOmnipoolPosition",
+        "to": "runtime:pallet:Omnipool:call:remove_liquidity_with_limit"
+      },
+      {
+        "from": "ui:hook:useRemoveSingleOmnipoolPosition",
+        "to": "runtime:pallet:OmnipoolLiquidityMining:call:withdraw_shares"
+      },
+      {
+        "from": "ui:hook:useRemoveSingleOmnipoolPosition",
+        "to": "runtime:pallet:Utility:call:batch_all"
+      },
+      {
+        "from": "ui:hook:useRemoveMultipleOmnipoolPositions",
+        "to": "runtime:pallet:OmnipoolLiquidityMining:call:withdraw_shares"
+      },
+      {
+        "from": "ui:hook:useRemoveMultipleOmnipoolPositions",
+        "to": "runtime:pallet:Omnipool:call:remove_liquidity_with_limit"
+      },
+      {
+        "from": "ui:hook:useRemoveMultipleOmnipoolPositions",
+        "to": "runtime:pallet:Utility:call:batch_all"
+      },
+      {
+        "from": "ui:hook:useStablepoolRemoveLiquidity",
+        "to": "runtime:pallet:Stableswap:call:remove_liquidity"
+      },
+      {
+        "from": "ui:hook:useStablepoolRemoveLiquidity",
+        "to": "runtime:pallet:Stableswap:call:remove_liquidity_one_asset"
+      },
+      {
+        "from": "ui:hook:useTerminateDcaSchedule",
+        "to": "runtime:pallet:DCA:call:terminate"
+      },
+      {
+        "from": "ui:hook:useSubmitCancelOtcOrder",
+        "to": "runtime:pallet:OTC:call:cancel_order"
+      },
+      {
+        "from": "ui:hook:useSubmitFillOrder",
+        "to": "runtime:pallet:OTC:call:partial_fill_order"
+      },
+      {
+        "from": "ui:hook:useSubmitFillOrder",
+        "to": "runtime:pallet:OTC:call:fill_order"
+      },
+      {
+        "from": "ui:hook:useSubmitFillOrder",
+        "to": "runtime:pallet:Dispatcher:call:dispatch_with_extra_gas"
+      },
+      {
+        "from": "ui:hook:useSubmitPlaceOrder",
+        "to": "runtime:pallet:OTC:call:place_order"
+      },
+      {
+        "from": "ui:hook:useSubmitPlaceOrder",
+        "to": "runtime:pallet:Dispatcher:call:dispatch_with_extra_gas"
+      },
+      {
+        "from": "ui:hook:useUnlockNativeLocks",
+        "to": "runtime:pallet:Democracy:call:remove_vote"
+      },
+      {
+        "from": "ui:hook:useUnlockNativeLocks",
+        "to": "runtime:pallet:Democracy:call:unlock"
+      },
+      {
+        "from": "ui:hook:useUnlockNativeLocks",
+        "to": "runtime:pallet:Utility:call:batch_all"
+      },
+      {
+        "from": "ui:hook:useClaimAllWalletRewards",
+        "to": "runtime:pallet:Referrals:call:claim_rewards"
+      },
+      {
+        "from": "ui:hook:useClaimAllWalletRewards",
+        "to": "runtime:pallet:Utility:call:batch_all"
+      },
+      {
+        "from": "ui:hook:useClaimAllWalletRewards",
+        "to": "runtime:pallet:XYKLiquidityMining:call:claim_rewards"
+      },
+      {
+        "from": "ui:hook:useClaimAllWalletRewards",
+        "to": "runtime:pallet:XYKLiquidityMining:call:withdraw_shares"
+      },
+      {
+        "from": "ui:hook:useClaimAllWalletRewards",
+        "to": "runtime:pallet:OmnipoolLiquidityMining:call:claim_rewards"
+      },
+      {
+        "from": "ui:hook:useClaimAllWalletRewards",
+        "to": "runtime:pallet:OmnipoolLiquidityMining:call:withdraw_shares"
+      },
+      {
+        "from": "ui:hook:useTransferPaymentInfo",
+        "to": "runtime:pallet:Currencies:call:transfer"
+      },
+      {
+        "from": "ui:hook:useTransferPaymentInfo",
+        "to": "runtime:pallet:Tokens:call:transfer"
+      },
+      {
+        "from": "ui:hook:useSubmitTransferPosition",
+        "to": "runtime:pallet:Currencies:call:transfer"
+      },
+      {
+        "from": "ui:hook:useSubmitTransferPosition",
+        "to": "runtime:pallet:Tokens:call:transfer"
+      }
+    ],
+    "handles": [
+      {
+        "from": "indexer:entity:Lbppool",
+        "to": "runtime:pallet:LBP"
+      },
+      {
+        "from": "indexer:entity:LbppoolCreatedData",
+        "to": "runtime:pallet:LBP"
+      },
+      {
+        "from": "indexer:entity:LbppoolDestroyedData",
+        "to": "runtime:pallet:LBP"
+      },
+      {
+        "from": "indexer:entity:LbppoolLifeState",
+        "to": "runtime:pallet:LBP"
+      },
+      {
+        "from": "indexer:entity:LbppoolPriceHistoricalData",
+        "to": "runtime:pallet:LBP"
+      },
+      {
+        "from": "indexer:entity:LbppoolVolumeHistoricalData",
+        "to": "runtime:pallet:LBP"
+      },
+      {
+        "from": "indexer:entity:LbppoolHistoricalData",
+        "to": "runtime:pallet:LBP"
+      },
+      {
+        "from": "indexer:entity:Xykpool",
+        "to": "runtime:pallet:XYK"
+      },
+      {
+        "from": "indexer:entity:XykpoolCreatedData",
+        "to": "runtime:pallet:XYK"
+      },
+      {
+        "from": "indexer:entity:XykpoolDestroyedData",
+        "to": "runtime:pallet:XYK"
+      },
+      {
+        "from": "indexer:entity:XykpoolLifeState",
+        "to": "runtime:pallet:XYK"
+      },
+      {
+        "from": "indexer:entity:XykpoolPriceHistoricalData",
+        "to": "runtime:pallet:XYK"
+      },
+      {
+        "from": "indexer:entity:XykpoolVolumeHistoricalData",
+        "to": "runtime:pallet:XYK"
+      },
+      {
+        "from": "indexer:entity:XykpoolHistoricalData",
+        "to": "runtime:pallet:XYK"
+      },
+      {
+        "from": "indexer:entity:Omnipool",
+        "to": "runtime:pallet:Omnipool"
+      },
+      {
+        "from": "indexer:entity:OmnipoolAsset",
+        "to": "runtime:pallet:Omnipool"
+      },
+      {
+        "from": "indexer:entity:OmnipoolAssetAddedData",
+        "to": "runtime:pallet:Omnipool"
+      },
+      {
+        "from": "indexer:entity:OmnipoolAssetRemovedData",
+        "to": "runtime:pallet:Omnipool"
+      },
+      {
+        "from": "indexer:entity:OmnipoolAssetLifeState",
+        "to": "runtime:pallet:Omnipool"
+      },
+      {
+        "from": "indexer:entity:OmnipoolAssetVolumeHistoricalData",
+        "to": "runtime:pallet:Omnipool"
+      },
+      {
+        "from": "indexer:entity:OmnipoolHistoricalData",
+        "to": "runtime:pallet:Omnipool"
+      },
+      {
+        "from": "indexer:entity:OmnipoolAssetHistoricalData",
+        "to": "runtime:pallet:Omnipool"
+      },
+      {
+        "from": "indexer:entity:OmnipoolAssetHistoricalDataLatest",
+        "to": "runtime:pallet:Omnipool"
+      },
+      {
+        "from": "indexer:entity:Stableswap",
+        "to": "runtime:pallet:Stableswap"
+      },
+      {
+        "from": "indexer:entity:StableswapCreatedData",
+        "to": "runtime:pallet:Stableswap"
+      },
+      {
+        "from": "indexer:entity:StableswapDestroyedData",
+        "to": "runtime:pallet:Stableswap"
+      },
+      {
+        "from": "indexer:entity:StableswapLifeState",
+        "to": "runtime:pallet:Stableswap"
+      },
+      {
+        "from": "indexer:entity:StableswapAsset",
+        "to": "runtime:pallet:Stableswap"
+      },
+      {
+        "from": "indexer:entity:StableswapVolumeHistoricalData",
+        "to": "runtime:pallet:Stableswap"
+      },
+      {
+        "from": "indexer:entity:StableswapAssetVolumeHistoricalData",
+        "to": "runtime:pallet:Stableswap"
+      },
+      {
+        "from": "indexer:entity:StableswapLiquidityEvent",
+        "to": "runtime:pallet:Stableswap"
+      },
+      {
+        "from": "indexer:entity:StableswapAssetLiquidityAmount",
+        "to": "runtime:pallet:Stableswap"
+      },
+      {
+        "from": "indexer:entity:StableswapPegsSource",
+        "to": "runtime:pallet:Stableswap"
+      },
+      {
+        "from": "indexer:entity:StableswapHistoricalData",
+        "to": "runtime:pallet:Stableswap"
+      },
+      {
+        "from": "indexer:entity:StableswapAssetHistoricalData",
+        "to": "runtime:pallet:Stableswap"
+      },
+      {
+        "from": "indexer:entity:StableswapAssetHistoricalDataLatest",
+        "to": "runtime:pallet:Stableswap"
+      },
+      {
+        "from": "indexer:entity:Hsmpool",
+        "to": "runtime:pallet:HSM"
+      },
+      {
+        "from": "indexer:entity:HsmCollateral",
+        "to": "runtime:pallet:HSM"
+      },
+      {
+        "from": "indexer:entity:HsmpoolHistoricalData",
+        "to": "runtime:pallet:HSM"
+      },
+      {
+        "from": "indexer:entity:HsmCollateralConfigHistoricalData",
+        "to": "runtime:pallet:HSM"
+      },
+      {
+        "from": "indexer:entity:HsmpoolAssetHistoricalData",
+        "to": "runtime:pallet:HSM"
+      },
+      {
+        "from": "indexer:entity:DynamicFeesAssetFeeParameters",
+        "to": "runtime:pallet:DynamicFees"
+      },
+      {
+        "from": "indexer:entity:EmaOracleEntryHistoricalData",
+        "to": "runtime:pallet:EmaOracle"
+      },
+      {
+        "from": "indexer:entity:DispatchError",
+        "to": "runtime:pallet:Dispatcher"
+      },
+      {
+        "from": "indexer:entity:DcaSchedule",
+        "to": "runtime:pallet:DCA"
+      },
+      {
+        "from": "indexer:entity:DcaScheduleOrderRouteHop",
+        "to": "runtime:pallet:DCA"
+      },
+      {
+        "from": "indexer:entity:DcaScheduleEvent",
+        "to": "runtime:pallet:DCA"
+      },
+      {
+        "from": "indexer:entity:DcaScheduleExecution",
+        "to": "runtime:pallet:DCA"
+      },
+      {
+        "from": "indexer:entity:DcaScheduleExecutionEvent",
+        "to": "runtime:pallet:DCA"
+      },
+      {
+        "from": "indexer:entity:OtcOrder",
+        "to": "runtime:pallet:OTC"
+      },
+      {
+        "from": "indexer:entity:OtcOrderEvent",
+        "to": "runtime:pallet:OTC"
+      },
+      {
+        "from": "indexer:entity:OmnipoolLiquidityPosition",
+        "to": "runtime:pallet:Omnipool"
+      },
+      {
+        "from": "indexer:entity:OmnipoolLiquidityPositionEvent",
+        "to": "runtime:pallet:Omnipool"
+      },
+      {
+        "from": "indexer:entity:OmnipoolAssetLiquidityEvent",
+        "to": "runtime:pallet:Omnipool"
+      },
+      {
+        "from": "indexer:entity:OmnipoolGlobalFarm",
+        "to": "runtime:pallet:Omnipool"
+      },
+      {
+        "from": "indexer:entity:OmnipoolYieldFarm",
+        "to": "runtime:pallet:Omnipool"
+      },
+      {
+        "from": "indexer:entity:OmnipoolYieldFarmDeposit",
+        "to": "runtime:pallet:Omnipool"
+      },
+      {
+        "from": "indexer:entity:OmnipoolYieldFarmDepositEvent",
+        "to": "runtime:pallet:Omnipool"
+      },
+      {
+        "from": "indexer:entity:OmnipoolYieldFarmEntry",
+        "to": "runtime:pallet:Omnipool"
+      },
+      {
+        "from": "indexer:entity:XykGlobalFarm",
+        "to": "runtime:pallet:XYK"
+      },
+      {
+        "from": "indexer:entity:XykYieldFarm",
+        "to": "runtime:pallet:XYK"
+      },
+      {
+        "from": "indexer:entity:XykYieldFarmDeposit",
+        "to": "runtime:pallet:XYK"
+      },
+      {
+        "from": "indexer:entity:XykYieldFarmEntry",
+        "to": "runtime:pallet:XYK"
+      },
+      {
+        "from": "indexer:entity:XykYieldFarmDepositEvent",
+        "to": "runtime:pallet:XYK"
+      },
+      {
+        "from": "indexer:entity:TransactionPaymentHistoricalData",
+        "to": "runtime:pallet:TransactionPayment"
+      },
+      {
+        "from": "indexer:entity:Account",
+        "to": "runtime:pallet:EVM"
+      },
+      {
+        "from": "indexer:entity:Asset",
+        "to": "runtime:pallet:AssetRegistry"
+      },
+      {
+        "from": "indexer:entity:DispatchError",
+        "to": "runtime:pallet:DCA"
+      },
+      {
+        "from": "indexer:entity:OmnipoolAsset",
+        "to": "runtime:pallet:XYK"
+      },
+      {
+        "from": "indexer:entity:OmnipoolYieldFarmDeposit",
+        "to": "runtime:pallet:OmnipoolLiquidityMining"
+      },
+      {
+        "from": "indexer:entity:XykYieldFarmDeposit",
+        "to": "runtime:pallet:XYKLiquidityMining"
+      },
+      {
+        "from": "indexer:handler:getOrCreateAccount",
+        "to": "runtime:pallet:EVM:event:Log"
+      },
+      {
+        "from": "indexer:handler:assetRegistered",
+        "to": "runtime:pallet:AssetRegistry:event:Registered"
+      },
+      {
+        "from": "indexer:handler:assetUpdated",
+        "to": "runtime:pallet:AssetRegistry:event:Updated"
+      },
+      {
+        "from": "indexer:handler:assetLocationSet",
+        "to": "runtime:pallet:AssetRegistry:event:LocationSet"
+      },
+      {
+        "from": "indexer:handler:handleDcaScheduleCreated",
+        "to": "runtime:pallet:DCA:event:Scheduled"
+      },
+      {
+        "from": "indexer:handler:handleDcaScheduleCompleted",
+        "to": "runtime:pallet:DCA:event:Completed"
+      },
+      {
+        "from": "indexer:handler:handleDcaScheduleTerminated",
+        "to": "runtime:pallet:DCA:event:Terminated"
+      },
+      {
+        "from": "indexer:handler:handleDcaScheduleExecutionPlanned",
+        "to": "runtime:pallet:DCA:event:ExecutionPlanned"
+      },
+      {
+        "from": "indexer:handler:handleDcaTradeExecuted",
+        "to": "runtime:pallet:DCA:event:TradeExecuted"
+      },
+      {
+        "from": "indexer:handler:handleDcaTradeFailed",
+        "to": "runtime:pallet:DCA:event:TradeFailed"
+      },
+      {
+        "from": "indexer:handler:handleEvmAccountsBoundEvent",
+        "to": "runtime:pallet:EVMAccounts:event:Bound"
+      },
+      {
+        "from": "indexer:handler:handleOtcOrderPlaced",
+        "to": "runtime:pallet:OTC:event:Placed"
+      },
+      {
+        "from": "indexer:handler:handleOtcOrderCancelled",
+        "to": "runtime:pallet:OTC:event:Cancelled"
+      },
+      {
+        "from": "indexer:handler:handleOtcOrderFilled",
+        "to": "runtime:pallet:OTC:event:Filled"
+      },
+      {
+        "from": "indexer:handler:handleOtcOrderPartiallyFilled",
+        "to": "runtime:pallet:OTC:event:PartiallyFilled"
+      },
+      {
+        "from": "indexer:handler:handleBroadcastSwappedEvent",
+        "to": "runtime:pallet:Broadcast:event:Swapped3"
+      },
+      {
+        "from": "indexer:handler:handleBalancesTransfer",
+        "to": "runtime:pallet:Balances:event:Transfer"
+      },
+      {
+        "from": "indexer:handler:handleTokensTransfer",
+        "to": "runtime:pallet:Tokens:event:Transfer"
+      },
+      {
+        "from": "indexer:handler:handleCurrenciesTransfer",
+        "to": "runtime:pallet:Currencies:event:Transferred"
+      },
+      {
+        "from": "indexer:handler:handleUniquesItemTransferred",
+        "to": "runtime:pallet:Uniques:event:Transferred"
+      },
+      {
+        "from": "indexer:handler:lpbSellExecuted",
+        "to": "runtime:pallet:LBP:event:BuyExecuted"
+      },
+      {
+        "from": "indexer:handler:lpbSellExecuted",
+        "to": "runtime:pallet:LBP:event:SellExecuted"
+      },
+      {
+        "from": "indexer:handler:omnipoolBuySellExecuted",
+        "to": "runtime:pallet:Omnipool:event:BuyExecuted"
+      },
+      {
+        "from": "indexer:handler:omnipoolBuySellExecuted",
+        "to": "runtime:pallet:Omnipool:event:SellExecuted"
+      },
+      {
+        "from": "indexer:handler:stablepoolBuySellExecuted",
+        "to": "runtime:pallet:Stableswap:event:BuyExecuted"
+      },
+      {
+        "from": "indexer:handler:stablepoolBuySellExecuted",
+        "to": "runtime:pallet:Stableswap:event:SellExecuted"
+      },
+      {
+        "from": "indexer:handler:stablepoolBuySellExecuted",
+        "to": "runtime:pallet:Stableswap:event:LiquidityAdded"
+      },
+      {
+        "from": "indexer:handler:stablepoolBuySellExecuted",
+        "to": "runtime:pallet:Stableswap:event:LiquidityRemoved"
+      },
+      {
+        "from": "indexer:handler:xykSellExecuted",
+        "to": "runtime:pallet:XYK:event:BuyExecuted"
+      },
+      {
+        "from": "indexer:handler:xykSellExecuted",
+        "to": "runtime:pallet:XYK:event:SellExecuted"
+      },
+      {
+        "from": "indexer:handler:handleOmnipoolLMSharesDeposited",
+        "to": "runtime:pallet:OmnipoolLiquidityMining:event:SharesDeposited"
+      },
+      {
+        "from": "indexer:handler:handleOmnipoolLMDepositDestroyed",
+        "to": "runtime:pallet:OmnipoolLiquidityMining:event:DepositDestroyed"
+      },
+      {
+        "from": "indexer:handler:handleOmnipoolLiquidityPositionCreated",
+        "to": "runtime:pallet:Omnipool:event:PositionCreated"
+      },
+      {
+        "from": "indexer:handler:handleOmnipoolLiquidityPositionUpdated",
+        "to": "runtime:pallet:Omnipool:event:PositionUpdated"
+      },
+      {
+        "from": "indexer:handler:handleOmnipoolLiquidityPositionDestroyed",
+        "to": "runtime:pallet:Omnipool:event:PositionDestroyed"
+      },
+      {
+        "from": "indexer:handler:handleXylpoolLMSharesDeposited",
+        "to": "runtime:pallet:XYKLiquidityMining:event:SharesDeposited"
+      },
+      {
+        "from": "indexer:handler:handleXylpoolLMDepositDestroyed",
+        "to": "runtime:pallet:XYKLiquidityMining:event:DepositDestroyed"
+      },
+      {
+        "from": "indexer:handler:lpbpoolCreated",
+        "to": "runtime:pallet:LBP:event:PoolCreated"
+      },
+      {
+        "from": "indexer:handler:lpbpoolUpdated",
+        "to": "runtime:pallet:LBP:event:PoolUpdated"
+      },
+      {
+        "from": "indexer:handler:omnipoolTokenAdded",
+        "to": "runtime:pallet:Omnipool:event:TokenAdded"
+      },
+      {
+        "from": "indexer:handler:omnipoolTokenRemoved",
+        "to": "runtime:pallet:Omnipool:event:TokenRemoved"
+      },
+      {
+        "from": "indexer:handler:stableswapCreated",
+        "to": "runtime:pallet:Stableswap:event:PoolCreated"
+      },
+      {
+        "from": "indexer:handler:xykPoolCreated",
+        "to": "runtime:pallet:XYK:event:PoolCreated"
+      },
+      {
+        "from": "indexer:handler:xykPoolDestroyed",
+        "to": "runtime:pallet:XYK:event:PoolDestroyed"
+      },
+      {
+        "from": "indexer:handler:handleCollateralAddedEvent",
+        "to": "runtime:pallet:HSM:event:CollateralAdded"
+      },
+      {
+        "from": "indexer:handler:handleCollateralUpdatedEvent",
+        "to": "runtime:pallet:HSM:event:CollateralUpdated"
+      },
+      {
+        "from": "indexer:handler:handleCollateralRemovedEvent",
+        "to": "runtime:pallet:HSM:event:CollateralRemoved"
+      }
+    ]
+  }
+}

@@ -1,0 +1,894 @@
+{
+  "useAccountInfo": {
+    "category": "account",
+    "file": "apps/main/src/api/account.ts"
+  },
+  "useAccountOmnipoolPositions": {
+    "category": "account",
+    "file": "apps/main/src/api/account.ts"
+  },
+  "useAccountOmnipoolMiningPositions": {
+    "category": "account",
+    "file": "apps/main/src/api/account.ts"
+  },
+  "useAccountXykMiningPositions": {
+    "category": "account",
+    "file": "apps/main/src/api/account.ts"
+  },
+  "useAccountUniques": {
+    "category": "account",
+    "file": "apps/main/src/api/account.ts"
+  },
+  "useAccountPermitNonce": {
+    "category": "account",
+    "file": "apps/main/src/api/account.ts"
+  },
+  "useRelayChainBlockNumber": {
+    "category": "chain",
+    "file": "apps/main/src/api/chain.ts"
+  },
+  "useBestNumber": {
+    "category": "chain",
+    "file": "apps/main/src/api/chain.ts"
+  },
+  "useInvalidateOnBlock": {
+    "category": "chain",
+    "file": "apps/main/src/api/chain.ts"
+  },
+  "useEstimateFutureBlockTimestamp": {
+    "category": "chain",
+    "file": "apps/main/src/api/chain.ts"
+  },
+  "useBlockTimestamp": {
+    "category": "chain",
+    "file": "apps/main/src/api/chain.ts"
+  },
+  "useChainSpecData": {
+    "category": "chain",
+    "file": "apps/main/src/api/chain.ts"
+  },
+  "useSquidUrl": {
+    "category": "chain",
+    "file": "apps/main/src/api/provider.ts"
+  },
+  "useIndexerUrl": {
+    "category": "chain",
+    "file": "apps/main/src/api/provider.ts"
+  },
+  "useSnowbridgeUrl": {
+    "category": "chain",
+    "file": "apps/main/src/api/provider.ts"
+  },
+  "useActiveProviderProps": {
+    "category": "chain",
+    "file": "apps/main/src/api/provider.ts"
+  },
+  "useProviderMetadata": {
+    "category": "chain",
+    "file": "apps/main/src/api/provider.ts"
+  },
+  "useSquidClient": {
+    "category": "chain",
+    "file": "apps/main/src/api/provider.ts"
+  },
+  "useIndexerClient": {
+    "category": "chain",
+    "file": "apps/main/src/api/provider.ts"
+  },
+  "useSnowbridgeClient": {
+    "category": "chain",
+    "file": "apps/main/src/api/provider.ts"
+  },
+  "useRpcStatus": {
+    "category": "chain",
+    "file": "apps/main/src/api/rpc.ts"
+  },
+  "useRpcsStatus": {
+    "category": "chain",
+    "file": "apps/main/src/api/rpc.ts"
+  },
+  "useBindEvmAccount": {
+    "category": "transactions",
+    "file": "apps/main/src/api/evm.ts"
+  },
+  "usePermitNonce": {
+    "category": "transactions",
+    "file": "apps/main/src/api/evm.ts"
+  },
+  "useAcceptedFeePaymentAssets": {
+    "category": "transactions",
+    "file": "apps/main/src/api/payments.ts"
+  },
+  "useAccountFeePaymentAssetId": {
+    "category": "transactions",
+    "file": "apps/main/src/api/payments.ts"
+  },
+  "useAccountFeePaymentAssets": {
+    "category": "transactions",
+    "file": "apps/main/src/api/payments.ts"
+  },
+  "useSetFeePaymentAsset": {
+    "category": "transactions",
+    "file": "apps/main/src/api/payments.ts"
+  },
+  "useEstimateFee": {
+    "category": "transactions",
+    "file": "apps/main/src/modules/transactions/hooks/useEstimateFee.ts"
+  },
+  "useNonce": {
+    "category": "transactions",
+    "file": "apps/main/src/modules/transactions/hooks/useNonce.ts"
+  },
+  "usePolkadotJSExtrinsicUrl": {
+    "category": "transactions",
+    "file": "apps/main/src/modules/transactions/hooks/usePolkadotJSExtrinsicUrl.ts"
+  },
+  "useProcessTransactionToasts": {
+    "category": "transactions",
+    "file": "apps/main/src/modules/transactions/hooks/useProcessTransactionToasts.ts"
+  },
+  "useSignAndSubmit": {
+    "category": "transactions",
+    "file": "apps/main/src/modules/transactions/hooks/useSignAndSubmit.ts"
+  },
+  "useTransactionAlerts": {
+    "category": "transactions",
+    "file": "apps/main/src/modules/transactions/hooks/useTransactionAlerts.ts"
+  },
+  "useTransactionEcosystem": {
+    "category": "transactions",
+    "file": "apps/main/src/modules/transactions/hooks/useTransactionEcosystem.ts"
+  },
+  "useTransactionPaymentInfo": {
+    "category": "transactions",
+    "file": "apps/main/src/modules/transactions/hooks/useTransactionPaymentInfo.ts"
+  },
+  "useTransactionTip": {
+    "category": "transactions",
+    "file": "apps/main/src/modules/transactions/hooks/useTransactionTip.ts"
+  },
+  "useTransactionToastProcessorFn": {
+    "category": "transactions",
+    "file": "apps/main/src/modules/transactions/hooks/useTransactionToastProcessorFn.ts"
+  },
+  "useTransactionToasts": {
+    "category": "transactions",
+    "file": "apps/main/src/modules/transactions/hooks/useTransactionToasts.ts"
+  },
+  "useTipForm": {
+    "category": "transactions",
+    "file": "apps/main/src/modules/transactions/review/ReviewTransactionTip/components/TipForm.form.ts"
+  },
+  "useOmnipoolFarms": {
+    "category": "farms",
+    "file": "apps/main/src/api/farms.ts"
+  },
+  "useIsolatedPoolsFarms": {
+    "category": "farms",
+    "file": "apps/main/src/api/farms.ts"
+  },
+  "useIsolatedPoolFarms": {
+    "category": "farms",
+    "file": "apps/main/src/api/farms.ts"
+  },
+  "useOmnipoolActiveFarm": {
+    "category": "farms",
+    "file": "apps/main/src/api/farms.ts"
+  },
+  "useFarmRewards": {
+    "category": "farms",
+    "file": "apps/main/src/api/farms.ts"
+  },
+  "useOmnipoolAssetsData": {
+    "category": "omnipool",
+    "file": "apps/main/src/api/omnipool.ts"
+  },
+  "useMaxAddLiquidityLimit": {
+    "category": "omnipool",
+    "file": "apps/main/src/api/omnipool.ts"
+  },
+  "useOmnipoolMinLiquidity": {
+    "category": "omnipool",
+    "file": "apps/main/src/api/omnipool.ts"
+  },
+  "useMinWithdrawalFee": {
+    "category": "omnipool",
+    "file": "apps/main/src/api/omnipool.ts"
+  },
+  "useAssetFeeParameters": {
+    "category": "omnipool",
+    "file": "apps/main/src/api/omnipool.ts"
+  },
+  "useOraclePrice": {
+    "category": "omnipool",
+    "file": "apps/main/src/api/omnipool.ts"
+  },
+  "useXykPools": {
+    "category": "pools",
+    "file": "apps/main/src/api/pools.ts"
+  },
+  "useXykPool": {
+    "category": "pools",
+    "file": "apps/main/src/api/pools.ts"
+  },
+  "useStablePools": {
+    "category": "pools",
+    "file": "apps/main/src/api/pools.ts"
+  },
+  "useOmnipoolIds": {
+    "category": "pools",
+    "file": "apps/main/src/api/pools.ts"
+  },
+  "usePriceSubscriber": {
+    "category": "trade",
+    "file": "apps/main/src/api/spotPrice.ts"
+  },
+  "useSubscribedPriceKeys": {
+    "category": "trade",
+    "file": "apps/main/src/api/spotPrice.ts"
+  },
+  "useShareTokenPrices": {
+    "category": "trade",
+    "file": "apps/main/src/api/spotPrice.ts"
+  },
+  "usePastExecutionsData": {
+    "category": "trade",
+    "file": "apps/main/src/modules/trade/orders/PastExecutions/usePastExecutionsData.ts"
+  },
+  "useOrdersData": {
+    "category": "trade",
+    "file": "apps/main/src/modules/trade/orders/lib/useOrdersData.ts"
+  },
+  "useRoutedTradesData": {
+    "category": "trade",
+    "file": "apps/main/src/modules/trade/orders/lib/useRoutedTradesData.ts"
+  },
+  "useSwapsData": {
+    "category": "trade",
+    "file": "apps/main/src/modules/trade/orders/lib/useSwapsData.ts"
+  },
+  "useTerminateDcaSchedule": {
+    "category": "trade",
+    "file": "apps/main/src/modules/trade/orders/lib/useTerminateDcaSchedule.ts"
+  },
+  "useSubmitCancelOtcOrder": {
+    "category": "trade",
+    "file": "apps/main/src/modules/trade/otc/cancel-order/CancelOtcOrderModalContent.submit.ts"
+  },
+  "useFillOrderForm": {
+    "category": "trade",
+    "file": "apps/main/src/modules/trade/otc/fill-order/FillOrderModalContent.form.ts"
+  },
+  "useSubmitFillOrder": {
+    "category": "trade",
+    "file": "apps/main/src/modules/trade/otc/fill-order/FillOrderModalContent.submit.ts"
+  },
+  "useOtcHeaderData": {
+    "category": "trade",
+    "file": "apps/main/src/modules/trade/otc/header/OtcHeader.data.ts"
+  },
+  "usePlaceOrderForm": {
+    "category": "trade",
+    "file": "apps/main/src/modules/trade/otc/place-order/PlaceOrderModalContent.form.ts"
+  },
+  "useSubmitPlaceOrder": {
+    "category": "trade",
+    "file": "apps/main/src/modules/trade/otc/place-order/PlaceOrderModalContent.submit.ts"
+  },
+  "useInitialOtcOfferAmount": {
+    "category": "trade",
+    "file": "apps/main/src/modules/trade/otc/table/columns/OfferStatusColumn.utils.ts"
+  },
+  "useTradeChartData": {
+    "category": "trade",
+    "file": "apps/main/src/modules/trade/swap/components/TradeChart/TradeChart.data.ts"
+  },
+  "useDcaForm": {
+    "category": "trade",
+    "file": "apps/main/src/modules/trade/swap/sections/DCA/useDcaForm.ts"
+  },
+  "useDcaPriceImpactValidation": {
+    "category": "trade",
+    "file": "apps/main/src/modules/trade/swap/sections/DCA/useDcaPriceImpactValidation.ts"
+  },
+  "useDcaTradeOrder": {
+    "category": "trade",
+    "file": "apps/main/src/modules/trade/swap/sections/DCA/useDcaTradeOrder.ts"
+  },
+  "useSubmitDcaOrder": {
+    "category": "trade",
+    "file": "apps/main/src/modules/trade/swap/sections/DCA/useSubmitDcaOrder.ts"
+  },
+  "useSwitchAssets": {
+    "category": "trade",
+    "file": "apps/main/src/modules/trade/swap/sections/Market/lib/useSwitchAssets.ts"
+  },
+  "useMarketBuyData": {
+    "category": "trade",
+    "file": "apps/main/src/modules/trade/swap/sections/Market/Market.BuyData.ts"
+  },
+  "useMarketSellData": {
+    "category": "trade",
+    "file": "apps/main/src/modules/trade/swap/sections/Market/Market.SellData.ts"
+  },
+  "useDcaSettingsForm": {
+    "category": "trade",
+    "file": "apps/main/src/modules/trade/swap/components/SettingsModal/DcaSettings/useDcaSettingsForm.ts"
+  },
+  "useSwapSettingsForm": {
+    "category": "trade",
+    "file": "apps/main/src/modules/trade/swap/components/SettingsModal/SwapSettings/useSwapSettingsForm.ts"
+  },
+  "useCalculateBuyAmount": {
+    "category": "trade",
+    "file": "apps/main/src/modules/trade/swap/sections/Market/lib/useCalculateBuyAmount.ts"
+  },
+  "useCalculateSellAmount": {
+    "category": "trade",
+    "file": "apps/main/src/modules/trade/swap/sections/Market/lib/useCalculateSellAmount.ts"
+  },
+  "useMarketForm": {
+    "category": "trade",
+    "file": "apps/main/src/modules/trade/swap/sections/Market/lib/useMarketForm.ts"
+  },
+  "useSubmitSwap": {
+    "category": "trade",
+    "file": "apps/main/src/modules/trade/swap/sections/Market/lib/useSubmitSwap.ts"
+  },
+  "useSubmitTwap": {
+    "category": "trade",
+    "file": "apps/main/src/modules/trade/swap/sections/Market/lib/useSubmitTwap.ts"
+  },
+  "useStableswap": {
+    "category": "stableswap",
+    "file": "apps/main/src/api/stableswap.ts"
+  },
+  "useStableSwapTradability": {
+    "category": "stableswap",
+    "file": "apps/main/src/api/stableswap.ts"
+  },
+  "useInvalidateStakeData": {
+    "category": "staking",
+    "file": "apps/main/src/api/staking.ts"
+  },
+  "useClaimStaking": {
+    "category": "staking",
+    "file": "apps/main/src/modules/staking/ClaimStaking.tx.ts"
+  },
+  "useStakingSupply": {
+    "category": "staking",
+    "file": "apps/main/src/modules/staking/DashboardStats.data.ts"
+  },
+  "useStakingAPR": {
+    "category": "staking",
+    "file": "apps/main/src/modules/staking/DashboardStats.data.ts"
+  },
+  "useReferendaState": {
+    "category": "staking",
+    "file": "apps/main/src/modules/staking/Referenda.utils.ts"
+  },
+  "useRewardsCurveData": {
+    "category": "staking",
+    "file": "apps/main/src/modules/staking/RewardsCurve.data.ts"
+  },
+  "useProcessedVotes": {
+    "category": "staking",
+    "file": "apps/main/src/modules/staking/Stake.data.ts"
+  },
+  "usePendingVotes": {
+    "category": "staking",
+    "file": "apps/main/src/modules/staking/Stake.data.ts"
+  },
+  "useStakeForm": {
+    "category": "staking",
+    "file": "apps/main/src/modules/staking/Stake.form.ts"
+  },
+  "useStake": {
+    "category": "staking",
+    "file": "apps/main/src/modules/staking/Stake.stake.ts"
+  },
+  "useUnstake": {
+    "category": "staking",
+    "file": "apps/main/src/modules/staking/Stake.unstake.ts"
+  },
+  "useIncreaseStake": {
+    "category": "staking",
+    "file": "apps/main/src/modules/staking/Stake.utils.ts"
+  },
+  "useAccountBalanceSubscription": {
+    "category": "utils",
+    "file": "apps/main/src/api/subscriptions.ts"
+  },
+  "useCountdown": {
+    "category": "utils",
+    "file": "apps/main/src/hooks/useCountdown.ts"
+  },
+  "useCsvDownload": {
+    "category": "utils",
+    "file": "apps/main/src/hooks/useCsvDownload.ts"
+  },
+  "useIsActiveQueries": {
+    "category": "utils",
+    "file": "apps/main/src/hooks/useIsActiveQueries.ts"
+  },
+  "useObservable": {
+    "category": "utils",
+    "file": "apps/main/src/hooks/useObservable.ts"
+  },
+  "useObservableQuery": {
+    "category": "utils",
+    "file": "apps/main/src/hooks/useObservableQuery.ts"
+  },
+  "usePapiObservableQuery": {
+    "category": "utils",
+    "file": "apps/main/src/hooks/usePapiObservableQuery.ts"
+  },
+  "useRouteBlock": {
+    "category": "utils",
+    "file": "apps/main/src/hooks/useRouteBlock.ts"
+  },
+  "useSaveFormOnChange": {
+    "category": "utils",
+    "file": "apps/main/src/hooks/useSaveFormOnChange.ts"
+  },
+  "useVisibleElements": {
+    "category": "utils",
+    "file": "apps/main/src/hooks/useVisibleElements.ts"
+  },
+  "useAccountData": {
+    "category": "utils",
+    "file": "apps/main/src/states/account.ts"
+  },
+  "useAccountBalances": {
+    "category": "utils",
+    "file": "apps/main/src/states/account.ts"
+  },
+  "useAccountBalance": {
+    "category": "utils",
+    "file": "apps/main/src/states/account.ts"
+  },
+  "useAccountPositions": {
+    "category": "utils",
+    "file": "apps/main/src/states/account.ts"
+  },
+  "useAccountOmnipoolPositionsData": {
+    "category": "utils",
+    "file": "apps/main/src/states/account.ts"
+  },
+  "useAccountBalancesWithPriceByAssetType": {
+    "category": "utils",
+    "file": "apps/main/src/states/account.ts"
+  },
+  "useAssetRegistryStore": {
+    "category": "utils",
+    "file": "apps/main/src/states/assetRegistry.ts"
+  },
+  "useAssetRegistry": {
+    "category": "utils",
+    "file": "apps/main/src/states/assetRegistry.ts"
+  },
+  "useDisplayAssetStore": {
+    "category": "utils",
+    "file": "apps/main/src/states/displayAsset.ts"
+  },
+  "useDisplaySpotPriceStore": {
+    "category": "utils",
+    "file": "apps/main/src/states/displayAsset.ts"
+  },
+  "useAssetsPrice": {
+    "category": "utils",
+    "file": "apps/main/src/states/displayAsset.ts"
+  },
+  "useAssetPrice": {
+    "category": "utils",
+    "file": "apps/main/src/states/displayAsset.ts"
+  },
+  "useFormatOmnipoolPositionData": {
+    "category": "utils",
+    "file": "apps/main/src/states/liquidity.ts"
+  },
+  "useOmnipoolPositionData": {
+    "category": "utils",
+    "file": "apps/main/src/states/liquidity.ts"
+  },
+  "useOmnipoolAssetsStore": {
+    "category": "utils",
+    "file": "apps/main/src/states/liquidity.ts"
+  },
+  "useOmnipoolStablepoolAssets": {
+    "category": "utils",
+    "file": "apps/main/src/states/liquidity.ts"
+  },
+  "useOmnipoolAsset": {
+    "category": "utils",
+    "file": "apps/main/src/states/liquidity.ts"
+  },
+  "useXYKPoolsStore": {
+    "category": "utils",
+    "file": "apps/main/src/states/liquidity.ts"
+  },
+  "useXYKPools": {
+    "category": "utils",
+    "file": "apps/main/src/states/liquidity.ts"
+  },
+  "useXYKPool": {
+    "category": "utils",
+    "file": "apps/main/src/states/liquidity.ts"
+  },
+  "useApiMetadataStore": {
+    "category": "utils",
+    "file": "apps/main/src/states/metadata.ts"
+  },
+  "useRpcListStore": {
+    "category": "utils",
+    "file": "apps/main/src/states/provider.ts"
+  },
+  "useProviderRpcUrlStore": {
+    "category": "utils",
+    "file": "apps/main/src/states/provider.ts"
+  },
+  "useTradeSettings": {
+    "category": "utils",
+    "file": "apps/main/src/states/tradeSettings.ts"
+  },
+  "useTransactionsStore": {
+    "category": "utils",
+    "file": "apps/main/src/states/transactions.ts"
+  },
+  "useValidateFormMaxBalance": {
+    "category": "utils",
+    "file": "apps/main/src/utils/validators.ts"
+  },
+  "useDefillamaLatestApyQuery": {
+    "category": "utils",
+    "file": "apps/main/src/api/external/defillama.ts"
+  },
+  "useDefillamaLatestApyQueries": {
+    "category": "utils",
+    "file": "apps/main/src/api/external/defillama.ts"
+  },
+  "useAssetSelectModalAssets": {
+    "category": "utils",
+    "file": "apps/main/src/components/AssetSelectModal/AssetSelectModal.utils.ts"
+  },
+  "useFilteredSearchAssets": {
+    "category": "utils",
+    "file": "apps/main/src/components/AssetSelectModal/AssetSelectModal.utils.ts"
+  },
+  "useElapsedTimeStatus": {
+    "category": "utils",
+    "file": "apps/main/src/components/ProviderRpcSelect/ProviderRpcSelect.utils.ts"
+  },
+  "useReferralRewards": {
+    "category": "utils",
+    "file": "apps/main/src/hooks/data/useReferralRewards.ts"
+  },
+  "useStakingRewards": {
+    "category": "utils",
+    "file": "apps/main/src/hooks/data/useStakingRewards.ts"
+  },
+  "useHasTopNavbar": {
+    "category": "utils",
+    "file": "apps/main/src/modules/layout/use-has-top-navbar.ts"
+  },
+  "useRpcFormSchema": {
+    "category": "utils",
+    "file": "apps/main/src/components/ProviderRpcSelect/components/RpcForm.utils.ts"
+  },
+  "useMenuTranslations": {
+    "category": "utils",
+    "file": "apps/main/src/modules/layout/components/HeaderMenu.utils.ts"
+  },
+  "useVisibleHeaderMenuItems": {
+    "category": "utils",
+    "file": "apps/main/src/modules/layout/components/HeaderMenu.utils.ts"
+  },
+  "useXYKPoolWithLiquidity": {
+    "category": "xyk",
+    "file": "apps/main/src/api/xyk.ts"
+  },
+  "useXYKConsts": {
+    "category": "xyk",
+    "file": "apps/main/src/api/xyk.ts"
+  },
+  "useXykShareTokenEntries": {
+    "category": "xyk",
+    "file": "apps/main/src/api/xyk.ts"
+  },
+  "useBorrowPoolDataContract": {
+    "category": "borrow",
+    "file": "apps/main/src/api/borrow/contracts.ts"
+  },
+  "useBorrowIncentivesContract": {
+    "category": "borrow",
+    "file": "apps/main/src/api/borrow/contracts.ts"
+  },
+  "useGhoServiceContract": {
+    "category": "borrow",
+    "file": "apps/main/src/api/borrow/contracts.ts"
+  },
+  "useBorrowAssetsApy": {
+    "category": "borrow",
+    "file": "apps/main/src/api/borrow/hooks.ts"
+  },
+  "useBorrowClaimableRewards": {
+    "category": "borrow",
+    "file": "apps/main/src/api/borrow/hooks.ts"
+  },
+  "useBorrowIncentives": {
+    "category": "borrow",
+    "file": "apps/main/src/api/borrow/queries.ts"
+  },
+  "useBorrowReserves": {
+    "category": "borrow",
+    "file": "apps/main/src/api/borrow/queries.ts"
+  },
+  "userBorrowReservesQuery": {
+    "category": "borrow",
+    "file": "apps/main/src/api/borrow/queries.ts"
+  },
+  "useUserBorrowReserves": {
+    "category": "borrow",
+    "file": "apps/main/src/api/borrow/queries.ts"
+  },
+  "useBorrowUserIncentives": {
+    "category": "borrow",
+    "file": "apps/main/src/api/borrow/queries.ts"
+  },
+  "useGhoReserveData": {
+    "category": "borrow",
+    "file": "apps/main/src/api/borrow/queries.ts"
+  },
+  "useGhoUserData": {
+    "category": "borrow",
+    "file": "apps/main/src/api/borrow/queries.ts"
+  },
+  "userBorrowSummaryQuery": {
+    "category": "borrow",
+    "file": "apps/main/src/api/borrow/queries.ts"
+  },
+  "useUserBorrowSummary": {
+    "category": "borrow",
+    "file": "apps/main/src/api/borrow/queries.ts"
+  },
+  "useGetClaimAllBorrowRewardsTx": {
+    "category": "borrow",
+    "file": "apps/main/src/api/borrow/queries.ts"
+  },
+  "useBorrowHistoryFilters": {
+    "category": "borrow",
+    "file": "apps/main/src/modules/borrow/history/BorrowHistoryFilter.utils.ts"
+  },
+  "useFormatEventName": {
+    "category": "borrow",
+    "file": "apps/main/src/modules/borrow/history/utils.ts"
+  },
+  "useApyBreakdownItems": {
+    "category": "borrow",
+    "file": "apps/main/src/modules/borrow/hooks/useApyBreakdownItems.ts"
+  },
+  "useExternalApyData": {
+    "category": "borrow",
+    "file": "apps/main/src/modules/borrow/hooks/useExternalApyData.ts"
+  },
+  "useFormatReserve": {
+    "category": "borrow",
+    "file": "apps/main/src/modules/borrow/hooks/useFormatReserve.ts"
+  },
+  "useDownloadTransactionsCsv": {
+    "category": "wallet",
+    "file": "apps/main/src/modules/wallet/transactions/WalletTransactionsTableHeader.utils.ts"
+  },
+  "useNetWorthData": {
+    "category": "wallet",
+    "file": "apps/main/src/modules/wallet/assets/Balances/NetWorth.data.ts"
+  },
+  "useUnlockNativeLocks": {
+    "category": "wallet",
+    "file": "apps/main/src/modules/wallet/assets/MyAssets/AssetDetailUnlock.tx.ts"
+  },
+  "useNativeAssetLocks": {
+    "category": "wallet",
+    "file": "apps/main/src/modules/wallet/assets/MyAssets/ExpandedNativeRow.data.ts"
+  },
+  "useUnlockableNativeTokens": {
+    "category": "wallet",
+    "file": "apps/main/src/modules/wallet/assets/MyAssets/ExpandedNativeRow.data.ts"
+  },
+  "useMyAssetsTableData": {
+    "category": "wallet",
+    "file": "apps/main/src/modules/wallet/assets/MyAssets/MyAssetsTable.data.ts"
+  },
+  "useMyIsolatedPoolsLiquidity": {
+    "category": "wallet",
+    "file": "apps/main/src/modules/wallet/assets/MyLiquidity/MyIsolatedPoolsLiquidity.data.ts"
+  },
+  "useMyLiquidityTableData": {
+    "category": "wallet",
+    "file": "apps/main/src/modules/wallet/assets/MyLiquidity/MyLiquidityTable.data.ts"
+  },
+  "useClaimAllWalletRewards": {
+    "category": "wallet",
+    "file": "apps/main/src/modules/wallet/assets/Rewards/WalletRewardsSection.claim.ts"
+  },
+  "useWalletRewardsSectionData": {
+    "category": "wallet",
+    "file": "apps/main/src/modules/wallet/assets/Rewards/WalletRewardsSection.data.ts"
+  },
+  "useTransferPositionForm": {
+    "category": "wallet",
+    "file": "apps/main/src/modules/wallet/assets/Transfer/TransferPosition.form.ts"
+  },
+  "useInsufficientTransferFee": {
+    "category": "wallet",
+    "file": "apps/main/src/modules/wallet/assets/Transfer/TransferPosition.utils.ts"
+  },
+  "usePaymentFees": {
+    "category": "wallet",
+    "file": "apps/main/src/modules/wallet/assets/Transfer/TransferPosition.utils.ts"
+  },
+  "useTransferPaymentInfo": {
+    "category": "wallet",
+    "file": "apps/main/src/modules/wallet/assets/Transfer/TransferPosition.utils.ts"
+  },
+  "useSubmitTransferPosition": {
+    "category": "wallet",
+    "file": "apps/main/src/modules/wallet/assets/Transfer/TransferPositionModal.submit.ts"
+  },
+  "useAddIsolatedLiquidityZod": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/AddIsolatediquidity/AddIsolatedLiquidity.utils.ts"
+  },
+  "useAddIsolatedLiquidity": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/AddIsolatediquidity/AddIsolatedLiquidity.utils.ts"
+  },
+  "useLiquidityOmnipoolShares": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/AddLiquidity/AddLiqudity.utils.ts"
+  },
+  "useCheckJoinOmnipoolFarm": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/AddLiquidity/AddLiqudity.utils.ts"
+  },
+  "useAddToOmnipoolZod": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/AddLiquidity/AddLiqudity.utils.ts"
+  },
+  "useAddLiquidityForm": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/AddLiquidity/AddLiqudity.utils.ts"
+  },
+  "useAddLiquidity": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/AddLiquidity/AddLiqudity.utils.ts"
+  },
+  "useStablepoolAddLiquidity": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/AddStablepoolLiquidity/AddStablepoolLiquidity.utils.ts"
+  },
+  "useStablepoolAddLiquidityForm": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/AddStablepoolLiquidity/AddStablepoolLiquidity.utils.ts"
+  },
+  "useAssetsToAddToMoneyMarket": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/AddStablepoolLiquidity/AddStablepoolLiquidity.utils.ts"
+  },
+  "useAssetsToAddToStablepool": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/AddStablepoolLiquidity/AddStablepoolLiquidity.utils.ts"
+  },
+  "useIsolatedPoolForm": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/CreateIsolatedPool/CreateIsolatedPool.utils.ts"
+  },
+  "useSubmitCreateIsolatedPool": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/CreateIsolatedPool/CreateIsolatedPool.utils.ts"
+  },
+  "useAllowedXYKPoolAssets": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/CreateIsolatedPool/CreateIsolatedPool.utils.ts"
+  },
+  "useSecondsToLeft": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/Farms/Farms.utils.ts"
+  },
+  "useCurrentFarmPeriod": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/Farms/Farms.utils.ts"
+  },
+  "useEnteredDate": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/Farms/Farms.utils.ts"
+  },
+  "useLoyaltyRates": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/Farms/Farms.utils.ts"
+  },
+  "useDepositAprs": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/Farms/Farms.utils.ts"
+  },
+  "useExitDepositFarmsMutation": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/Farms/Farms.utils.ts"
+  },
+  "useJoinOmnipoolFarms": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/JoinFarms/JoinFarms.utils.ts"
+  },
+  "useXYKFarmMinShares": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/JoinFarms/JoinFarms.utils.ts"
+  },
+  "useMinOmnipoolFarmJoin": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/JoinFarms/JoinFarms.utils.ts"
+  },
+  "useJoinIsolatedPoolFarms": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/JoinFarms/JoinFarms.utils.ts"
+  },
+  "useJoinFarmsForm": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/JoinFarms/JoinFarms.utils.ts"
+  },
+  "useLiquidityMiningRewards": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/PoolsHeader/ClaimRewardsButton.utils.ts"
+  },
+  "useClaimPositionRewards": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/PoolsHeader/ClaimRewardsButton.utils.ts"
+  },
+  "useSummarizeClaimableValues": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/PoolsHeader/ClaimRewardsButton.utils.ts"
+  },
+  "useClaimFarmRewardsMutation": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/PoolsHeader/ClaimRewardsButton.utils.ts"
+  },
+  "useMyLiquidityTotals": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/PoolsHeader/MyLiquidity.data.ts"
+  },
+  "useIsolatedPositions": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/PositionsTable/PositionsTable.utils.ts"
+  },
+  "useOmnipoolPositions": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/PositionsTable/PositionsTable.utils.ts"
+  },
+  "useUserPositionsTotal": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/PositionsTable/PositionsTable.utils.ts"
+  },
+  "useUserIsolatedPositionsTotal": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/PositionsTable/PositionsTable.utils.ts"
+  },
+  "useRemoveSingleOmnipoolPosition": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/RemoveLiquidity/RemoveOmnipoolLiquidity.utils.ts"
+  },
+  "useRemoveMultipleOmnipoolPositions": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/RemoveLiquidity/RemoveOmnipoolLiquidity.utils.ts"
+  },
+  "useRemoveLiquidityForm": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/RemoveLiquidity/RemoveOmnipoolLiquidity.utils.ts"
+  },
+  "useStablepoolRemoveLiquidity": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/RemoveLiquidity/RemoveStablepoolLiquidity.utils.ts"
+  },
+  "useRemoveStablepoolLiquidityForm": {
+    "category": "liquidity",
+    "file": "apps/main/src/modules/liquidity/components/RemoveLiquidity/RemoveStablepoolLiquidity.utils.ts"
+  }
+}

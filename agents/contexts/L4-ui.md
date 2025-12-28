@@ -1,0 +1,1379 @@
+# L4: UI Context
+
+> **Auto-generated** - Do not edit manually.
+> Extracted: 2025-12-27T00:24:57.531Z
+> Commit: `eb7c539` (next)
+
+## Summary
+
+| Metric | Count |
+|--------|-------|
+| Components | 858 |
+| Hooks | 226 |
+| SDK Calls | 195 |
+| Indexer Queries | 282 |
+
+## Components by Feature
+
+### Shared Components (442)
+
+<details>
+<summary>Show all 442 components</summary>
+
+- AssetAmount — `apps/main/src/components/AssetAmount/AssetAmount.tsx`
+- AssetHeader — `apps/main/src/components/AssetHeader/AssetHeader.tsx`
+- AssetLabelFull — `apps/main/src/components/AssetLabelFull/AssetLabelFull.tsx`
+- AssetLabelXYK — `apps/main/src/components/AssetLabelFull/AssetLabelFull.tsx`
+- AssetLabelStablepool — `apps/main/src/components/AssetLabelFull/AssetLabelFull.tsx`
+- AssetLabelFullContainer — `apps/main/src/components/AssetLabelFull/AssetLabelFull.tsx`
+- AssetLogo — `apps/main/src/components/AssetLogo/AssetLogo.tsx`
+- AssetPrice — `apps/main/src/components/AssetPrice/AssetPrice.tsx`
+- AssetSelect — `apps/main/src/components/AssetSelect/AssetSelect.tsx`
+- AssetSelectEmptyState — `apps/main/src/components/AssetSelect/AssetSelectEmptyState.tsx`
+- AssetSelectModalContent — `apps/main/src/components/AssetSelectModal/AssetSelectModal.tsx`
+- AssetSelectModal — `apps/main/src/components/AssetSelectModal/AssetSelectModal.tsx`
+- AssetSwitcher — `apps/main/src/components/AssetSwitcher/AssetSwitcher.tsx`
+- TradeAssetSwitcher — `apps/main/src/components/AssetSwitcher/TradeAssetSwitcher.tsx`
+- AuthorizedAction — `apps/main/src/components/AuthorizedAction/AuthorizedAction.tsx`
+- Breadcrumb — `apps/main/src/components/Breadcrumb/Breadcrumb.tsx`
+- ChainLogo — `apps/main/src/components/ChainLogo/ChainLogo.tsx`
+- ChartState — `apps/main/src/components/ChartState/ChartState.tsx`
+- ChartTimeRange — `apps/main/src/components/ChartTimeRange/ChartTimeRange.tsx`
+- ChartTimeRangeDropdown — `apps/main/src/components/ChartTimeRange/ChartTimeRangeDropdown.tsx`
+- ChartTimeRangeOption — `apps/main/src/components/ChartTimeRange/ChartTimeRangeOption.tsx`
+- ApyRow — `apps/main/src/components/DetailedApy/DetailedApy.tsx`
+- DetailedApy — `apps/main/src/components/DetailedApy/DetailedApy.tsx`
+- DetailedLink — `apps/main/src/components/DetailedLink/DetailedLink.tsx`
+- DynamicFee — `apps/main/src/components/DynamicFee/DynamicFee.tsx`
+- ExpandableDynamicFee — `apps/main/src/components/DynamicFee/ExpandableDynamicFee.tsx`
+- EmptyState — `apps/main/src/components/EmptyState/EmptyState.tsx`
+- EmptyStateAction — `apps/main/src/components/EmptyState/EmptyState.tsx`
+- Loader — `apps/main/src/components/Loader/Loader.tsx`
+- Page404 — `apps/main/src/components/Page404/Page404.tsx`
+- ProvideRpcResolver — `apps/main/src/components/ProviderRpcSelect/ProviderRpcResolver.tsx`
+- ProviderRpcSelect — `apps/main/src/components/ProviderRpcSelect/ProviderRpcSelect.tsx`
+- RouteError — `apps/main/src/components/RouteError/RouteError.tsx`
+- TabMenu — `apps/main/src/components/TabMenu/TabMenu.tsx`
+- TabMenuItem — `apps/main/src/components/TabMenu/TabMenuItem.tsx`
+- TimeFrame — `apps/main/src/components/TimeFrame/TimeFrame.tsx`
+- TransactionItemLabel — `apps/main/src/components/TransactionItem/TransactionItem.tsx`
+- TransactionItemValue — `apps/main/src/components/TransactionItem/TransactionItem.tsx`
+- TransactionItem — `apps/main/src/components/TransactionItem/TransactionItem.tsx`
+- TransactionItemMobile — `apps/main/src/components/TransactionItem/TransactionItemMobile.tsx`
+- TransactionStatus — `apps/main/src/components/TransactionItem/TransactionStatus.tsx`
+- TransactionStatusMessage — `apps/main/src/components/TransactionItem/TransactionStatus.tsx`
+- RpcAutoModeToggle — `apps/main/src/components/ProviderRpcSelect/components/RpcAutoModeToggle.tsx`
+- RpcForm — `apps/main/src/components/ProviderRpcSelect/components/RpcForm.tsx`
+- RpcList — `apps/main/src/components/ProviderRpcSelect/components/RpcList.tsx`
+- RpcListHeader — `apps/main/src/components/ProviderRpcSelect/components/RpcListItem.tsx`
+- RpcListItemActive — `apps/main/src/components/ProviderRpcSelect/components/RpcListItem.tsx`
+- RpcListItem — `apps/main/src/components/ProviderRpcSelect/components/RpcListItem.tsx`
+- RpcListModalContent — `apps/main/src/components/ProviderRpcSelect/components/RpcListModalContent.tsx`
+- RpcRemoveModal — `apps/main/src/components/ProviderRpcSelect/components/RpcRemoveModal.tsx`
+- RpcSelectModal — `apps/main/src/components/ProviderRpcSelect/components/RpcSelectModal.tsx`
+- RpcStatusSuccess — `apps/main/src/components/ProviderRpcSelect/components/RpcStatus.tsx`
+- RpcStatusSlow — `apps/main/src/components/ProviderRpcSelect/components/RpcStatus.tsx`
+- RpcStatusOffline — `apps/main/src/components/ProviderRpcSelect/components/RpcStatus.tsx`
+- RpcStatus — `apps/main/src/components/ProviderRpcSelect/components/RpcStatus.tsx`
+- SquidList — `apps/main/src/components/ProviderRpcSelect/components/SquidList.tsx`
+- SquidListHeader — `apps/main/src/components/ProviderRpcSelect/components/SquidListItem.tsx`
+- SquidListItem — `apps/main/src/components/ProviderRpcSelect/components/SquidListItem.tsx`
+- SquidListModalContent — `apps/main/src/components/ProviderRpcSelect/components/SquidListModalContent.tsx`
+- CallHashText — `apps/main/src/modules/transactions/review/ReviewTransactionJsonView/components/CallHashText.tsx`
+- CopyMenu — `apps/main/src/modules/transactions/review/ReviewTransactionJsonView/components/CopyMenu.tsx`
+- ExpandableSection — `apps/main/src/modules/transactions/review/ReviewTransactionJsonView/components/ExpandableSection.tsx`
+- TipForm — `apps/main/src/modules/transactions/review/ReviewTransactionTip/components/TipForm.tsx`
+- TipInput — `apps/main/src/modules/transactions/review/ReviewTransactionTip/components/TipInput.tsx`
+- MoneyMarketProvider — `packages/money-market/src/components/MoneyMarketProvider.tsx`
+- Web3ConnectButton — `packages/web3-connect/src/components/Web3ConnectButton.tsx`
+- Web3ConnectModal — `packages/web3-connect/src/components/Web3ConnectModal.tsx`
+- DebtCeilingStatus — `packages/money-market/src/components/caps/DebtCeilingStatus.tsx`
+- AssetInput — `packages/money-market/src/components/primitives/AssetInput.tsx`
+- BasicModal — `packages/money-market/src/components/primitives/BasicModal.tsx`
+- CollateralState — `packages/money-market/src/components/primitives/CollateralState.tsx`
+- HealthFactorChange — `packages/money-market/src/components/primitives/HealthFactorChange.tsx`
+- HealthFactorNumber — `packages/money-market/src/components/primitives/HealthFactorNumber.tsx`
+- HealthFactorRiskWarning — `packages/money-market/src/components/primitives/HealthFactorRiskWarning.tsx`
+- IncentivesButton — `packages/money-market/src/components/primitives/IncentivesButton.tsx`
+- IncentivesTooltipContent — `packages/money-market/src/components/primitives/IncentivesButton.tsx`
+- ManageEmodeButton — `packages/money-market/src/components/primitives/ManageEmodeButton.tsx`
+- ReserveLogo — `packages/money-market/src/components/primitives/ReserveLogo.tsx`
+- ValueDetail — `packages/money-market/src/components/primitives/ValueDetail.tsx`
+- APYTypeTooltip — `packages/money-market/src/components/tooltips/APYTypeTooltip.tsx`
+- ApprovalTooltip — `packages/money-market/src/components/tooltips/ApprovalTooltip.tsx`
+- BorrowCapMaxedTooltip — `packages/money-market/src/components/tooltips/BorrowCapMaxedTooltip.tsx`
+- DebtCeilingMaxedTooltip — `packages/money-market/src/components/tooltips/DebtCeilingMaxedTooltip.tsx`
+- FixedAPYTooltip — `packages/money-market/src/components/tooltips/FixedAPYTooltip.tsx`
+- SupplyCapMaxedTooltip — `packages/money-market/src/components/tooltips/SupplyCapMaxedTooltip.tsx`
+- TxActionsWrapper — `packages/money-market/src/components/transactions/TxActionsWrapper.tsx`
+- TxModalWrapper — `packages/money-market/src/components/transactions/TxModalWrapper.tsx`
+- BorrowCapWarning — `packages/money-market/src/components/warnings/BorrowCapWarning.tsx`
+- DebtCeilingWarning — `packages/money-market/src/components/warnings/DebtCeilingWarning.tsx`
+- IsolationModeWarning — `packages/money-market/src/components/warnings/IsolationModeWarning.tsx`
+- ParameterChangeWarning — `packages/money-market/src/components/warnings/ParameterChangeWarning.tsx`
+- SupplyCapWarning — `packages/money-market/src/components/warnings/SupplyCapWarning.tsx`
+- Ethereum — `packages/ui/src/components/AccountAvatar/AccountAvatar.stories.tsx`
+- Polkadot — `packages/ui/src/components/AccountAvatar/AccountAvatar.stories.tsx`
+- TalismanPolkadot — `packages/ui/src/components/AccountAvatar/AccountAvatar.stories.tsx`
+- TalismanEvm — `packages/ui/src/components/AccountAvatar/AccountAvatar.stories.tsx`
+- AccountAvatar — `packages/ui/src/components/AccountAvatar/AccountAvatar.tsx`
+- Default — `packages/ui/src/components/AccountInput/AccountInput.stories.tsx`
+- WithValue — `packages/ui/src/components/AccountInput/AccountInput.stories.tsx`
+- WithError — `packages/ui/src/components/AccountInput/AccountInput.stories.tsx`
+- AccountInput — `packages/ui/src/components/AccountInput/AccountInput.tsx`
+- Default — `packages/ui/src/components/AccountTile/AccountTile.stories.tsx`
+- Active — `packages/ui/src/components/AccountTile/AccountTile.stories.tsx`
+- AccountTile — `packages/ui/src/components/AccountTile/AccountTile.tsx`
+- Info — `packages/ui/src/components/Alert/Alert.stories.tsx`
+- WithTitle — `packages/ui/src/components/Alert/Alert.stories.tsx`
+- Error — `packages/ui/src/components/Alert/Alert.stories.tsx`
+- Warning — `packages/ui/src/components/Alert/Alert.stories.tsx`
+- Alert — `packages/ui/src/components/Alert/Alert.tsx`
+- Amount — `packages/ui/src/components/Amount/Amount.tsx`
+- Default — `packages/ui/src/components/AssetInput/AssetInput.stories.tsx`
+- EmptyAssetSelector — `packages/ui/src/components/AssetInput/AssetInput.stories.tsx`
+- ErrorAssetSelector — `packages/ui/src/components/AssetInput/AssetInput.stories.tsx`
+- AssetSelectorWithNoMaxBalance — `packages/ui/src/components/AssetInput/AssetInput.stories.tsx`
+- AssetSelectorLoading — `packages/ui/src/components/AssetInput/AssetInput.stories.tsx`
+- AssetInput — `packages/ui/src/components/AssetInput/AssetInput.tsx`
+- AssetButton — `packages/ui/src/components/AssetInput/AssetInput.tsx`
+- AssetLabel — `packages/ui/src/components/AssetLabel/AssetLabel.tsx`
+- Default — `packages/ui/src/components/AssetLogo/AssetLogo.stories.tsx`
+- WithChain — `packages/ui/src/components/AssetLogo/AssetLogo.stories.tsx`
+- WithMultipleAssets — `packages/ui/src/components/AssetLogo/AssetLogo.stories.tsx`
+- WithAtokenDecoration — `packages/ui/src/components/AssetLogo/AssetLogo.stories.tsx`
+- WithYellowBadge — `packages/ui/src/components/AssetLogo/AssetLogo.stories.tsx`
+- WithRedBadge — `packages/ui/src/components/AssetLogo/AssetLogo.stories.tsx`
+- Placeholder — `packages/ui/src/components/AssetLogo/AssetLogo.stories.tsx`
+- AssetLogo — `packages/ui/src/components/AssetLogo/AssetLogo.tsx`
+- MultipleAssetLogoWrapper — `packages/ui/src/components/AssetLogo/AssetLogo.tsx`
+- AssetWarning — `packages/ui/src/components/AssetWarning/AssetWarning.tsx`
+- AssetPropertyChanged — `packages/ui/src/components/AssetWarning/AssetWarning.tsx`
+- Default — `packages/ui/src/components/Box/Box.stories.tsx`
+- WithBorderRadius — `packages/ui/src/components/Box/Box.stories.tsx`
+- WithBackground — `packages/ui/src/components/Box/Box.stories.tsx`
+- WithColor — `packages/ui/src/components/Box/Box.stories.tsx`
+- WithPadding — `packages/ui/src/components/Box/Box.stories.tsx`
+- WithMargin — `packages/ui/src/components/Box/Box.stories.tsx`
+- WithSize — `packages/ui/src/components/Box/Box.stories.tsx`
+- Responsive — `packages/ui/src/components/Box/Box.stories.tsx`
+- Box — `packages/ui/src/components/Box/Box.tsx`
+- Default — `packages/ui/src/components/Button/Button.stories.tsx`
+- Disabled — `packages/ui/src/components/Button/Button.stories.tsx`
+- Primary — `packages/ui/src/components/Button/Button.stories.tsx`
+- Secondary — `packages/ui/src/components/Button/Button.stories.tsx`
+- Tertiary — `packages/ui/src/components/Button/Button.stories.tsx`
+- Danger — `packages/ui/src/components/Button/Button.stories.tsx`
+- Emphasis — `packages/ui/src/components/Button/Button.stories.tsx`
+- Accent — `packages/ui/src/components/Button/Button.stories.tsx`
+- Muted — `packages/ui/src/components/Button/Button.stories.tsx`
+- Transparent — `packages/ui/src/components/Button/Button.stories.tsx`
+- Button — `packages/ui/src/components/Button/Button.tsx`
+- ButtonTransparent — `packages/ui/src/components/Button/Button.tsx`
+- MicroButton — `packages/ui/src/components/Button/Button.tsx`
+- ButtonIcon — `packages/ui/src/components/Button/Button.tsx`
+- LoadingButton — `packages/ui/src/components/Button/Button.tsx`
+- Desktop — `packages/ui/src/components/Chain/Chain.stories.tsx`
+- Mobile — `packages/ui/src/components/Chain/Chain.stories.tsx`
+- Chain — `packages/ui/src/components/Chain/Chain.tsx`
+- Area — `packages/ui/src/components/Chart/Chart.stories.tsx`
+- AreaLabels — `packages/ui/src/components/Chart/Chart.stories.tsx`
+- AreaMultiSeries — `packages/ui/src/components/Chart/Chart.stories.tsx`
+- AreaLinearCurve — `packages/ui/src/components/Chart/Chart.stories.tsx`
+- AreaTimeTooltip — `packages/ui/src/components/Chart/Chart.stories.tsx`
+- AreaHiddenTooltip — `packages/ui/src/components/Chart/Chart.stories.tsx`
+- AreaHiddenAxes — `packages/ui/src/components/Chart/Chart.stories.tsx`
+- AreaGradientLine — `packages/ui/src/components/Chart/Chart.stories.tsx`
+- AreaCustomDot — `packages/ui/src/components/Chart/Chart.stories.tsx`
+- Bar — `packages/ui/src/components/Chart/Chart.stories.tsx`
+- BarLabels — `packages/ui/src/components/Chart/Chart.stories.tsx`
+- BarMultiSeries — `packages/ui/src/components/Chart/Chart.stories.tsx`
+- BarCustomBarSize — `packages/ui/src/components/Chart/Chart.stories.tsx`
+- BarStacked — `packages/ui/src/components/Chart/Chart.stories.tsx`
+- BarVerticalLayout — `packages/ui/src/components/Chart/Chart.stories.tsx`
+- BarTimeTooltip — `packages/ui/src/components/Chart/Chart.stories.tsx`
+- BarHiddenTooltip — `packages/ui/src/components/Chart/Chart.stories.tsx`
+- BarHiddenAxes — `packages/ui/src/components/Chart/Chart.stories.tsx`
+- ChartContainer — `packages/ui/src/components/Chart/ChartContainer.tsx`
+- ChartCrosshair — `packages/ui/src/components/Chart/ChartCrosshair.tsx`
+- ChartSkeleton — `packages/ui/src/components/Chart/ChartSkeleton.tsx`
+- ChartStatus — `packages/ui/src/components/Chart/ChartStatus.tsx`
+- ChartTooltipLegendType — `packages/ui/src/components/Chart/ChartTooltip.tsx`
+- ChartTooltipTimeType — `packages/ui/src/components/Chart/ChartTooltip.tsx`
+- ChartTooltip — `packages/ui/src/components/Chart/ChartTooltip.tsx`
+- ChartValues — `packages/ui/src/components/Chart/ChartValues.tsx`
+- Default — `packages/ui/src/components/Checkbox/Checkbox.stories.tsx`
+- Small — `packages/ui/src/components/Checkbox/Checkbox.stories.tsx`
+- Large — `packages/ui/src/components/Checkbox/Checkbox.stories.tsx`
+- Disabled — `packages/ui/src/components/Checkbox/Checkbox.stories.tsx`
+- DisabledActive — `packages/ui/src/components/Checkbox/Checkbox.stories.tsx`
+- Checkbox — `packages/ui/src/components/Checkbox/Checkbox.tsx`
+- Default — `packages/ui/src/components/Chip/Chip.stories.tsx`
+- Primary — `packages/ui/src/components/Chip/Chip.stories.tsx`
+- Rounded — `packages/ui/src/components/Chip/Chip.stories.tsx`
+- Secondary — `packages/ui/src/components/Chip/Chip.stories.tsx`
+- Tertiary — `packages/ui/src/components/Chip/Chip.stories.tsx`
+- Info — `packages/ui/src/components/Chip/Chip.stories.tsx`
+- Success — `packages/ui/src/components/Chip/Chip.stories.tsx`
+- Warning — `packages/ui/src/components/Chip/Chip.stories.tsx`
+- Danger — `packages/ui/src/components/Chip/Chip.stories.tsx`
+- SChip — `packages/ui/src/components/Chip/Chip.styled.tsx`
+- Chip — `packages/ui/src/components/Chip/Chip.tsx`
+- Default — `packages/ui/src/components/Collapsible/Collapsible.stories.tsx`
+- InitiallyOpen — `packages/ui/src/components/Collapsible/Collapsible.stories.tsx`
+- CustomTrigger — `packages/ui/src/components/Collapsible/Collapsible.stories.tsx`
+- ComboboxStory — `packages/ui/src/components/Combobox/Combobox.stories.tsx`
+- Combobox — `packages/ui/src/components/Combobox/Combobox.tsx`
+- DefaultWithReset — `packages/ui/src/components/CopyButton/CopyButton.stories.tsx`
+- WithoutReset — `packages/ui/src/components/CopyButton/CopyButton.stories.tsx`
+- AsStyledButton — `packages/ui/src/components/CopyButton/CopyButton.stories.tsx`
+- CopyButton — `packages/ui/src/components/CopyButton/CopyButton.tsx`
+- Default — `packages/ui/src/components/DataTable/DataTable.stories.tsx`
+- WithSkeletons — `packages/ui/src/components/DataTable/DataTable.stories.tsx`
+- WithSearch — `packages/ui/src/components/DataTable/DataTable.stories.tsx`
+- WithExpandableRows — `packages/ui/src/components/DataTable/DataTable.stories.tsx`
+- WithPagination — `packages/ui/src/components/DataTable/DataTable.stories.tsx`
+- WithPinnedColumn — `packages/ui/src/components/DataTable/DataTable.stories.tsx`
+- DataTablePagination — `packages/ui/src/components/DataTable/DataTable.tsx`
+- Default — `packages/ui/src/components/Drawer/Drawer.stories.tsx`
+- DisabledInteractOutside — `packages/ui/src/components/Drawer/Drawer.stories.tsx`
+- WithHeaderAndFooter — `packages/ui/src/components/Drawer/Drawer.stories.tsx`
+- WithCustomHeader — `packages/ui/src/components/Drawer/Drawer.stories.tsx`
+- DropdownMenuStory — `packages/ui/src/components/DropdownMenu/DropdownMenu.stories.tsx`
+- DropdownMenu — `packages/ui/src/components/DropdownMenu/DropdownMenu.styled.tsx`
+- DropdownMenuTrigger — `packages/ui/src/components/DropdownMenu/DropdownMenu.styled.tsx`
+- DropdownMenuContent — `packages/ui/src/components/DropdownMenu/DropdownMenu.styled.tsx`
+- DropdownMenuItem — `packages/ui/src/components/DropdownMenu/DropdownMenu.styled.tsx`
+- DropdownMenuContentDivider — `packages/ui/src/components/DropdownMenu/DropdownMenu.styled.tsx`
+- ExternalLink — `packages/ui/src/components/ExternalLink/ExternalLink.tsx`
+- Default — `packages/ui/src/components/Flex/Flex.stories.tsx`
+- JustifyBetween — `packages/ui/src/components/Flex/Flex.stories.tsx`
+- JustifyAround — `packages/ui/src/components/Flex/Flex.stories.tsx`
+- JustifyFlexEnd — `packages/ui/src/components/Flex/Flex.stories.tsx`
+- AlignStart — `packages/ui/src/components/Flex/Flex.stories.tsx`
+- AlignCenter — `packages/ui/src/components/Flex/Flex.stories.tsx`
+- AlignEnd — `packages/ui/src/components/Flex/Flex.stories.tsx`
+- DirectionColumn — `packages/ui/src/components/Flex/Flex.stories.tsx`
+- Responsive — `packages/ui/src/components/Flex/Flex.stories.tsx`
+- Flex — `packages/ui/src/components/Flex/Flex.tsx`
+- FormLabel — `packages/ui/src/components/FormField/FormField.tsx`
+- FormError — `packages/ui/src/components/FormField/FormField.tsx`
+- FormField — `packages/ui/src/components/FormField/FormField.tsx`
+- Default — `packages/ui/src/components/Grid/Grid.stories.tsx`
+- ColumnCount — `packages/ui/src/components/Grid/Grid.stories.tsx`
+- ColumnTemplate — `packages/ui/src/components/Grid/Grid.stories.tsx`
+- RowTemplate — `packages/ui/src/components/Grid/Grid.stories.tsx`
+- ColumnFitWidth — `packages/ui/src/components/Grid/Grid.stories.tsx`
+- ColumnFillWidth — `packages/ui/src/components/Grid/Grid.stories.tsx`
+- Responsive — `packages/ui/src/components/Grid/Grid.stories.tsx`
+- Grid — `packages/ui/src/components/Grid/Grid.tsx`
+- Default — `packages/ui/src/components/HoverCard/HoverCard.stories.tsx`
+- Icon — `packages/ui/src/components/Icon/Icon.tsx`
+- Default — `packages/ui/src/components/Image/Image.stories.tsx`
+- WithPlaceholder — `packages/ui/src/components/Image/Image.stories.tsx`
+- Image — `packages/ui/src/components/Image/Image.tsx`
+- Default — `packages/ui/src/components/Input/Input.stories.tsx`
+- Small — `packages/ui/src/components/Input/Input.stories.tsx`
+- Large — `packages/ui/src/components/Input/Input.stories.tsx`
+- IconStart — `packages/ui/src/components/Input/Input.stories.tsx`
+- IconEnd — `packages/ui/src/components/Input/Input.stories.tsx`
+- Unit — `packages/ui/src/components/Input/Input.stories.tsx`
+- Disabled — `packages/ui/src/components/Input/Input.stories.tsx`
+- Embedded — `packages/ui/src/components/Input/Input.stories.tsx`
+- EmbeddedDisalbed — `packages/ui/src/components/Input/Input.stories.tsx`
+- Numeric — `packages/ui/src/components/Input/Input.stories.tsx`
+- Input — `packages/ui/src/components/Input/Input.tsx`
+- NumberInput — `packages/ui/src/components/Input/NumberInput.tsx`
+- Default — `packages/ui/src/components/JsonView/JsonView.stories.tsx`
+- CustomFontSize — `packages/ui/src/components/JsonView/JsonView.stories.tsx`
+- JsonView — `packages/ui/src/components/JsonView/JsonView.tsx`
+- JsonViewFallback — `packages/ui/src/components/JsonView/JsonView.tsx`
+- Default — `packages/ui/src/components/Label/Label.stories.tsx`
+- Customized — `packages/ui/src/components/Label/Label.stories.tsx`
+- AsWrapper — `packages/ui/src/components/Label/Label.stories.tsx`
+- Label — `packages/ui/src/components/Label/Label.tsx`
+- Default — `packages/ui/src/components/Logo/Logo.stories.tsx`
+- WithPlaceholder — `packages/ui/src/components/Logo/Logo.stories.tsx`
+- Logo — `packages/ui/src/components/Logo/Logo.tsx`
+- Default — `packages/ui/src/components/Modal/Modal.stories.tsx`
+- DisabledInteractOutside — `packages/ui/src/components/Modal/Modal.stories.tsx`
+- WithHeaderAndFooter — `packages/ui/src/components/Modal/Modal.stories.tsx`
+- WithTopContent — `packages/ui/src/components/Modal/Modal.stories.tsx`
+- WithCustomHeader — `packages/ui/src/components/Modal/Modal.stories.tsx`
+- ForcedDrawerVariant — `packages/ui/src/components/Modal/Modal.stories.tsx`
+- ForcedPopupVariant — `packages/ui/src/components/Modal/Modal.stories.tsx`
+- Success — `packages/ui/src/components/Notification/Notification.stories.tsx`
+- Pending — `packages/ui/src/components/Notification/Notification.stories.tsx`
+- Error — `packages/ui/src/components/Notification/Notification.stories.tsx`
+- Warning — `packages/ui/src/components/Notification/Notification.stories.tsx`
+- Submitted — `packages/ui/src/components/Notification/Notification.stories.tsx`
+- Unknown — `packages/ui/src/components/Notification/Notification.stories.tsx`
+- DEFAULT_AUTO_CLOSE_TIME — `packages/ui/src/components/Notification/Notification.tsx`
+- Notification — `packages/ui/src/components/Notification/Notification.tsx`
+- Default — `packages/ui/src/components/Paper/Paper.stories.tsx`
+- Plain — `packages/ui/src/components/Paper/Paper.stories.tsx`
+- Paper — `packages/ui/src/components/Paper/Paper.tsx`
+- PointsStory — `packages/ui/src/components/Points/Points.stories.tsx`
+- Points — `packages/ui/src/components/Points/Points.tsx`
+- ProgressBarSmall — `packages/ui/src/components/ProgressBar/ProgressBar.stories.tsx`
+- ProgressBarLarge — `packages/ui/src/components/ProgressBar/ProgressBar.stories.tsx`
+- ProgressBar — `packages/ui/src/components/ProgressBar/ProgressBar.tsx`
+- Default — `packages/ui/src/components/ProgressCircle/ProgressCircle.stories.tsx`
+- CustomColor — `packages/ui/src/components/ProgressCircle/ProgressCircle.stories.tsx`
+- Thickness — `packages/ui/src/components/ProgressCircle/ProgressCircle.stories.tsx`
+- Radius — `packages/ui/src/components/ProgressCircle/ProgressCircle.stories.tsx`
+- LabelStart — `packages/ui/src/components/ProgressCircle/ProgressCircle.stories.tsx`
+- LabelEnd — `packages/ui/src/components/ProgressCircle/ProgressCircle.stories.tsx`
+- CustomLabel — `packages/ui/src/components/ProgressCircle/ProgressCircle.stories.tsx`
+- ReversedDirection — `packages/ui/src/components/ProgressCircle/ProgressCircle.stories.tsx`
+- ProgressCircle — `packages/ui/src/components/ProgressCircle/ProgressCircle.tsx`
+- Example — `packages/ui/src/components/ResponsiveScope/ResponsiveScope.stories.tsx`
+- ResponsiveScope — `packages/ui/src/components/ResponsiveScope/ResponsiveScope.tsx`
+- Default — `packages/ui/src/components/ScrollArea/ScrollArea.stories.tsx`
+- Horizontal — `packages/ui/src/components/ScrollArea/ScrollArea.stories.tsx`
+- AlwaysVisible — `packages/ui/src/components/ScrollArea/ScrollArea.stories.tsx`
+- SectionHeader — `packages/ui/src/components/SectionHeader/SectionHeader.tsx`
+- Default — `packages/ui/src/components/Select/Select.stories.tsx`
+- Select — `packages/ui/src/components/Select/Select.tsx`
+- SelectLabel — `packages/ui/src/components/Select/Select.tsx`
+- SelectCaret — `packages/ui/src/components/Select/Select.tsx`
+- Horizontal — `packages/ui/src/components/Separator/Separator.stories.tsx`
+- Vertical — `packages/ui/src/components/Separator/Separator.stories.tsx`
+- Separator — `packages/ui/src/components/Separator/Separator.tsx`
+- Default — `packages/ui/src/components/Sheet/Sheet.stories.tsx`
+- Default — `packages/ui/src/components/Skeleton/Skeleton.stories.tsx`
+- Skeleton — `packages/ui/src/components/Skeleton/Skeleton.tsx`
+- Default — `packages/ui/src/components/Slider/Slider.stories.tsx`
+- Slider — `packages/ui/src/components/Slider/Slider.tsx`
+- SliderTabs — `packages/ui/src/components/SliderTabs/SliderTabs.tsx`
+- Spinner — `packages/ui/src/components/Spinner/Spinner.tsx`
+- Column — `packages/ui/src/components/Stack/Stack.stories.tsx`
+- Row — `packages/ui/src/components/Stack/Stack.stories.tsx`
+- ColumnWithSeparator — `packages/ui/src/components/Stack/Stack.stories.tsx`
+- RowWithSeparator — `packages/ui/src/components/Stack/Stack.stories.tsx`
+- CustomSeparator — `packages/ui/src/components/Stack/Stack.stories.tsx`
+- Responsive — `packages/ui/src/components/Stack/Stack.stories.tsx`
+- Stack — `packages/ui/src/components/Stack/Stack.tsx`
+- Default — `packages/ui/src/components/Stepper/Stepper.stories.tsx`
+- CustomWidth — `packages/ui/src/components/Stepper/Stepper.stories.tsx`
+- Stepper — `packages/ui/src/components/Stepper/Stepper.tsx`
+- Default — `packages/ui/src/components/Summary/Summary.stories.tsx`
+- Summary — `packages/ui/src/components/Summary/Summary.tsx`
+- SummaryRow — `packages/ui/src/components/Summary/SummaryRow.tsx`
+- SummaryRowValue — `packages/ui/src/components/Summary/SummaryRow.tsx`
+- SummaryRowLabel — `packages/ui/src/components/Summary/SummaryRow.tsx`
+- Default — `packages/ui/src/components/Table/Table.stories.tsx`
+- SmallSize — `packages/ui/src/components/Table/Table.stories.tsx`
+- MediumSize — `packages/ui/src/components/Table/Table.stories.tsx`
+- LargeSize — `packages/ui/src/components/Table/Table.stories.tsx`
+- Borderless — `packages/ui/src/components/Table/Table.stories.tsx`
+- TableHead — `packages/ui/src/components/Table/Table.tsx`
+- ExpandedTableRowHorizontalSeparator — `packages/ui/src/components/Table/Table.tsx`
+- TableRowAction — `packages/ui/src/components/Table/Table.tsx`
+- TableRowDetailsExpand — `packages/ui/src/components/Table/Table.tsx`
+- Default — `packages/ui/src/components/Text/Text.stories.tsx`
+- PrimaryRegular — `packages/ui/src/components/Text/Text.stories.tsx`
+- PrimaryMedium — `packages/ui/src/components/Text/Text.stories.tsx`
+- PrimaryBold — `packages/ui/src/components/Text/Text.stories.tsx`
+- SecondaryRegular — `packages/ui/src/components/Text/Text.stories.tsx`
+- SecondaryMedium — `packages/ui/src/components/Text/Text.stories.tsx`
+- SecondaryBold — `packages/ui/src/components/Text/Text.stories.tsx`
+- Responsive — `packages/ui/src/components/Text/Text.stories.tsx`
+- Colors — `packages/ui/src/components/Text/Text.stories.tsx`
+- Text — `packages/ui/src/components/Text/Text.tsx`
+- Default — `packages/ui/src/components/TextButton/TextButton.stories.tsx`
+- Underline — `packages/ui/src/components/TextButton/TextButton.stories.tsx`
+- UnderlineInternal — `packages/ui/src/components/TextButton/TextButton.stories.tsx`
+- UnderlineExternal — `packages/ui/src/components/TextButton/TextButton.stories.tsx`
+- TextButton — `packages/ui/src/components/TextButton/TextButton.tsx`
+- LinkTextButton — `packages/ui/src/components/TextButton/TextButton.tsx`
+- Default — `packages/ui/src/components/Toggle/Toggle.stories.tsx`
+- Large — `packages/ui/src/components/Toggle/Toggle.stories.tsx`
+- Active — `packages/ui/src/components/Toggle/Toggle.stories.tsx`
+- Disabled — `packages/ui/src/components/Toggle/Toggle.stories.tsx`
+- DisabledActive — `packages/ui/src/components/Toggle/Toggle.stories.tsx`
+- ToggleRoot — `packages/ui/src/components/Toggle/Toggle.tsx`
+- Toggle — `packages/ui/src/components/Toggle/Toggle.tsx`
+- ToggleLabel — `packages/ui/src/components/Toggle/Toggle.tsx`
+- Default — `packages/ui/src/components/ToggleGroup/ToggleGroup.stories.tsx`
+- Multiple — `packages/ui/src/components/ToggleGroup/ToggleGroup.stories.tsx`
+- Disabled — `packages/ui/src/components/ToggleGroup/ToggleGroup.stories.tsx`
+- Default — `packages/ui/src/components/Tooltip/Tooltip.stories.tsx`
+- Tooltip — `packages/ui/src/components/Tooltip/Tooltip.tsx`
+- TooltipIcon — `packages/ui/src/components/Tooltip/Tooltip.tsx`
+- Baseline — `packages/ui/src/components/TradingViewChart/TradingViewChart.stories.tsx`
+- Candlestick — `packages/ui/src/components/TradingViewChart/TradingViewChart.stories.tsx`
+- TradingViewChart — `packages/ui/src/components/TradingViewChart/TradingViewChart.tsx`
+- Small — `packages/ui/src/components/ValueStats/ValueStats.stories.tsx`
+- Medium — `packages/ui/src/components/ValueStats/ValueStats.stories.tsx`
+- Large — `packages/ui/src/components/ValueStats/ValueStats.stories.tsx`
+- BottomLabel — `packages/ui/src/components/ValueStats/ValueStats.stories.tsx`
+- SecondaryFont — `packages/ui/src/components/ValueStats/ValueStats.stories.tsx`
+- ValueStatsLabel — `packages/ui/src/components/ValueStats/ValueStats.tsx`
+- ValueStatsValue — `packages/ui/src/components/ValueStats/ValueStats.tsx`
+- ValueStatsBottomValue — `packages/ui/src/components/ValueStats/ValueStats.tsx`
+- ValueStats — `packages/ui/src/components/ValueStats/ValueStats.tsx`
+- Default — `packages/ui/src/components/VirtualizedList/VirtualizedList.stories.tsx`
+- WithInitialScrollIndex — `packages/ui/src/components/VirtualizedList/VirtualizedList.stories.tsx`
+- AddressBookStory — `packages/web3-connect/src/components/address-book/AddressBook.stories.tsx`
+- AddressBook — `packages/web3-connect/src/components/address-book/AddressBook.tsx`
+- AddressBookEmptyState — `packages/web3-connect/src/components/address-book/AddressBookEmptyState.tsx`
+- AddressBookModal — `packages/web3-connect/src/components/address-book/AddressBookModal.tsx`
+- AddressBookSearch — `packages/web3-connect/src/components/address-book/AddressBookSearch.tsx`
+- AccountSelectContent — `packages/web3-connect/src/components/content/AccountSelectContent.tsx`
+- ErrorContent — `packages/web3-connect/src/components/content/ErrorContent.tsx`
+- ExternalWalletContent — `packages/web3-connect/src/components/content/ExternalWalletContent.tsx`
+- ProviderSelectContent — `packages/web3-connect/src/components/content/ProviderSelectContent.tsx`
+- ExternalWalletForm — `packages/web3-connect/src/components/external/ExternalWalletForm.tsx`
+- AccountActionsFooter — `packages/web3-connect/src/components/footer/AccountActionsFooter.tsx`
+- ProviderButton — `packages/web3-connect/src/components/provider/ProviderButton.tsx`
+- ProviderExternalButton — `packages/web3-connect/src/components/provider/ProviderExternalButton.tsx`
+- ProviderIcons — `packages/web3-connect/src/components/provider/ProviderIcons.tsx`
+- ProviderInstalledButton — `packages/web3-connect/src/components/provider/ProviderInstalledButton.tsx`
+- ProviderLastConnectedButton — `packages/web3-connect/src/components/provider/ProviderLastConnectedButton.tsx`
+- ProviderLoader — `packages/web3-connect/src/components/provider/ProviderLoader.tsx`
+- ProviderLogo — `packages/web3-connect/src/components/provider/ProviderLogo.tsx`
+- ProviderSelect — `packages/web3-connect/src/components/provider/ProviderSelect.tsx`
+- ClaimRewardsActions — `packages/money-market/src/components/transactions/claim/ClaimRewardsActions.tsx`
+- ClaimRewardsModal — `packages/money-market/src/components/transactions/claim/ClaimRewardsModal.tsx`
+- ClaimRewardsModalContent — `packages/money-market/src/components/transactions/claim/ClaimRewardsModalContent.tsx`
+- ClaimRewardsSelect — `packages/money-market/src/components/transactions/claim/ClaimRewardsSelect.tsx`
+- CollateralChangeActions — `packages/money-market/src/components/transactions/collateral/CollateralChangeActions.tsx`
+- CollateralChangeModal — `packages/money-market/src/components/transactions/collateral/CollateralChangeModal.tsx`
+- CollateralChangeModalContent — `packages/money-market/src/components/transactions/collateral/CollateralChangeModalContent.tsx`
+- EmodeActions — `packages/money-market/src/components/transactions/emode/EmodeActions.tsx`
+- EmodeModal — `packages/money-market/src/components/transactions/emode/EmodeModal.tsx`
+- EmodeModalContent — `packages/money-market/src/components/transactions/emode/EmodeModalContent.tsx`
+- EmodeSelect — `packages/money-market/src/components/transactions/emode/EmodeSelect.tsx`
+- RepayActions — `packages/money-market/src/components/transactions/repay/RepayActions.tsx`
+- RepayModal — `packages/money-market/src/components/transactions/repay/RepayModal.tsx`
+- RepayModalContent — `packages/money-market/src/components/transactions/repay/RepayModalContent.tsx`
+- SupplyActions — `packages/money-market/src/components/transactions/supply/SupplyActions.tsx`
+- SupplyModal — `packages/money-market/src/components/transactions/supply/SupplyModal.tsx`
+- SupplyModalContent — `packages/money-market/src/components/transactions/supply/SupplyModalContent.tsx`
+- WithdrawActions — `packages/money-market/src/components/transactions/withdraw/WithdrawActions.tsx`
+- WithdrawModal — `packages/money-market/src/components/transactions/withdraw/WithdrawModal.tsx`
+- WithdrawModalContent — `packages/money-market/src/components/transactions/withdraw/WithdrawModalContent.tsx`
+- EmptyIdenticon — `packages/ui/src/components/AccountAvatar/identicons/EmptyIdenticon.tsx`
+- EthereumIdenticon — `packages/ui/src/components/AccountAvatar/identicons/EthereumIdenticon.tsx`
+- PolkadotIdenticon — `packages/ui/src/components/AccountAvatar/identicons/PolkadotIdenticon.tsx`
+- TalismanIdenticon — `packages/ui/src/components/AccountAvatar/identicons/TalismanIdenticon.tsx`
+- AreaChart — `packages/ui/src/components/Chart/charts/AreaChart.tsx`
+- BarChart — `packages/ui/src/components/Chart/charts/BarChart.tsx`
+- Crosshair — `packages/ui/src/components/TradingViewChart/components/Crosshair.tsx`
+- PriceIndicator — `packages/ui/src/components/TradingViewChart/components/PriceIndicator.tsx`
+
+</details>
+
+### Trading (103)
+
+<details>
+<summary>Show all 103 components</summary>
+
+- Route — `apps/main/src/routes/trade/bonds.tsx`
+- Route — `apps/main/src/routes/trade/index.tsx`
+- Route — `apps/main/src/routes/trade/otc.tsx`
+- Route — `apps/main/src/routes/trade/route.tsx`
+- DcaOrderDetailsModal — `apps/main/src/modules/trade/orders/DcaOrderDetailsModal.tsx`
+- OrdersEmptyState — `apps/main/src/modules/trade/orders/OrdersEmptyState.tsx`
+- SwapDetailsModal — `apps/main/src/modules/trade/orders/SwapDetailsModal.tsx`
+- TerminateDcaScheduleModalContent — `apps/main/src/modules/trade/orders/TerminateDcaScheduleModalContent.tsx`
+- TradeOrders — `apps/main/src/modules/trade/orders/TradeOrders.tsx`
+- TradeOrdersHeader — `apps/main/src/modules/trade/orders/TradeOrdersHeader.tsx`
+- TradeFee — `apps/main/src/modules/trade/otc/TradeFee.tsx`
+- TradeOtcPage — `apps/main/src/modules/trade/otc/TradeOtcPage.tsx`
+- SwapPage — `apps/main/src/modules/trade/swap/SwapPage.tsx`
+- SwapPageDesktop — `apps/main/src/modules/trade/swap/SwapPageDesktop.tsx`
+- SwapPageMobile — `apps/main/src/modules/trade/swap/SwapPageMobile.tsx`
+- Route — `apps/main/src/routes/trade/_history/route.tsx`
+- Route — `apps/main/src/routes/trade/_history/swap.dca.tsx`
+- Route — `apps/main/src/routes/trade/_history/swap.index.tsx`
+- Route — `apps/main/src/routes/trade/_history/swap.market.tsx`
+- Route — `apps/main/src/routes/trade/_history/swap.tsx`
+- Route — `apps/main/src/routes/trade/_history/yield-dca.tsx`
+- MarketTransactions — `apps/main/src/modules/trade/orders/MarketTransactions/MarketTransactions.tsx`
+- MyRecentActivity — `apps/main/src/modules/trade/orders/MyRecentActivity/MyRecentActivity.tsx`
+- OpenOrders — `apps/main/src/modules/trade/orders/OpenOrders/OpenOrders.tsx`
+- OpenOrdersBadge — `apps/main/src/modules/trade/orders/OpenOrders/OpenOrdersBadge.tsx`
+- OrderHistory — `apps/main/src/modules/trade/orders/OrderHistory/OrderHistory.tsx`
+- PastExecutions — `apps/main/src/modules/trade/orders/PastExecutions/PastExecutions.tsx`
+- PastExecutionsHeader — `apps/main/src/modules/trade/orders/PastExecutions/PastExecutionsHeader.tsx`
+- PastExecutionsList — `apps/main/src/modules/trade/orders/PastExecutions/PastExecutionsList.tsx`
+- PastExecutionsListHeader — `apps/main/src/modules/trade/orders/PastExecutions/PastExecutionsListHeader.tsx`
+- AccountDate — `apps/main/src/modules/trade/orders/columns/AccountDate.tsx`
+- AmountMobile — `apps/main/src/modules/trade/orders/columns/AmountMobile.tsx`
+- DcaOrderStatus — `apps/main/src/modules/trade/orders/columns/DcaOrderStatus.tsx`
+- SwapAmount — `apps/main/src/modules/trade/orders/columns/SwapAmount.tsx`
+- SwapMobile — `apps/main/src/modules/trade/orders/columns/SwapMobile.tsx`
+- SwapPrice — `apps/main/src/modules/trade/orders/columns/SwapPrice.tsx`
+- SwapStatus — `apps/main/src/modules/trade/orders/columns/SwapStatus.tsx`
+- Status — `apps/main/src/modules/trade/orders/columns/SwapStatus.tsx`
+- SwapType — `apps/main/src/modules/trade/orders/columns/SwapType.tsx`
+- TransactionType — `apps/main/src/modules/trade/orders/columns/TransactionType.tsx`
+- CancelOtcOrderModalContent — `apps/main/src/modules/trade/otc/cancel-order/CancelOtcOrderModalContent.tsx`
+- CancelTradeOrderModalContent — `apps/main/src/modules/trade/otc/cancel-order/CancelTradeOrderModalContent.tsx`
+- AvailableAmount — `apps/main/src/modules/trade/otc/fill-order/AvailableAmount.tsx`
+- FillOrderModalContent — `apps/main/src/modules/trade/otc/fill-order/FillOrderModalContent.tsx`
+- TokensConversion — `apps/main/src/modules/trade/otc/fill-order/TokensConversion.tsx`
+- OrderFilter — `apps/main/src/modules/trade/otc/filter/OrderFilter.tsx`
+- OtcFilters — `apps/main/src/modules/trade/otc/filter/OtcFilters.tsx`
+- OtcSearch — `apps/main/src/modules/trade/otc/filter/OtcSearch.tsx`
+- OtcHeader — `apps/main/src/modules/trade/otc/header/OtcHeader.tsx`
+- OtcValue — `apps/main/src/modules/trade/otc/header/OtcValue.tsx`
+- PartiallyFillableToggle — `apps/main/src/modules/trade/otc/place-order/PartiallyFillableToggle.tsx`
+- PlaceOrder — `apps/main/src/modules/trade/otc/place-order/PlaceOrder.tsx`
+- PlaceOrderModalContent — `apps/main/src/modules/trade/otc/place-order/PlaceOrderModalContent.tsx`
+- PlaceOrderPrice — `apps/main/src/modules/trade/otc/place-order/PlaceOrderPrice.tsx`
+- PRICE_GAIN_DIFF_THRESHOLD — `apps/main/src/modules/trade/otc/place-order/PlaceOrderPriceButtons.tsx`
+- PlaceOrderPriceButtons — `apps/main/src/modules/trade/otc/place-order/PlaceOrderPriceButtons.tsx`
+- PriceGainWarning — `apps/main/src/modules/trade/otc/place-order/PriceGainWarning.tsx`
+- OtcTable — `apps/main/src/modules/trade/otc/table/OtcTable.tsx`
+- SwapSummaryRow — `apps/main/src/modules/trade/swap/components/SwapSummaryRow.tsx`
+- OfferMarketPriceColumn — `apps/main/src/modules/trade/otc/table/columns/OfferMarketPriceColumn.tsx`
+- OfferPriceColumn — `apps/main/src/modules/trade/otc/table/columns/OfferPriceColumn.tsx`
+- FormHeader — `apps/main/src/modules/trade/swap/components/FormHeader/FormHeader.tsx`
+- PageHeader — `apps/main/src/modules/trade/swap/components/PageHeader/PageHeader.tsx`
+- SettingLabel — `apps/main/src/modules/trade/swap/components/SettingsModal/SettingLabel.tsx`
+- SettingsModal — `apps/main/src/modules/trade/swap/components/SettingsModal/SettingsModal.tsx`
+- SettingsSection — `apps/main/src/modules/trade/swap/components/SettingsModal/SettingsSection.tsx`
+- TradeSlippage — `apps/main/src/modules/trade/swap/components/SettingsModal/TradeSlippage.tsx`
+- TradeChart — `apps/main/src/modules/trade/swap/components/TradeChart/TradeChart.tsx`
+- TradeOption — `apps/main/src/modules/trade/swap/components/TradeOption/TradeOption.tsx`
+- TradeOptionSkeleton — `apps/main/src/modules/trade/swap/components/TradeOption/TradeOptionSkeleton.tsx`
+- TradeRouteAsset — `apps/main/src/modules/trade/swap/components/TradeRoutes/TradeRouteAsset.tsx`
+- TradeRouteFee — `apps/main/src/modules/trade/swap/components/TradeRoutes/TradeRouteFee.tsx`
+- TradeRoutes — `apps/main/src/modules/trade/swap/components/TradeRoutes/TradeRoutes.tsx`
+- TradeRoutesModalContent — `apps/main/src/modules/trade/swap/components/TradeRoutes/TradeRoutesModalContent.tsx`
+- Dca — `apps/main/src/modules/trade/swap/sections/DCA/Dca.tsx`
+- DcaAssetSwitcher — `apps/main/src/modules/trade/swap/sections/DCA/DcaAssetSwitcher.tsx`
+- DcaDurationField — `apps/main/src/modules/trade/swap/sections/DCA/DcaDurationField.tsx`
+- DcaErrors — `apps/main/src/modules/trade/swap/sections/DCA/DcaErrors.tsx`
+- DcaFooter — `apps/main/src/modules/trade/swap/sections/DCA/DcaFooter.tsx`
+- DcaForm — `apps/main/src/modules/trade/swap/sections/DCA/DcaForm.tsx`
+- DcaOrderInfo — `apps/main/src/modules/trade/swap/sections/DCA/DcaOrderInfo.tsx`
+- DcaOrderInfoSkeleton — `apps/main/src/modules/trade/swap/sections/DCA/DcaOrderInfoSkeleton.tsx`
+- DcaPriceImpactWarning — `apps/main/src/modules/trade/swap/sections/DCA/DcaPriceImpactWarning.tsx`
+- DcaSummary — `apps/main/src/modules/trade/swap/sections/DCA/DcaSummary.tsx`
+- DcaSummarySkeleton — `apps/main/src/modules/trade/swap/sections/DCA/DcaSummarySkeleton.tsx`
+- DcaWarnings — `apps/main/src/modules/trade/swap/sections/DCA/DcaWarnings.tsx`
+- Market — `apps/main/src/modules/trade/swap/sections/Market/Market.tsx`
+- MarketErrors — `apps/main/src/modules/trade/swap/sections/Market/MarketErrors.tsx`
+- MarketFields — `apps/main/src/modules/trade/swap/sections/Market/MarketFields.tsx`
+- MarketSubmit — `apps/main/src/modules/trade/swap/sections/Market/MarketSubmit.tsx`
+- MarketSwitcher — `apps/main/src/modules/trade/swap/sections/Market/MarketSwitcher.tsx`
+- MarketTradeOptions — `apps/main/src/modules/trade/swap/sections/Market/MarketTradeOptions.tsx`
+- MarketWarnings — `apps/main/src/modules/trade/swap/sections/Market/MarketWarnings.tsx`
+- DcaSettingsModal — `apps/main/src/modules/trade/swap/components/SettingsModal/DcaSettings/DcaSettingsModal.tsx`
+- SingleTradeSection — `apps/main/src/modules/trade/swap/components/SettingsModal/SwapSettings/SingleTradeSection.tsx`
+- SplitTradeSection — `apps/main/src/modules/trade/swap/components/SettingsModal/SwapSettings/SplitTradeSection.tsx`
+- SwapSettingsModal — `apps/main/src/modules/trade/swap/components/SettingsModal/SwapSettings/SwapSettingsModal.tsx`
+- CalculatedAmountSummaryRow — `apps/main/src/modules/trade/swap/sections/Market/Summary/CalculatedAmountSummaryRow.tsx`
+- MarketSummary — `apps/main/src/modules/trade/swap/sections/Market/Summary/MarketSummary.tsx`
+- MarketSummarySkeleton — `apps/main/src/modules/trade/swap/sections/Market/Summary/MarketSummarySkeleton.tsx`
+- MarketSummarySwap — `apps/main/src/modules/trade/swap/sections/Market/Summary/MarketSummarySwap.tsx`
+- MarketSummaryTwap — `apps/main/src/modules/trade/swap/sections/Market/Summary/MarketSummaryTwap.tsx`
+- PriceImpactSummaryRow — `apps/main/src/modules/trade/swap/sections/Market/Summary/PriceImpactSummaryRow.tsx`
+
+</details>
+
+### Liquidity (88)
+
+<details>
+<summary>Show all 88 components</summary>
+
+- AssetLabelWithFarmApr — `apps/main/src/modules/liquidity/IsolatedPools.columns.tsx`
+- PoolDetails — `apps/main/src/modules/liquidity/PoolDetails.tsx`
+- PoolDetailsSkeleton — `apps/main/src/modules/liquidity/PoolDetailsSkeleton.tsx`
+- PoolsPage — `apps/main/src/modules/liquidity/PoolsPage.tsx`
+- OmnipoolAndStablepoolTable — `apps/main/src/modules/liquidity/PoolsPage.tsx`
+- IsolatedPoolsTable — `apps/main/src/modules/liquidity/PoolsPage.tsx`
+- Route — `apps/main/src/routes/liquidity/$id.add.tsx`
+- AddLiquidityModalContent — `apps/main/src/routes/liquidity/$id.add.tsx`
+- Route — `apps/main/src/routes/liquidity/$id.join.tsx`
+- Route — `apps/main/src/routes/liquidity/$id.remove.tsx`
+- Route — `apps/main/src/routes/liquidity/$id.tsx`
+- Route — `apps/main/src/routes/liquidity/create.tsx`
+- Route — `apps/main/src/routes/liquidity/index.tsx`
+- OmnipoolSubscriber — `apps/main/src/routes/liquidity/route.tsx`
+- Route — `apps/main/src/routes/liquidity/route.tsx`
+- AddIsolatedLiquidity — `apps/main/src/modules/liquidity/components/AddIsolatediquidity/AddIsolatedLiquidity.tsx`
+- AddIsolatedLiquidityForm — `apps/main/src/modules/liquidity/components/AddIsolatediquidity/AddIsolatedLiquidity.tsx`
+- AddIsolatedLiquiditySkeleton — `apps/main/src/modules/liquidity/components/AddIsolatediquidity/AddIsolatedLiquiditySkeleton.tsx`
+- AddLiquidity — `apps/main/src/modules/liquidity/components/AddLiquidity/AddLiquidity.tsx`
+- AddLiquiditySummary — `apps/main/src/modules/liquidity/components/AddLiquidity/AddLiquidity.tsx`
+- RewardsAPR — `apps/main/src/modules/liquidity/components/AddLiquidity/RewardsAPR.tsx`
+- AddMoneyMarketOmnipoolLiquidity — `apps/main/src/modules/liquidity/components/AddMoneyMarketLiquidity/AddMoneyMarketLiquidityWrapper.tsx`
+- AddMoneyMarketLiquidity — `apps/main/src/modules/liquidity/components/AddMoneyMarketLiquidity/AddMoneyMarketLiquidityWrapper.tsx`
+- AddStablepoolLiquidityWrapper — `apps/main/src/modules/liquidity/components/AddStablepoolLiquidity/AddStablepoolLiquidity.tsx`
+- AddStablepoolLiquidityForm — `apps/main/src/modules/liquidity/components/AddStablepoolLiquidity/AddStablepoolLiquidity.tsx`
+- AddStablepoolLiquidityTooltip — `apps/main/src/modules/liquidity/components/AddStablepoolLiquidity/AddStablepoolLiquidity.tsx`
+- AddStablepoolLiquiditySkeleton — `apps/main/src/modules/liquidity/components/AddStablepoolLiquidity/AddStablepoolLiquiditySkeleton.tsx`
+- AvailableFarm — `apps/main/src/modules/liquidity/components/AvailableFarms/AvailableFarm.tsx`
+- AvailableFarmModalBody — `apps/main/src/modules/liquidity/components/AvailableFarms/AvailableFarmModalBody.tsx`
+- AvailableFarms — `apps/main/src/modules/liquidity/components/AvailableFarms/AvailableFarms.tsx`
+- FarmDetails — `apps/main/src/modules/liquidity/components/AvailableFarms/FarmDetails.tsx`
+- JoinedFarm — `apps/main/src/modules/liquidity/components/AvailableFarms/JoinedFarm.tsx`
+- SupplyYieldOpportunity — `apps/main/src/modules/liquidity/components/AvailableFarms/SupplyYieldOpportunity.tsx`
+- YieldOpportunitiesSection — `apps/main/src/modules/liquidity/components/AvailableFarms/YieldOpportunitiesSection.tsx`
+- LiquidityBreadcrumb — `apps/main/src/modules/liquidity/components/Breadcrumb/LiquidityBreadcrumb.tsx`
+- CreateIsolatedPool — `apps/main/src/modules/liquidity/components/CreateIsolatedPool/CreateIsolatedPool.tsx`
+- LoyaltyGraph — `apps/main/src/modules/liquidity/components/Farms/LoyaltyGraph.tsx`
+- TooltipAPR — `apps/main/src/modules/liquidity/components/Farms/TooltipAPR.tsx`
+- JoinFarmsWrapper — `apps/main/src/modules/liquidity/components/JoinFarms/JoinFarms.tsx`
+- JoinFarmsSkeleton — `apps/main/src/modules/liquidity/components/JoinFarms/JoinFarmsSkeleton.tsx`
+- LiquiditySubpageMenu — `apps/main/src/modules/liquidity/components/LiquiditySubpageMenu/LiquiditySubpageMenu.tsx`
+- MyLiquidityTab — `apps/main/src/modules/liquidity/components/MyLiquidityTab/MyLiquidityTab.tsx`
+- PoolChart — `apps/main/src/modules/liquidity/components/PoolDetailsChart/PoolDetailsChart.tsx`
+- AssetYields — `apps/main/src/modules/liquidity/components/PoolDetailsHeader/AssetYields.tsx`
+- PoolDetailsHeader — `apps/main/src/modules/liquidity/components/PoolDetailsHeader/PoolDetailsHeader.tsx`
+- PoolDetailsHeaderSkeleton — `apps/main/src/modules/liquidity/components/PoolDetailsHeader/PoolDetailsHeaderSkeleton.tsx`
+- CurrencyReserves — `apps/main/src/modules/liquidity/components/PoolDetailsValues/CurrencyReserves.tsx`
+- CurrencyReservesRow — `apps/main/src/modules/liquidity/components/PoolDetailsValues/CurrencyReserves.tsx`
+- CurrencyReservesRowSkeleton — `apps/main/src/modules/liquidity/components/PoolDetailsValues/CurrencyReserves.tsx`
+- LiquidityLimit — `apps/main/src/modules/liquidity/components/PoolDetailsValues/LiquidityLimit.tsx`
+- PoolDetailsValues — `apps/main/src/modules/liquidity/components/PoolDetailsValues/PoolDetailsValues.tsx`
+- PoolDetailsValuesSkeleton — `apps/main/src/modules/liquidity/components/PoolDetailsValues/PoolDetailsValuesSkeleton.tsx`
+- PoolStats — `apps/main/src/modules/liquidity/components/PoolDetailsValues/PoolStats.tsx`
+- PoolsFilters — `apps/main/src/modules/liquidity/components/PoolsFilters/PoolsFilters.tsx`
+- AllPools — `apps/main/src/modules/liquidity/components/PoolsHeader/AllPools.tsx`
+- ClaimRewardsButton — `apps/main/src/modules/liquidity/components/PoolsHeader/ClaimRewardsButton.tsx`
+- Isolated — `apps/main/src/modules/liquidity/components/PoolsHeader/Isolated.tsx`
+- MyLiquidity — `apps/main/src/modules/liquidity/components/PoolsHeader/MyLiquidity.tsx`
+- Omnipool — `apps/main/src/modules/liquidity/components/PoolsHeader/Omnipool.tsx`
+- PoolsHeader — `apps/main/src/modules/liquidity/components/PoolsHeader/PoolsHeader.tsx`
+- PoolTypeTabs — `apps/main/src/modules/liquidity/components/PoolsTypeTabs/PoolTypeTabs.tsx`
+- ATokenBalanceTable — `apps/main/src/modules/liquidity/components/PositionsTable/ATokenBalanceTable.tsx`
+- ClaimCard — `apps/main/src/modules/liquidity/components/PositionsTable/ClaimCard.tsx`
+- OmnipoolPositions — `apps/main/src/modules/liquidity/components/PositionsTable/OmnipoolPositions.tsx`
+- PositionDetails — `apps/main/src/modules/liquidity/components/PositionsTable/PositionDetails.tsx`
+- PositionsHeader — `apps/main/src/modules/liquidity/components/PositionsTable/PositionsHeader.tsx`
+- PositionsTable — `apps/main/src/modules/liquidity/components/PositionsTable/PositionsTable.tsx`
+- AmountToRemove — `apps/main/src/modules/liquidity/components/RemoveLiquidity/AmountToRemove.tsx`
+- PositionToRemove — `apps/main/src/modules/liquidity/components/RemoveLiquidity/PositionToRemove.tsx`
+- ReceiveAssets — `apps/main/src/modules/liquidity/components/RemoveLiquidity/ReceiveAssets.tsx`
+- RemoveSelectableXYKPositions — `apps/main/src/modules/liquidity/components/RemoveLiquidity/RemoveIsolatedPoolLiquidity.tsx`
+- RemoveIsolatedPoolsLiquidity — `apps/main/src/modules/liquidity/components/RemoveLiquidity/RemoveIsolatedPoolLiquidity.tsx`
+- RemoveMultipleIsolatedPoolLiquidity — `apps/main/src/modules/liquidity/components/RemoveLiquidity/RemoveIsolatedPoolLiquidity.tsx`
+- RemoveSingleIsolatedPoolLiquidity — `apps/main/src/modules/liquidity/components/RemoveLiquidity/RemoveIsolatedPoolLiquidity.tsx`
+- RemoveXYKShares — `apps/main/src/modules/liquidity/components/RemoveLiquidity/RemoveIsolatedPoolLiquidity.tsx`
+- RemoveLiquidity — `apps/main/src/modules/liquidity/components/RemoveLiquidity/RemoveLiquidity.tsx`
+- RemoveLiquidityForm — `apps/main/src/modules/liquidity/components/RemoveLiquidity/RemoveLiquidity.tsx`
+- RemoveLiquiditySkeleton — `apps/main/src/modules/liquidity/components/RemoveLiquidity/RemoveLiquiditySkeleton.tsx`
+- RemoveMoneyMarketLiquidity — `apps/main/src/modules/liquidity/components/RemoveLiquidity/RemoveMoneyMarketLiquidity.tsx`
+- RemoveMoneyMarketLiquidityForm — `apps/main/src/modules/liquidity/components/RemoveLiquidity/RemoveMoneyMarketLiquidity.tsx`
+- RemoveSelectablePositions — `apps/main/src/modules/liquidity/components/RemoveLiquidity/RemoveOmnipoolLiquidity.tsx`
+- RemoveOmnipoolLiquidity — `apps/main/src/modules/liquidity/components/RemoveLiquidity/RemoveOmnipoolLiquidity.tsx`
+- RemoveStablepoolLiquidity — `apps/main/src/modules/liquidity/components/RemoveLiquidity/RemoveStablepoolLiquidity.tsx`
+- SearchInput — `apps/main/src/modules/liquidity/components/SearchInput/SearchInput.tsx`
+- StablepoolBadge — `apps/main/src/modules/liquidity/components/StablepoolBadge/StablepoolBadge.tsx`
+- StablepoolReserves — `apps/main/src/modules/liquidity/components/StablepoolReserves/StablepoolReserves.tsx`
+- TradeLimit — `apps/main/src/modules/liquidity/components/TradeLimitRow/TradeLimitRow.tsx`
+- TradeLimitRow — `apps/main/src/modules/liquidity/components/TradeLimitRow/TradeLimitRow.tsx`
+
+</details>
+
+### Wallet (72)
+
+<details>
+<summary>Show all 72 components</summary>
+
+- WalletEmptyState — `apps/main/src/modules/wallet/WalletEmptyState.tsx`
+- Route — `apps/main/src/routes/wallet/assets.tsx`
+- Route — `apps/main/src/routes/wallet/index.tsx`
+- Route — `apps/main/src/routes/wallet/route.tsx`
+- Route — `apps/main/src/routes/wallet/transactions.tsx`
+- WalletAssetsPage — `apps/main/src/modules/wallet/assets/WalletAssetsPage.tsx`
+- WalletAssetsSubpageLayoutActions — `apps/main/src/modules/wallet/assets/WalletAssetsSubpageLayoutActions.tsx`
+- WalletAssetsSubpageMenu — `apps/main/src/modules/wallet/assets/WalletAssetsSubpageMenu.tsx`
+- WalletTransactionAddressColumn — `apps/main/src/modules/wallet/transactions/WalletTransactionAddressColumn.tsx`
+- WalletTransactionsPage — `apps/main/src/modules/wallet/transactions/WalletTransactionsPage.tsx`
+- WalletTransactionsSkeleton — `apps/main/src/modules/wallet/transactions/WalletTransactionsSkeleton.tsx`
+- WalletTransactionsTable — `apps/main/src/modules/wallet/transactions/WalletTransactionsTable.tsx`
+- WalletTransactionsTableHeader — `apps/main/src/modules/wallet/transactions/WalletTransactionsTableHeader.tsx`
+- NetWorth — `apps/main/src/modules/wallet/assets/Balances/NetWorth.tsx`
+- WalletBalances — `apps/main/src/modules/wallet/assets/Balances/WalletBalances.tsx`
+- WalletBalancesSection — `apps/main/src/modules/wallet/assets/Balances/WalletBalancesSection.tsx`
+- InvalidAssetAction — `apps/main/src/modules/wallet/assets/Invalid/InvalidAssetAction.tsx`
+- InvalidAssetDataPreview — `apps/main/src/modules/wallet/assets/Invalid/InvalidAssetDataPreview.tsx`
+- InvalidAssetDataPreviewList — `apps/main/src/modules/wallet/assets/Invalid/InvalidAssetDataPreviewList.tsx`
+- InvalidAssetModal — `apps/main/src/modules/wallet/assets/Invalid/InvalidAssetModal.tsx`
+- InvalidAssetModalHeader — `apps/main/src/modules/wallet/assets/Invalid/InvalidAssetModalHeader.tsx`
+- InvalidAssetRow — `apps/main/src/modules/wallet/assets/Invalid/InvalidAssetRow.tsx`
+- AssetDetailExpanded — `apps/main/src/modules/wallet/assets/MyAssets/AssetDetailExpanded.tsx`
+- AssetDetailMobileActions — `apps/main/src/modules/wallet/assets/MyAssets/AssetDetailMobileActions.tsx`
+- AssetDetailMobileModal — `apps/main/src/modules/wallet/assets/MyAssets/AssetDetailMobileModal.tsx`
+- AssetDetailMobileModalBalances — `apps/main/src/modules/wallet/assets/MyAssets/AssetDetailMobileModalBalances.tsx`
+- AssetDetailMobileModalBalancesHeader — `apps/main/src/modules/wallet/assets/MyAssets/AssetDetailMobileModalBalancesHeader.tsx`
+- AssetDetailNativeMobileModal — `apps/main/src/modules/wallet/assets/MyAssets/AssetDetailNativeMobileModal.tsx`
+- AssetDetailNativeMobileModalBalances — `apps/main/src/modules/wallet/assets/MyAssets/AssetDetailNativeMobileModalBalances.tsx`
+- AssetDetailStaking — `apps/main/src/modules/wallet/assets/MyAssets/AssetDetailStaking.tsx`
+- AssetDetailTotal — `apps/main/src/modules/wallet/assets/MyAssets/AssetDetailTotal.tsx`
+- AssetDetailUnlock — `apps/main/src/modules/wallet/assets/MyAssets/AssetDetailUnlock.tsx`
+- AssetOriginMobile — `apps/main/src/modules/wallet/assets/MyAssets/AssetOriginMobile.tsx`
+- ExpandedNativeRow — `apps/main/src/modules/wallet/assets/MyAssets/ExpandedNativeRow.tsx`
+- FullExpiration — `apps/main/src/modules/wallet/assets/MyAssets/FullExpiration.tsx`
+- MyAssets — `apps/main/src/modules/wallet/assets/MyAssets/MyAssets.tsx`
+- MyAssetsActions — `apps/main/src/modules/wallet/assets/MyAssets/MyAssetsActions.tsx`
+- MyAssetsEmptyState — `apps/main/src/modules/wallet/assets/MyAssets/MyAssetsEmptyState.tsx`
+- MyAssetsFeePaymentChange — `apps/main/src/modules/wallet/assets/MyAssets/MyAssetsFeePaymentChange.tsx`
+- MyAssetsTable — `apps/main/src/modules/wallet/assets/MyAssets/MyAssetsTable.tsx`
+- LiquidityDetailExpanded — `apps/main/src/modules/wallet/assets/MyLiquidity/LiquidityDetailExpanded.tsx`
+- LiquidityDetailMobileActions — `apps/main/src/modules/wallet/assets/MyLiquidity/LiquidityDetailMobileActions.tsx`
+- LiquidityDetailMobileModal — `apps/main/src/modules/wallet/assets/MyLiquidity/LiquidityDetailMobileModal.tsx`
+- LiquidityPosition — `apps/main/src/modules/wallet/assets/MyLiquidity/LiquidityPosition.tsx`
+- LiquidityPositionActions — `apps/main/src/modules/wallet/assets/MyLiquidity/LiquidityPositionActions.tsx`
+- LiquidityPositionMobileHeader — `apps/main/src/modules/wallet/assets/MyLiquidity/LiquidityPositionMobileHeader.tsx`
+- XYKLiquidityPositionMobileHeader — `apps/main/src/modules/wallet/assets/MyLiquidity/LiquidityPositionMobileHeader.tsx`
+- LiquidityPositionMobileValues — `apps/main/src/modules/wallet/assets/MyLiquidity/LiquidityPositionMobileValues.tsx`
+- LiquidityPositionMoreActions — `apps/main/src/modules/wallet/assets/MyLiquidity/LiquidityPositionMoreActions.tsx`
+- XYKSharesPositionMoreActions — `apps/main/src/modules/wallet/assets/MyLiquidity/LiquidityPositionMoreActions.tsx`
+- StableswapPositionMoreActions — `apps/main/src/modules/wallet/assets/MyLiquidity/LiquidityPositionMoreActions.tsx`
+- LiquidityPositionsMobile — `apps/main/src/modules/wallet/assets/MyLiquidity/LiquidityPositionsMobile.tsx`
+- LockExpiration — `apps/main/src/modules/wallet/assets/MyLiquidity/LockExpiration.tsx`
+- MyLiquidity — `apps/main/src/modules/wallet/assets/MyLiquidity/MyLiquidity.tsx`
+- MyLiquidityActions — `apps/main/src/modules/wallet/assets/MyLiquidity/MyLiquidityActions.tsx`
+- MyLiquidityEmptyState — `apps/main/src/modules/wallet/assets/MyLiquidity/MyLiquidityEmptyState.tsx`
+- MyLiquidityTableActions — `apps/main/src/modules/wallet/assets/MyLiquidity/MyLiquidityTable.actions.tsx`
+- MyLiquidityTable — `apps/main/src/modules/wallet/assets/MyLiquidity/MyLiquidityTable.tsx`
+- StableswapLiquidityPosition — `apps/main/src/modules/wallet/assets/MyLiquidity/StableswapPosition.tsx`
+- XYKDeposit — `apps/main/src/modules/wallet/assets/MyLiquidity/XYKDeposit.tsx`
+- XYKSharesPositions — `apps/main/src/modules/wallet/assets/MyLiquidity/XYKSharesPositions.tsx`
+- WalletRewards — `apps/main/src/modules/wallet/assets/Rewards/WalletRewards.tsx`
+- WalletRewardsSection — `apps/main/src/modules/wallet/assets/Rewards/WalletRewardsSection.tsx`
+- WalletRewardsSectionEmpty — `apps/main/src/modules/wallet/assets/Rewards/WalletRewardsSectionEmpty.tsx`
+- TransferPositionModal — `apps/main/src/modules/wallet/assets/Transfer/TransferPositionModal.tsx`
+- AccountDeleteButton — `packages/web3-connect/src/components/account/AccountDeleteButton.tsx`
+- AccountEditButton — `packages/web3-connect/src/components/account/AccountEditButton.tsx`
+- AccountFilter — `packages/web3-connect/src/components/account/AccountFilter.tsx`
+- AccountMetaMaskOption — `packages/web3-connect/src/components/account/AccountMetaMaskOption.tsx`
+- AccountNameEdit — `packages/web3-connect/src/components/account/AccountNameEdit.tsx`
+- AccountOption — `packages/web3-connect/src/components/account/AccountOption.tsx`
+- AccountRemoveModal — `packages/web3-connect/src/components/account/AccountRemoveModal.tsx`
+
+</details>
+
+### Borrowing (63)
+
+<details>
+<summary>Show all 63 components</summary>
+
+- BorrowContextProvider — `apps/main/src/modules/borrow/BorrowContextProvider.tsx`
+- Route — `apps/main/src/routes/borrow/dashboard.tsx`
+- Route — `apps/main/src/routes/borrow/history.tsx`
+- Route — `apps/main/src/routes/borrow/index.tsx`
+- Route — `apps/main/src/routes/borrow/markets.$address.tsx`
+- Route — `apps/main/src/routes/borrow/markets.index.tsx`
+- Route — `apps/main/src/routes/borrow/route.tsx`
+- AccountBindingBanner — `apps/main/src/modules/borrow/account/AccountBindingBanner.tsx`
+- ApyBreakdown — `apps/main/src/modules/borrow/components/ApyBreakdown.tsx`
+- ApyColumn — `apps/main/src/modules/borrow/components/ApyColumn.tsx`
+- NoData — `apps/main/src/modules/borrow/components/NoData.tsx`
+- TablePaper — `apps/main/src/modules/borrow/components/TablePaper.tsx`
+- ApyContext — `apps/main/src/modules/borrow/context/ApyContext.tsx`
+- ApyProvider — `apps/main/src/modules/borrow/context/ApyContext.tsx`
+- BorrowDashboardPage — `apps/main/src/modules/borrow/dashboard/BorrowDashboardPage.tsx`
+- HealthFactorLtvScale — `apps/main/src/modules/borrow/healthfactor/HealthFactorLtvScale.tsx`
+- HealthFactorRisk — `apps/main/src/modules/borrow/healthfactor/HealthFactorRisk.tsx`
+- HealthFactorRiskInfo — `apps/main/src/modules/borrow/healthfactor/HealthFactorRiskInfo.tsx`
+- HealthFactorRiskScale — `apps/main/src/modules/borrow/healthfactor/HealthFactorRiskScale.tsx`
+- BorrowHistoryFilter — `apps/main/src/modules/borrow/history/BorrowHistoryFilter.tsx`
+- BorrowHistoryPage — `apps/main/src/modules/borrow/history/BorrowHistoryPage.tsx`
+- BorrowHistoryPlaceholder — `apps/main/src/modules/borrow/history/BorrowHistoryPlaceholder.tsx`
+- BorrowHistorySearch — `apps/main/src/modules/borrow/history/BorrowHistorySearch.tsx`
+- BorrowHistoryTable — `apps/main/src/modules/borrow/history/BorrowHistoryTable.tsx`
+- HollarBanner — `apps/main/src/modules/borrow/hollar/HollarBanner.tsx`
+- BorrowMarketDetailPage — `apps/main/src/modules/borrow/markets/BorrowMarketDetailPage.tsx`
+- BorrowMarketsPage — `apps/main/src/modules/borrow/markets/BorrowMarketsPage.tsx`
+- HollarReserveConfiguration — `apps/main/src/modules/borrow/reserve/HollarReserveConfiguration.tsx`
+- ReserveConfiguration — `apps/main/src/modules/borrow/reserve/ReserveConfiguration.tsx`
+- MIN_CLAIMABLE_INCENTIVES_USDT — `apps/main/src/modules/borrow/dashboard/components/DashboardHeader.tsx`
+- DashboardHeader — `apps/main/src/modules/borrow/dashboard/components/DashboardHeader.tsx`
+- AssetAmountDescription — `apps/main/src/modules/borrow/history/descriptions/AssetAmountDescription.tsx`
+- CollateralDescription — `apps/main/src/modules/borrow/history/descriptions/CollateralDescription.tsx`
+- EModeDescription — `apps/main/src/modules/borrow/history/descriptions/EModeDescription.tsx`
+- LiquidationCallDescription — `apps/main/src/modules/borrow/history/descriptions/LiquidationCallDescription.tsx`
+- MarketAssetsStats — `apps/main/src/modules/borrow/markets/components/MarketAssetsStats.tsx`
+- MarketAssetsTable — `apps/main/src/modules/borrow/markets/components/MarketAssetsTable.tsx`
+- ApyChart — `apps/main/src/modules/borrow/reserve/components/ApyChart.tsx`
+- BorrowApyChart — `apps/main/src/modules/borrow/reserve/components/BorrowApyChart.tsx`
+- BorrowInfo — `apps/main/src/modules/borrow/reserve/components/BorrowInfo.tsx`
+- CapProgressCircle — `apps/main/src/modules/borrow/reserve/components/CapProgressCircle.tsx`
+- EModeInfo — `apps/main/src/modules/borrow/reserve/components/EModeInfo.tsx`
+- HollarBorrowInfo — `apps/main/src/modules/borrow/reserve/components/HollarBorrowInfo.tsx`
+- HollarReserveHeader — `apps/main/src/modules/borrow/reserve/components/HollarReserveHeader.tsx`
+- VARIABLE_BORROW_RATE_COLOR — `apps/main/src/modules/borrow/reserve/components/InterestRateModelChart.tsx`
+- InterestRateModelChart — `apps/main/src/modules/borrow/reserve/components/InterestRateModelChart.tsx`
+- ReserveActions — `apps/main/src/modules/borrow/reserve/components/ReserveActions.tsx`
+- ReserveHeader — `apps/main/src/modules/borrow/reserve/components/ReserveHeader.tsx`
+- ReserveLabel — `apps/main/src/modules/borrow/reserve/components/ReserveLabel.tsx`
+- ReserveSectionDivider — `apps/main/src/modules/borrow/reserve/components/ReserveSectionDivider.tsx`
+- SupplyApyChart — `apps/main/src/modules/borrow/reserve/components/SupplyApyChart.tsx`
+- SupplyInfo — `apps/main/src/modules/borrow/reserve/components/SupplyInfo.tsx`
+- BorrowAssetsTable — `apps/main/src/modules/borrow/dashboard/components/borrow-assets/BorrowAssetsTable.tsx`
+- BorrowedAssetsHeader — `apps/main/src/modules/borrow/dashboard/components/borrowed-assets/BorrowedAssetsHeader.tsx`
+- BorrowedAssetsTable — `apps/main/src/modules/borrow/dashboard/components/borrowed-assets/BorrowedAssetsTable.tsx`
+- SuppliedAssetsHeader — `apps/main/src/modules/borrow/dashboard/components/supplied-assets/SuppliedAssetsHeader.tsx`
+- SuppliedAssetsTable — `apps/main/src/modules/borrow/dashboard/components/supplied-assets/SuppliedAssetsTable.tsx`
+- SupplyAssetsTable — `apps/main/src/modules/borrow/dashboard/components/supply-assets/SupplyAssetsTable.tsx`
+- BorrowActions — `packages/money-market/src/components/transactions/borrow/BorrowActions.tsx`
+- BorrowAmountWarning — `packages/money-market/src/components/transactions/borrow/BorrowAmountWarning.tsx`
+- BorrowModal — `packages/money-market/src/components/transactions/borrow/BorrowModal.tsx`
+- BorrowModalContent — `packages/money-market/src/components/transactions/borrow/BorrowModalContent.tsx`
+- GhoBorrowModalContent — `packages/money-market/src/components/transactions/borrow/GhoBorrowModalContent.tsx`
+
+</details>
+
+### Other (38)
+
+<details>
+<summary>Show all 38 components</summary>
+
+- App — `apps/main/src/App.tsx`
+- AddressBookFormField — `apps/main/src/form/AddressBookFormField.tsx`
+- AssetSelectFormField — `apps/main/src/form/AssetSelectFormField.tsx`
+- TimeFrameFormField — `apps/main/src/form/TimeFrameFormField.tsx`
+- AssetsProvider — `apps/main/src/providers/assetsProvider.tsx`
+- RpcProvider — `apps/main/src/providers/rpcProvider.tsx`
+- Route — `apps/main/src/routes/__root.tsx`
+- Route — `apps/main/src/routes/index.tsx`
+- TOAST_MESSAGES — `apps/main/src/states/toasts.tsx`
+- TransactionFeePaymentAssetModal — `apps/main/src/modules/transactions/TransactionFeePaymentAssetModal.tsx`
+- TransactionManager — `apps/main/src/modules/transactions/TransactionManager.tsx`
+- TransactionProvider — `apps/main/src/modules/transactions/TransactionProvider.tsx`
+- Route — `apps/main/src/routes/_cross-chain/cross-chain.tsx`
+- ReviewMultiTransaction — `apps/main/src/modules/transactions/review/ReviewMultiTransaction.tsx`
+- ReviewTransactionContent — `apps/main/src/modules/transactions/review/ReviewTransaction.tsx`
+- ReviewTransaction — `apps/main/src/modules/transactions/review/ReviewTransaction.tsx`
+- ReviewTransactionFee — `apps/main/src/modules/transactions/review/ReviewTransactionFee.tsx`
+- ReviewTransactionFeePaymentAssetModal — `apps/main/src/modules/transactions/review/ReviewTransactionFeePaymentAssetModal.tsx`
+- ReviewTransactionFooter — `apps/main/src/modules/transactions/review/ReviewTransactionFooter.tsx`
+- ReviewTransactionMortality — `apps/main/src/modules/transactions/review/ReviewTransactionMortality.tsx`
+- ReviewTransactionStatus — `apps/main/src/modules/transactions/review/ReviewTransactionStatus.tsx`
+- ReviewTransactionSubmitButton — `apps/main/src/modules/transactions/review/ReviewTransactionSubmitButton.tsx`
+- ReviewTransactionSummary — `apps/main/src/modules/transactions/review/ReviewTransactionSummary.tsx`
+- ReviewTransactionJsonView — `apps/main/src/modules/transactions/review/ReviewTransactionJsonView/ReviewTransactionJsonView.tsx`
+- ReviewTransactionTip — `apps/main/src/modules/transactions/review/ReviewTransactionTip/ReviewTransactionTip.tsx`
+- AssetCapsProvider — `packages/money-market/src/hooks/useAssetCaps.tsx`
+- ModalContext — `packages/money-market/src/hooks/useModal.tsx`
+- ModalContextProvider — `packages/money-market/src/hooks/useModal.tsx`
+- PermissionProvider — `packages/money-market/src/hooks/usePermissions.tsx`
+- SharedDependenciesProvider — `packages/money-market/src/ui-config/SharedDependenciesProvider.tsx`
+- GlobalStyles — `packages/ui/src/styles/index.tsx`
+- ThemeProvider — `packages/ui/src/theme/provider.tsx`
+- BackgroundDataProvider — `packages/money-market/src/hooks/app-data-provider/BackgroundDataProvider.tsx`
+- AppDataContext — `packages/money-market/src/hooks/app-data-provider/useAppDataProvider.tsx`
+- AppDataProvider — `packages/money-market/src/hooks/app-data-provider/useAppDataProvider.tsx`
+- AppFormattersProvider — `packages/money-market/src/hooks/app-data-provider/useAppFormatters.tsx`
+- Web3Context — `packages/money-market/src/libs/hooks/useWeb3Context.tsx`
+- Web3ContextProvider — `packages/money-market/src/libs/web3-data-provider/Web3Provider.tsx`
+
+</details>
+
+### Staking (26)
+
+<details>
+<summary>Show all 26 components</summary>
+
+- ActiveDashboard — `apps/main/src/modules/staking/ActiveDashboard.tsx`
+- ActiveDashboardSkeleton — `apps/main/src/modules/staking/ActiveDashboardSkeleton.tsx`
+- AyeDetails — `apps/main/src/modules/staking/AyeDetails.tsx`
+- ClaimStakingRemainder — `apps/main/src/modules/staking/ClaimStakingRemainder.tsx`
+- ClaimStakingWarning — `apps/main/src/modules/staking/ClaimStakingWarning.tsx`
+- DashboardStats — `apps/main/src/modules/staking/DashboardStats.tsx`
+- DashboardStatsSkeleton — `apps/main/src/modules/staking/DashboardStatsSkeleton.tsx`
+- HowToStake — `apps/main/src/modules/staking/HowToStake.tsx`
+- OngoingReferenda — `apps/main/src/modules/staking/OngoingReferenda.tsx`
+- OngoingReferendaEmptyState — `apps/main/src/modules/staking/OngoingReferendaEmptyState.tsx`
+- Referenda — `apps/main/src/modules/staking/Referenda.tsx`
+- ReferendaFooter — `apps/main/src/modules/staking/ReferendaFooter.tsx`
+- ReferendaHeader — `apps/main/src/modules/staking/ReferendaHeader.tsx`
+- ReferendaSeparator — `apps/main/src/modules/staking/ReferendaSeparator.tsx`
+- ReferendaSkeleton — `apps/main/src/modules/staking/ReferendaSkeleton.tsx`
+- ReferendaStatus — `apps/main/src/modules/staking/ReferendaStatus.tsx`
+- ReferendaThresholdLine — `apps/main/src/modules/staking/ReferendaThresholdLine.tsx`
+- RewardsCurve — `apps/main/src/modules/staking/RewardsCurve.tsx`
+- RewardsInfo — `apps/main/src/modules/staking/RewardsInfo.tsx`
+- RewardsList — `apps/main/src/modules/staking/RewardsList.tsx`
+- Stake — `apps/main/src/modules/staking/Stake.tsx`
+- StakeForm — `apps/main/src/modules/staking/StakeForm.tsx`
+- StakingDashboard — `apps/main/src/modules/staking/StakingDashboard.tsx`
+- UnstakeForm — `apps/main/src/modules/staking/UnstakeForm.tsx`
+- Route — `apps/main/src/routes/staking/index.tsx`
+- Route — `apps/main/src/routes/staking/route.tsx`
+
+</details>
+
+### Layout (24)
+
+<details>
+<summary>Show all 24 components</summary>
+
+- MainLayout — `apps/main/src/modules/layout/MainLayout.tsx`
+- SubpageLayout — `apps/main/src/modules/layout/SubpageLayout.tsx`
+- Content — `apps/main/src/modules/layout/components/Content.tsx`
+- Header — `apps/main/src/modules/layout/components/Header.tsx`
+- HeaderMenu — `apps/main/src/modules/layout/components/HeaderMenu.tsx`
+- SHeaderToolbar — `apps/main/src/modules/layout/components/HeaderToolbar.styled.tsx`
+- HeaderToolbar — `apps/main/src/modules/layout/components/HeaderToolbar.tsx`
+- HeaderWeb3ConnectButton — `apps/main/src/modules/layout/components/HeaderWeb3ConnectButton.tsx`
+- SubpageMenu — `apps/main/src/modules/layout/components/SubpageMenu.tsx`
+- MobileTabBar — `apps/main/src/modules/layout/components/MobileTabBar/MobileTabBar.tsx`
+- MobileTabBarAction — `apps/main/src/modules/layout/components/MobileTabBar/MobileTabBarAction.tsx`
+- MobileTabBarActions — `apps/main/src/modules/layout/components/MobileTabBar/MobileTabBarActions.tsx`
+- MobileTabBarSubmenuItem — `apps/main/src/modules/layout/components/MobileTabBar/MobileTabBarSubMenu.tsx`
+- NotificationCenter — `apps/main/src/modules/layout/components/NotificationCenter/NotificationCenter.tsx`
+- NotificationToast — `apps/main/src/modules/layout/components/NotificationCenter/NotificationToast.tsx`
+- Contacts — `apps/main/src/modules/layout/components/Settings/Contacts.tsx`
+- DegenMode — `apps/main/src/modules/layout/components/Settings/DegenMode.tsx`
+- PaymentAsset — `apps/main/src/modules/layout/components/Settings/PaymentAsset.tsx`
+- Settings — `apps/main/src/modules/layout/components/Settings/Settings.tsx`
+- SettingsModal — `apps/main/src/modules/layout/components/Settings/SettingsModal.tsx`
+- SettingsModalDefault — `apps/main/src/modules/layout/components/Settings/SettingsModalDefault.tsx`
+- ThemePreference — `apps/main/src/modules/layout/components/Settings/ThemePreference.tsx`
+- NAVIGATION — `packages/ui/src/components/NavigationMenu/NavigationMenu.stories.tsx`
+- Default — `packages/ui/src/components/NavigationMenu/NavigationMenu.stories.tsx`
+
+</details>
+
+### Referrals (1)
+
+<details>
+<summary>Show all 1 components</summary>
+
+- Route — `apps/main/src/routes/referrals.tsx`
+
+</details>
+
+### Cross-Chain (1)
+
+<details>
+<summary>Show all 1 components</summary>
+
+- XcmPage — `apps/main/src/modules/xcm/XcmPage.tsx`
+
+</details>
+
+
+## Hooks
+
+### SDK-connected (88)
+
+- `useAccountInfo` — account.ts
+- `useAccountOmnipoolPositions` — account.ts
+- `useAccountOmnipoolMiningPositions` — account.ts
+- `useAccountXykMiningPositions` — account.ts
+- `useAccountUniques` — account.ts
+- `useAccountPermitNonce` — account.ts
+- `useRelayChainBlockNumber` — chain.ts
+- `useBestNumber` — chain.ts
+- `useInvalidateOnBlock` — chain.ts
+- `useEstimateFutureBlockTimestamp` — chain.ts
+- `useBlockTimestamp` — chain.ts
+- `useChainSpecData` — chain.ts
+- `useBindEvmAccount` — evm.ts
+- `usePermitNonce` — evm.ts
+- `useOmnipoolAssetsData` — omnipool.ts
+- `useMaxAddLiquidityLimit` — omnipool.ts
+- `useOmnipoolMinLiquidity` — omnipool.ts
+- `useMinWithdrawalFee` — omnipool.ts
+- `useAssetFeeParameters` — omnipool.ts
+- `useOraclePrice` — omnipool.ts
+- `useAcceptedFeePaymentAssets` — payments.ts
+- `useAccountFeePaymentAssetId` — payments.ts
+- `useAccountFeePaymentAssets` — payments.ts
+- `useSetFeePaymentAsset` — payments.ts
+- `useStableswap` — stableswap.ts
+- `useStableSwapTradability` — stableswap.ts
+- `useInvalidateStakeData` — staking.ts
+- `useXYKPoolWithLiquidity` — xyk.ts
+- `useXYKConsts` — xyk.ts
+- `useXykShareTokenEntries` — xyk.ts
+- `useBorrowIncentives` — queries.ts
+- `useBorrowReserves` — queries.ts
+- `userBorrowReservesQuery` — queries.ts
+- `useUserBorrowReserves` — queries.ts
+- `useBorrowUserIncentives` — queries.ts
+- `useGhoReserveData` — queries.ts
+- `useGhoUserData` — queries.ts
+- `userBorrowSummaryQuery` — queries.ts
+- `useUserBorrowSummary` — queries.ts
+- `useGetClaimAllBorrowRewardsTx` — queries.ts
+- `useClaimStaking` — ClaimStaking.tx.ts
+- `useStake` — Stake.stake.ts
+- `useUnstake` — Stake.unstake.ts
+- `useEstimateFee` — useEstimateFee.ts
+- `useAddIsolatedLiquidityZod` — AddIsolatedLiquidity.utils.ts
+- `useAddIsolatedLiquidity` — AddIsolatedLiquidity.utils.ts
+- `useLiquidityOmnipoolShares` — AddLiqudity.utils.ts
+- `useCheckJoinOmnipoolFarm` — AddLiqudity.utils.ts
+- `useAddToOmnipoolZod` — AddLiqudity.utils.ts
+- `useAddLiquidityForm` — AddLiqudity.utils.ts
+- `useAddLiquidity` — AddLiqudity.utils.ts
+- `useStablepoolAddLiquidity` — AddStablepoolLiquidity.utils.ts
+- `useStablepoolAddLiquidityForm` — AddStablepoolLiquidity.utils.ts
+- `useAssetsToAddToMoneyMarket` — AddStablepoolLiquidity.utils.ts
+- `useAssetsToAddToStablepool` — AddStablepoolLiquidity.utils.ts
+- `useIsolatedPoolForm` — CreateIsolatedPool.utils.ts
+- `useSubmitCreateIsolatedPool` — CreateIsolatedPool.utils.ts
+- `useAllowedXYKPoolAssets` — CreateIsolatedPool.utils.ts
+- `useSecondsToLeft` — Farms.utils.ts
+- `useCurrentFarmPeriod` — Farms.utils.ts
+- `useEnteredDate` — Farms.utils.ts
+- `useLoyaltyRates` — Farms.utils.ts
+- `useDepositAprs` — Farms.utils.ts
+- `useExitDepositFarmsMutation` — Farms.utils.ts
+- `useJoinOmnipoolFarms` — JoinFarms.utils.ts
+- `useXYKFarmMinShares` — JoinFarms.utils.ts
+- `useMinOmnipoolFarmJoin` — JoinFarms.utils.ts
+- `useJoinIsolatedPoolFarms` — JoinFarms.utils.ts
+- `useJoinFarmsForm` — JoinFarms.utils.ts
+- `useLiquidityMiningRewards` — ClaimRewardsButton.utils.ts
+- `useClaimPositionRewards` — ClaimRewardsButton.utils.ts
+- `useSummarizeClaimableValues` — ClaimRewardsButton.utils.ts
+- `useClaimFarmRewardsMutation` — ClaimRewardsButton.utils.ts
+- `useRemoveSingleOmnipoolPosition` — RemoveOmnipoolLiquidity.utils.ts
+- `useRemoveMultipleOmnipoolPositions` — RemoveOmnipoolLiquidity.utils.ts
+- `useRemoveLiquidityForm` — RemoveOmnipoolLiquidity.utils.ts
+- `useStablepoolRemoveLiquidity` — RemoveStablepoolLiquidity.utils.ts
+- `useRemoveStablepoolLiquidityForm` — RemoveStablepoolLiquidity.utils.ts
+- `useTerminateDcaSchedule` — useTerminateDcaSchedule.ts
+- `useSubmitCancelOtcOrder` — CancelOtcOrderModalContent.submit.ts
+- `useSubmitFillOrder` — FillOrderModalContent.submit.ts
+- `useSubmitPlaceOrder` — PlaceOrderModalContent.submit.ts
+- `useUnlockNativeLocks` — AssetDetailUnlock.tx.ts
+- `useClaimAllWalletRewards` — WalletRewardsSection.claim.ts
+- `useInsufficientTransferFee` — TransferPosition.utils.ts
+- `usePaymentFees` — TransferPosition.utils.ts
+- `useTransferPaymentInfo` — TransferPosition.utils.ts
+- `useSubmitTransferPosition` — TransferPositionModal.submit.ts
+
+### Indexer-connected (122)
+
+- `useAccountInfo` — account.ts
+- `useAccountOmnipoolPositions` — account.ts
+- `useAccountOmnipoolMiningPositions` — account.ts
+- `useAccountXykMiningPositions` — account.ts
+- `useAccountUniques` — account.ts
+- `useAccountPermitNonce` — account.ts
+- `useRelayChainBlockNumber` — chain.ts
+- `useBestNumber` — chain.ts
+- `useInvalidateOnBlock` — chain.ts
+- `useEstimateFutureBlockTimestamp` — chain.ts
+- `useBlockTimestamp` — chain.ts
+- `useChainSpecData` — chain.ts
+- `useBindEvmAccount` — evm.ts
+- `usePermitNonce` — evm.ts
+- `useOmnipoolFarms` — farms.ts
+- `useIsolatedPoolsFarms` — farms.ts
+- `useIsolatedPoolFarms` — farms.ts
+- `useOmnipoolActiveFarm` — farms.ts
+- `useFarmRewards` — farms.ts
+- `useOmnipoolAssetsData` — omnipool.ts
+- `useMaxAddLiquidityLimit` — omnipool.ts
+- `useOmnipoolMinLiquidity` — omnipool.ts
+- `useMinWithdrawalFee` — omnipool.ts
+- `useAssetFeeParameters` — omnipool.ts
+- `useOraclePrice` — omnipool.ts
+- `useAcceptedFeePaymentAssets` — payments.ts
+- `useAccountFeePaymentAssetId` — payments.ts
+- `useAccountFeePaymentAssets` — payments.ts
+- `useSetFeePaymentAsset` — payments.ts
+- `useXykPools` — pools.ts
+- `useXykPool` — pools.ts
+- `useStablePools` — pools.ts
+- `useOmnipoolIds` — pools.ts
+- `useSquidUrl` — provider.ts
+- `useIndexerUrl` — provider.ts
+- `useSnowbridgeUrl` — provider.ts
+- `useActiveProviderProps` — provider.ts
+- `useProviderMetadata` — provider.ts
+- `useSquidClient` — provider.ts
+- `useIndexerClient` — provider.ts
+- `useSnowbridgeClient` — provider.ts
+- `useRpcStatus` — rpc.ts
+- `useRpcsStatus` — rpc.ts
+- `usePriceSubscriber` — spotPrice.ts
+- `useSubscribedPriceKeys` — spotPrice.ts
+- `useShareTokenPrices` — spotPrice.ts
+- `useStableswap` — stableswap.ts
+- `useStableSwapTradability` — stableswap.ts
+- `useInvalidateStakeData` — staking.ts
+- `useAccountBalanceSubscription` — subscriptions.ts
+- `useXYKPoolWithLiquidity` — xyk.ts
+- `useXYKConsts` — xyk.ts
+- `useXykShareTokenEntries` — xyk.ts
+- `useIsActiveQueries` — useIsActiveQueries.ts
+- `useObservableQuery` — useObservableQuery.ts
+- `usePapiObservableQuery` — usePapiObservableQuery.ts
+- `usePapiObservableQuery` — usePapiObservableQuery.ts
+- `usePapiObservableQuery` — usePapiObservableQuery.ts
+- `useFormatOmnipoolPositionData` — liquidity.ts
+- `useOmnipoolPositionData` — liquidity.ts
+- `useOmnipoolAssetsStore` — liquidity.ts
+- `useOmnipoolStablepoolAssets` — liquidity.ts
+- `useOmnipoolAsset` — liquidity.ts
+- `useXYKPoolsStore` — liquidity.ts
+- `useXYKPools` — liquidity.ts
+- `useXYKPool` — liquidity.ts
+- `useBorrowIncentives` — queries.ts
+- `useBorrowReserves` — queries.ts
+- `userBorrowReservesQuery` — queries.ts
+- `useUserBorrowReserves` — queries.ts
+- `useBorrowUserIncentives` — queries.ts
+- `useGhoReserveData` — queries.ts
+- `useGhoUserData` — queries.ts
+- `userBorrowSummaryQuery` — queries.ts
+- `useUserBorrowSummary` — queries.ts
+- `useGetClaimAllBorrowRewardsTx` — queries.ts
+- `useDefillamaLatestApyQuery` — defillama.ts
+- `useDefillamaLatestApyQueries` — defillama.ts
+- `useReferralRewards` — useReferralRewards.ts
+- `useStakingRewards` — useStakingRewards.ts
+- `useStakingSupply` — DashboardStats.data.ts
+- `useStakingAPR` — DashboardStats.data.ts
+- `useRewardsCurveData` — RewardsCurve.data.ts
+- `useProcessedVotes` — Stake.data.ts
+- `usePendingVotes` — Stake.data.ts
+- `useStakeForm` — Stake.form.ts
+- `useStake` — Stake.stake.ts
+- `useUnstake` — Stake.unstake.ts
+- `useEstimateFee` — useEstimateFee.ts
+- `useTransactionPaymentInfo` — useTransactionPaymentInfo.ts
+- `useTransactionToastProcessorFn` — useTransactionToastProcessorFn.ts
+- `useAddIsolatedLiquidityZod` — AddIsolatedLiquidity.utils.ts
+- `useAddIsolatedLiquidity` — AddIsolatedLiquidity.utils.ts
+- `useSecondsToLeft` — Farms.utils.ts
+- `useCurrentFarmPeriod` — Farms.utils.ts
+- `useEnteredDate` — Farms.utils.ts
+- `useLoyaltyRates` — Farms.utils.ts
+- `useDepositAprs` — Farms.utils.ts
+- `useExitDepositFarmsMutation` — Farms.utils.ts
+- `usePastExecutionsData` — usePastExecutionsData.ts
+- `useOrdersData` — useOrdersData.ts
+- `useRoutedTradesData` — useRoutedTradesData.ts
+- `useSwapsData` — useSwapsData.ts
+- `useFillOrderForm` — FillOrderModalContent.form.ts
+- `usePlaceOrderForm` — PlaceOrderModalContent.form.ts
+- `useNetWorthData` — NetWorth.data.ts
+- `useUnlockNativeLocks` — AssetDetailUnlock.tx.ts
+- `useNativeAssetLocks` — ExpandedNativeRow.data.ts
+- `useUnlockableNativeTokens` — ExpandedNativeRow.data.ts
+- `useClaimAllWalletRewards` — WalletRewardsSection.claim.ts
+- `useInsufficientTransferFee` — TransferPosition.utils.ts
+- `usePaymentFees` — TransferPosition.utils.ts
+- `useTransferPaymentInfo` — TransferPosition.utils.ts
+- `useInitialOtcOfferAmount` — OfferStatusColumn.utils.ts
+- `useTradeChartData` — TradeChart.data.ts
+- `useDcaForm` — useDcaForm.ts
+- `useDcaTradeOrder` — useDcaTradeOrder.ts
+- `useMarketBuyData` — Market.BuyData.ts
+- `useMarketSellData` — Market.SellData.ts
+- `useCalculateBuyAmount` — useCalculateBuyAmount.ts
+- `useCalculateSellAmount` — useCalculateSellAmount.ts
+- `useSubmitTwap` — useSubmitTwap.ts
+
+## SDK Usage
+
+### Transaction Calls (89)
+
+- `tx.EVMAccounts.bind_evm_address`
+- `tx.MultiTransactionPayment.set_currency`
+- `tx.EVM.call`
+- `tx.Dispatcher.dispatch_evm_call`
+- `tx.Staking.claim`
+- `tx.Utility.batch_all`
+- `tx.Democracy.remove_vote`
+- `tx.ConvictionVoting.remove_vote`
+- `tx.Staking.stake`
+- `tx.Staking.increase_stake`
+- `tx.Staking.unstake`
+- `tx.Currencies.transfer`
+- `tx.MultiTransactionPayment.dispatch_permit`
+- `tx.XYKLiquidityMining.add_liquidity_and_join_farms`
+- `tx.XYK.add_liquidity`
+- `tx.OmnipoolLiquidityMining.add_liquidity_and_join_farms`
+- `tx.Omnipool.add_liquidity_with_limit`
+- `tx.Dispatcher.dispatch_with_extra_gas`
+- `tx.Stableswap.add_assets_liquidity`
+- `tx.OmnipoolLiquidityMining.add_liquidity_stableswap_omnipool_and_join_farms`
+- `tx.XYK.create_pool`
+- `tx.XYKLiquidityMining.withdraw_shares`
+- `tx.OmnipoolLiquidityMining.withdraw_shares`
+- `tx.OmnipoolLiquidityMining.redeposit_shares`
+- `tx.OmnipoolLiquidityMining.join_farms`
+- `tx.XYKLiquidityMining.redeposit_shares`
+- `tx.XYKLiquidityMining.join_farms`
+- `tx.XYKLiquidityMining.claim_rewards`
+- `tx.OmnipoolLiquidityMining.claim_rewards`
+- `tx.XYK.remove_liquidity_with_limits`
+- `tx.Stableswap.remove_liquidity`
+- `tx.Omnipool.remove_liquidity_with_limit`
+- `tx.Stableswap.remove_liquidity_one_asset`
+- `tx.DCA.terminate`
+- `tx.OTC.cancel_order`
+- `tx.OTC.partial_fill_order`
+- `tx.OTC.fill_order`
+- `tx.OTC.place_order`
+- `tx.Democracy.unlock`
+- `tx.Referrals.claim_rewards`
+- `tx.Tokens.transfer`
+
+### Query Calls (80)
+
+- `query.Uniques.Account`
+- `query.XYK.ShareToken`
+- `query.Balances.Locks`
+- `query.System.Account`
+- `query.Tokens.Accounts`
+- `query.Balances.TotalIssuance`
+- `query.Balances.InactiveIssuance`
+- `query.ParachainSystem.ValidationData`
+- `query.System.Number`
+- `query.Timestamp.Now`
+- `query.System.LastRuntimeUpgrade`
+- `query.Democracy.VotingOf`
+- `query.Democracy.ReferendumInfoOf`
+- `query.Referenda.ReferendumInfoFor`
+- `query.ConvictionVoting.VotingFor`
+- `query.EmaOracle.Oracles`
+- `query.MultiTransactionPayment.AcceptedCurrencies`
+- `query.Referrals.TotalShares`
+- `query.Referrals.ReferrerShares`
+- `query.Referrals.TraderShares`
+- `query.Stableswap.Pools`
+- `query.Stableswap.AssetTradability`
+- `query.Staking.Staking`
+- `query.Staking.Positions`
+- `query.Staking.VotesRewarded`
+- `query.Staking.ProcessedVotes`
+- `query.Staking.Votes`
+- `query.Staking.PositionVotes`
+- `query.XYK.TotalLiquidity`
+- `query.Omnipool.Positions`
+- `query.OmnipoolLiquidityMining.OmniPositionId`
+- `query.OmnipoolWarehouseLM.Deposit`
+- `query.XYKWarehouseLM.Deposit`
+- `papi.query.Uniques.Account`
+- `papi.query.XYK.ShareToken`
+- `papi.query.Balances.Locks`
+- `papi.query.System.Account`
+- `papi.query.Tokens.Accounts`
+- `papi.query.Balances.TotalIssuance`
+- `papi.query.Balances.InactiveIssuance`
+- `papi.query.ParachainSystem.ValidationData`
+- `papi.query.System.Number`
+- `papi.query.Timestamp.Now`
+- `papi.query.System.LastRuntimeUpgrade`
+- `papi.query.Democracy.VotingOf`
+- `papi.query.Democracy.ReferendumInfoOf`
+- `papi.query.Referenda.ReferendumInfoFor`
+- `papi.query.ConvictionVoting.VotingFor`
+- `papi.query.EmaOracle.Oracles`
+- `papi.query.MultiTransactionPayment.AcceptedCurrencies`
+- `papi.query.Referrals.TotalShares`
+- `papi.query.Referrals.ReferrerShares`
+- `papi.query.Referrals.TraderShares`
+- `papi.query.Stableswap.Pools`
+- `papi.query.Stableswap.AssetTradability`
+- `papi.query.Staking.Staking`
+- `papi.query.Staking.Positions`
+- `papi.query.Staking.VotesRewarded`
+- `papi.query.Staking.ProcessedVotes`
+- `papi.query.Staking.Votes`
+- `papi.query.Staking.PositionVotes`
+- `papi.query.XYK.TotalLiquidity`
+- `papi.query.Omnipool.Positions`
+- `papi.query.OmnipoolLiquidityMining.OmniPositionId`
+- `papi.query.OmnipoolWarehouseLM.Deposit`
+- `papi.query.XYKWarehouseLM.Deposit`
+
+## Indexer Usage (88 files)
+
+- `apps/main/src/api/staking.ts`
+- `apps/main/src/modules/borrow/history/BorrowHistoryTable.utils.ts`
+- `apps/main/src/modules/trade/orders/TradeOrdersHeader.tsx`
+- `apps/main/src/modules/liquidity/components/PoolsHeader/AllPools.tsx`
+- `apps/main/src/modules/liquidity/components/PoolsHeader/Omnipool.tsx`
+- `apps/main/src/modules/trade/orders/lib/useRoutedTradesData.ts`
+- `apps/main/src/modules/trade/otc/table/columns/OfferStatusColumn.utils.ts`
+- `apps/main/src/api/account.ts`
+- `apps/main/src/api/chain.ts`
+- `apps/main/src/api/evm.ts`
+- `apps/main/src/api/farms.ts`
+- `apps/main/src/api/omnipool.ts`
+- `apps/main/src/api/payments.ts`
+- `apps/main/src/api/pools.ts`
+- `apps/main/src/api/provider.ts`
+- `apps/main/src/api/rpc.ts`
+- `apps/main/src/api/spotPrice.ts`
+- `apps/main/src/api/stableswap.ts`
+- `apps/main/src/api/subscriptions.ts`
+- `apps/main/src/api/xyk.ts`
+- `apps/main/src/config/rpc.ts`
+- `apps/main/src/hooks/useIsActiveQueries.ts`
+- `apps/main/src/hooks/useObservableQuery.ts`
+- `apps/main/src/hooks/usePapiObservableQuery.ts`
+- `apps/main/src/providers/rpcProvider.tsx`
+- `apps/main/src/routes/__root.tsx`
+- `apps/main/src/states/liquidity.ts`
+- `apps/main/src/states/provider.ts`
+- `apps/main/src/api/borrow/queries.ts`
+- `apps/main/src/api/external/defillama.ts`
+- `apps/main/src/components/AssetSwitcher/TradeAssetSwitcher.tsx`
+- `apps/main/src/components/ProviderRpcSelect/ProviderRpcResolver.tsx`
+- `apps/main/src/components/ProviderRpcSelect/ProviderRpcSelect.tsx`
+- `apps/main/src/hooks/data/useReferralRewards.ts`
+- `apps/main/src/hooks/data/useStakingRewards.ts`
+- `apps/main/src/modules/liquidity/Liquidity.utils.tsx`
+- `apps/main/src/modules/staking/DashboardStats.data.ts`
+- `apps/main/src/modules/staking/OngoingReferenda.tsx`
+- `apps/main/src/modules/staking/Referenda.tsx`
+- `apps/main/src/modules/staking/RewardsCurve.data.ts`
+- `apps/main/src/modules/staking/Stake.data.ts`
+- `apps/main/src/modules/staking/Stake.form.ts`
+- `apps/main/src/modules/staking/Stake.stake.ts`
+- `apps/main/src/modules/staking/Stake.unstake.ts`
+- `apps/main/src/modules/staking/StakingDashboard.tsx`
+- `apps/main/src/modules/transactions/TransactionProvider.tsx`
+- `apps/main/src/components/ProviderRpcSelect/components/RpcListItem.tsx`
+- `apps/main/src/components/ProviderRpcSelect/components/RpcStatus.tsx`
+- `apps/main/src/components/ProviderRpcSelect/components/SquidList.tsx`
+- `apps/main/src/components/ProviderRpcSelect/components/SquidListItem.tsx`
+- `apps/main/src/modules/borrow/account/AccountBindingBanner.tsx`
+- `apps/main/src/modules/borrow/dashboard/BorrowDashboardPage.tsx`
+- `apps/main/src/modules/borrow/history/BorrowHistoryTable.query.tsx`
+- `apps/main/src/modules/transactions/hooks/useEstimateFee.ts`
+- `apps/main/src/modules/transactions/hooks/useTransactionPaymentInfo.ts`
+- `apps/main/src/modules/transactions/hooks/useTransactionToastProcessorFn.ts`
+- `apps/main/src/modules/wallet/transactions/WalletTransactionsTable.tsx`
+- `apps/main/src/modules/borrow/reserve/components/BorrowApyChart.tsx`
+- `apps/main/src/modules/borrow/reserve/components/SupplyApyChart.tsx`
+- `apps/main/src/modules/liquidity/components/AddIsolatediquidity/AddIsolatedLiquidity.utils.ts`
+- `apps/main/src/modules/liquidity/components/AddMoneyMarketLiquidity/AddMoneyMarketLiquidity.utils.tsx`
+- `apps/main/src/modules/liquidity/components/AddStablepoolLiquidity/AddStablepoolLiquidity.tsx`
+- `apps/main/src/modules/liquidity/components/Farms/Farms.utils.ts`
+- `apps/main/src/modules/liquidity/components/RemoveLiquidity/RemoveMoneyMarketLiquidity.tsx`
+- `apps/main/src/modules/liquidity/components/RemoveLiquidity/RemoveMoneyMarketLiquidity.utils.tsx`
+- `apps/main/src/modules/trade/orders/PastExecutions/usePastExecutionsData.ts`
+- `apps/main/src/modules/trade/orders/lib/useOrdersData.ts`
+- `apps/main/src/modules/trade/orders/lib/useSwapsData.ts`
+- `apps/main/src/modules/trade/otc/fill-order/FillOrderModalContent.form.ts`
+- `apps/main/src/modules/trade/otc/fill-order/FillOrderModalContent.tsx`
+- `apps/main/src/modules/trade/otc/place-order/PlaceOrderModalContent.form.ts`
+- `apps/main/src/modules/trade/otc/place-order/PlaceOrderModalContent.tsx`
+- `apps/main/src/modules/wallet/assets/Balances/NetWorth.data.ts`
+- `apps/main/src/modules/wallet/assets/MyAssets/AssetDetailUnlock.tx.ts`
+- `apps/main/src/modules/wallet/assets/MyAssets/ExpandedNativeRow.data.ts`
+- `apps/main/src/modules/wallet/assets/Rewards/WalletRewardsSection.claim.ts`
+- `apps/main/src/modules/wallet/assets/Transfer/TransferPosition.utils.ts`
+- `apps/main/src/modules/wallet/assets/Transfer/TransferPositionModal.tsx`
+- `apps/main/src/modules/trade/swap/components/TradeChart/TradeChart.data.ts`
+- `apps/main/src/modules/trade/swap/sections/DCA/DcaAssetSwitcher.tsx`
+- `apps/main/src/modules/trade/swap/sections/DCA/useDcaForm.ts`
+- `apps/main/src/modules/trade/swap/sections/DCA/useDcaTradeOrder.ts`
+- `apps/main/src/modules/trade/swap/sections/Market/Market.BuyData.ts`
+- `apps/main/src/modules/trade/swap/sections/Market/Market.SellData.ts`
+- `apps/main/src/modules/trade/swap/sections/Market/MarketTradeOptions.tsx`
+- `apps/main/src/modules/trade/swap/sections/Market/lib/useCalculateBuyAmount.ts`
+- `apps/main/src/modules/trade/swap/sections/Market/lib/useCalculateSellAmount.ts`
+- `apps/main/src/modules/trade/swap/sections/Market/lib/useSubmitTwap.ts`

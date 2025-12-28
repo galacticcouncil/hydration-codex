@@ -1,0 +1,313 @@
+{
+  "version": "1.0.0",
+  "hookCount": 223,
+  "categories": [
+    {
+      "name": "utils",
+      "count": 47,
+      "hooks": [
+        "useAccountBalance",
+        "useAccountBalanceSubscription",
+        "useAccountBalances",
+        "useAccountBalancesWithPriceByAssetType",
+        "useAccountData",
+        "useAccountOmnipoolPositionsData",
+        "useAccountPositions",
+        "useApiMetadataStore",
+        "useAssetPrice",
+        "useAssetRegistry",
+        "useAssetRegistryStore",
+        "useAssetSelectModalAssets",
+        "useAssetsPrice",
+        "useCountdown",
+        "useCsvDownload",
+        "useDefillamaLatestApyQueries",
+        "useDefillamaLatestApyQuery",
+        "useDisplayAssetStore",
+        "useDisplaySpotPriceStore",
+        "useElapsedTimeStatus",
+        "useFilteredSearchAssets",
+        "useFormatOmnipoolPositionData",
+        "useHasTopNavbar",
+        "useIsActiveQueries",
+        "useMenuTranslations",
+        "useObservable",
+        "useObservableQuery",
+        "useOmnipoolAsset",
+        "useOmnipoolAssetsStore",
+        "useOmnipoolPositionData",
+        "useOmnipoolStablepoolAssets",
+        "usePapiObservableQuery",
+        "useProviderRpcUrlStore",
+        "useReferralRewards",
+        "useRouteBlock",
+        "useRpcFormSchema",
+        "useRpcListStore",
+        "useSaveFormOnChange",
+        "useStakingRewards",
+        "useTradeSettings",
+        "useTransactionsStore",
+        "useValidateFormMaxBalance",
+        "useVisibleElements",
+        "useVisibleHeaderMenuItems",
+        "useXYKPool",
+        "useXYKPools",
+        "useXYKPoolsStore"
+      ]
+    },
+    {
+      "name": "liquidity",
+      "count": 39,
+      "hooks": [
+        "useAddIsolatedLiquidity",
+        "useAddIsolatedLiquidityZod",
+        "useAddLiquidity",
+        "useAddLiquidityForm",
+        "useAddToOmnipoolZod",
+        "useAllowedXYKPoolAssets",
+        "useAssetsToAddToMoneyMarket",
+        "useAssetsToAddToStablepool",
+        "useCheckJoinOmnipoolFarm",
+        "useClaimFarmRewardsMutation",
+        "useClaimPositionRewards",
+        "useCurrentFarmPeriod",
+        "useDepositAprs",
+        "useEnteredDate",
+        "useExitDepositFarmsMutation",
+        "useIsolatedPoolForm",
+        "useIsolatedPositions",
+        "useJoinFarmsForm",
+        "useJoinIsolatedPoolFarms",
+        "useJoinOmnipoolFarms",
+        "useLiquidityMiningRewards",
+        "useLiquidityOmnipoolShares",
+        "useLoyaltyRates",
+        "useMinOmnipoolFarmJoin",
+        "useMyLiquidityTotals",
+        "useOmnipoolPositions",
+        "useRemoveLiquidityForm",
+        "useRemoveMultipleOmnipoolPositions",
+        "useRemoveSingleOmnipoolPosition",
+        "useRemoveStablepoolLiquidityForm",
+        "useSecondsToLeft",
+        "useStablepoolAddLiquidity",
+        "useStablepoolAddLiquidityForm",
+        "useStablepoolRemoveLiquidity",
+        "useSubmitCreateIsolatedPool",
+        "useSummarizeClaimableValues",
+        "useUserIsolatedPositionsTotal",
+        "useUserPositionsTotal",
+        "useXYKFarmMinShares"
+      ]
+    },
+    {
+      "name": "trade",
+      "count": 30,
+      "hooks": [
+        "useCalculateBuyAmount",
+        "useCalculateSellAmount",
+        "useDcaForm",
+        "useDcaPriceImpactValidation",
+        "useDcaSettingsForm",
+        "useDcaTradeOrder",
+        "useFillOrderForm",
+        "useInitialOtcOfferAmount",
+        "useMarketBuyData",
+        "useMarketForm",
+        "useMarketSellData",
+        "useOrdersData",
+        "useOtcHeaderData",
+        "usePastExecutionsData",
+        "usePlaceOrderForm",
+        "usePriceSubscriber",
+        "useRoutedTradesData",
+        "useShareTokenPrices",
+        "useSubmitCancelOtcOrder",
+        "useSubmitDcaOrder",
+        "useSubmitFillOrder",
+        "useSubmitPlaceOrder",
+        "useSubmitSwap",
+        "useSubmitTwap",
+        "useSubscribedPriceKeys",
+        "useSwapSettingsForm",
+        "useSwapsData",
+        "useSwitchAssets",
+        "useTerminateDcaSchedule",
+        "useTradeChartData"
+      ]
+    },
+    {
+      "name": "borrow",
+      "count": 20,
+      "hooks": [
+        "useApyBreakdownItems",
+        "useBorrowAssetsApy",
+        "useBorrowClaimableRewards",
+        "useBorrowHistoryFilters",
+        "useBorrowIncentives",
+        "useBorrowIncentivesContract",
+        "useBorrowPoolDataContract",
+        "useBorrowReserves",
+        "useBorrowUserIncentives",
+        "useExternalApyData",
+        "useFormatEventName",
+        "useFormatReserve",
+        "useGetClaimAllBorrowRewardsTx",
+        "useGhoReserveData",
+        "useGhoServiceContract",
+        "useGhoUserData",
+        "useUserBorrowReserves",
+        "useUserBorrowSummary",
+        "userBorrowReservesQuery",
+        "userBorrowSummaryQuery"
+      ]
+    },
+    {
+      "name": "transactions",
+      "count": 18,
+      "hooks": [
+        "useAcceptedFeePaymentAssets",
+        "useAccountFeePaymentAssetId",
+        "useAccountFeePaymentAssets",
+        "useBindEvmAccount",
+        "useEstimateFee",
+        "useNonce",
+        "usePermitNonce",
+        "usePolkadotJSExtrinsicUrl",
+        "useProcessTransactionToasts",
+        "useSetFeePaymentAsset",
+        "useSignAndSubmit",
+        "useTipForm",
+        "useTransactionAlerts",
+        "useTransactionEcosystem",
+        "useTransactionPaymentInfo",
+        "useTransactionTip",
+        "useTransactionToastProcessorFn",
+        "useTransactionToasts"
+      ]
+    },
+    {
+      "name": "chain",
+      "count": 16,
+      "hooks": [
+        "useActiveProviderProps",
+        "useBestNumber",
+        "useBlockTimestamp",
+        "useChainSpecData",
+        "useEstimateFutureBlockTimestamp",
+        "useIndexerClient",
+        "useIndexerUrl",
+        "useInvalidateOnBlock",
+        "useProviderMetadata",
+        "useRelayChainBlockNumber",
+        "useRpcStatus",
+        "useRpcsStatus",
+        "useSnowbridgeClient",
+        "useSnowbridgeUrl",
+        "useSquidClient",
+        "useSquidUrl"
+      ]
+    },
+    {
+      "name": "wallet",
+      "count": 15,
+      "hooks": [
+        "useClaimAllWalletRewards",
+        "useDownloadTransactionsCsv",
+        "useInsufficientTransferFee",
+        "useMyAssetsTableData",
+        "useMyIsolatedPoolsLiquidity",
+        "useMyLiquidityTableData",
+        "useNativeAssetLocks",
+        "useNetWorthData",
+        "usePaymentFees",
+        "useSubmitTransferPosition",
+        "useTransferPaymentInfo",
+        "useTransferPositionForm",
+        "useUnlockNativeLocks",
+        "useUnlockableNativeTokens",
+        "useWalletRewardsSectionData"
+      ]
+    },
+    {
+      "name": "staking",
+      "count": 12,
+      "hooks": [
+        "useClaimStaking",
+        "useIncreaseStake",
+        "useInvalidateStakeData",
+        "usePendingVotes",
+        "useProcessedVotes",
+        "useReferendaState",
+        "useRewardsCurveData",
+        "useStake",
+        "useStakeForm",
+        "useStakingAPR",
+        "useStakingSupply",
+        "useUnstake"
+      ]
+    },
+    {
+      "name": "account",
+      "count": 6,
+      "hooks": [
+        "useAccountInfo",
+        "useAccountOmnipoolMiningPositions",
+        "useAccountOmnipoolPositions",
+        "useAccountPermitNonce",
+        "useAccountUniques",
+        "useAccountXykMiningPositions"
+      ]
+    },
+    {
+      "name": "omnipool",
+      "count": 6,
+      "hooks": [
+        "useAssetFeeParameters",
+        "useMaxAddLiquidityLimit",
+        "useMinWithdrawalFee",
+        "useOmnipoolAssetsData",
+        "useOmnipoolMinLiquidity",
+        "useOraclePrice"
+      ]
+    },
+    {
+      "name": "farms",
+      "count": 5,
+      "hooks": [
+        "useFarmRewards",
+        "useIsolatedPoolFarms",
+        "useIsolatedPoolsFarms",
+        "useOmnipoolActiveFarm",
+        "useOmnipoolFarms"
+      ]
+    },
+    {
+      "name": "pools",
+      "count": 4,
+      "hooks": [
+        "useOmnipoolIds",
+        "useStablePools",
+        "useXykPool",
+        "useXykPools"
+      ]
+    },
+    {
+      "name": "xyk",
+      "count": 3,
+      "hooks": [
+        "useXYKConsts",
+        "useXYKPoolWithLiquidity",
+        "useXykShareTokenEntries"
+      ]
+    },
+    {
+      "name": "stableswap",
+      "count": 2,
+      "hooks": [
+        "useStableSwapTradability",
+        "useStableswap"
+      ]
+    }
+  ]
+}

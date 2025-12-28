@@ -4,6 +4,12 @@
 
 # Build outputs
 dist/
+docs-site/build/
+docs-site/.docusaurus/
+
+# Removed directories (consolidated)
+raw/
+docs/
 
 # Docker volumes
 .docker/

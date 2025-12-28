@@ -1,0 +1,17 @@
+# Chopsticks config for forking Hydration mainnet
+# Run: npm run chopsticks
+# Then: npm run extract:chain:local
+
+endpoint: wss://rpc.hydradx.cloud
+port: 8000
+block: null  # Use latest block
+
+# Optional: Use local WASM if you've built the node
+# wasm-override: ./repos/hydration-node/target/release/wbuild/hydradx-runtime/hydradx_runtime.wasm
+
+# Mock specific storage if needed for testing
+# mock-signature-host: true
+# allow-unresolved-imports: true
+
+# DB for state persistence (optional)
+# db: ./chopsticks-db

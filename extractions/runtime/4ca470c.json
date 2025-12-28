@@ -1,0 +1,1854 @@
+{
+  "meta": {
+    "layer": "L1",
+    "name": "runtime",
+    "extractedAt": "2025-12-26T00:26:35.149Z",
+    "source": {
+      "commit": "4ca470c5d613d62ce52eb8645770ef5fff263111",
+      "branch": "master",
+      "repo": "galacticcouncil/hydration-node"
+    }
+  },
+  "pallets": [
+    {
+      "name": "asset-registry",
+      "packageName": "pallet-asset-registry",
+      "path": "repos/hydration-node/pallets/asset-registry",
+      "storage": [
+        {
+          "pallet": "asset-registry",
+          "name": "Assets",
+          "type": "map",
+          "file": "pallets/asset-registry/src/lib.rs",
+          "line": 198
+        },
+        {
+          "pallet": "asset-registry",
+          "name": "NextAssetId",
+          "type": "value",
+          "file": "pallets/asset-registry/src/lib.rs",
+          "line": 202
+        },
+        {
+          "pallet": "asset-registry",
+          "name": "AssetIds",
+          "type": "value",
+          "file": "pallets/asset-registry/src/lib.rs",
+          "line": 207
+        },
+        {
+          "pallet": "asset-registry",
+          "name": "AssetLocations",
+          "type": "value",
+          "file": "pallets/asset-registry/src/lib.rs",
+          "line": 213
+        },
+        {
+          "pallet": "asset-registry",
+          "name": "BannedAssets",
+          "type": "map",
+          "file": "pallets/asset-registry/src/lib.rs",
+          "line": 219
+        },
+        {
+          "pallet": "asset-registry",
+          "name": "LocationAssets",
+          "type": "value",
+          "file": "pallets/asset-registry/src/lib.rs",
+          "line": 224
+        },
+        {
+          "pallet": "asset-registry",
+          "name": "ExistentialDepositCounter",
+          "type": "value",
+          "file": "pallets/asset-registry/src/lib.rs",
+          "line": 230
+        }
+      ],
+      "extrinsics": [],
+      "events": [
+        {
+          "pallet": "asset-registry",
+          "name": "ExistentialDepositPaid",
+          "fields": [],
+          "file": "pallets/asset-registry/src/lib.rs",
+          "line": 308
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "bonds",
+      "packageName": "pallet-bonds",
+      "path": "repos/hydration-node/pallets/bonds",
+      "storage": [
+        {
+          "pallet": "bonds",
+          "name": "BondIds",
+          "type": "map",
+          "file": "pallets/bonds/src/lib.rs",
+          "line": 141
+        },
+        {
+          "pallet": "bonds",
+          "name": "Bonds",
+          "type": "map",
+          "file": "pallets/bonds/src/lib.rs",
+          "line": 147
+        }
+      ],
+      "extrinsics": [],
+      "events": [
+        {
+          "pallet": "bonds",
+          "name": "TokenCreated",
+          "fields": [],
+          "file": "pallets/bonds/src/lib.rs",
+          "line": 153
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "broadcast",
+      "packageName": "pallet-broadcast",
+      "path": "repos/hydration-node/pallets/broadcast",
+      "storage": [
+        {
+          "pallet": "broadcast",
+          "name": "IncrementalId",
+          "type": "value",
+          "file": "pallets/broadcast/src/lib.rs",
+          "line": 63
+        },
+        {
+          "pallet": "broadcast",
+          "name": "ExecutionContext",
+          "type": "value",
+          "file": "pallets/broadcast/src/lib.rs",
+          "line": 69
+        },
+        {
+          "pallet": "broadcast",
+          "name": "Swapper",
+          "type": "value",
+          "file": "pallets/broadcast/src/lib.rs",
+          "line": 74
+        }
+      ],
+      "extrinsics": [],
+      "events": [
+        {
+          "pallet": "broadcast",
+          "name": "Swapped3",
+          "fields": [],
+          "file": "pallets/broadcast/src/lib.rs",
+          "line": 95
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "circuit-breaker",
+      "packageName": "pallet-circuit-breaker",
+      "path": "repos/hydration-node/pallets/circuit-breaker",
+      "storage": [
+        {
+          "pallet": "circuit-breaker",
+          "name": "TradeVolumeLimitPerAsset",
+          "type": "value",
+          "file": "pallets/circuit-breaker/src/lib.rs",
+          "line": 255
+        },
+        {
+          "pallet": "circuit-breaker",
+          "name": "AllowedTradeVolumeLimitPerAsset",
+          "type": "value",
+          "file": "pallets/circuit-breaker/src/lib.rs",
+          "line": 261
+        },
+        {
+          "pallet": "circuit-breaker",
+          "name": "LiquidityAddLimitPerAsset",
+          "type": "value",
+          "file": "pallets/circuit-breaker/src/lib.rs",
+          "line": 274
+        },
+        {
+          "pallet": "circuit-breaker",
+          "name": "AllowedAddLiquidityAmountPerAsset",
+          "type": "value",
+          "file": "pallets/circuit-breaker/src/lib.rs",
+          "line": 280
+        },
+        {
+          "pallet": "circuit-breaker",
+          "name": "AssetLockdownState",
+          "type": "value",
+          "file": "pallets/circuit-breaker/src/lib.rs",
+          "line": 285
+        },
+        {
+          "pallet": "circuit-breaker",
+          "name": "LiquidityRemoveLimitPerAsset",
+          "type": "value",
+          "file": "pallets/circuit-breaker/src/lib.rs",
+          "line": 298
+        },
+        {
+          "pallet": "circuit-breaker",
+          "name": "AllowedRemoveLiquidityAmountPerAsset",
+          "type": "value",
+          "file": "pallets/circuit-breaker/src/lib.rs",
+          "line": 304
+        }
+      ],
+      "extrinsics": [
+        {
+          "pallet": "circuit-breaker",
+          "name": "set_trade_volume_limit",
+          "params": [
+            {
+              "name": "asset_id",
+              "type": "T::AssetId"
+            },
+            {
+              "name": "trade_volume_limit",
+              "type": "(u32"
+            }
+          ],
+          "file": "pallets/circuit-breaker/src/lib.rs",
+          "line": 375
+        }
+      ],
+      "events": [
+        {
+          "pallet": "circuit-breaker",
+          "name": "TradeVolumeLimitChanged",
+          "fields": [],
+          "file": "pallets/circuit-breaker/src/lib.rs",
+          "line": 311
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "claims",
+      "packageName": "pallet-claims",
+      "path": "repos/hydration-node/pallets/claims",
+      "storage": [
+        {
+          "pallet": "claims",
+          "name": "Claims",
+          "type": "map",
+          "file": "pallets/claims/src/lib.rs",
+          "line": 103
+        }
+      ],
+      "extrinsics": [
+        {
+          "pallet": "claims",
+          "name": "claim",
+          "params": [
+            {
+              "name": "ethereum_signature",
+              "type": "EcdsaSignature"
+            }
+          ],
+          "file": "pallets/claims/src/lib.rs",
+          "line": 125
+        }
+      ],
+      "events": [
+        {
+          "pallet": "claims",
+          "name": "Claim",
+          "fields": [],
+          "file": "pallets/claims/src/lib.rs",
+          "line": 87
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "collator-rewards",
+      "packageName": "pallet-collator-rewards",
+      "path": "repos/hydration-node/pallets/collator-rewards",
+      "storage": [
+        {
+          "pallet": "collator-rewards",
+          "name": "Collators",
+          "type": "value",
+          "file": "pallets/collator-rewards/src/lib.rs",
+          "line": 114
+        }
+      ],
+      "extrinsics": [],
+      "events": [
+        {
+          "pallet": "collator-rewards",
+          "name": "CollatorRewarded",
+          "fields": [],
+          "file": "pallets/collator-rewards/src/lib.rs",
+          "line": 104
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "currencies",
+      "packageName": "pallet-currencies",
+      "path": "repos/hydration-node/pallets/currencies",
+      "storage": [],
+      "extrinsics": [
+        {
+          "pallet": "currencies",
+          "name": "transfer",
+          "params": [
+            {
+              "name": "dest",
+              "type": "<T::Lookup as StaticLookup>::Source"
+            },
+            {
+              "name": "currency_id",
+              "type": "CurrencyIdOf<T>"
+            },
+            {
+              "name": "pallet",
+              "type": ":compact] amount: BalanceOf<T>"
+            }
+          ],
+          "file": "pallets/currencies/src/lib.rs",
+          "line": 182
+        }
+      ],
+      "events": [
+        {
+          "pallet": "currencies",
+          "name": "Transferred",
+          "fields": [],
+          "file": "pallets/currencies/src/lib.rs",
+          "line": 142
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "dca",
+      "packageName": "pallet-dca",
+      "path": "repos/hydration-node/pallets/dca",
+      "storage": [
+        {
+          "pallet": "dca",
+          "name": "ScheduleIdSequencer",
+          "type": "value",
+          "file": "pallets/dca/src/lib.rs",
+          "line": 416
+        },
+        {
+          "pallet": "dca",
+          "name": "Schedules",
+          "type": "value",
+          "file": "pallets/dca/src/lib.rs",
+          "line": 421
+        },
+        {
+          "pallet": "dca",
+          "name": "ScheduleOwnership",
+          "type": "value",
+          "file": "pallets/dca/src/lib.rs",
+          "line": 427
+        },
+        {
+          "pallet": "dca",
+          "name": "RemainingAmounts",
+          "type": "map",
+          "file": "pallets/dca/src/lib.rs",
+          "line": 433
+        },
+        {
+          "pallet": "dca",
+          "name": "RetriesOnError",
+          "type": "map",
+          "file": "pallets/dca/src/lib.rs",
+          "line": 438
+        },
+        {
+          "pallet": "dca",
+          "name": "ScheduleExecutionBlock",
+          "type": "value",
+          "file": "pallets/dca/src/lib.rs",
+          "line": 443
+        },
+        {
+          "pallet": "dca",
+          "name": "ScheduleIdsPerBlock",
+          "type": "value",
+          "file": "pallets/dca/src/lib.rs",
+          "line": 449
+        }
+      ],
+      "extrinsics": [],
+      "events": [
+        {
+          "pallet": "dca",
+          "name": "ExecutionStarted",
+          "fields": [],
+          "file": "pallets/dca/src/lib.rs",
+          "line": 324
+        },
+        {
+          "pallet": "dca",
+          "name": "Scheduled",
+          "fields": [],
+          "file": "pallets/dca/src/lib.rs",
+          "line": 326
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "democracy",
+      "packageName": "pallet-democracy",
+      "path": "repos/hydration-node/pallets/democracy",
+      "storage": [
+        {
+          "pallet": "democracy",
+          "name": "PublicPropCount",
+          "type": "value",
+          "file": "pallets/democracy/src/lib.rs",
+          "line": 354
+        },
+        {
+          "pallet": "democracy",
+          "name": "PublicProps",
+          "type": "value",
+          "file": "pallets/democracy/src/lib.rs",
+          "line": 359
+        },
+        {
+          "pallet": "democracy",
+          "name": "DepositOf",
+          "type": "value",
+          "file": "pallets/democracy/src/lib.rs",
+          "line": 367
+        },
+        {
+          "pallet": "democracy",
+          "name": "ReferendumCount",
+          "type": "value",
+          "file": "pallets/democracy/src/lib.rs",
+          "line": 373
+        },
+        {
+          "pallet": "democracy",
+          "name": "LowestUnbaked",
+          "type": "value",
+          "file": "pallets/democracy/src/lib.rs",
+          "line": 379
+        },
+        {
+          "pallet": "democracy",
+          "name": "ReferendumInfoOf",
+          "type": "value",
+          "file": "pallets/democracy/src/lib.rs",
+          "line": 386
+        },
+        {
+          "pallet": "democracy",
+          "name": "VotingOf",
+          "type": "map",
+          "file": "pallets/democracy/src/lib.rs",
+          "line": 394
+        },
+        {
+          "pallet": "democracy",
+          "name": "LastTabledWasExternal",
+          "type": "value",
+          "file": "pallets/democracy/src/lib.rs",
+          "line": 405
+        },
+        {
+          "pallet": "democracy",
+          "name": "NextExternal",
+          "type": "value",
+          "file": "pallets/democracy/src/lib.rs",
+          "line": 412
+        },
+        {
+          "pallet": "democracy",
+          "name": "Blacklist",
+          "type": "value",
+          "file": "pallets/democracy/src/lib.rs",
+          "line": 417
+        },
+        {
+          "pallet": "democracy",
+          "name": "Cancellations",
+          "type": "map",
+          "file": "pallets/democracy/src/lib.rs",
+          "line": 422
+        },
+        {
+          "pallet": "democracy",
+          "name": "MetadataOf",
+          "type": "map",
+          "file": "pallets/democracy/src/lib.rs",
+          "line": 431
+        }
+      ],
+      "extrinsics": [
+        {
+          "pallet": "democracy",
+          "name": "propose",
+          "params": [
+            {
+              "name": "proposal",
+              "type": "BoundedCallOf<T>"
+            },
+            {
+              "name": "pallet",
+              "type": ":compact] value: BalanceOf<T>"
+            }
+          ],
+          "file": "pallets/democracy/src/lib.rs",
+          "line": 599
+        }
+      ],
+      "events": [
+        {
+          "pallet": "democracy",
+          "name": "Proposed",
+          "fields": [],
+          "file": "pallets/democracy/src/lib.rs",
+          "line": 453
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "dispatcher",
+      "packageName": "pallet-dispatcher",
+      "path": "repos/hydration-node/pallets/dispatcher",
+      "storage": [
+        {
+          "pallet": "dispatcher",
+          "name": "AaveManagerAccount",
+          "type": "value",
+          "file": "pallets/dispatcher/src/lib.rs",
+          "line": 104
+        },
+        {
+          "pallet": "dispatcher",
+          "name": "ExtraGas",
+          "type": "value",
+          "file": "pallets/dispatcher/src/lib.rs",
+          "line": 109
+        },
+        {
+          "pallet": "dispatcher",
+          "name": "LastEvmCallExitReason",
+          "type": "value",
+          "file": "pallets/dispatcher/src/lib.rs",
+          "line": 115
+        }
+      ],
+      "extrinsics": [
+        {
+          "pallet": "dispatcher",
+          "name": "dispatch_as_treasury",
+          "params": [
+            {
+              "name": "call",
+              "type": "Box<<T as Config>::RuntimeCall>"
+            }
+          ],
+          "file": "pallets/dispatcher/src/lib.rs",
+          "line": 171
+        }
+      ],
+      "events": [
+        {
+          "pallet": "dispatcher",
+          "name": "TreasuryManagerCallDispatched",
+          "fields": [],
+          "file": "pallets/dispatcher/src/lib.rs",
+          "line": 143
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "dispenser",
+      "packageName": "pallet-dispenser",
+      "path": "repos/hydration-node/pallets/dispenser",
+      "storage": [
+        {
+          "pallet": "dispenser",
+          "name": "DispenserConfig",
+          "type": "value",
+          "file": "pallets/dispenser/src/lib.rs",
+          "line": 138
+        },
+        {
+          "pallet": "dispenser",
+          "name": "FaucetBalanceWei",
+          "type": "value",
+          "file": "pallets/dispenser/src/lib.rs",
+          "line": 146
+        },
+        {
+          "pallet": "dispenser",
+          "name": "UsedRequestIds",
+          "type": "map",
+          "file": "pallets/dispenser/src/lib.rs",
+          "line": 159
+        }
+      ],
+      "extrinsics": [],
+      "events": [
+        {
+          "pallet": "dispenser",
+          "name": "FundRequested",
+          "fields": [],
+          "file": "pallets/dispenser/src/lib.rs",
+          "line": 173
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "duster",
+      "packageName": "pallet-duster",
+      "path": "repos/hydration-node/pallets/duster",
+      "storage": [
+        {
+          "pallet": "duster",
+          "name": "AccountWhitelist",
+          "type": "map",
+          "file": "pallets/duster/src/lib.rs",
+          "line": 68
+        }
+      ],
+      "extrinsics": [
+        {
+          "pallet": "duster",
+          "name": "dust_account",
+          "params": [
+            {
+              "name": "account",
+              "type": "T::AccountId"
+            },
+            {
+              "name": "currency_id",
+              "type": "T::AssetId"
+            }
+          ],
+          "file": "pallets/duster/src/lib.rs",
+          "line": 169
+        }
+      ],
+      "events": [
+        {
+          "pallet": "duster",
+          "name": "Dusted",
+          "fields": [],
+          "file": "pallets/duster/src/lib.rs",
+          "line": 145
+        },
+        {
+          "pallet": "duster",
+          "name": "Added",
+          "fields": [],
+          "file": "pallets/duster/src/lib.rs",
+          "line": 148
+        },
+        {
+          "pallet": "duster",
+          "name": "Removed",
+          "fields": [],
+          "file": "pallets/duster/src/lib.rs",
+          "line": 151
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "dynamic-evm-fee",
+      "packageName": "pallet-dynamic-evm-fee",
+      "path": "repos/hydration-node/pallets/dynamic-evm-fee",
+      "storage": [
+        {
+          "pallet": "dynamic-evm-fee",
+          "name": "BaseFeePerGas",
+          "type": "value",
+          "file": "pallets/dynamic-evm-fee/src/lib.rs",
+          "line": 130
+        }
+      ],
+      "extrinsics": [],
+      "events": [],
+      "errors": []
+    },
+    {
+      "name": "dynamic-fees",
+      "packageName": "pallet-dynamic-fees",
+      "path": "repos/hydration-node/pallets/dynamic-fees",
+      "storage": [
+        {
+          "pallet": "dynamic-fees",
+          "name": "AssetFee",
+          "type": "value",
+          "file": "pallets/dynamic-fees/src/lib.rs",
+          "line": 102
+        },
+        {
+          "pallet": "dynamic-fees",
+          "name": "AssetFeeConfiguration",
+          "type": "value",
+          "file": "pallets/dynamic-fees/src/lib.rs",
+          "line": 108
+        }
+      ],
+      "extrinsics": [
+        {
+          "pallet": "dynamic-fees",
+          "name": "set_asset_fee",
+          "params": [
+            {
+              "name": "asset_id",
+              "type": "T::AssetId"
+            },
+            {
+              "name": "config",
+              "type": "AssetFeeConfig<T::Fee>"
+            }
+          ],
+          "file": "pallets/dynamic-fees/src/lib.rs",
+          "line": 170
+        }
+      ],
+      "events": [
+        {
+          "pallet": "dynamic-fees",
+          "name": "AssetFeeConfigSet",
+          "fields": [],
+          "file": "pallets/dynamic-fees/src/lib.rs",
+          "line": 144
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "ema-oracle",
+      "packageName": "pallet-ema-oracle",
+      "path": "repos/hydration-node/pallets/ema-oracle",
+      "storage": [
+        {
+          "pallet": "ema-oracle",
+          "name": "Accumulator",
+          "type": "value",
+          "file": "pallets/ema-oracle/src/lib.rs",
+          "line": 188
+        },
+        {
+          "pallet": "ema-oracle",
+          "name": "Oracles",
+          "type": "n_map",
+          "file": "pallets/ema-oracle/src/lib.rs",
+          "line": 199
+        },
+        {
+          "pallet": "ema-oracle",
+          "name": "WhitelistedAssets",
+          "type": "value",
+          "file": "pallets/ema-oracle/src/lib.rs",
+          "line": 213
+        }
+      ],
+      "extrinsics": [
+        {
+          "pallet": "ema-oracle",
+          "name": "add_oracle",
+          "params": [
+            {
+              "name": "source",
+              "type": "Source"
+            },
+            {
+              "name": "assets",
+              "type": "(AssetId"
+            }
+          ],
+          "file": "pallets/ema-oracle/src/lib.rs",
+          "line": 273
+        }
+      ],
+      "events": [
+        {
+          "pallet": "ema-oracle",
+          "name": "AddedToWhitelist",
+          "fields": [],
+          "file": "pallets/ema-oracle/src/lib.rs",
+          "line": 180
+        },
+        {
+          "pallet": "ema-oracle",
+          "name": "RemovedFromWhitelist",
+          "fields": [],
+          "file": "pallets/ema-oracle/src/lib.rs",
+          "line": 182
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "evm-accounts",
+      "packageName": "pallet-evm-accounts",
+      "path": "repos/hydration-node/pallets/evm-accounts",
+      "storage": [
+        {
+          "pallet": "evm-accounts",
+          "name": "AccountExtension",
+          "type": "map",
+          "file": "pallets/evm-accounts/src/lib.rs",
+          "line": 140
+        },
+        {
+          "pallet": "evm-accounts",
+          "name": "ContractDeployer",
+          "type": "map",
+          "file": "pallets/evm-accounts/src/lib.rs",
+          "line": 145
+        },
+        {
+          "pallet": "evm-accounts",
+          "name": "ApprovedContract",
+          "type": "map",
+          "file": "pallets/evm-accounts/src/lib.rs",
+          "line": 150
+        },
+        {
+          "pallet": "evm-accounts",
+          "name": "MarkedEvmAccounts",
+          "type": "map",
+          "file": "pallets/evm-accounts/src/lib.rs",
+          "line": 159
+        }
+      ],
+      "extrinsics": [
+        {
+          "pallet": "evm-accounts",
+          "name": "bind_evm_address",
+          "params": [],
+          "file": "pallets/evm-accounts/src/lib.rs",
+          "line": 284
+        }
+      ],
+      "events": [
+        {
+          "pallet": "evm-accounts",
+          "name": "Bound",
+          "fields": [],
+          "file": "pallets/evm-accounts/src/lib.rs",
+          "line": 165
+        },
+        {
+          "pallet": "evm-accounts",
+          "name": "DeployerAdded",
+          "fields": [],
+          "file": "pallets/evm-accounts/src/lib.rs",
+          "line": 167
+        },
+        {
+          "pallet": "evm-accounts",
+          "name": "DeployerRemoved",
+          "fields": [],
+          "file": "pallets/evm-accounts/src/lib.rs",
+          "line": 169
+        },
+        {
+          "pallet": "evm-accounts",
+          "name": "ContractApproved",
+          "fields": [],
+          "file": "pallets/evm-accounts/src/lib.rs",
+          "line": 171
+        },
+        {
+          "pallet": "evm-accounts",
+          "name": "ContractDisapproved",
+          "fields": [],
+          "file": "pallets/evm-accounts/src/lib.rs",
+          "line": 173
+        },
+        {
+          "pallet": "evm-accounts",
+          "name": "AccountClaimed",
+          "fields": [],
+          "file": "pallets/evm-accounts/src/lib.rs",
+          "line": 175
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "genesis-history",
+      "packageName": "pallet-genesis-history",
+      "path": "repos/hydration-node/pallets/genesis-history",
+      "storage": [
+        {
+          "pallet": "genesis-history",
+          "name": "PreviousChain",
+          "type": "value",
+          "file": "pallets/genesis-history/src/lib.rs",
+          "line": 65
+        }
+      ],
+      "extrinsics": [],
+      "events": [],
+      "errors": []
+    },
+    {
+      "name": "hsm",
+      "packageName": "pallet-hsm",
+      "path": "repos/hydration-node/pallets/hsm",
+      "storage": [
+        {
+          "pallet": "hsm",
+          "name": "Collaterals",
+          "type": "map",
+          "file": "pallets/hsm/src/lib.rs",
+          "line": 196
+        },
+        {
+          "pallet": "hsm",
+          "name": "HollarAmountReceived",
+          "type": "map",
+          "file": "pallets/hsm/src/lib.rs",
+          "line": 205
+        },
+        {
+          "pallet": "hsm",
+          "name": "FlashMinter",
+          "type": "value",
+          "file": "pallets/hsm/src/lib.rs",
+          "line": 210
+        }
+      ],
+      "extrinsics": [],
+      "events": [
+        {
+          "pallet": "hsm",
+          "name": "CollateralAdded",
+          "fields": [],
+          "file": "pallets/hsm/src/lib.rs",
+          "line": 227
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "lbp",
+      "packageName": "pallet-lbp",
+      "path": "repos/hydration-node/pallets/lbp",
+      "storage": [
+        {
+          "pallet": "lbp",
+          "name": "PoolData",
+          "type": "value",
+          "file": "pallets/lbp/src/lib.rs",
+          "line": 374
+        },
+        {
+          "pallet": "lbp",
+          "name": "FeeCollectorWithAsset",
+          "type": "value",
+          "file": "pallets/lbp/src/lib.rs",
+          "line": 380
+        }
+      ],
+      "extrinsics": [],
+      "events": [
+        {
+          "pallet": "lbp",
+          "name": "PoolCreated",
+          "fields": [],
+          "file": "pallets/lbp/src/lib.rs",
+          "line": 317
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "liquidation",
+      "packageName": "pallet-liquidation",
+      "path": "repos/hydration-node/pallets/liquidation",
+      "storage": [
+        {
+          "pallet": "liquidation",
+          "name": "BorrowingContract",
+          "type": "value",
+          "file": "pallets/liquidation/src/lib.rs",
+          "line": 152
+        }
+      ],
+      "extrinsics": [],
+      "events": [
+        {
+          "pallet": "liquidation",
+          "name": "Liquidated",
+          "fields": [],
+          "file": "pallets/liquidation/src/lib.rs",
+          "line": 191
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "liquidity-mining",
+      "packageName": "pallet-liquidity-mining",
+      "path": "repos/hydration-node/pallets/liquidity-mining",
+      "storage": [
+        {
+          "pallet": "liquidity-mining",
+          "name": "FarmSequencer",
+          "type": "value",
+          "file": "pallets/liquidity-mining/src/lib.rs",
+          "line": 388
+        },
+        {
+          "pallet": "liquidity-mining",
+          "name": "DepositSequencer",
+          "type": "value",
+          "file": "pallets/liquidity-mining/src/lib.rs",
+          "line": 392
+        },
+        {
+          "pallet": "liquidity-mining",
+          "name": "GlobalFarm",
+          "type": "value",
+          "file": "pallets/liquidity-mining/src/lib.rs",
+          "line": 396
+        },
+        {
+          "pallet": "liquidity-mining",
+          "name": "YieldFarm",
+          "type": "n_map",
+          "file": "pallets/liquidity-mining/src/lib.rs",
+          "line": 402
+        },
+        {
+          "pallet": "liquidity-mining",
+          "name": "Deposit",
+          "type": "value",
+          "file": "pallets/liquidity-mining/src/lib.rs",
+          "line": 416
+        },
+        {
+          "pallet": "liquidity-mining",
+          "name": "ActiveYieldFarm",
+          "type": "value",
+          "file": "pallets/liquidity-mining/src/lib.rs",
+          "line": 422
+        }
+      ],
+      "extrinsics": [],
+      "events": [
+        {
+          "pallet": "liquidity-mining",
+          "name": "GlobalFarmAccRPZUpdated",
+          "fields": [],
+          "file": "pallets/liquidity-mining/src/lib.rs",
+          "line": 429
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "nft",
+      "packageName": "pallet-nft",
+      "path": "repos/hydration-node/pallets/nft",
+      "storage": [
+        {
+          "pallet": "nft",
+          "name": "Collections",
+          "type": "map",
+          "file": "pallets/nft/src/lib.rs",
+          "line": 105
+        },
+        {
+          "pallet": "nft",
+          "name": "Items",
+          "type": "value",
+          "file": "pallets/nft/src/lib.rs",
+          "line": 110
+        }
+      ],
+      "extrinsics": [
+        {
+          "pallet": "nft",
+          "name": "create_collection",
+          "params": [
+            {
+              "name": "collection_id",
+              "type": "T::NftCollectionId"
+            },
+            {
+              "name": "collection_type",
+              "type": "T::CollectionType"
+            },
+            {
+              "name": "metadata",
+              "type": "BoundedVecOfUnq<T>"
+            }
+          ],
+          "file": "pallets/nft/src/lib.rs",
+          "line": 129
+        }
+      ],
+      "events": [
+        {
+          "pallet": "nft",
+          "name": "CollectionCreated",
+          "fields": [],
+          "file": "pallets/nft/src/lib.rs",
+          "line": 264
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "omnipool",
+      "packageName": "pallet-omnipool",
+      "path": "repos/hydration-node/pallets/omnipool",
+      "storage": [
+        {
+          "pallet": "omnipool",
+          "name": "Assets",
+          "type": "map",
+          "file": "pallets/omnipool/src/lib.rs",
+          "line": 241
+        },
+        {
+          "pallet": "omnipool",
+          "name": "HubAssetTradability",
+          "type": "value",
+          "file": "pallets/omnipool/src/lib.rs",
+          "line": 251
+        },
+        {
+          "pallet": "omnipool",
+          "name": "Positions",
+          "type": "value",
+          "file": "pallets/omnipool/src/lib.rs",
+          "line": 257
+        },
+        {
+          "pallet": "omnipool",
+          "name": "NextPositionId",
+          "type": "value",
+          "file": "pallets/omnipool/src/lib.rs",
+          "line": 263
+        }
+      ],
+      "extrinsics": [],
+      "events": [
+        {
+          "pallet": "omnipool",
+          "name": "TokenAdded",
+          "fields": [],
+          "file": "pallets/omnipool/src/lib.rs",
+          "line": 269
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "omnipool-liquidity-mining",
+      "packageName": "pallet-omnipool-liquidity-mining",
+      "path": "repos/hydration-node/pallets/omnipool-liquidity-mining",
+      "storage": [
+        {
+          "pallet": "omnipool-liquidity-mining",
+          "name": "OmniPositionId",
+          "type": "value",
+          "file": "pallets/omnipool-liquidity-mining/src/lib.rs",
+          "line": 173
+        }
+      ],
+      "extrinsics": [],
+      "events": [
+        {
+          "pallet": "omnipool-liquidity-mining",
+          "name": "GlobalFarmCreated",
+          "fields": [],
+          "file": "pallets/omnipool-liquidity-mining/src/lib.rs",
+          "line": 180
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "otc",
+      "packageName": "pallet-otc",
+      "path": "repos/hydration-node/pallets/otc",
+      "storage": [
+        {
+          "pallet": "otc",
+          "name": "NextOrderId",
+          "type": "value",
+          "file": "pallets/otc/src/lib.rs",
+          "line": 184
+        },
+        {
+          "pallet": "otc",
+          "name": "Orders",
+          "type": "map",
+          "file": "pallets/otc/src/lib.rs",
+          "line": 188
+        }
+      ],
+      "extrinsics": [],
+      "events": [
+        {
+          "pallet": "otc",
+          "name": "Cancelled",
+          "fields": [],
+          "file": "pallets/otc/src/lib.rs",
+          "line": 129
+        },
+        {
+          "pallet": "otc",
+          "name": "Filled",
+          "fields": [],
+          "file": "pallets/otc/src/lib.rs",
+          "line": 132
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "otc-settlements",
+      "packageName": "pallet-otc-settlements",
+      "path": "repos/hydration-node/pallets/otc-settlements",
+      "storage": [],
+      "extrinsics": [],
+      "events": [
+        {
+          "pallet": "otc-settlements",
+          "name": "Executed",
+          "fields": [],
+          "file": "pallets/otc-settlements/src/lib.rs",
+          "line": 201
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "parameters",
+      "packageName": "pallet-parameters",
+      "path": "repos/hydration-node/pallets/parameters",
+      "storage": [
+        {
+          "pallet": "parameters",
+          "name": "IsTestnet",
+          "type": "value",
+          "file": "pallets/parameters/src/lib.rs",
+          "line": 52
+        }
+      ],
+      "extrinsics": [],
+      "events": [],
+      "errors": []
+    },
+    {
+      "name": "referrals",
+      "packageName": "pallet-referrals",
+      "path": "repos/hydration-node/pallets/referrals",
+      "storage": [
+        {
+          "pallet": "referrals",
+          "name": "ReferralCodes",
+          "type": "value",
+          "file": "pallets/referrals/src/lib.rs",
+          "line": 225
+        },
+        {
+          "pallet": "referrals",
+          "name": "ReferralAccounts",
+          "type": "value",
+          "file": "pallets/referrals/src/lib.rs",
+          "line": 232
+        },
+        {
+          "pallet": "referrals",
+          "name": "LinkedAccounts",
+          "type": "map",
+          "file": "pallets/referrals/src/lib.rs",
+          "line": 239
+        },
+        {
+          "pallet": "referrals",
+          "name": "ReferrerShares",
+          "type": "map",
+          "file": "pallets/referrals/src/lib.rs",
+          "line": 244
+        },
+        {
+          "pallet": "referrals",
+          "name": "TraderShares",
+          "type": "map",
+          "file": "pallets/referrals/src/lib.rs",
+          "line": 249
+        },
+        {
+          "pallet": "referrals",
+          "name": "TotalShares",
+          "type": "value",
+          "file": "pallets/referrals/src/lib.rs",
+          "line": 254
+        },
+        {
+          "pallet": "referrals",
+          "name": "Referrer",
+          "type": "map",
+          "file": "pallets/referrals/src/lib.rs",
+          "line": 261
+        },
+        {
+          "pallet": "referrals",
+          "name": "AssetRewards",
+          "type": "value",
+          "file": "pallets/referrals/src/lib.rs",
+          "line": 267
+        },
+        {
+          "pallet": "referrals",
+          "name": "PendingConversions",
+          "type": "map",
+          "file": "pallets/referrals/src/lib.rs",
+          "line": 274
+        }
+      ],
+      "extrinsics": [
+        {
+          "pallet": "referrals",
+          "name": "register_code",
+          "params": [
+            {
+              "name": "code",
+              "type": "ReferralCode<T::CodeLength>"
+            }
+          ],
+          "file": "pallets/referrals/src/lib.rs",
+          "line": 361
+        },
+        {
+          "pallet": "referrals",
+          "name": "trade",
+          "params": [
+            {
+              "name": "asset_in",
+              "type": "T::AssetId"
+            },
+            {
+              "name": "asset_out",
+              "type": "T::AssetId"
+            },
+            {
+              "name": "amount",
+              "type": "Balance"
+            }
+          ],
+          "file": "pallets/referrals/src/tests/mock_amm.rs",
+          "line": 33
+        }
+      ],
+      "events": [
+        {
+          "pallet": "referrals",
+          "name": "CodeRegistered",
+          "fields": [],
+          "file": "pallets/referrals/src/lib.rs",
+          "line": 280
+        },
+        {
+          "pallet": "referrals",
+          "name": "Ok",
+          "fields": [],
+          "file": "pallets/referrals/src/tests/mock_amm.rs",
+          "line": 42
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "relaychain-info",
+      "packageName": "pallet-relaychain-info",
+      "path": "repos/hydration-node/pallets/relaychain-info",
+      "storage": [],
+      "extrinsics": [],
+      "events": [
+        {
+          "pallet": "relaychain-info",
+          "name": "CurrentBlockNumbers",
+          "fields": [],
+          "file": "pallets/relaychain-info/src/lib.rs",
+          "line": 55
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "route-executor",
+      "packageName": "pallet-route-executor",
+      "path": "repos/hydration-node/pallets/route-executor",
+      "storage": [
+        {
+          "pallet": "route-executor",
+          "name": "Routes",
+          "type": "map",
+          "file": "pallets/route-executor/src/lib.rs",
+          "line": 175
+        }
+      ],
+      "extrinsics": [],
+      "events": [
+        {
+          "pallet": "route-executor",
+          "name": "Executed",
+          "fields": [],
+          "file": "pallets/route-executor/src/lib.rs",
+          "line": 137
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "signet",
+      "packageName": "pallet-signet",
+      "path": "repos/hydration-node/pallets/signet",
+      "storage": [
+        {
+          "pallet": "signet",
+          "name": "Admin",
+          "type": "value",
+          "file": "pallets/signet/src/lib.rs",
+          "line": 121
+        },
+        {
+          "pallet": "signet",
+          "name": "SignatureDeposit",
+          "type": "value",
+          "file": "pallets/signet/src/lib.rs",
+          "line": 126
+        },
+        {
+          "pallet": "signet",
+          "name": "ChainId",
+          "type": "value",
+          "file": "pallets/signet/src/lib.rs",
+          "line": 131
+        }
+      ],
+      "extrinsics": [
+        {
+          "pallet": "signet",
+          "name": "initialize",
+          "params": [
+            {
+              "name": "admin",
+              "type": "T::AccountId"
+            },
+            {
+              "name": "signature_deposit",
+              "type": "BalanceOf<T>"
+            },
+            {
+              "name": "chain_id",
+              "type": "BoundedVec<u8"
+            },
+            {
+              "name": "T",
+              "type": ":MaxChainIdLength>"
+            }
+          ],
+          "file": "pallets/signet/src/lib.rs",
+          "line": 251
+        },
+        {
+          "pallet": "signet",
+          "name": "call_signet",
+          "params": [],
+          "file": "pallets/signet/src/tests/mod.rs",
+          "line": 38
+        }
+      ],
+      "events": [
+        {
+          "pallet": "signet",
+          "name": "Initialized",
+          "fields": [],
+          "file": "pallets/signet/src/lib.rs",
+          "line": 141
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "stableswap",
+      "packageName": "pallet-stableswap",
+      "path": "repos/hydration-node/pallets/stableswap",
+      "storage": [
+        {
+          "pallet": "stableswap",
+          "name": "Pools",
+          "type": "map",
+          "file": "pallets/stableswap/src/lib.rs",
+          "line": 201
+        },
+        {
+          "pallet": "stableswap",
+          "name": "PoolPegs",
+          "type": "value",
+          "file": "pallets/stableswap/src/lib.rs",
+          "line": 206
+        },
+        {
+          "pallet": "stableswap",
+          "name": "AssetTradability",
+          "type": "value",
+          "file": "pallets/stableswap/src/lib.rs",
+          "line": 212
+        },
+        {
+          "pallet": "stableswap",
+          "name": "PoolSnapshots",
+          "type": "value",
+          "file": "pallets/stableswap/src/lib.rs",
+          "line": 218
+        },
+        {
+          "pallet": "stableswap",
+          "name": "BlockFee",
+          "type": "map",
+          "file": "pallets/stableswap/src/lib.rs",
+          "line": 224
+        }
+      ],
+      "extrinsics": [],
+      "events": [
+        {
+          "pallet": "stableswap",
+          "name": "PoolCreated",
+          "fields": [],
+          "file": "pallets/stableswap/src/lib.rs",
+          "line": 230
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "staking",
+      "packageName": "pallet-staking",
+      "path": "repos/hydration-node/pallets/staking",
+      "storage": [
+        {
+          "pallet": "staking",
+          "name": "Staking",
+          "type": "value",
+          "file": "pallets/staking/src/lib.rs",
+          "line": 197
+        },
+        {
+          "pallet": "staking",
+          "name": "Positions",
+          "type": "value",
+          "file": "pallets/staking/src/lib.rs",
+          "line": 202
+        },
+        {
+          "pallet": "staking",
+          "name": "NextPositionId",
+          "type": "value",
+          "file": "pallets/staking/src/lib.rs",
+          "line": 208
+        },
+        {
+          "pallet": "staking",
+          "name": "Votes",
+          "type": "value",
+          "file": "pallets/staking/src/lib.rs",
+          "line": 213
+        },
+        {
+          "pallet": "staking",
+          "name": "VotesRewarded",
+          "type": "double_map",
+          "file": "pallets/staking/src/lib.rs",
+          "line": 219
+        },
+        {
+          "pallet": "staking",
+          "name": "PositionVotes",
+          "type": "value",
+          "file": "pallets/staking/src/lib.rs",
+          "line": 235
+        },
+        {
+          "pallet": "staking",
+          "name": "ProcessedVotes",
+          "type": "double_map",
+          "file": "pallets/staking/src/lib.rs",
+          "line": 240
+        },
+        {
+          "pallet": "staking",
+          "name": "SixSecBlocksSince",
+          "type": "value",
+          "file": "pallets/staking/src/lib.rs",
+          "line": 253
+        }
+      ],
+      "extrinsics": [
+        {
+          "pallet": "staking",
+          "name": "initialize_staking",
+          "params": [],
+          "file": "pallets/staking/src/lib.rs",
+          "line": 384
+        }
+      ],
+      "events": [
+        {
+          "pallet": "staking",
+          "name": "PositionCreated",
+          "fields": [],
+          "file": "pallets/staking/src/lib.rs",
+          "line": 260
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "transaction-multi-payment",
+      "packageName": "pallet-transaction-multi-payment",
+      "path": "repos/hydration-node/pallets/transaction-multi-payment",
+      "storage": [
+        {
+          "pallet": "transaction-multi-payment",
+          "name": "AccountCurrencyMap",
+          "type": "map",
+          "file": "pallets/transaction-multi-payment/src/lib.rs",
+          "line": 240
+        },
+        {
+          "pallet": "transaction-multi-payment",
+          "name": "AcceptedCurrencies",
+          "type": "map",
+          "file": "pallets/transaction-multi-payment/src/lib.rs",
+          "line": 245
+        },
+        {
+          "pallet": "transaction-multi-payment",
+          "name": "AcceptedCurrencyPrice",
+          "type": "map",
+          "file": "pallets/transaction-multi-payment/src/lib.rs",
+          "line": 250
+        },
+        {
+          "pallet": "transaction-multi-payment",
+          "name": "TransactionCurrencyOverride",
+          "type": "value",
+          "file": "pallets/transaction-multi-payment/src/lib.rs",
+          "line": 254
+        }
+      ],
+      "extrinsics": [],
+      "events": [
+        {
+          "pallet": "transaction-multi-payment",
+          "name": "CurrencySet",
+          "fields": [],
+          "file": "pallets/transaction-multi-payment/src/lib.rs",
+          "line": 171
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "transaction-pause",
+      "packageName": "pallet-transaction-pause",
+      "path": "repos/hydration-node/pallets/transaction-pause",
+      "storage": [
+        {
+          "pallet": "transaction-pause",
+          "name": "PausedTransactions",
+          "type": "map",
+          "file": "pallets/transaction-pause/src/lib.rs",
+          "line": 97
+        }
+      ],
+      "extrinsics": [
+        {
+          "pallet": "transaction-pause",
+          "name": "pause_transaction",
+          "params": [
+            {
+              "name": "pallet_name",
+              "type": "Vec<u8>"
+            },
+            {
+              "name": "function_name",
+              "type": "Vec<u8>"
+            }
+          ],
+          "file": "pallets/transaction-pause/src/lib.rs",
+          "line": 106
+        }
+      ],
+      "events": [
+        {
+          "pallet": "transaction-pause",
+          "name": "TransactionPaused",
+          "fields": [],
+          "file": "pallets/transaction-pause/src/lib.rs",
+          "line": 81
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "xcm-rate-limiter",
+      "packageName": "pallet-xcm-rate-limiter",
+      "path": "repos/hydration-node/pallets/xcm-rate-limiter",
+      "storage": [
+        {
+          "pallet": "xcm-rate-limiter",
+          "name": "AccumulatedAmounts",
+          "type": "value",
+          "file": "pallets/xcm-rate-limiter/src/lib.rs",
+          "line": 152
+        }
+      ],
+      "extrinsics": [],
+      "events": [],
+      "errors": []
+    },
+    {
+      "name": "xyk",
+      "packageName": "pallet-xyk",
+      "path": "repos/hydration-node/pallets/xyk",
+      "storage": [
+        {
+          "pallet": "xyk",
+          "name": "ShareToken",
+          "type": "map",
+          "file": "pallets/xyk/src/lib.rs",
+          "line": 279
+        },
+        {
+          "pallet": "xyk",
+          "name": "TotalLiquidity",
+          "type": "map",
+          "file": "pallets/xyk/src/lib.rs",
+          "line": 284
+        },
+        {
+          "pallet": "xyk",
+          "name": "PoolAssets",
+          "type": "value",
+          "file": "pallets/xyk/src/lib.rs",
+          "line": 289
+        }
+      ],
+      "extrinsics": [],
+      "events": [
+        {
+          "pallet": "xyk",
+          "name": "LiquidityAdded",
+          "fields": [],
+          "file": "pallets/xyk/src/lib.rs",
+          "line": 214
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "xyk-liquidity-mining",
+      "packageName": "pallet-xyk-liquidity-mining",
+      "path": "repos/hydration-node/pallets/xyk-liquidity-mining",
+      "storage": [],
+      "extrinsics": [],
+      "events": [
+        {
+          "pallet": "xyk-liquidity-mining",
+          "name": "GlobalFarmCreated",
+          "fields": [],
+          "file": "pallets/xyk-liquidity-mining/src/lib.rs",
+          "line": 220
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "runtime": {
+    "constructRuntime": ""
+  },
+  "node": {
+    "files": [
+      "node/src/cli.rs",
+      "node/src/command.rs",
+      "node/src/lib.rs",
+      "node/src/liquidation_worker.rs",
+      "node/src/main.rs",
+      "node/src/rpc.rs",
+      "node/src/service.rs",
+      "node/src/chain_spec/hydradx.rs",
+      "node/src/chain_spec/local.rs",
+      "node/src/chain_spec/mod.rs",
+      "node/src/chain_spec/moonbase.rs",
+      "node/src/chain_spec/rococo.rs",
+      "node/src/chain_spec/staging.rs",
+      "node/src/service/evm.rs"
+    ]
+  },
+  "evm": {
+    "files": [
+      "runtime/hydradx/src/evm/aave_trade_executor.rs",
+      "runtime/hydradx/src/evm/accounts_conversion.rs",
+      "runtime/hydradx/src/evm/erc20_currency.rs",
+      "runtime/hydradx/src/evm/evm_error_decoder.rs",
+      "runtime/hydradx/src/evm/evm_fee.rs",
+      "runtime/hydradx/src/evm/executor.rs",
+      "runtime/hydradx/src/evm/gas_to_weight_mapping.rs",
+      "runtime/hydradx/src/evm/mod.rs",
+      "runtime/hydradx/src/evm/permit.rs",
+      "runtime/hydradx/src/evm/runner.rs",
+      "runtime/hydradx/src/evm/precompiles/chainlink_adapter.rs",
+      "runtime/hydradx/src/evm/precompiles/costs.rs",
+      "runtime/hydradx/src/evm/precompiles/erc20_mapping.rs",
+      "runtime/hydradx/src/evm/precompiles/handle.rs",
+      "runtime/hydradx/src/evm/precompiles/mod.rs",
+      "runtime/hydradx/src/evm/precompiles/multicurrency.rs",
+      "runtime/hydradx/src/evm/precompiles/substrate.rs",
+      "runtime/hydradx/src/evm/evm-utility/src/lib.rs",
+      "runtime/hydradx/src/evm/precompiles/tests/erc20_mapping.rs",
+      "runtime/hydradx/src/evm/precompiles/tests/mod.rs",
+      "runtime/hydradx/src/evm/evm-utility/macro/src/lib.rs",
+      "runtime/hydradx/src/evm/evm-utility/macro/tests/test.rs"
+    ],
+    "precompiles": [
+      "call-permit",
+      "flash-loan",
+      "utils"
+    ]
+  },
+  "statistics": {
+    "palletsCount": 38,
+    "storageItems": 115,
+    "extrinsics": 16,
+    "events": 45,
+    "errors": 0
+  }
+}
