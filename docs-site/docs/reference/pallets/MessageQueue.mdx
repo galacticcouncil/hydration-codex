@@ -1,0 +1,334 @@
+---
+title: MessageQueue
+description: Runtime pallet documentation
+sidebar_label: MessageQueue
+---
+
+# MessageQueue
+
+## Release
+
+Polkadot SDK stable2409
+
+<details>
+<summary>Code Documentation</summary>
+
+Provides generalized message queuing and processing capabilities on a per-queue basis for
+arbitrary use-cases.
+
+# Design Goals
+
+1. Minimal assumptions about `Message`s and `MessageOrigin`s. Both should be MEL bounded blobs.
+ This ensures the generality and reusability of the pallet.
+2. Well known and tightly limited pre-dispatch PoV weights, especially for message execution.
+ This is paramount for the success of the pallet since message execution is done in
+ `on_initialize` which must _never_ under-estimate its PoV weight. It also needs a frugal PoV
+ footprint since PoV is scarce and this is (possibly) done in every block. This must also hold
+in the presence of unpredictable message size distributions.
+3. Usable as XCMP, DMP and UMP message/dispatch queue - possibly through adapter types.
+
+# Design
+
+The pallet has means to enqueue, store and process messages. This is implemented by having
+*queues* which store enqueued messages and can be *served* to process said messages. A queue is
+identified by its origin in the `BookStateFor`. Each message has an origin which defines into
+which queue it will be stored. Messages are stored by being appended to the last `Page` of a
+book. Each book keeps track of its pages by indexing `Pages`. The `ReadyRing` contains all
+queues which hold at least one unprocessed message and are thereby *ready* to be serviced. The
+`ServiceHead` indicates which *ready* queue is the next to be serviced.
+The pallet implements `frame_support::traits::EnqueueMessage`,
+`frame_support::traits::ServiceQueues` and has `frame_support::traits::ProcessMessage` and
+`OnQueueChanged` hooks to communicate with the outside world.
+
+NOTE: The storage items are not linked since they are not public.
+
+**Message Execution**
+
+Executing a message is offloaded to the `Config::MessageProcessor` which contains the actual
+logic of how to handle the message since they are blobs. Storage changes are not rolled back on
+error.
+
+A failed message can be temporarily or permanently overweight. The pallet will perpetually try
+to execute a temporarily overweight message. A permanently overweight message is skipped and
+must be executed manually.
+
+**Reentrancy**
+
+This pallet has two entry points for executing (possibly recursive) logic;
+`Pallet::service_queues` and `Pallet::execute_overweight`. Both entry points are guarded by
+the same mutex to error on reentrancy. The only functions that are explicitly **allowed** to be
+called by a message processor are: `Pallet::enqueue_message` and
+`Pallet::enqueue_messages`. All other functions are forbidden and error with
+`Error::RecursiveDisallowed`.
+
+**Pagination**
+
+Queues are stored in a *paged* manner by splitting their messages into `Page`s. This results
+in a lot of complexity when implementing the pallet but is completely necessary to achieve the
+second #`Design Goal`. The problem comes from the fact a message can *possibly* be
+quite large, lets say 64KiB. This then results in a *MEL* of at least 64KiB which results in a
+PoV of at least 64KiB. Now we have the assumption that most messages are much shorter than their
+maximum allowed length. This would result in most messages having a pre-dispatch PoV size which
+is much larger than their post-dispatch PoV size, possibly by a factor of thousand. Disregarding
+this observation would cripple the processing power of the pallet since it cannot straighten out
+this discrepancy at runtime. Conceptually, the implementation is packing as many messages into a
+single bounded vec, as actually fit into the bounds. This reduces the wasted PoV.
+
+**Page Data Layout**
+
+A Page contains a heap which holds all its messages. The heap is built by concatenating
+`(ItemHeader, Message)` pairs. The `ItemHeader` contains the length of the message which is
+needed for retrieving it. This layout allows for constant access time of the next message and
+linear access time for any message in the page. The header must remain minimal to reduce its PoV
+impact.
+
+**Weight Metering**
+
+The pallet utilizes the `sp_weights::WeightMeter` to manually track its consumption to always
+stay within the required limit. This implies that the message processor hook can calculate the
+weight of a message without executing it. This restricts the possible use-cases but is necessary
+since the pallet runs in `on_initialize` which has a hard weight limit. The weight meter is used
+in a way that `can_accrue` and `check_accrue` are always used to check the remaining weight of
+an operation before committing to it. The process of exiting due to insufficient weight is
+termed "bailing".
+
+# Scenario: Message enqueuing
+
+A message `m` is enqueued for origin `o` into queue `Q[o]` through
+`frame_support::traits::EnqueueMessage::enqueue_message``(m, o)`.
+
+First the queue is either loaded if it exists or otherwise created with empty default values.
+The message is then inserted to the queue by appended it into its last `Page` or by creating a
+new `Page` just for `m` if it does not fit in there. The number of messages in the `Book` is
+incremented.
+
+`Q[o]` is now *ready* which will eventually result in `m` being processed.
+
+# Scenario: Message processing
+
+The pallet runs each block in `on_initialize` or when being manually called through
+`frame_support::traits::ServiceQueues::service_queues`.
+
+First it tries to "rotate" the `ReadyRing` by one through advancing the `ServiceHead` to the
+next *ready* queue. It then starts to service this queue by servicing as many pages of it as
+possible. Servicing a page means to execute as many message of it as possible. Each executed
+message is marked as *processed* if the `Config::MessageProcessor` return Ok. An event
+`Event::Processed` is emitted afterwards. It is possible that the weight limit of the pallet
+will never allow a specific message to be executed. In this case it remains as unprocessed and
+is skipped. This process stops if either there are no more messages in the queue or the
+remaining weight became insufficient to service this queue. If there is enough weight it tries
+to advance to the next *ready* queue and service it. This continues until there are no more
+queues on which it can make progress or not enough weight to check that.
+
+# Scenario: Overweight execution
+
+A permanently over-weight message which was skipped by the message processing will never be
+executed automatically through `on_initialize` nor by calling
+`frame_support::traits::ServiceQueues::service_queues`.
+
+Manual intervention in the form of
+`frame_support::traits::ServiceQueues::execute_overweight` is necessary. Overweight messages
+emit an `Event::OverweightEnqueued` event which can be used to extract the arguments for
+manual execution. This only works on permanently overweight messages. There is no guarantee that
+this will work since the message could be part of a stale page and be reaped before execution
+commences.
+
+# Terminology
+
+- `Message`: A blob of data into which the pallet has no introspection, defined as
+`BoundedSlice<u8, MaxMessageLenOf<T>>`. The message length is limited by `MaxMessageLenOf`
+which is calculated from `Config::HeapSize` and `ItemHeader::max_encoded_len()`.
+- `MessageOrigin`: A generic *origin* of a message, defined as `MessageOriginOf`. The
+requirements for it are kept minimal to remain as generic as possible. The type is defined in
+`frame_support::traits::ProcessMessage::Origin`.
+- `Page`: An array of `Message`s, see `Page`. Can never be empty.
+- `Book`: A list of `Page`s, see `BookState`. Can be empty.
+- `Queue`: A `Book` together with an `MessageOrigin` which can be part of the `ReadyRing`. Can
+ be empty.
+- `ReadyRing`: A double-linked list which contains all *ready* `Queue`s. It chains together the
+ queues via their `ready_neighbours` fields. A `Queue` is *ready* if it contains at least one
+ `Message` which can be processed. Can be empty.
+- `ServiceHead`: A pointer into the `ReadyRing` to the next `Queue` to be serviced.
+- (`un`)`processed`: A message is marked as *processed* after it was executed by the pallet. A
+ message which was either: not yet executed or could not be executed remains as `unprocessed`
+ which is the default state for a message after being enqueued.
+- `knitting`/`unknitting`: The means of adding or removing a `Queue` from the `ReadyRing`.
+- `MEL`: The Max Encoded Length of a type, see `codec::MaxEncodedLen`.
+- `Reentrance`: To enter an execution context again before it has completed.
+
+# Properties
+
+**Liveness - Enqueueing**
+
+It is always possible to enqueue any message for any `MessageOrigin`.
+
+**Liveness - Processing**
+
+`on_initialize` always respects its finite weight-limit.
+
+**Progress - Enqueueing**
+
+An enqueued message immediately becomes *unprocessed* and thereby eligible for execution.
+
+**Progress - Processing**
+
+The pallet will execute at least one unprocessed message per block, if there is any. Ensuring
+this property needs careful consideration of the concrete weights, since it is possible that the
+weight limit of `on_initialize` never allows for the execution of even one message; trivially if
+the limit is set to zero. `integrity_test` can be used to ensure that this property holds.
+
+**Fairness - Enqueuing**
+
+Enqueueing a message for a specific `MessageOrigin` does not influence the ability to enqueue a
+message for the same of any other `MessageOrigin`; guaranteed by **Liveness - Enqueueing**.
+
+**Fairness - Processing**
+
+The average amount of weight available for message processing is the same for each queue if the
+number of queues is constant. Creating a new queue must therefore be, possibly economically,
+expensive. Currently this is archived by having one queue per para-chain/thread, which keeps the
+number of queues within `O(n)` and should be "good enough".
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #114** · Polkadot SDK<br/>
+`pallet-message-queue/1ed66275/stable2409-patch6`
+
+[GitHub](https://github.com/galacticcouncil/polkadot-sdk/tree/1ed662757b03c4f17dc2429c1df84e975d98513a/substrate/frame/message-queue) · [docs.rs](https://docs.rs/crate/pallet-message-queue/41.0.2/source/) · [crates.io](https://crates.io/crates/pallet-message-queue) · [Subscan](https://hydradx.subscan.io/runtime/MessageQueue)
+
+## Storage (3)
+
+### BookStateFor
+
+The index of the first and last (non-empty) pages.
+
+```rust
+BookStateFor: Map<{_enum: {Here: Null, Parent: Null, Sibling: u32}} -> {_alias: {size_: size}, begin: u32, end: u32, count: u32, readyNeighbours: Option<PalletMessageQueueNeighbours>, messageCount: u64, size_: u64}> [Twox64Concat]
+```
+
+### ServiceHead
+
+The origin at which we should begin servicing.
+
+```rust
+ServiceHead: Value<{_enum: {Here: Null, Parent: Null, Sibling: u32}}>
+```
+
+### Pages
+
+The map of page indices to pages.
+
+```rust
+Pages: Map<(CumulusPrimitivesCoreAggregateMessageOrigin,u32) -> {
+    remaining: u32,
+    remainingSize: u32,
+    firstIndex: u32,
+    first: u32,
+    last: u32,
+    heap: Bytes,
+}> [Twox64Concat, Twox64Concat]
+```
+
+## Extrinsics (2)
+
+### reap_page
+
+```rust
+fn reap_page(
+    origin: OriginFor<T>,
+    messageOrigin: Lookup394,
+    pageIndex: u32,
+)
+```
+
+### execute_overweight
+
+```rust
+fn execute_overweight(
+    origin: OriginFor<T>,
+    messageOrigin: Lookup394,
+    page: u32,
+    index: u32,
+    weightLimit: Lookup10,
+)
+```
+
+## Events (4)
+
+### ProcessingFailed
+
+```rust
+ProcessingFailed {
+    id: H256,
+    origin: Lookup394,
+    error: Lookup530,
+}
+```
+
+### Processed
+
+```rust
+Processed {
+    id: H256,
+    origin: Lookup394,
+    weightUsed: Lookup10,
+    success: bool,
+}
+```
+
+### OverweightEnqueued
+
+```rust
+OverweightEnqueued {
+    id: [u8;32],
+    origin: Lookup394,
+    pageIndex: u32,
+    messageIndex: u32,
+}
+```
+
+### PageReaped
+
+```rust
+PageReaped {
+    origin: Lookup394,
+    index: u32,
+}
+```
+
+## Constants (4)
+
+### HeapSize
+
+The size of the page; this implies the maximum message size which can be sent. A good value depends on the expected message sizes, their weights, the weight that is available for processing them and the maximal needed message size. The maximal message size is slightly lower than this as defined by `MaxMessageLenOf`.
+
+```rust
+const HeapSize: u32
+```
+
+### MaxStale
+
+The maximum number of stale pages (i.e. of overweight messages) allowed before culling can happen. Once there are more stale pages than this, then historical pages may be dropped, even if they contain unprocessed overweight messages.
+
+```rust
+const MaxStale: u32
+```
+
+### ServiceWeight
+
+The amount of weight (if any) which should be provided to the message queue for servicing enqueued items `on_initialize`. This may be legitimately `None` in the case that you will call `ServiceQueues::service_queues` manually or set `Self::IdleMaxServiceWeight` to have it run in `on_idle`.
+
+```rust
+const ServiceWeight: Option<SpWeightsWeightV2Weight>
+```
+
+### IdleMaxServiceWeight
+
+The maximum amount of weight (if any) to be used from remaining weight `on_idle` which should be provided to the message queue for servicing enqueued items `on_idle`. Useful for parachains to process messages at the same block they are received. If `None`, it will not call `ServiceQueues::service_queues` in `on_idle`.
+
+```rust
+const IdleMaxServiceWeight: Option<SpWeightsWeightV2Weight>
+```

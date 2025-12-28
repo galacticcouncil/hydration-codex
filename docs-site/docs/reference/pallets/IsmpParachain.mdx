@@ -1,0 +1,102 @@
+---
+title: IsmpParachain
+description: Runtime pallet documentation
+sidebar_label: IsmpParachain
+---
+
+# IsmpParachain
+
+This allows parachains communicate over ISMP leveraging the relay chain as a consensus oracle.
+
+The consensus client relies on a pallet which stores a list of parachains whom we intend to
+track their finalized states. This can be paired with an inherent provider which includes the
+proofs for the relevant parachains configured in the pallet at every block.
+
+## Overview
+
+The Pallet allows the `AdminOrigin` configured in `pallet-ismp` to dispatch calls for adding and removing parachains from the pallet whitelist.
+
+## License
+
+This library is licensed under the Apache 2.0 License, Copyright (c) 2025 Polytope Labs.
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #181** · Hyperbridge<br/>
+`ismp-parachain/e5f75aa9/polkadot-stable2409`
+
+[GitHub](https://github.com/polytope-labs/hyperbridge/tree/e5f75aa977b96fbf30fc7aeb501ea7d8ca7c0a68/./modules/ismp/clients/parachain/client) · [docs.rs](https://docs.rs/crate/ismp-parachain/16.2.0/source/) · [crates.io](https://crates.io/crates/ismp-parachain) · [Subscan](https://hydradx.subscan.io/runtime/IsmpParachain)
+
+## Storage (3)
+
+### RelayChainStateCommitments
+
+Mapping of relay chain heights to it's state commitment. The state commitment of the parent relay block is inserted at every block in `on_finalize`. This commitment is gotten from parachain-system.
+
+```rust
+RelayChainStateCommitments: Map<u32 -> H256> [Blake2_128Concat]
+```
+
+### ConsensusUpdated
+
+Tracks whether we've already seen the `update_parachain_consensus` inherent
+
+```rust
+ConsensusUpdated: Value<bool>
+```
+
+### Parachains
+
+List of parachains that this state machine is interested in.
+
+```rust
+Parachains: Map<u32 -> u64> [Identity]
+```
+
+## Extrinsics (3)
+
+### update_parachain_consensus
+
+```rust
+fn update_parachain_consensus(
+    origin: OriginFor<T>,
+    data: Lookup406,
+)
+```
+
+### add_parachain
+
+```rust
+fn add_parachain(
+    origin: OriginFor<T>,
+    paraIds: Vec<IsmpParachainParachainData>,
+)
+```
+
+### remove_parachain
+
+```rust
+fn remove_parachain(
+    origin: OriginFor<T>,
+    paraIds: Vec<u32>,
+)
+```
+
+## Events (2)
+
+### ParachainsAdded
+
+```rust
+ParachainsAdded {
+    paraIds: Vec<IsmpParachainParachainData>,
+}
+```
+
+### ParachainsRemoved
+
+```rust
+ParachainsRemoved {
+    paraIds: Vec<u32>,
+}
+```

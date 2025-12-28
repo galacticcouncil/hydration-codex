@@ -1,0 +1,2831 @@
+---
+title: "@galacticcouncil/sdk"
+description: SDK package documentation
+sidebar_label: sdk
+slug: sdk
+---
+
+# @galacticcouncil/sdk
+
+Galactic off-chain routing & optimization of orders across pools for best price execution
+
+**Version:** 10.4.0 | **Methods:** 278
+
+**Links:** [GitHub](https://github.com/galacticcouncil/sdk/tree/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk) | [npm](https://www.npmjs.com/package/@galacticcouncil/sdk)
+
+# Galactic SDK
+
+Hydration sdk build on top of [@polkadot\{.js\} (Pjs)](https://polkadot.js.org/).
+
+Table of contents:
+
+- [Installation](#installation)
+- [Troubleshooting](#troubleshooting)
+- [Usage](#usage)
+- [Components](#components)
+  - [api](#api)
+  - [client](#client)
+  - [ctx](#ctx)
+  - [tx](#tx)
+- [API Reference](#api-reference)
+  - [AaveUtils](#aaveutils)
+  - [TradeRouter](#traderouter)
+  - [TradeScheduler](#tradescheduler)
+  - [BalanceClient](#balanceclient)
+  - [AssetClient](#assetclient)
+- [Examples](#examples)
+
+## Installation
+
+Install with [npm](https://www.npmjs.com/):
+
+`npm install @galacticcouncil/sdk`
+
+## Troubleshooting
+
+### Version 8.x
+
+⚠️ **Important:** In the 8.x release, we upgraded `@polkadot/api` to version **16.x**. 
+
+See the [changelog](https://github.com/galacticcouncil/sdk/blob/master/packages/sdk/CHANGELOG.md#800) for details.
+
+### Version 2.x
+
+As of **v2.x** .wasm files are no longer embedded in bundle
+but rather deferred to improve load performance & decrease
+module size (esm only).
+
+For more details visit [TROUBLESHOOTING.md](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/TROUBLESHOOTING.md)
+
+## Usage
+
+Use `createSdkContext` to quickly set up all components of the SDK — pool context, trading logic, client access, and transaction building — in a single call.
+
+```ts
+import \{ createSdkContext \} from '@galacticcouncil/sdk';
+import \{ ApiPromise, WsProvider \} from '@polkadot/api';
+
+const ws = 'wss://hydration-rpc.n.dwellir.com';
+const wsProvider = new WsProvider(ws, 2_500, \{\}, 60_000, 102400, 10 * 60_000);
+
+const api = await ApiPromise.create(\{
+  provider: wsProvider,
+\});
+
+const sdk = await createSdkContext(api);
+
+// Don't forget to cleanup resources when DONE
+sdk.destroy();
+api.disconnect();
+```
+
+It handles all necessary setup under the hood. Just plug in your ApiPromise, and you're ready to interact with registry, accounts, pools, router, and more.
+
+⚠️ **Note:** Make sure to keep only single instance of context per session.
+
+## Components
+
+### `api`
+
+- `aave: AaveUtils` — Aave-related utilities.
+- `router: TradeRouter` — Off-chain optimization of trades across pools for best price execution.
+- `scheduler: TradeScheduler` — Trade orders scheduling.
+
+### `client`
+
+- `asset: AssetClient` — Registry metadata and lookup.
+- `balance: BalanceClient` — Account balance tracking.
+- `evm: EvmClient` — Interacts with EVM.
+
+### `ctx`
+
+- `pool: PoolService` — Internal stateful pool context. Initialized with support for:
+  - Aave
+  - Omnipool
+  - Stableswap
+  - XYK pools
+  - LBP pools
+
+### `tx`
+
+- `TxBuilderFactory` — Factory for generating submittable transaction using fluent APIs.
+
+### `destroy()`
+
+Gracefully cleans up SDK resources. Always call before exiting to avoid memory leaks or stale subscriptions.
+
+## API Reference
+
+### AaveUtils
+
+| Method | Description  |
+| :----- | :----------- |
+| `getSummary(user: string): AaveSummary` | Returns market summary. |
+| `getHealthFactor(user: string): number` | Calculate HF. |
+| `getHealthFactorAfterWithdraw(user: string, reserve:string, withdrawAmount: string): number` | Calculate HF after withdraw. |
+| `getHealthFactorAfterSupply(user: string, reserve:string, supplyAmount: string): number` | Calculate HF after supply. |
+| `getMaxWithdraw(user: string, reserve:string): Amount` | Get max possible safe withdraw. |
+
+➡️ For type definitions visit [types.ts](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/aave/types.ts)<br />
+
+### TradeRouter
+
+| Method | Description  |
+| :----- | :----------- |
+| `getPools(): PoolBase[]` | Returns the current list of available pools. |
+| `getAllPaths(tokenIn: string, tokenOut: string): Hop[][]` | Computes possible routes between two assets. |
+| `getAllAssets(): PoolBase[]` | Lists all assets that are tradeable through the router. |
+| `getAssetPairs(token: string): Asset[]` | Lists all assets given token is tradeable with. |
+| `getBestSell(tokenIn: string, tokenOut: string, amountIn: bigint \| string): Trade` | Find the best sell trade for given input amount. |
+| `getBestBuy(tokenIn: string, tokenOut: string, amountOut: bigint \| string): Trade` | Find the best buy trade for given output amount. |
+| `getBuy(tokenIn: string, tokenOut: string, amountOut: bigint \| string, route?: Hop[]): Trade` | Calculate a buy using a specific route (optional). |
+| `getSell(tokenIn: string, tokenOut: string, amountIn: bigint \| string, route?: Hop[]): Trade` | Calculate a sell using a specific route (optional). |
+| `getBestSpotPrice(tokenIn: string, tokenOut: string): Amount` | Get the current spot price between two tokens. |
+| `getMostLiquidRoute(tokenIn: string, tokenOut: string): Hop[]` | Find the route with the highest liquidity between two tokens. |
+
+➡️ For type definitions visit [types.ts](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/sor/types.ts)<br />
+
+### TradeScheduler
+
+| Method | Description  |
+| :----- | :----------- |
+| `getDcaOrder(assetIn: string, assetOut: string, amountInTotal: string, duration: number): TradeDcaOrder` | Calculate DCA order. |
+| `getTwapBuyOrder(assetIn: string, assetOut: string, amountInTotal: string): TradeOrder` | Calculate TWAP buy order. |
+| `getTwapSellOrder(assetIn: string, assetOut: string, amountInTotal: string): TradeOrder` | Calculate TWAP buy order. |
+
+➡️ For type definitions visit [types.ts](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/sor/types.ts)<br />
+
+### AssetClient
+
+| Method | Description  |
+| :----- | :----------- |
+| `getOnChainAssets(includeInvalid?: boolean, external?: ExternalAsset[]): Promise<Asset[]>` | Returns assets with metadata from registry. |
+
+➡️ For type definitions visit [types.ts](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/types.ts)<br />
+
+## Examples
+
+All examples assume sdk have been initialized [see](#usage)
+
+### TradeRouter
+
+Calculate sell of 1 DOT for HDX & build tx with 5% slippage (default to 1% if not specified)
+
+```typescript
+const \{ api, tx \} = sdk;
+
+const trade = await api.router.getBestSell("5", "10", "10");
+const tradeTx = await tx.trade(trade)
+  .withBeneficiary(BENEFICIARY)
+  .withSlippage(5)
+  .build();
+console.log(trade.toHuman());
+console.log('Transaction hash:', tradeTx.hex);
+```
+
+### AssetClient
+
+Get default on-chain data.
+
+```typescript
+const \{ client \} = sdk;
+
+const assets = await client.asset.getOnChainAssets();
+console.log(assets);
+```
+
+To demonstrate more full working examples on real chain see [script](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/test/script/examples) section.
+
+Run: `$ npx tsx ./test/script/examples/<examplePackage>/<exampleName>.ts` with valid example package & name.
+
+## Installation
+
+```bash
+npm install @galacticcouncil/sdk
+```
+
+## Functions
+
+### bnFormatter
+
+```typescript
+function bnFormatter(_: any, nestedValue: any): any
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/json.ts#L23)
+
+### bnum
+
+```typescript
+function bnum(val: any): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/bignumber.ts#L21)
+
+### calculateBuyFee
+
+The total fee paid for a ‘buy‘ transaction
+Suppose the trader is buying Y using X
+
+fee = (deltaX / delta0X) - 1
+
+```typescript
+function calculateBuyFee(delta0X: BigNumber, deltaX: BigNumber): any
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/math.ts#L72)
+
+### calculateDiffToAvg
+
+Percentage Difference Formula
+
+(|𝑉1−𝑉2| / [(𝑉1+𝑉2)/2]) × 100
+
+This formula calculates the percentage difference by comparing
+the absolute difference between the two values with their <b>average</b>.
+
+Usage: It's used when you want to find the percentage difference between
+two quantities where both quantities are significant.
+
+```typescript
+function calculateDiffToAvg(v1: BigNumber, v2: BigNumber): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/math.ts#L20)
+
+### calculateDiffToRef
+
+Percentage Difference Formula (Relative Change)
+
+((Vfin-Vref) / Vref) * 100
+
+This formula calculates the percentage difference by comparing
+the absolute difference between the two values with the <b>reference value</b>.
+
+Usage: This formula isn't suitable for finding percentage differences
+when the values being compared are not reference and final values of the
+same quantity.
+
+```typescript
+function calculateDiffToRef(vFin: BigNumber, vRef: BigNumber): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/math.ts#L41)
+
+### calculateSellFee
+
+The total fee paid for a ‘sell’ transaction
+Suppose the trader is selling X for Y
+
+fee = 1 - (deltaY / delta0Y)
+
+```typescript
+function calculateSellFee(delta0Y: BigNumber, deltaY: BigNumber): any
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/math.ts#L58)
+
+### createChain
+
+```typescript
+function createChain(provider: any): Chain
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/evm/chain.ts#L16)
+
+### createSdkContext
+
+```typescript
+function createSdkContext(api: import("/root/hydration-codex/node_modul..., opts: { router: import("/root/hydration-codex/...): import("/root/hydration-codex/repos/sdk/packages/sdk/src/factory").SdkCtx
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/factory.ts#L36)
+
+### findNestedKey
+
+```typescript
+function findNestedKey(obj: any, keyToFind: any): any
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/json.ts#L1)
+
+### findNestedObj
+
+```typescript
+function findNestedObj(obj: any, keyToFind: any, valToFind: any): any
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/json.ts#L12)
+
+### getFraction
+
+Get % fraction from amount
+
+```typescript
+function getFraction(value: BigNumber, pct: number): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/math.ts#L84)
+
+### getLogValue
+
+```typescript
+function getLogValue(value: any): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/api/utils.ts#L1)
+
+### getNodesAndEdges
+
+Calculate nodes & edges from pools
+
+```typescript
+function getNodesAndEdges(pools: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/sdk/src/sor/route/graph").NodeEdges
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/sor/route/graph.ts#L15)
+
+### hashPools
+
+```typescript
+function hashPools(pools: import("/root/hydration-codex/repos/sdk/...): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/utils.ts#L6)
+
+### humanizeError
+
+```typescript
+function humanizeError(api: import("/root/hydration-codex/node_modul..., dispatchError: import("/root/hydration-codex/node_modul...): string | undefined
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/error.ts#L4)
+
+### isEvmAccount
+
+```typescript
+function isEvmAccount(address: string): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/h160.ts#L10)
+
+### isEvmAddress
+
+```typescript
+function isEvmAddress(address: string): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/h160.ts#L22)
+
+### isSs58Address
+
+```typescript
+function isSs58Address(address: string): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/h160.ts#L29)
+
+### pjsWebSocket
+
+```typescript
+function pjsWebSocket(provider: import("/root/hydration-codex/node_modul...): Transport<"webSocket">
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/evm/transport.ts#L5)
+
+### scale
+
+```typescript
+function scale(input: BigNumber, decimalPlaces: number): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/bignumber.ts#L15)
+
+### toBn
+
+```typescript
+function toBn(amount: string | number, decimals: number): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/bignumber.ts#L25)
+
+### toDecimals
+
+```typescript
+function toDecimals(amount: BigNumber, decimals: number): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/bignumber.ts#L30)
+
+## AaveClient
+
+### getBlockTimestamp
+
+```typescript
+async getBlockTimestamp(): Promise<number>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/aave/AaveClient.ts#L17)
+
+### getReservesData
+
+```typescript
+async getReservesData(): Promise<any>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/aave/AaveClient.ts#L22)
+
+### getUserAccountData
+
+```typescript
+async getUserAccountData(user: string): Promise<any>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/aave/AaveClient.ts#L42)
+
+### getUserReservesData
+
+```typescript
+async getUserReservesData(user: string): Promise<any>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/aave/AaveClient.ts#L32)
+
+## AavePool
+
+### calculateInGivenOut
+
+```typescript
+calculateInGivenOut(_poolPair: import("/root/hydration-codex/repos/sdk/..., amountOut: BigNumber): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/aave/AavePool.ts#L96)
+
+### calculateOutGivenIn
+
+```typescript
+calculateOutGivenIn(_poolPair: import("/root/hydration-codex/repos/sdk/..., amountIn: BigNumber): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/aave/AavePool.ts#L100)
+
+### calculateTradeFee
+
+```typescript
+calculateTradeFee(_amount: BigNumber, _fees: import("/root/hydration-codex/repos/sdk/...): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/aave/AavePool.ts#L112)
+
+### fromPool
+
+```typescript
+fromPool(pool: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/aave/AavePool").AavePool
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/aave/AavePool.ts#L22)
+
+### parsePair
+
+```typescript
+parsePair(tokenIn: string, tokenOut: string): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolPair
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/aave/AavePool.ts#L39)
+
+### spotPriceInGivenOut
+
+```typescript
+spotPriceInGivenOut(poolPair: import("/root/hydration-codex/repos/sdk/...): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/aave/AavePool.ts#L104)
+
+### spotPriceOutGivenIn
+
+```typescript
+spotPriceOutGivenIn(poolPair: import("/root/hydration-codex/repos/sdk/...): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/aave/AavePool.ts#L108)
+
+### validateAndBuy
+
+```typescript
+validateAndBuy(poolPair: import("/root/hydration-codex/repos/sdk/..., amountOut: BigNumber): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").BuyCtx
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/aave/AavePool.ts#L62)
+
+### validateAndSell
+
+```typescript
+validateAndSell(poolPair: import("/root/hydration-codex/repos/sdk/..., amountIn: BigNumber): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").SellCtx
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/aave/AavePool.ts#L79)
+
+### validatePair
+
+```typescript
+validatePair(_tokenIn: string, _tokenOut: string): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/aave/AavePool.ts#L35)
+
+## AavePoolClient
+
+### getPoolFees
+
+```typescript
+async getPoolFees(_block: number, _poolPair: import("/root/hydration-codex/repos/sdk/..., _poolAddress: string): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolFees>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/aave/AavePoolClient.ts#L84)
+
+### getPoolType
+
+```typescript
+getPoolType(): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolType
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/aave/AavePoolClient.ts#L30)
+
+### isSupported
+
+```typescript
+isSupported(): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/aave/AavePoolClient.ts#L55)
+
+### loadPools
+
+```typescript
+async loadPools(): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolBase[]>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/aave/AavePoolClient.ts#L59)
+
+## AaveUtils
+
+### getHealthFactor
+
+Get current user health factor
+
+```typescript
+async getHealthFactor(user: string): Promise<number>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/aave/AaveUtils.ts#L146)
+
+### getHealthFactorAfterSupply
+
+Estimate health factor after reserve supply
+
+```typescript
+async getHealthFactorAfterSupply(user: string, reserve: string, supplyAmount: string): Promise<number>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/aave/AaveUtils.ts#L235)
+
+### getHealthFactorAfterSwap
+
+Estimate health factor after swapping between reserves
+
+```typescript
+async getHealthFactorAfterSwap(user: string, fromAmount: string, fromReserve: string, toAmount: string, toReserve: string): Promise<number>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/aave/AaveUtils.ts#L296)
+
+### getHealthFactorAfterWithdraw
+
+Estimate health factor after aToken withdraw
+
+```typescript
+async getHealthFactorAfterWithdraw(user: string, reserve: string, withdrawAmount: string): Promise<number>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/aave/AaveUtils.ts#L173)
+
+### getMaxWithdraw
+
+Get MAX withdraw balance for given user reserve
+
+```typescript
+async getMaxWithdraw(user: string, reserveId: string): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/types").Amount>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/aave/AaveUtils.ts#L371)
+
+### getMaxWithdrawAll
+
+Get MAX withdraw balances for all user reserves
+
+```typescript
+async getMaxWithdrawAll(user: string): Promise<Record<number, import("/root/hydration-codex/repos/sdk/packages/sdk/src/types").Amount>>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/aave/AaveUtils.ts#L388)
+
+### getSummary
+
+```typescript
+async getSummary(user: string): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/aave/types").AaveSummary>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/aave/AaveUtils.ts#L24)
+
+### hasBorrowPositions
+
+Check if user has active borrow positions
+
+```typescript
+async hasBorrowPositions(user: string): Promise<boolean>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/aave/AaveUtils.ts#L133)
+
+## AssetClient
+
+### getOnChainAssets
+
+```typescript
+async getOnChainAssets(includeInvalid: boolean | undefined, external: import("/root/hydration-codex/repos/sdk/...): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/types").Asset[]>
+```
+
+**Reads:** [AssetRegistry.assets](/reference/pallets/AssetRegistry)
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/client/AssetClient.ts#L285)
+
+### locationsQuery
+
+```typescript
+async locationsQuery(): Promise<Map<string, HydradxRuntimeXcmAssetLocation>>
+```
+
+**Reads:** [AssetRegistry.assetLocations](/reference/pallets/AssetRegistry)
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/client/AssetClient.ts#L97)
+
+### metadataQuery
+
+```typescript
+async metadataQuery(): Promise<Map<string, import("/root/hydration-codex/repos/sdk/packages/sdk/src/types").AssetMetadata>>
+```
+
+**Reads:** [AssetRegistry.assetMetadataMap](/reference/pallets/AssetRegistry)
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/client/AssetClient.ts#L67)
+
+### safeBondsQuery
+
+```typescript
+async safeBondsQuery(): Promise<...>
+```
+
+**Reads:** [Bonds.bonds](/reference/pallets/Bonds)
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/client/AssetClient.ts#L47)
+
+### safeSharesQuery
+
+```typescript
+async safeSharesQuery(): Promise<Map<string, PalletStableswapPoolInfo>>
+```
+
+**Reads:** [Stableswap.pools](/reference/pallets/Stableswap)
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/client/AssetClient.ts#L29)
+
+## BalanceClient
+
+### getBalance
+
+```typescript
+async getBalance(account: string, assetId: string): Promise<BigNumber>
+```
+
+**Reads:** [AssetRegistry.assets](/reference/pallets/AssetRegistry)
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/client/BalanceClient.ts#L17)
+
+### getErc20Balance
+
+```typescript
+async getErc20Balance(account: string, assetId: string): Promise<BigNumber>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/client/BalanceClient.ts#L40)
+
+### getSystemBalance
+
+```typescript
+async getSystemBalance(account: string): Promise<BigNumber>
+```
+
+**Reads:** [System.account](/reference/pallets/System)
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/client/BalanceClient.ts#L30)
+
+### getTokenBalance
+
+```typescript
+async getTokenBalance(account: string, assetId: string): Promise<BigNumber>
+```
+
+**Reads:** [Tokens.accounts](/reference/pallets/Tokens)
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/client/BalanceClient.ts#L35)
+
+### getTokenBalanceData
+
+```typescript
+async getTokenBalanceData(account: string, assetId: string): Promise<OrmlTokensAccountData>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/client/BalanceClient.ts#L165)
+
+### subscribeErc20Balance
+
+```typescript
+async subscribeErc20Balance(address: string, onChange: (balances: [string, BigNumber][]) => void, assets: string[] | undefined): import("/root/hydration-codex/node_modules/@polkadot/api-base/types/base").UnsubscribePromise
+```
+
+**Reads:** [AssetRegistry.assets](/reference/pallets/AssetRegistry)
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/client/BalanceClient.ts#L109)
+
+### subscribeErc20Balances
+
+```typescript
+async subscribeErc20Balances(queries: string[][], onChange: (balances: [string[], BigNumber][]) => void): import("/root/hydration-codex/node_modules/@polkadot/api-base/types/base").UnsubscribePromise
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/client/BalanceClient.ts#L146)
+
+### subscribeSystemBalance
+
+```typescript
+async subscribeSystemBalance(address: string, onChange: (token: string, balance: BigNumber) => void): import("/root/hydration-codex/node_modules/@polkadot/api-base/types/base").UnsubscribePromise
+```
+
+**Reads:** [System.account](/reference/pallets/System)
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/client/BalanceClient.ts#L45)
+
+### subscribeSystemBalances
+
+```typescript
+async subscribeSystemBalances(queries: string[], onChange: (balances: [string, BigNumber][]) => void): import("/root/hydration-codex/node_modules/@polkadot/api-base/types/base").UnsubscribePromise
+```
+
+**Reads:** [System.account](/reference/pallets/System)
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/client/BalanceClient.ts#L54)
+
+### subscribeTokenBalance
+
+```typescript
+async subscribeTokenBalance(address: string, onChange: (balances: [string, BigNumber][]) => void, assets: string[] | undefined): import("/root/hydration-codex/node_modules/@polkadot/api-base/types/base").UnsubscribePromise
+```
+
+**Reads:** [Tokens.accounts](/reference/pallets/Tokens)
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/client/BalanceClient.ts#L69)
+
+### subscribeTokenBalances
+
+```typescript
+async subscribeTokenBalances(queries: string[][], onChange: (balances: [string[], BigNumber][]) => void): import("/root/hydration-codex/node_modules/@polkadot/api-base/types/base").UnsubscribePromise
+```
+
+**Reads:** [Tokens.accounts](/reference/pallets/Tokens)
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/client/BalanceClient.ts#L94)
+
+## BalanceClientV2
+
+### getBalance
+
+```typescript
+async getBalance(account: string, assetId: string): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/types").Balance>
+```
+
+**Reads:** [AssetRegistry.assets](/reference/pallets/AssetRegistry)
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/client/BalanceClientV2.ts#L18)
+
+### getErc20Balance
+
+```typescript
+async getErc20Balance(account: string, assetId: string): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/types").Balance>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/client/BalanceClientV2.ts#L41)
+
+### getSystemBalance
+
+```typescript
+async getSystemBalance(account: string): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/types").Balance>
+```
+
+**Reads:** [System.account](/reference/pallets/System)
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/client/BalanceClientV2.ts#L31)
+
+### getTokenBalance
+
+```typescript
+async getTokenBalance(account: string, assetId: string): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/types").Balance>
+```
+
+**Reads:** [Tokens.accounts](/reference/pallets/Tokens)
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/client/BalanceClientV2.ts#L36)
+
+### getTokenBalanceData
+
+```typescript
+async getTokenBalanceData(account: string, assetId: string): Promise<OrmlTokensAccountData>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/client/BalanceClientV2.ts#L117)
+
+### subscribeErc20Balance
+
+```typescript
+async subscribeErc20Balance(address: string, onChange: (balances: [string, import("/root/hydrat..., assets: string[] | undefined): import("/root/hydration-codex/node_modules/@polkadot/api-base/types/base").UnsubscribePromise
+```
+
+**Reads:** [AssetRegistry.assets](/reference/pallets/AssetRegistry)
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/client/BalanceClientV2.ts#L80)
+
+### subscribeSystemBalance
+
+```typescript
+async subscribeSystemBalance(address: string, onChange: (token: string, balance: import("/root/h...): import("/root/hydration-codex/node_modules/@polkadot/api-base/types/base").UnsubscribePromise
+```
+
+**Reads:** [System.account](/reference/pallets/System)
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/client/BalanceClientV2.ts#L46)
+
+### subscribeTokenBalance
+
+```typescript
+async subscribeTokenBalance(address: string, onChange: (balances: [string, import("/root/hydrat..., assets: string[] | undefined): import("/root/hydration-codex/node_modules/@polkadot/api-base/types/base").UnsubscribePromise
+```
+
+**Reads:** [Tokens.accounts](/reference/pallets/Tokens)
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/client/BalanceClientV2.ts#L55)
+
+## Bfs
+
+### buildAndPopulateGraph
+
+Build and populate graph
+
+```typescript
+buildAndPopulateGraph(nodes: string[], edges: [string, string, string][]): Map<number, import("/root/hydration-codex/repos/sdk/packages/sdk/src/sor/route/bfs").Path>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/sor/route/bfs.ts#L149)
+
+### findPaths
+
+Finding paths in graph from given source to destination
+
+```typescript
+findPaths(g: Map<number, import("/root/hydration-code..., src: number, dst: number | null): import("/root/hydration-codex/repos/sdk/packages/sdk/src/sor/route/bfs").Path[]
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/sor/route/bfs.ts#L42)
+
+### findPaths
+
+Finding paths in graph from given source to destination
+
+```typescript
+findPaths(g: number[][], src: number, dst: number): number[][]
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/traversal/bfs.ts#L37)
+
+### findShortestPaths
+
+Finding shortest paths in graph from given source to destination
+
+```typescript
+findShortestPaths(g: Map<number, import("/root/hydration-code..., src: number, dst: number | null): import("/root/hydration-codex/repos/sdk/packages/sdk/src/sor/route/bfs").Path[]
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/sor/route/bfs.ts#L92)
+
+### isNotVisited
+
+Check if current node is present in path or traversal within the same pool was already done
+
+```typescript
+isNotVisited(x: import("/root/hydration-codex/repos/sdk/..., path: import("/root/hydration-codex/repos/sdk/...): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/sor/route/bfs.ts#L24)
+
+### isNotVisited
+
+Check if current node is already present in path
+
+```typescript
+isNotVisited(x: number, path: number[]): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/traversal/bfs.ts#L19)
+
+## CachingPoolService
+
+### destroy
+
+```typescript
+async destroy(): Promise<void>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/CachingPoolService.ts#L37)
+
+### getPoolFees
+
+```typescript
+async getPoolFees(poolPair: import("/root/hydration-codex/repos/sdk/..., pool: import("/root/hydration-codex/repos/sdk/...): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolFees>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/CachingPoolService.ts#L25)
+
+## ERC20
+
+### fromAssetId
+
+```typescript
+fromAssetId(assetId: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/erc20.ts#L4)
+
+### isAssetAddress
+
+```typescript
+isAssetAddress(address: string): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/erc20.ts#L21)
+
+### toAssetId
+
+```typescript
+toAssetId(address: string): number | null
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/erc20.ts#L13)
+
+## EvmClient
+
+### getProvider
+
+```typescript
+getProvider(): PublicClient
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/evm/client.ts#L45)
+
+### getRPCAdapter
+
+```typescript
+getRPCAdapter(): import("/root/hydration-codex/repos/sdk/packages/sdk/src/evm/adapter").EvmRpcAdapter
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/evm/client.ts#L67)
+
+### getSigner
+
+```typescript
+getSigner(address: string): WalletClient
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/evm/client.ts#L59)
+
+### getWsProvider
+
+```typescript
+getWsProvider(): PublicClient
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/evm/client.ts#L52)
+
+## EvmRpcAdapter
+
+### getBlock
+
+```typescript
+async getBlock(): Promise<{ timestamp: bigint; number: bigint; }>
+```
+
+**Reads:** [Ethereum.currentBlock](/reference/pallets/Ethereum)
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/evm/adapter.ts#L16)
+
+## FarmClient
+
+### getFarmApr
+
+Return list of all available assets from substrate based pools
+
+```typescript
+async getFarmApr(id: string, type: "omnipool" | "isolatedpool"): Promise<any>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/client/FarmClient.ts#L224)
+
+### getOraclePrice
+
+```typescript
+async getOraclePrice(globalFarm: PalletLiquidityMiningGlobalFarmData): Promise<any>
+```
+
+**Reads:** [EmaOracle.oracles](/reference/pallets/EmaOracle)
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/client/FarmClient.ts#L130)
+
+## FeeUtils
+
+### fromPerbill
+
+```typescript
+fromPerbill(perbill: number): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolFee
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/fee.ts#L19)
+
+### fromPermill
+
+```typescript
+fromPermill(permill: number): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolFee
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/fee.ts#L15)
+
+### fromRate
+
+```typescript
+fromRate(numerator: number, denominator: number): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolFee
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/fee.ts#L23)
+
+### safeDivide
+
+```typescript
+safeDivide(numerator: number, denominator: number, decimals: number): number
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/fee.ts#L27)
+
+### safeRound
+
+```typescript
+safeRound(value: number): number
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/fee.ts#L36)
+
+### toPct
+
+```typescript
+toPct(fee: import("/root/hydration-codex/repos/sdk/...): number
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/fee.ts#L5)
+
+### toRaw
+
+```typescript
+toRaw(fee: import("/root/hydration-codex/repos/sdk/...): number
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/fee.ts#L10)
+
+## GhoTokenClient
+
+### getFacilitatorCapacity
+
+```typescript
+async getFacilitatorCapacity(address: string, facilitator: string): Promise<bigint>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/gho/GhoTokenClient.ts#L12)
+
+## HsmClient
+
+### getPoolFees
+
+```typescript
+async getPoolFees(_block: number, _poolPair: import("/root/hydration-codex/repos/sdk/..., _poolAddress: string): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolFees>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/hsm/HsmPoolClient.ts#L140)
+
+### getPoolType
+
+```typescript
+getPoolType(): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolType
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/hsm/HsmPoolClient.ts#L43)
+
+### isSupported
+
+```typescript
+isSupported(): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/hsm/HsmPoolClient.ts#L64)
+
+### loadPools
+
+```typescript
+async loadPools(): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolBase[]>
+```
+
+**Reads:** [HSM.hollarId](/reference/pallets/HSM), [AssetRegistry.assetLocations](/reference/pallets/AssetRegistry), [HSM.collaterals](/reference/pallets/HSM)
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/hsm/HsmPoolClient.ts#L68)
+
+## HsmMath
+
+### calculateBuybackLimit
+
+```typescript
+calculateBuybackLimit(imbalance: string, buybackRate: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/hsm/HsmMath.ts#L80)
+
+### calculateBuybackPriceWithFee
+
+```typescript
+calculateBuybackPriceWithFee(executionPriceNum: string, executionPriceDen: string, buyBackFee: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/hsm/HsmMath.ts#L84)
+
+### calculateCollateralInGivenHollarOut
+
+```typescript
+calculateCollateralInGivenHollarOut(amountOut: string, collateralPeg: string, purchaseFee: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/hsm/HsmMath.ts#L13)
+
+### calculateCollateralOutGivenHollarIn
+
+```typescript
+calculateCollateralOutGivenHollarIn(amountIn: string, executionPrice: string, buybackFee: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/hsm/HsmMath.ts#L25)
+
+### calculateHollarInGivenCollateralOut
+
+```typescript
+calculateHollarInGivenCollateralOut(amountOut: string, executionPrice: string, buybackFee: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/hsm/HsmMath.ts#L49)
+
+### calculateHollarOutGivenCollateralIn
+
+```typescript
+calculateHollarOutGivenCollateralIn(amountIn: string, collateralPeg: string, purchaseFee: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/hsm/HsmMath.ts#L37)
+
+### calculateImbalance
+
+I_i = (H_i - peg_i * R_i) / 2
+
+If hollar reserve is less than pegged collateral, we're considering zero imbalance
+as we only care about positive imbalance (excess Hollar in the pool
+
+```typescript
+calculateImbalance(hollarReserve: string, collateralPeg: string, collateralReserve: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/hsm/HsmMath.ts#L72)
+
+### calculateMaxPrice
+
+```typescript
+calculateMaxPrice(collateralPeg: string, coeficient: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/hsm/HsmMath.ts#L96)
+
+## HsmPool
+
+### calculateInGivenOut
+
+```typescript
+calculateInGivenOut(poolPair: import("/root/hydration-codex/repos/sdk/..., amountOut: BigNumber): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/hsm/HsmPool.ts#L208)
+
+### calculateOutGivenIn
+
+```typescript
+calculateOutGivenIn(poolPair: import("/root/hydration-codex/repos/sdk/..., amountIn: BigNumber): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/hsm/HsmPool.ts#L241)
+
+### fromPool
+
+```typescript
+fromPool(pool: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/hsm/HsmPool").HsmPool
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/hsm/HsmPool.ts#L43)
+
+### parsePair
+
+```typescript
+parsePair(tokenIn: string, tokenOut: string): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/stable/StableSwap").StableSwapPair
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/hsm/HsmPool.ts#L67)
+
+### spotPriceInGivenOut
+
+```typescript
+spotPriceInGivenOut(poolPair: import("/root/hydration-codex/repos/sdk/...): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/hsm/HsmPool.ts#L288)
+
+### spotPriceOutGivenIn
+
+```typescript
+spotPriceOutGivenIn(poolPair: import("/root/hydration-codex/repos/sdk/...): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/hsm/HsmPool.ts#L293)
+
+### validateAndBuy
+
+```typescript
+validateAndBuy(poolPair: import("/root/hydration-codex/repos/sdk/..., amountOut: BigNumber): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").BuyCtx
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/hsm/HsmPool.ts#L148)
+
+### validateAndSell
+
+```typescript
+validateAndSell(poolPair: import("/root/hydration-codex/repos/sdk/..., amountIn: BigNumber): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").SellCtx
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/hsm/HsmPool.ts#L165)
+
+### validatePair
+
+```typescript
+validatePair(_tokenIn: string, _tokenOut: string): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/hsm/HsmPool.ts#L63)
+
+### validateTradeConstraints
+
+```typescript
+validateTradeConstraints(poolPair: import("/root/hydration-codex/repos/sdk/..., amountIn: BigNumber, amountOut: BigNumber): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolError[]
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/hsm/HsmPool.ts#L132)
+
+### validateTradeHollarIn
+
+```typescript
+validateTradeHollarIn(poolPair: import("/root/hydration-codex/repos/sdk/..., amountIn: BigNumber, amountOut: BigNumber, errors: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolError[]
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/hsm/HsmPool.ts#L71)
+
+### validateTradeHollarOut
+
+```typescript
+validateTradeHollarOut(amountIn: BigNumber, amountOut: BigNumber, errors: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolError[]
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/hsm/HsmPool.ts#L109)
+
+## LbpMath
+
+### calculateInGivenOut
+
+```typescript
+calculateInGivenOut(balanceIn: string, balanceOut: string, weightIn: string, weightOut: string, amountOut: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/lbp/LbpMath.ts#L14)
+
+### calculateLinearWeights
+
+```typescript
+calculateLinearWeights(start: string, end: string, initialWeight: string, finalWeight: string, at: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/lbp/LbpMath.ts#L34)
+
+### calculateOutGivenIn
+
+```typescript
+calculateOutGivenIn(balanceIn: string, balanceOut: string, weightIn: string, weightOut: string, amountIn: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/lbp/LbpMath.ts#L24)
+
+### calculatePoolTradeFee
+
+```typescript
+calculatePoolTradeFee(amount: string, feeNumerator: number, feeDenominator: number): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/lbp/LbpMath.ts#L44)
+
+### getSpotPrice
+
+```typescript
+getSpotPrice(balanceA: string, balanceB: string, weightA: string, weightB: string, amount: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/lbp/LbpMath.ts#L10)
+
+## LbpPool
+
+### calculateInGivenOut
+
+```typescript
+calculateInGivenOut(poolPair: import("/root/hydration-codex/repos/sdk/..., amountOut: BigNumber): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/lbp/LbpPool.ts#L214)
+
+### calculateOutGivenIn
+
+```typescript
+calculateOutGivenIn(poolPair: import("/root/hydration-codex/repos/sdk/..., amountIn: BigNumber): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/lbp/LbpPool.ts#L229)
+
+### calculateTradeFee
+
+```typescript
+calculateTradeFee(amount: BigNumber, fees: import("/root/hydration-codex/repos/sdk/...): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/lbp/LbpPool.ts#L266)
+
+### fromPool
+
+```typescript
+fromPool(pool: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/lbp/LbpPool").LbpPool
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/lbp/LbpPool.ts#L48)
+
+### parsePair
+
+```typescript
+parsePair(tokenIn: string, tokenOut: string): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/lbp/LbpPool").WeightedPoolPair
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/lbp/LbpPool.ts#L67)
+
+### spotPriceInGivenOut
+
+```typescript
+spotPriceInGivenOut(poolPair: import("/root/hydration-codex/repos/sdk/...): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/lbp/LbpPool.ts#L244)
+
+### spotPriceOutGivenIn
+
+```typescript
+spotPriceOutGivenIn(poolPair: import("/root/hydration-codex/repos/sdk/...): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/lbp/LbpPool.ts#L255)
+
+### validateAndBuy
+
+Validate buy transfer
+
+a) Accumulated asset is bought (out) from the pool for distributed asset (in) - User(Buyer) bears the fee
+b) Distributed asset is bought (out) from the pool for accumualted asset (in) - Pool bears the fee
+
+```typescript
+validateAndBuy(poolPair: import("/root/hydration-codex/repos/sdk/..., amountOut: BigNumber, fees: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").BuyCtx
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/lbp/LbpPool.ts#L96)
+
+### validateAndSell
+
+Validate sell transfer
+
+a) Accumulated asset is sold (in) to the pool for distributed asset (out) - Pool bears the fee
+b) Distributed asset is sold (in) to the pool for accumualted asset (out) - User(Seller) bears the fee
+
+```typescript
+validateAndSell(poolPair: import("/root/hydration-codex/repos/sdk/..., amountIn: BigNumber, fees: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").SellCtx
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/lbp/LbpPool.ts#L158)
+
+### validatePair
+
+```typescript
+validatePair(_tokenIn: string, _tokenOut: string): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/lbp/LbpPool.ts#L63)
+
+## LbpPoolClient
+
+### getPoolFees
+
+```typescript
+async getPoolFees(_block: number, _poolPair: import("/root/hydration-codex/repos/sdk/..., poolAddress: string): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolFees>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/lbp/LbpPoolClient.ts#L175)
+
+### getPoolType
+
+```typescript
+getPoolType(): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolType
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/lbp/LbpPoolClient.ts#L24)
+
+### isSupported
+
+```typescript
+isSupported(): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/lbp/LbpPoolClient.ts#L130)
+
+### loadPools
+
+```typescript
+async loadPools(): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolBase[]>
+```
+
+**Reads:** [LBP.poolData](/reference/pallets/LBP), [ParachainSystem.validationData](/reference/pallets/ParachainSystem)
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/lbp/LbpPoolClient.ts#L134)
+
+## MmOracleClient
+
+### getData
+
+```typescript
+async getData(address: string, blockTimeInSec: number): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/oracle/types").MmOracleEntry>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/oracle/MmOracleClient.ts#L13)
+
+## OmniMath
+
+### calculateCapDifference
+
+```typescript
+calculateCapDifference(assetReserve: string, assetHubReserve: string, assetCap: string, totalHubReserve: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniMath.ts#L183)
+
+### calculateInGivenOut
+
+```typescript
+calculateInGivenOut(assetInBalance: string, assetInHubReserve: string, assetInShares: string, assetOutBalance: string, assetOutHubReserve: string, assetOutShares: string, amountOut: string, assetFee: string, protocolFee: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniMath.ts#L45)
+
+### calculateLimitHubIn
+
+```typescript
+calculateLimitHubIn(assetReserve: string, assetHubReserve: string, assetShares: string, amountIn: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniMath.ts#L206)
+
+### calculateLiquidityLRNAOut
+
+```typescript
+calculateLiquidityLRNAOut(assetReserve: string, assetHubReserve: string, assetShares: string, positionAmount: string, positionShares: string, positionPrice: string, sharesToRemove: string, withdrawalFee: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniMath.ts#L161)
+
+### calculateLiquidityOut
+
+```typescript
+calculateLiquidityOut(assetReserve: string, assetHubReserve: string, assetShares: string, positionAmount: string, positionShares: string, positionPrice: string, sharesToRemove: string, withdrawalFee: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniMath.ts#L139)
+
+### calculateLrnaInGivenOut
+
+```typescript
+calculateLrnaInGivenOut(assetOutBalance: string, assetOutHubReserve: string, assetOutShares: string, amountOut: string, assetFee: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniMath.ts#L69)
+
+### calculateLrnaSpotPrice
+
+```typescript
+calculateLrnaSpotPrice(assetBalance: string, assetHubReserve: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniMath.ts#L38)
+
+### calculateOutGivenIn
+
+```typescript
+calculateOutGivenIn(assetInBalance: string, assetInHubReserve: string, assetInShares: string, assetOutBalance: string, assetOutHubReserve: string, assetOutShares: string, amountIn: string, assetFee: string, protocolFee: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniMath.ts#L85)
+
+### calculateOutGivenLrnaIn
+
+```typescript
+calculateOutGivenLrnaIn(assetOutBalance: string, assetOutHubReserve: string, assetOutShares: string, amountOut: string, assetFee: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniMath.ts#L109)
+
+### calculateShares
+
+```typescript
+calculateShares(assetReserve: string, assetHubReserve: string, assetShares: string, amountIn: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniMath.ts#L125)
+
+### calculateSpotPrice
+
+```typescript
+calculateSpotPrice(assetInBalance: string, assetInHubReserve: string, assetOutBalance: string, assetOutHubReserve: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniMath.ts#L24)
+
+### isAddLiquidityAllowed
+
+```typescript
+isAddLiquidityAllowed(bits: number): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniMath.ts#L228)
+
+### isBuyAllowed
+
+```typescript
+isBuyAllowed(bits: number): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniMath.ts#L224)
+
+### isRemoveLiquidityAllowed
+
+```typescript
+isRemoveLiquidityAllowed(bits: number): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniMath.ts#L232)
+
+### isSellAllowed
+
+```typescript
+isSellAllowed(bits: number): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniMath.ts#L220)
+
+### recalculateAssetFee
+
+```typescript
+recalculateAssetFee(oracleAmountIn: string, oracleAmountOut: string, oracleLiquidity: string, oraclePeriod: string, currentAssetLiquidity: string, previousFee: string, blocDifference: string, minFee: string, maxFee: string, decay: string, amplification: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniMath.ts#L236)
+
+### recalculateProtocolFee
+
+```typescript
+recalculateProtocolFee(oracleAmountIn: string, oracleAmountOut: string, oracleLiquidity: string, oraclePeriod: string, currentAssetLiquidity: string, previousFee: string, blocDifference: string, minFee: string, maxFee: string, decay: string, amplification: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniMath.ts#L264)
+
+### verifyAssetCap
+
+```typescript
+verifyAssetCap(assetReserve: string, assetCap: string, hubAdded: string, totalHubReserve: string): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniMath.ts#L292)
+
+## OmniPool
+
+### calculateInGivenOut
+
+```typescript
+calculateInGivenOut(poolPair: import("/root/hydration-codex/repos/sdk/..., amountOut: BigNumber, fees: import("/root/hydration-codex/repos/sdk/...): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniPool.ts#L201)
+
+### calculateLrnaInGivenOut
+
+```typescript
+calculateLrnaInGivenOut(poolPair: import("/root/hydration-codex/repos/sdk/..., amountOut: BigNumber, fees: import("/root/hydration-codex/repos/sdk/...): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniPool.ts#L225)
+
+### calculateOutGivenIn
+
+```typescript
+calculateOutGivenIn(poolPair: import("/root/hydration-codex/repos/sdk/..., amountIn: BigNumber, fees: import("/root/hydration-codex/repos/sdk/...): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniPool.ts#L241)
+
+### calculateOutGivenLrnaIn
+
+```typescript
+calculateOutGivenLrnaIn(poolPair: import("/root/hydration-codex/repos/sdk/..., amountIn: BigNumber, fees: import("/root/hydration-codex/repos/sdk/...): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniPool.ts#L265)
+
+### fromPool
+
+```typescript
+fromPool(pool: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/omni/OmniPool").OmniPool
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniPool.ts#L54)
+
+### parsePair
+
+```typescript
+parsePair(tokenIn: string, tokenOut: string): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/omni/OmniPool").OmniPoolPair
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniPool.ts#L76)
+
+### spotPriceInGivenOut
+
+```typescript
+spotPriceInGivenOut(poolPair: import("/root/hydration-codex/repos/sdk/...): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniPool.ts#L281)
+
+### spotPriceLrnaInGivenOut
+
+```typescript
+spotPriceLrnaInGivenOut(poolPair: import("/root/hydration-codex/repos/sdk/...): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniPool.ts#L297)
+
+### spotPriceOutGivenIn
+
+```typescript
+spotPriceOutGivenIn(poolPair: import("/root/hydration-codex/repos/sdk/...): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniPool.ts#L307)
+
+### spotPriceOutGivenLrnaIn
+
+```typescript
+spotPriceOutGivenLrnaIn(poolPair: import("/root/hydration-codex/repos/sdk/...): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniPool.ts#L323)
+
+### validateAndBuy
+
+```typescript
+validateAndBuy(poolPair: import("/root/hydration-codex/repos/sdk/..., amountOut: BigNumber, fees: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").BuyCtx
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniPool.ts#L108)
+
+### validateAndSell
+
+```typescript
+validateAndSell(poolPair: import("/root/hydration-codex/repos/sdk/..., amountIn: BigNumber, fees: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").SellCtx
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniPool.ts#L156)
+
+### validatePair
+
+```typescript
+validatePair(_tokenIn: string, tokenOut: string): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniPool.ts#L68)
+
+## OmniPoolClient
+
+### getPoolFees
+
+```typescript
+async getPoolFees(block: number, poolPair: import("/root/hydration-codex/repos/sdk/..., _poolAddress: string): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/omni/OmniPool").OmniPoolFees>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniPoolClient.ts#L187)
+
+### getPoolType
+
+```typescript
+getPoolType(): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolType
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniPoolClient.ts#L68)
+
+### isAssetConfigSupported
+
+```typescript
+isAssetConfigSupported(): boolean
+```
+
+**Reads:** [DynamicFees.assetFeeConfiguration](/reference/pallets/DynamicFees)
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniPoolClient.ts#L126)
+
+### isSupported
+
+```typescript
+isSupported(): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniPoolClient.ts#L122)
+
+### loadPools
+
+```typescript
+async loadPools(): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolBase[]>
+```
+
+**Reads:** [Omnipool.hubAssetId](/reference/pallets/Omnipool), [Omnipool.assets](/reference/pallets/Omnipool), [Omnipool.hubAssetTradability](/reference/pallets/Omnipool)
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/omni/OmniPoolClient.ts#L130)
+
+## OrderTxBuilder
+
+### build
+
+```typescript
+async build(): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/tx/types").SubstrateTransaction>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/tx/OrderTxBuilder.ts#L57)
+
+### setOrder
+
+```typescript
+setOrder(order: import("/root/hydration-codex/repos/sdk/...): this
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/tx/OrderTxBuilder.ts#L15)
+
+### withBeneficiary
+
+```typescript
+withBeneficiary(beneficiary: string): this
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/tx/OrderTxBuilder.ts#L20)
+
+### withMaxRetries
+
+```typescript
+withMaxRetries(maxRetries: number): this
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/tx/OrderTxBuilder.ts#L25)
+
+### withSlippage
+
+```typescript
+withSlippage(slippage: number): this
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/tx/OrderTxBuilder.ts#L30)
+
+## PoolClient
+
+### getPoolFees
+
+```typescript
+getPoolFees(block: number, pair: import("/root/hydration-codex/repos/sdk/..., address: string): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolFees>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/PoolClient.ts#L58)
+
+### getPools
+
+```typescript
+async getPools(): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolBase[]>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/PoolClient.ts#L86)
+
+### getPoolsMem
+
+```typescript
+async getPoolsMem(): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolBase[]>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/PoolClient.ts#L82)
+
+### getPoolType
+
+```typescript
+getPoolType(): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolType
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/PoolClient.ts#L57)
+
+### isSupported
+
+```typescript
+isSupported(): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/PoolClient.ts#L56)
+
+### unsubscribe
+
+```typescript
+unsubscribe(): void
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/PoolClient.ts#L193)
+
+### withAssets
+
+Update registry assets, evict mempool
+
+```typescript
+async withAssets(assets: import("/root/hydration-codex/repos/sdk/...): Promise<void>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/PoolClient.ts#L77)
+
+## PoolFactory
+
+### get
+
+```typescript
+get(pool: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").Pool
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/PoolFactory.ts#L11)
+
+## PoolService
+
+### destroy
+
+```typescript
+destroy(): void
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/PoolService.ts#L171)
+
+### getPoolFees
+
+```typescript
+async getPoolFees(poolPair: import("/root/hydration-codex/repos/sdk/..., pool: import("/root/hydration-codex/repos/sdk/...): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolFees>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/PoolService.ts#L182)
+
+### getPools
+
+```typescript
+async getPools(filter: import("/root/hydration-codex/repos/sdk/...): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolBase[]>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/PoolService.ts#L139)
+
+### syncRegistry
+
+```typescript
+async syncRegistry(external: import("/root/hydration-codex/repos/sdk/...): Promise<void>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/PoolService.ts#L133)
+
+## Queue
+
+### dequeue
+
+```typescript
+dequeue(): T | undefined
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/Queue.ts#L19)
+
+### enqueue
+
+```typescript
+enqueue(item: T): void
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/Queue.ts#L12)
+
+### size
+
+```typescript
+size(): number
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/Queue.ts#L23)
+
+## Router
+
+### getAllAssets
+
+Return list of all available assets from substrate based pools
+
+```typescript
+async getAllAssets(): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/types").Asset[]>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/sor/Router.ts#L51)
+
+### getPools
+
+Return all pools
+
+```typescript
+async getPools(): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolBase[]>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/sor/Router.ts#L42)
+
+### getRouteableAssets
+
+Return list of all routeble assets from substrate based pools
+
+```typescript
+async getRouteableAssets(toAsset: string): Promise<string[]>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/sor/Router.ts#L62)
+
+### getRoutes
+
+Calculate and return all possible paths for best swap assetIn>assetOut
+
+```typescript
+async getRoutes(assetIn: string, assetOut: string): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").Hop[][]>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/sor/Router.ts#L83)
+
+## RouteSuggester
+
+### getProposals
+
+Returns ideal path proposals from `tokenIn` to `tokenOut`
+based on BFS over trusted, isolated or both pools.
+
+- Trusted pools = all pools except XYK (isolated)
+
+The routing strategy is:
+- If neither `tokenIn` and `tokenOut` is in a trusted pool:
+  → Run BFS over isolated pools only, searching for all paths.
+- If both `tokenIn` and `tokenOut` are in trusted pools:
+  → Run BFS over trusted pools only, searching for shortest paths.
+- Otherwise:
+  → Run BFS over all relevant pools (trusted + isolated).
+
+This strategy minimizes search scope while ensuring all viable
+paths are discovered.
+
+NOTE: Filtering of valid swaps and pair execution is handled by the router,
+not in this step.
+
+```typescript
+getProposals(tokenIn: string, tokenOut: string, pools: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/sdk/src/sor/route/suggester").RouteProposal[]
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/sor/route/suggester.ts#L34)
+
+## StableMath
+
+### calculateAddOneAsset
+
+```typescript
+calculateAddOneAsset(reserves: string, shares: string, assetIn: number, amplification: string, shareIssuance: string, fee: string, pegs: string): any
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/stable/StableMath.ts#L63)
+
+### calculateAmplification
+
+```typescript
+calculateAmplification(initialAmp: string, finalAmp: string, initialBlock: string, finalBlock: string, currentBlock: string): any
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/stable/StableMath.ts#L27)
+
+### calculateInGivenOut
+
+```typescript
+calculateInGivenOut(reserves: string, assetIn: number, assetOut: number, amountOut: string, amplification: string, fee: string, pegs: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/stable/StableMath.ts#L43)
+
+### calculateLiquidityOutOneAsset
+
+```typescript
+calculateLiquidityOutOneAsset(reserves: string, shares: string, assetOut: number, amplification: string, shareIssuance: string, withdrawFee: string, pegs: string): any
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/stable/StableMath.ts#L123)
+
+### calculateOutGivenIn
+
+```typescript
+calculateOutGivenIn(reserves: string, assetIn: number, assetOut: number, amountIn: string, amplification: string, fee: string, pegs: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/stable/StableMath.ts#L103)
+
+### calculateShares
+
+```typescript
+calculateShares(reserves: string, assets: string, amplification: string, shareIssuance: string, fee: string, pegs: string): any
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/stable/StableMath.ts#L143)
+
+### calculateSharesForAmount
+
+```typescript
+calculateSharesForAmount(reserves: string, assetIn: number, amount: string, amplification: string, shareIssuance: string, fee: string, pegs: string): any
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/stable/StableMath.ts#L83)
+
+### calculateSpotPriceWithFee
+
+```typescript
+calculateSpotPriceWithFee(poolId: string, reserves: string, amplification: string, assetIn: string, assetOut: string, shareIssuance: string, fee: string, pegs: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/stable/StableMath.ts#L161)
+
+### defaultPegs
+
+```typescript
+defaultPegs(size: number): string[][]
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/stable/StableMath.ts#L19)
+
+### getPoolAddress
+
+```typescript
+getPoolAddress(assetId: number): Uint8Array<ArrayBufferLike>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/stable/StableMath.ts#L15)
+
+### recalculatePegs
+
+```typescript
+recalculatePegs(currentPegs: string, currentPegsUpdatedAt: string, targetPegs: string, currentBlock: string, maxPegUpdate: string, poolFee: string): [string, string[][]]
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/stable/StableMath.ts#L183)
+
+## StableSwap
+
+### calculateInGivenOut
+
+```typescript
+calculateInGivenOut(poolPair: import("/root/hydration-codex/repos/sdk/..., amountOut: BigNumber, fees: import("/root/hydration-codex/repos/sdk/...): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/stable/StableSwap.ts#L233)
+
+### calculateOutGivenIn
+
+```typescript
+calculateOutGivenIn(poolPair: import("/root/hydration-codex/repos/sdk/..., amountIn: BigNumber, fees: import("/root/hydration-codex/repos/sdk/...): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/stable/StableSwap.ts#L327)
+
+### fromPool
+
+```typescript
+fromPool(pool: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/stable/StableSwap").StableSwap
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/stable/StableSwap.ts#L53)
+
+### parsePair
+
+```typescript
+parsePair(tokenIn: string, tokenOut: string): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/stable/StableSwap").StableSwapPair
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/stable/StableSwap.ts#L76)
+
+### spotPriceInGivenOut
+
+```typescript
+spotPriceInGivenOut(poolPair: import("/root/hydration-codex/repos/sdk/...): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/stable/StableSwap.ts#L249)
+
+### spotPriceOutGivenIn
+
+```typescript
+spotPriceOutGivenIn(poolPair: import("/root/hydration-codex/repos/sdk/...): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/stable/StableSwap.ts#L343)
+
+### validateAndBuy
+
+```typescript
+validateAndBuy(poolPair: import("/root/hydration-codex/repos/sdk/..., amountOut: BigNumber, fees: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").BuyCtx
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/stable/StableSwap.ts#L106)
+
+### validateAndSell
+
+```typescript
+validateAndSell(poolPair: import("/root/hydration-codex/repos/sdk/..., amountIn: BigNumber, fees: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").SellCtx
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/stable/StableSwap.ts#L144)
+
+### validatePair
+
+```typescript
+validatePair(_tokenIn: string, _tokenOut: string): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/stable/StableSwap.ts#L72)
+
+## StableSwapClient
+
+### getPoolFees
+
+```typescript
+async getPoolFees(_block: number, _poolPair: import("/root/hydration-codex/repos/sdk/..., poolAddress: string): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolFees>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/stable/StableSwapClient.ts#L168)
+
+### getPoolType
+
+```typescript
+getPoolType(): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolType
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/stable/StableSwapClient.ts#L41)
+
+### isSupported
+
+```typescript
+isSupported(): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/stable/StableSwapClient.ts#L111)
+
+### loadPools
+
+```typescript
+async loadPools(): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolBase[]>
+```
+
+**Reads:** [Stableswap.pools](/reference/pallets/Stableswap), [System.number](/reference/pallets/System)
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/stable/StableSwapClient.ts#L115)
+
+## Stack
+
+### peek
+
+```typescript
+peek(): T | undefined
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/Stack.ts#L24)
+
+### pop
+
+```typescript
+pop(): T | undefined
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/Stack.ts#L20)
+
+### push
+
+```typescript
+push(item: T): void
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/Stack.ts#L13)
+
+### size
+
+```typescript
+size(): number
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/utils/Stack.ts#L28)
+
+## TradeRouteBuilder
+
+### build
+
+```typescript
+build(swaps: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/sdk/src/sor/types").TradeRoute[]
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/sor/TradeRouteBuilder.ts#L6)
+
+## TradeRouter
+
+### getBestBuy
+
+Calculate and return best possible buy trade for assetIn > assetOut pair
+
+```typescript
+async getBestBuy(assetIn: string, assetOut: string, amountOut: any): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/sor/types").Trade>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/sor/TradeRouter.ts#L514)
+
+### getBestSell
+
+Calculate and return best possible sell trade for assetIn > assetOut pair
+
+```typescript
+async getBestSell(assetIn: string, assetOut: string, amountIn: any): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/sor/types").Trade>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/sor/TradeRouter.ts#L129)
+
+### getBestSpotPrice
+
+Calculate and return best possible spot price for assetIn > assetOut pair
+
+```typescript
+async getBestSpotPrice(assetIn: string, assetOut: string): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/types").Amount | undefined>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/sor/TradeRouter.ts#L463)
+
+### getBuy
+
+Calculate and return buy trade for assetIn > assetOut pair
+
+```typescript
+async getBuy(assetIn: string, assetOut: string, amountOut: any, route: import("/root/hydration-codex/repos/sdk/...): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/sor/types").Trade>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/sor/TradeRouter.ts#L531)
+
+### getBuyTrades
+
+Calculate and return all possible buy trades for assetIn > assetOut
+
+```typescript
+async getBuyTrades(assetIn: string, assetOut: string, amountOut: any): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/sor/types").Trade[]>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/sor/TradeRouter.ts#L561)
+
+### getMostLiquidRoute
+
+Returns the most liquid route
+
+```typescript
+async getMostLiquidRoute(assetIn: string, assetOut: string): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").Hop[]>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/sor/TradeRouter.ts#L445)
+
+### getSell
+
+Calculate and return sell trade for assetIn > assetOut pair
+
+```typescript
+async getSell(assetIn: string, assetOut: string, amountIn: any, route: import("/root/hydration-codex/repos/sdk/...): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/sor/types").Trade>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/sor/TradeRouter.ts#L146)
+
+### getSellTrades
+
+Calculate and return all possible sell trades for assetIn > assetOut
+
+```typescript
+async getSellTrades(assetIn: string, assetOut: string, amountIn: any): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/sor/types").Trade[]>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/sor/TradeRouter.ts#L176)
+
+### toBuySwaps
+
+Calculate and return buy route for given path
+
+```typescript
+async toBuySwaps(amountOut: any, path: import("/root/hydration-codex/repos/sdk/..., poolsMap: Map<string, import("/root/hydration-code...): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/sor/types").BuySwap[]>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/sor/TradeRouter.ts#L692)
+
+### toSellSwaps
+
+Calculate and return sell route for given path
+
+```typescript
+async toSellSwaps(amountIn: any, path: import("/root/hydration-codex/repos/sdk/..., poolsMap: Map<string, import("/root/hydration-code...): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/sor/types").SellSwap[]>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/sor/TradeRouter.ts#L358)
+
+## TradeScheduler
+
+### getDcaOrder
+
+Build a DCA (Dollar Cost Averaging) order
+
+```typescript
+async getDcaOrder(assetIn: string, assetOut: string, amountInTotal: any, duration: number, frequency: number | undefined): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/sor/types").TradeDcaOrder>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/sor/TradeScheduler.ts#L57)
+
+### getMinimumOrderBudget
+
+Calculate minimum order budget (amountIn) required for order
+execution.
+
+```typescript
+async getMinimumOrderBudget(asset: string): Promise<BigNumber>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/sor/TradeScheduler.ts#L149)
+
+### getTwapBuyOrder
+
+Build a TWAP (Time-Weighted Average Price) buy order
+
+```typescript
+async getTwapBuyOrder(assetIn: string, assetOut: string, amountInTotal: any): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/sor/types").TradeOrder>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/sor/TradeScheduler.ts#L288)
+
+### getTwapExecutionTime
+
+Calculate approx. execution time for twap order.
+
+```typescript
+getTwapExecutionTime(tradeCount: number): number
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/sor/TradeScheduler.ts#L393)
+
+### getTwapSellOrder
+
+Build a TWAP (Time-Weighted Average Price) sell order
+
+```typescript
+async getTwapSellOrder(assetIn: string, assetOut: string, amountInTotal: any): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/sor/types").TradeOrder>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/sor/TradeScheduler.ts#L205)
+
+### getTwapTradeCount
+
+Calculate number of trades for twap order execution.
+
+We aim to achieve price impact 0.1% per single execution
+with max execution time 6 hours.
+
+```typescript
+getTwapTradeCount(priceImpact: number): number
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/sor/TradeScheduler.ts#L375)
+
+## TradeTxBuilder
+
+### build
+
+```typescript
+async build(): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/tx/types").SubstrateTransaction>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/tx/TradeTxBuilder.ts#L48)
+
+### setTrade
+
+```typescript
+setTrade(trade: import("/root/hydration-codex/repos/sdk/...): this
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/tx/TradeTxBuilder.ts#L15)
+
+### withBeneficiary
+
+```typescript
+withBeneficiary(beneficiary: string): this
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/tx/TradeTxBuilder.ts#L20)
+
+### withSlippage
+
+```typescript
+withSlippage(slippage: number): this
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/tx/TradeTxBuilder.ts#L25)
+
+## TxBuilderFactory
+
+### order
+
+```typescript
+order(order: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/sdk/src/tx/OrderTxBuilder").OrderTxBuilder
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/tx/TxBuilderFactory.ts#L22)
+
+### trade
+
+```typescript
+trade(trade: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/sdk/src/tx/TradeTxBuilder").TradeTxBuilder
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/tx/TxBuilderFactory.ts#L18)
+
+## XykMath
+
+### calculateInGivenOut
+
+```typescript
+calculateInGivenOut(balanceIn: string, balanceOut: string, amountOut: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/xyk/XykMath.ts#L23)
+
+### calculateLiquidityIn
+
+```typescript
+calculateLiquidityIn(reserveA: string, reserveB: string, amountA: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/xyk/XykMath.ts#L47)
+
+### calculateLiquidityOutAssetA
+
+```typescript
+calculateLiquidityOutAssetA(reserveA: string, reserveB: string, shares: string, totalShares: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/xyk/XykMath.ts#L81)
+
+### calculateLiquidityOutAssetB
+
+```typescript
+calculateLiquidityOutAssetB(reserveA: string, reserveB: string, shares: string, totalShares: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/xyk/XykMath.ts#L95)
+
+### calculateOutGivenIn
+
+```typescript
+calculateOutGivenIn(balanceIn: string, balanceOut: string, amountIn: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/xyk/XykMath.ts#L31)
+
+### calculatePoolTradeFee
+
+```typescript
+calculatePoolTradeFee(amount: string, feeNumerator: number, feeDenominator: number): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/xyk/XykMath.ts#L39)
+
+### calculateShares
+
+```typescript
+calculateShares(reserveA: string, amountA: string, totalShares: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/xyk/XykMath.ts#L73)
+
+### calculateSpotPrice
+
+```typescript
+calculateSpotPrice(balanceA: string, balanceB: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/xyk/XykMath.ts#L55)
+
+### calculateSpotPriceWithFee
+
+```typescript
+calculateSpotPriceWithFee(balanceA: string, balanceB: string, feeNumerator: string, feeDenominator: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/xyk/XykMath.ts#L59)
+
+### getSpotPrice
+
+```typescript
+getSpotPrice(balanceA: string, balanceB: string, amount: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/xyk/XykMath.ts#L15)
+
+## XykPool
+
+### calculateInGivenOut
+
+```typescript
+calculateInGivenOut(poolPair: import("/root/hydration-codex/repos/sdk/..., amountOut: BigNumber): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/xyk/XykPool.ts#L152)
+
+### calculateOutGivenIn
+
+```typescript
+calculateOutGivenIn(poolPair: import("/root/hydration-codex/repos/sdk/..., amountIn: BigNumber): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/xyk/XykPool.ts#L162)
+
+### calculateTradeFee
+
+```typescript
+calculateTradeFee(amount: BigNumber, fees: import("/root/hydration-codex/repos/sdk/...): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/xyk/XykPool.ts#L192)
+
+### fromPool
+
+```typescript
+fromPool(pool: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/xyk/XykPool").XykPool
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/xyk/XykPool.ts#L31)
+
+### parsePair
+
+```typescript
+parsePair(tokenIn: string, tokenOut: string): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolPair
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/xyk/XykPool.ts#L48)
+
+### spotPriceInGivenOut
+
+```typescript
+spotPriceInGivenOut(poolPair: import("/root/hydration-codex/repos/sdk/...): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/xyk/XykPool.ts#L172)
+
+### spotPriceOutGivenIn
+
+```typescript
+spotPriceOutGivenIn(poolPair: import("/root/hydration-codex/repos/sdk/...): BigNumber
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/xyk/XykPool.ts#L182)
+
+### validateAndBuy
+
+```typescript
+validateAndBuy(poolPair: import("/root/hydration-codex/repos/sdk/..., amountOut: BigNumber, fees: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").BuyCtx
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/xyk/XykPool.ts#L74)
+
+### validateAndSell
+
+```typescript
+validateAndSell(poolPair: import("/root/hydration-codex/repos/sdk/..., amountIn: BigNumber, fees: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").SellCtx
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/xyk/XykPool.ts#L113)
+
+### validatePair
+
+```typescript
+validatePair(_tokenIn: string, _tokenOut: string): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/xyk/XykPool.ts#L44)
+
+## XykPoolClient
+
+### getPoolFees
+
+```typescript
+async getPoolFees(_block: number, _poolPair: import("/root/hydration-codex/repos/sdk/..., _poolAddress: string): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolFees>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/xyk/XykPoolClient.ts#L76)
+
+### getPoolType
+
+```typescript
+getPoolType(): import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolType
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/xyk/XykPoolClient.ts#L21)
+
+### isSupported
+
+```typescript
+isSupported(): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/xyk/XykPoolClient.ts#L36)
+
+### loadPools
+
+```typescript
+async loadPools(): Promise<import("/root/hydration-codex/repos/sdk/packages/sdk/src/pool/types").PoolBase[]>
+```
+
+**Reads:** [XYK.poolAssets](/reference/pallets/XYK)
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/sdk/src/pool/xyk/XykPoolClient.ts#L40)
+
+## References
+
+### Runtime (19)
+
+- [Stableswap.pools](/reference/pallets/Stableswap)
+- [Bonds.bonds](/reference/pallets/Bonds)
+- [AssetRegistry.assetMetadataMap](/reference/pallets/AssetRegistry)
+- [AssetRegistry.assetLocations](/reference/pallets/AssetRegistry)
+- [AssetRegistry.assets](/reference/pallets/AssetRegistry)
+- [System.account](/reference/pallets/System)
+- [Tokens.accounts](/reference/pallets/Tokens)
+- [EmaOracle.oracles](/reference/pallets/EmaOracle)
+- [Ethereum.currentBlock](/reference/pallets/Ethereum)
+- [HSM.collaterals](/reference/pallets/HSM)
+- [LBP.poolData](/reference/pallets/LBP)
+- [ParachainSystem.validationData](/reference/pallets/ParachainSystem)
+- [DynamicFees.assetFeeConfiguration](/reference/pallets/DynamicFees)
+- [Omnipool.assets](/reference/pallets/Omnipool)
+- [Omnipool.hubAssetTradability](/reference/pallets/Omnipool)
+- [System.number](/reference/pallets/System)
+- [XYK.poolAssets](/reference/pallets/XYK)
+- [HSM.hollarId](/reference/pallets/HSM)
+- [Omnipool.hubAssetId](/reference/pallets/Omnipool)
+
+### UI (88)
+
+- [useAccountInfo](/reference/hooks/account/useAccountInfo)
+- [useAccountOmnipoolPositions](/reference/hooks/account/useAccountOmnipoolPositions)
+- [useAccountOmnipoolMiningPositions](/reference/hooks/account/useAccountOmnipoolMiningPositions)
+- [useAccountXykMiningPositions](/reference/hooks/account/useAccountXykMiningPositions)
+- [useAccountUniques](/reference/hooks/account/useAccountUniques)
+- [useAccountPermitNonce](/reference/hooks/account/useAccountPermitNonce)
+- [useRelayChainBlockNumber](/reference/hooks/chain/useRelayChainBlockNumber)
+- [useBestNumber](/reference/hooks/chain/useBestNumber)
+- [useInvalidateOnBlock](/reference/hooks/chain/useInvalidateOnBlock)
+- [useEstimateFutureBlockTimestamp](/reference/hooks/chain/useEstimateFutureBlockTimestamp)
+- [useBlockTimestamp](/reference/hooks/chain/useBlockTimestamp)
+- [useChainSpecData](/reference/hooks/chain/useChainSpecData)
+- [useBindEvmAccount](/reference/hooks/transactions/useBindEvmAccount)
+- [usePermitNonce](/reference/hooks/transactions/usePermitNonce)
+- [useOmnipoolAssetsData](/reference/hooks/omnipool/useOmnipoolAssetsData)
+- [useMaxAddLiquidityLimit](/reference/hooks/omnipool/useMaxAddLiquidityLimit)
+- [useOmnipoolMinLiquidity](/reference/hooks/omnipool/useOmnipoolMinLiquidity)
+- [useMinWithdrawalFee](/reference/hooks/omnipool/useMinWithdrawalFee)
+- [useAssetFeeParameters](/reference/hooks/omnipool/useAssetFeeParameters)
+- [useOraclePrice](/reference/hooks/omnipool/useOraclePrice)
+- [useAcceptedFeePaymentAssets](/reference/hooks/transactions/useAcceptedFeePaymentAssets)
+- [useAccountFeePaymentAssetId](/reference/hooks/transactions/useAccountFeePaymentAssetId)
+- [useAccountFeePaymentAssets](/reference/hooks/transactions/useAccountFeePaymentAssets)
+- [useSetFeePaymentAsset](/reference/hooks/transactions/useSetFeePaymentAsset)
+- [useStableswap](/reference/hooks/stableswap/useStableswap)
+- [useStableSwapTradability](/reference/hooks/stableswap/useStableSwapTradability)
+- [useInvalidateStakeData](/reference/hooks/staking/useInvalidateStakeData)
+- [useXYKPoolWithLiquidity](/reference/hooks/xyk/useXYKPoolWithLiquidity)
+- [useXYKConsts](/reference/hooks/xyk/useXYKConsts)
+- [useXykShareTokenEntries](/reference/hooks/xyk/useXykShareTokenEntries)
+- [useBorrowIncentives](/reference/hooks/borrow/useBorrowIncentives)
+- [useBorrowReserves](/reference/hooks/borrow/useBorrowReserves)
+- [userBorrowReservesQuery](/reference/hooks/borrow/userBorrowReservesQuery)
+- [useUserBorrowReserves](/reference/hooks/borrow/useUserBorrowReserves)
+- [useBorrowUserIncentives](/reference/hooks/borrow/useBorrowUserIncentives)
+- [useGhoReserveData](/reference/hooks/borrow/useGhoReserveData)
+- [useGhoUserData](/reference/hooks/borrow/useGhoUserData)
+- [userBorrowSummaryQuery](/reference/hooks/borrow/userBorrowSummaryQuery)
+- [useUserBorrowSummary](/reference/hooks/borrow/useUserBorrowSummary)
+- [useGetClaimAllBorrowRewardsTx](/reference/hooks/borrow/useGetClaimAllBorrowRewardsTx)
+- [useClaimStaking](/reference/hooks/staking/useClaimStaking)
+- [useStake](/reference/hooks/staking/useStake)
+- [useUnstake](/reference/hooks/staking/useUnstake)
+- [useEstimateFee](/reference/hooks/transactions/useEstimateFee)
+- [useAddIsolatedLiquidityZod](/reference/hooks/liquidity/useAddIsolatedLiquidityZod)
+- [useAddIsolatedLiquidity](/reference/hooks/liquidity/useAddIsolatedLiquidity)
+- [useLiquidityOmnipoolShares](/reference/hooks/liquidity/useLiquidityOmnipoolShares)
+- [useCheckJoinOmnipoolFarm](/reference/hooks/liquidity/useCheckJoinOmnipoolFarm)
+- [useAddToOmnipoolZod](/reference/hooks/liquidity/useAddToOmnipoolZod)
+- [useAddLiquidityForm](/reference/hooks/liquidity/useAddLiquidityForm)
+- [useAddLiquidity](/reference/hooks/liquidity/useAddLiquidity)
+- [useStablepoolAddLiquidity](/reference/hooks/liquidity/useStablepoolAddLiquidity)
+- [useStablepoolAddLiquidityForm](/reference/hooks/liquidity/useStablepoolAddLiquidityForm)
+- [useAssetsToAddToMoneyMarket](/reference/hooks/liquidity/useAssetsToAddToMoneyMarket)
+- [useAssetsToAddToStablepool](/reference/hooks/liquidity/useAssetsToAddToStablepool)
+- [useIsolatedPoolForm](/reference/hooks/liquidity/useIsolatedPoolForm)
+- [useSubmitCreateIsolatedPool](/reference/hooks/liquidity/useSubmitCreateIsolatedPool)
+- [useAllowedXYKPoolAssets](/reference/hooks/liquidity/useAllowedXYKPoolAssets)
+- [useSecondsToLeft](/reference/hooks/liquidity/useSecondsToLeft)
+- [useCurrentFarmPeriod](/reference/hooks/liquidity/useCurrentFarmPeriod)
+- [useEnteredDate](/reference/hooks/liquidity/useEnteredDate)
+- [useLoyaltyRates](/reference/hooks/liquidity/useLoyaltyRates)
+- [useDepositAprs](/reference/hooks/liquidity/useDepositAprs)
+- [useExitDepositFarmsMutation](/reference/hooks/liquidity/useExitDepositFarmsMutation)
+- [useJoinOmnipoolFarms](/reference/hooks/liquidity/useJoinOmnipoolFarms)
+- [useXYKFarmMinShares](/reference/hooks/liquidity/useXYKFarmMinShares)
+- [useMinOmnipoolFarmJoin](/reference/hooks/liquidity/useMinOmnipoolFarmJoin)
+- [useJoinIsolatedPoolFarms](/reference/hooks/liquidity/useJoinIsolatedPoolFarms)
+- [useJoinFarmsForm](/reference/hooks/liquidity/useJoinFarmsForm)
+- [useLiquidityMiningRewards](/reference/hooks/liquidity/useLiquidityMiningRewards)
+- [useClaimPositionRewards](/reference/hooks/liquidity/useClaimPositionRewards)
+- [useSummarizeClaimableValues](/reference/hooks/liquidity/useSummarizeClaimableValues)
+- [useClaimFarmRewardsMutation](/reference/hooks/liquidity/useClaimFarmRewardsMutation)
+- [useRemoveSingleOmnipoolPosition](/reference/hooks/liquidity/useRemoveSingleOmnipoolPosition)
+- [useRemoveMultipleOmnipoolPositions](/reference/hooks/liquidity/useRemoveMultipleOmnipoolPositions)
+- [useRemoveLiquidityForm](/reference/hooks/liquidity/useRemoveLiquidityForm)
+- [useStablepoolRemoveLiquidity](/reference/hooks/liquidity/useStablepoolRemoveLiquidity)
+- [useRemoveStablepoolLiquidityForm](/reference/hooks/liquidity/useRemoveStablepoolLiquidityForm)
+- [useTerminateDcaSchedule](/reference/hooks/trade/useTerminateDcaSchedule)
+- [useSubmitCancelOtcOrder](/reference/hooks/trade/useSubmitCancelOtcOrder)
+- [useSubmitFillOrder](/reference/hooks/trade/useSubmitFillOrder)
+- [useSubmitPlaceOrder](/reference/hooks/trade/useSubmitPlaceOrder)
+- [useUnlockNativeLocks](/reference/hooks/wallet/useUnlockNativeLocks)
+- [useClaimAllWalletRewards](/reference/hooks/wallet/useClaimAllWalletRewards)
+- [useInsufficientTransferFee](/reference/hooks/wallet/useInsufficientTransferFee)
+- [usePaymentFees](/reference/hooks/wallet/usePaymentFees)
+- [useTransferPaymentInfo](/reference/hooks/wallet/useTransferPaymentInfo)
+- [useSubmitTransferPosition](/reference/hooks/wallet/useSubmitTransferPosition)

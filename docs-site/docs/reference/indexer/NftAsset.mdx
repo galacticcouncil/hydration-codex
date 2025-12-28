@@ -1,0 +1,56 @@
+---
+title: NftAsset
+description: Indexer entity documentation
+sidebar_label: NftAsset
+---
+
+# NftAsset
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 5 |
+| Nullable Fields | 0 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/nftAsset.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type NftAsset {
+  id: ID!
+  collectionId: String!
+  ownerId: String!
+  deposit: BigInt!
+  isFrozen: Boolean!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface NftAsset {
+  id: string;
+  collectionId: string;
+  ownerId: string;
+  deposit: bigint;
+  isFrozen: boolean;
+}
+```
+
+## Example Query
+
+```graphql
+query GetNftAssets {
+  nftAssets(limit: 10) {
+    id
+    collectionId
+    ownerId
+    deposit
+    isFrozen
+  }
+}
+```

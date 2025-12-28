@@ -1,0 +1,411 @@
+---
+title: Referenda
+description: Runtime pallet documentation
+sidebar_label: Referenda
+---
+
+# Referenda
+
+- `Config`
+- `Call`
+
+## Overview
+
+The Referenda pallet handles the administration of general stakeholder voting.
+
+## Release
+
+Polkadot SDK stable2409
+
+<details>
+<summary>Code Documentation</summary>
+
+### Overview
+
+A pallet for executing referenda. No voting logic is present here, and the `Polling` and
+`PollStatus` traits are used to allow the voting logic (likely in a pallet) to be utilized.
+
+A referendum is a vote on whether a proposal should be dispatched from a particular origin. The
+origin is used to determine which one of several _tracks_ that a referendum happens under.
+Tracks each have their own configuration which governs the voting process and parameters.
+
+A referendum's lifecycle has three main stages: Preparation, deciding and conclusion.
+Referenda are considered "ongoing" immediately after submission until their eventual
+conclusion, and votes may be cast throughout.
+
+In order to progress from preparating to being decided, three things must be in place:
+- There must have been a *Decision Deposit* placed, an amount determined by the track. Anyone
+may place this deposit.
+- A period must have elapsed since submission of the referendum. This period is known as the
+*Preparation Period* and is determined by the track.
+- The track must not already be at capacity with referendum being decided. The maximum number of
+referenda which may be being decided simultaneously is determined by the track.
+
+In order to become concluded, one of three things must happen:
+- The referendum should remain in an unbroken _Passing_ state for a period of time. This
+is known as the _Confirmation Period_ and is determined by the track. A referendum is considered
+_Passing_ when there is a sufficiently high support and approval, given the amount of time it
+has been being decided. Generally the threshold for what counts as being "sufficiently high"
+will reduce over time. The curves setting these thresholds are determined by the track. In this
+case, the referendum is considered _Approved_ and the proposal is scheduled for dispatch.
+- The referendum reaches the end of its deciding phase outside not _Passing_. It ends in
+rejection and the proposal is not dispatched.
+- The referendum is cancelled.
+
+A general time-out is also in place and referenda which exist in preparation for too long may
+conclude without ever entering into a deciding stage.
+
+Once a referendum is concluded, the decision deposit may be refunded.
+
+### Terms
+- *Support*: The number of aye-votes, pre-conviction, as a proportion of the total number of
+ pre-conviction votes able to be cast in the population.
+
+- `Config`
+- `Call`
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #37** · Polkadot SDK<br/>
+`pallet-referenda/1ed66275/stable2409-patch6`
+
+[GitHub](https://github.com/galacticcouncil/polkadot-sdk/tree/1ed662757b03c4f17dc2429c1df84e975d98513a/substrate/frame/referenda) · [docs.rs](https://docs.rs/crate/pallet-referenda/38.0.0/source/) · [crates.io](https://crates.io/crates/pallet-referenda) · [Subscan](https://hydradx.subscan.io/runtime/Referenda)
+
+## Storage (5)
+
+### ReferendumCount
+
+The next free referendum index, aka the number of referenda started so far.
+
+```rust
+ReferendumCount: Value<u32>
+```
+
+### ReferendumInfoFor
+
+Information concerning any given referendum.
+
+```rust
+ReferendumInfoFor: Map<u32 -> {_enum: {Ongoing: PalletReferendaReferendumStatus, Approved: (u32, Option<PalletReferendaDeposit>, Option<PalletReferendaDeposit>), Rejected: (u32, Option<PalletReferendaDeposit>, Option<PalletReferendaDeposit>), Cancelled: (u32, Option<PalletReferendaDeposit>, Option<PalletReferendaDeposit>), TimedOut: (u32, Option<PalletReferendaDeposit>, Option<PalletReferendaDeposit>), Killed: u32}}> [Blake2_128Concat]
+```
+
+**Read by SDK:** [StakingClient.getReferendumInfo](/reference/sdk/sdk-next#stakingclient)
+
+### TrackQueue
+
+The sorted list of referenda ready to be decided but not yet being decided, ordered by conviction-weighted approvals. This should be empty if `DecidingCount` is less than `TrackInfo::max_deciding`.
+
+```rust
+TrackQueue: Map<u16 -> Vec<(u32, u128)>> [Twox64Concat]
+```
+
+### DecidingCount
+
+The number of referenda being decided currently.
+
+```rust
+DecidingCount: Map<u16 -> u32> [Twox64Concat]
+```
+
+### MetadataOf
+
+The metadata is a general information concerning the referendum. The `Hash` refers to the preimage of the `Preimages` provider which can be a JSON dump or IPFS hash of a JSON file. Consider a garbage collection for a metadata of finished referendums to `unrequest` (remove) large preimages.
+
+```rust
+MetadataOf: Map<u32 -> H256> [Blake2_128Concat]
+```
+
+## Extrinsics (9)
+
+### submit
+
+```rust
+fn submit(
+    origin: OriginFor<T>,
+    proposalOrigin: Lookup89,
+    proposal: Lookup67,
+    enactmentMoment: Lookup179,
+)
+```
+
+### place_decision_deposit
+
+```rust
+fn place_decision_deposit(
+    origin: OriginFor<T>,
+    index: u32,
+)
+```
+
+### refund_decision_deposit
+
+```rust
+fn refund_decision_deposit(
+    origin: OriginFor<T>,
+    index: u32,
+)
+```
+
+### cancel
+
+```rust
+fn cancel(
+    origin: OriginFor<T>,
+    index: u32,
+)
+```
+
+### kill
+
+```rust
+fn kill(
+    origin: OriginFor<T>,
+    index: u32,
+)
+```
+
+### nudge_referendum
+
+```rust
+fn nudge_referendum(
+    origin: OriginFor<T>,
+    index: u32,
+)
+```
+
+### one_fewer_deciding
+
+```rust
+fn one_fewer_deciding(
+    origin: OriginFor<T>,
+    track: u16,
+)
+```
+
+### refund_submission_deposit
+
+```rust
+fn refund_submission_deposit(
+    origin: OriginFor<T>,
+    index: u32,
+)
+```
+
+### set_metadata
+
+```rust
+fn set_metadata(
+    origin: OriginFor<T>,
+    index: u32,
+    maybeHash: Option<H256>,
+)
+```
+
+## Events (16)
+
+### Submitted
+
+```rust
+Submitted {
+    index: u32,
+    track: u16,
+    proposal: Lookup67,
+}
+```
+
+### DecisionDepositPlaced
+
+```rust
+DecisionDepositPlaced {
+    index: u32,
+    who: AccountId32,
+    amount: u128,
+}
+```
+
+### DecisionDepositRefunded
+
+```rust
+DecisionDepositRefunded {
+    index: u32,
+    who: AccountId32,
+    amount: u128,
+}
+```
+
+### DepositSlashed
+
+```rust
+DepositSlashed {
+    who: AccountId32,
+    amount: u128,
+}
+```
+
+### DecisionStarted
+
+```rust
+DecisionStarted {
+    index: u32,
+    track: u16,
+    proposal: Lookup67,
+    tally: Lookup467,
+}
+```
+
+### ConfirmStarted
+
+```rust
+ConfirmStarted {
+    index: u32,
+}
+```
+
+### ConfirmAborted
+
+```rust
+ConfirmAborted {
+    index: u32,
+}
+```
+
+### Confirmed
+
+```rust
+Confirmed {
+    index: u32,
+    tally: Lookup467,
+}
+```
+
+### Approved
+
+```rust
+Approved {
+    index: u32,
+}
+```
+
+### Rejected
+
+```rust
+Rejected {
+    index: u32,
+    tally: Lookup467,
+}
+```
+
+### TimedOut
+
+```rust
+TimedOut {
+    index: u32,
+    tally: Lookup467,
+}
+```
+
+### Cancelled
+
+```rust
+Cancelled {
+    index: u32,
+    tally: Lookup467,
+}
+```
+
+### Killed
+
+```rust
+Killed {
+    index: u32,
+    tally: Lookup467,
+}
+```
+
+### SubmissionDepositRefunded
+
+```rust
+SubmissionDepositRefunded {
+    index: u32,
+    who: AccountId32,
+    amount: u128,
+}
+```
+
+### MetadataSet
+
+```rust
+MetadataSet {
+    index: u32,
+    hash_: H256,
+}
+```
+
+### MetadataCleared
+
+```rust
+MetadataCleared {
+    index: u32,
+    hash_: H256,
+}
+```
+
+## Constants (5)
+
+### SubmissionDeposit
+
+The minimum amount to be used as a deposit for a public referendum proposal.
+
+```rust
+const SubmissionDeposit: u128
+```
+
+### MaxQueued
+
+Maximum size of the referendum queue for a single track.
+
+```rust
+const MaxQueued: u32
+```
+
+### UndecidingTimeout
+
+The number of blocks after submission that a referendum must begin being decided by. Once this passes, then anyone may cancel the referendum.
+
+```rust
+const UndecidingTimeout: u32
+```
+
+### AlarmInterval
+
+Quantization level for the referendum wakeup scheduler. A higher number will result in fewer storage reads/writes needed for smaller voters, but also result in delays to the automatic referendum status changes. Explicit servicing instructions are unaffected.
+
+```rust
+const AlarmInterval: u32
+```
+
+### Tracks
+
+Information concerning the different referendum tracks.
+
+```rust
+const Tracks: Vec<(u16,PalletReferendaTrackInfo)>
+```
+
+## References
+
+### SDK (1)
+
+- [sdk-next](/reference/sdk/sdk-next)
+
+### UI (6)
+
+- [useStakingRewards](/reference/hooks/utils/useStakingRewards)
+- [useClaimStaking](/reference/hooks/staking/useClaimStaking)
+- [useStakingAPR](/reference/hooks/staking/useStakingAPR)
+- [useRewardsCurveData](/reference/hooks/staking/useRewardsCurveData)
+- [useClaimAllWalletRewards](/reference/hooks/wallet/useClaimAllWalletRewards)
+- [useWalletRewardsSectionData](/reference/hooks/wallet/useWalletRewardsSectionData)

@@ -1,0 +1,111 @@
+---
+title: Whitelist
+description: Runtime pallet documentation
+sidebar_label: Whitelist
+---
+
+# Whitelist
+
+## Release
+
+Polkadot SDK stable2409
+
+<details>
+<summary>Code Documentation</summary>
+
+- `Config`
+- `Call`
+
+### Overview
+
+Allow some configurable origin: `Config::WhitelistOrigin` to whitelist some hash of a call,
+and allow another configurable origin: `Config::DispatchWhitelistedOrigin` to dispatch them
+with the root origin.
+
+In the meantime the call corresponding to the hash must have been submitted to the pre-image
+handler `pallet::Config::Preimages`.
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #39** · Polkadot SDK<br/>
+`pallet-whitelist/1ed66275/stable2409-patch6`
+
+[GitHub](https://github.com/galacticcouncil/polkadot-sdk/tree/1ed662757b03c4f17dc2429c1df84e975d98513a/substrate/frame/whitelist) · [docs.rs](https://docs.rs/crate/pallet-whitelist/37.0.0/source/) · [crates.io](https://crates.io/crates/pallet-whitelist) · [Subscan](https://hydradx.subscan.io/runtime/Whitelist)
+
+## Storage (1)
+
+### WhitelistedCall
+
+```rust
+WhitelistedCall: Map<H256 -> Null> [Twox64Concat]
+```
+
+## Extrinsics (4)
+
+### whitelist_call
+
+```rust
+fn whitelist_call(
+    origin: OriginFor<T>,
+    callHash: H256,
+)
+```
+
+### remove_whitelisted_call
+
+```rust
+fn remove_whitelisted_call(
+    origin: OriginFor<T>,
+    callHash: H256,
+)
+```
+
+### dispatch_whitelisted_call
+
+```rust
+fn dispatch_whitelisted_call(
+    origin: OriginFor<T>,
+    callHash: H256,
+    callEncodedLen: u32,
+    callWeightWitness: Lookup10,
+)
+```
+
+### dispatch_whitelisted_call_with_preimage
+
+```rust
+fn dispatch_whitelisted_call_with_preimage(
+    origin: OriginFor<T>,
+    call: Call,
+)
+```
+
+## Events (3)
+
+### CallWhitelisted
+
+```rust
+CallWhitelisted {
+    callHash: H256,
+}
+```
+
+### WhitelistedCallRemoved
+
+```rust
+WhitelistedCallRemoved {
+    callHash: H256,
+}
+```
+
+### WhitelistedCallDispatched
+
+```rust
+WhitelistedCallDispatched {
+    callHash: H256,
+    result: Result<FrameSupportDispatchPostDispatchInfo, SpRuntimeDispatchErrorWithPostInfo>,
+}
+```

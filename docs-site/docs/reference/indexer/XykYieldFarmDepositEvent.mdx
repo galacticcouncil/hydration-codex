@@ -1,0 +1,77 @@
+---
+title: XykYieldFarmDepositEvent
+description: Indexer entity documentation
+sidebar_label: XykYieldFarmDepositEvent
+---
+
+# XykYieldFarmDepositEvent
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 12 |
+| Nullable Fields | 8 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/xykYieldFarmDepositEvent.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type XykYieldFarmDepositEvent {
+  id: ID!
+  depositId: String!
+  eventName: YieldFarmDepositStatus!
+  globalFarmId: String
+  yieldFarmId: String
+  lpAssetId: String
+  accountId: String
+  amount: BigInt
+  claimedAmount: BigInt
+  rewardAssetId: String
+  paraBlockHeight: Int!
+  eventId: String
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface XykYieldFarmDepositEvent {
+  id: string;
+  depositId: string;
+  eventName: YieldFarmDepositStatus;
+  globalFarmId: string | null;
+  yieldFarmId: string | null;
+  lpAssetId: string | null;
+  accountId: string | null;
+  amount: bigint | null;
+  claimedAmount: bigint | null;
+  rewardAssetId: string | null;
+  paraBlockHeight: number;
+  eventId: string | null;
+}
+```
+
+## Example Query
+
+```graphql
+query GetXykYieldFarmDepositEvents {
+  xykYieldFarmDepositEvents(limit: 10) {
+    id
+    depositId
+    eventName
+    globalFarmId
+    yieldFarmId
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [XYK](/reference/pallets/XYK)

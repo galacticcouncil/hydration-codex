@@ -1,0 +1,185 @@
+---
+title: OTC
+description: Runtime pallet documentation
+sidebar_label: OTC
+---
+
+# OTC
+
+## General description
+This pallet provides basic over-the-counter (OTC) trading functionality.
+It allows anyone to `place_order` by specifying a pair of assets (in and out), their respective amounts, and
+whether the order is partially fillable. Fee is applied to all trades and is deducted from the `amount_out`.
+Because of the fee, the order price is static and calculated as `(amount_out - fee) / amount_in`.
+
+## Notes
+The pallet implements a minimum order size as an alternative to storage fees. The amounts of an open order cannot
+be lower than the existential deposit for the respective asset, multiplied by `ExistentialDepositMultiplier`.
+This is validated at `place_order` but also at `partial_fill_order` - meaning that a user cannot leave dust amounts
+below the defined threshold after filling an order (instead they should fill the order completely).
+
+## Dispatachable functions
+* `place_order` - create a new OTC order.
+* `partial_fill_order` - fill an OTC order (partially).
+* `fill_order` - fill an OTC order (completely).
+* `cancel_order` - cancel an open OTC order.
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #64** · HydraDX<br/>
+`pallet-otc/4ca470c5/master`
+
+[GitHub](https://github.com/galacticcouncil/HydraDX-node/tree/4ca470c5d613d62ce52eb8645770ef5fff263111/pallets/otc) · [Subscan](https://hydradx.subscan.io/runtime/OTC)
+
+## Storage (2)
+
+### NextOrderId
+
+ID sequencer for Orders
+
+```rust
+NextOrderId: Value<u32>
+```
+
+### Orders
+
+```rust
+Orders: Map<u32 -> {
+    owner: AccountId32,
+    assetIn: u32,
+    assetOut: u32,
+    amountIn: u128,
+    amountOut: u128,
+    partiallyFillable: bool,
+}> [Blake2_128Concat]
+```
+
+## Extrinsics (4)
+
+### place_order
+
+```rust
+fn place_order(
+    origin: OriginFor<T>,
+    assetIn: u32,
+    assetOut: u32,
+    amountIn: u128,
+    amountOut: u128,
+    partiallyFillable: bool,
+)
+```
+
+### partial_fill_order
+
+```rust
+fn partial_fill_order(
+    origin: OriginFor<T>,
+    orderId: u32,
+    amountIn: u128,
+)
+```
+
+### fill_order
+
+```rust
+fn fill_order(
+    origin: OriginFor<T>,
+    orderId: u32,
+)
+```
+
+### cancel_order
+
+```rust
+fn cancel_order(
+    origin: OriginFor<T>,
+    orderId: u32,
+)
+```
+
+## Events (4)
+
+### Cancelled
+
+```rust
+Cancelled {
+    orderId: u32,
+}
+```
+
+### Filled
+
+```rust
+Filled {
+    orderId: u32,
+    who: AccountId32,
+    amountIn: u128,
+    amountOut: u128,
+    fee: u128,
+}
+```
+
+### PartiallyFilled
+
+```rust
+PartiallyFilled {
+    orderId: u32,
+    who: AccountId32,
+    amountIn: u128,
+    amountOut: u128,
+    fee: u128,
+}
+```
+
+### Placed
+
+```rust
+Placed {
+    orderId: u32,
+    assetIn: u32,
+    assetOut: u32,
+    amountIn: u128,
+    amountOut: u128,
+    partiallyFillable: bool,
+}
+```
+
+## Constants (3)
+
+### ExistentialDepositMultiplier
+
+Multiplier used to compute minimal amounts of asset_in and asset_out in an OTC.
+
+```rust
+const ExistentialDepositMultiplier: u8
+```
+
+### Fee
+
+Fee deducted from amount_out.
+
+```rust
+const Fee: Permill
+```
+
+### FeeReceiver
+
+Fee receiver.
+
+```rust
+const FeeReceiver: AccountId32
+```
+
+## References
+
+### Indexer (2)
+
+- [OtcOrder](/reference/indexer/OtcOrder)
+- [OtcOrderEvent](/reference/indexer/OtcOrderEvent)
+
+### UI (3)
+
+- [useSubmitCancelOtcOrder](/reference/hooks/trade/useSubmitCancelOtcOrder)
+- [useSubmitFillOrder](/reference/hooks/trade/useSubmitFillOrder)
+- [useSubmitPlaceOrder](/reference/hooks/trade/useSubmitPlaceOrder)

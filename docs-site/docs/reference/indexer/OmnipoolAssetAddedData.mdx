@@ -1,0 +1,62 @@
+---
+title: OmnipoolAssetAddedData
+description: Indexer entity documentation
+sidebar_label: OmnipoolAssetAddedData
+---
+
+# OmnipoolAssetAddedData
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 5 |
+| Nullable Fields | 3 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/omnipoolAssetAddedData.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type OmnipoolAssetAddedData {
+  initialAmount: String
+  initialPrice: String
+  eventId: String
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface OmnipoolAssetAddedData {
+  initialAmount: string | null;
+  initialPrice: string | null;
+  eventId: string | null;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+}
+```
+
+## Example Query
+
+```graphql
+query GetOmnipoolAssetAddedDatas {
+  omnipoolAssetAddedDatas(limit: 10) {
+    initialAmount
+    initialPrice
+    eventId
+    paraBlockHeight
+    relayBlockHeight
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [Omnipool](/reference/pallets/Omnipool)

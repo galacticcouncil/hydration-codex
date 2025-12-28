@@ -1,0 +1,371 @@
+---
+title: Treasury
+description: Runtime pallet documentation
+sidebar_label: Treasury
+---
+
+# Treasury
+
+The Treasury pallet provides a "pot" of funds that can be managed by stakeholders in the system and
+a structure for making spending proposals from this pot.
+
+## Overview
+
+The Treasury Pallet itself provides the pot to store funds, and a means for stakeholders to propose,
+approve, and deny expenditures. The chain will need to provide a method (e.g.inflation, fees) for
+collecting funds.
+
+By way of example, the Council could vote to fund the Treasury with a portion of the block reward
+and use the funds to pay developers.
+
+### Terminology
+
+- **Proposal:** A suggestion to allocate funds from the pot to a beneficiary.
+- **Beneficiary:** An account who will receive the funds from a proposal if the proposal is
+ approved.
+- **Deposit:** Funds that a proposer must lock when making a proposal. The deposit will be returned
+ or slashed if the proposal is approved or rejected respectively.
+- **Pot:** Unspent funds accumulated by the treasury pallet.
+
+## Interface
+
+### Dispatchable Functions
+
+General spending/proposal protocol:
+- `spend_local` - Propose and approve a spend of treasury funds, enables the
+ creation of spends using the native currency of the chain, utilizing the funds
+ stored in the pot
+- `spend` - Propose and approve a spend of treasury funds, allows spending any
+ asset kind managed by the treasury
+- `remove_approval` - Force a previously approved proposal to be removed from
+ the approval queue
+- `payout` - Claim a spend
+- `check_status` - Check the status of the spend and remove it from the storage
+ if processed
+- `void_spend` - Void previously approved spend
+
+## Release
+
+Polkadot SDK stable2409
+
+<details>
+<summary>Code Documentation</summary>
+
+\> Made with *Substrate*, for *Polkadot*.
+
+[![github]](https://github.com/paritytech/substrate/frame/fast-unstake) -
+[![polkadot]](https://polkadot.network)
+
+[polkadot]: https://img.shields.io/badge/polkadot-E6007A?style=for-the-badge&logo=polkadot&logoColor=white
+[github]: https://img.shields.io/badge/github-8da0cb?style=for-the-badge&labelColor=555555&logo=github
+
+# Treasury Pallet
+
+The Treasury pallet provides a "pot" of funds that can be managed by stakeholders in the system
+and a structure for making spending proposals from this pot.
+
+### Overview
+
+The Treasury Pallet itself provides the pot to store funds, and a means for stakeholders to
+propose and claim expenditures (aka spends). The chain will need to provide a method to approve
+spends (e.g. public referendum) and a method for collecting funds (e.g. inflation, fees).
+
+By way of example, stakeholders could vote to fund the Treasury with a portion of the block
+reward and use the funds to pay developers.
+
+### Terminology
+
+- **Proposal:** A suggestion to allocate funds from the pot to a beneficiary.
+- **Beneficiary:** An account who will receive the funds from a proposal iff the proposal is
+ approved.
+- **Pot:** Unspent funds accumulated by the treasury pallet.
+- **Spend** An approved proposal for transferring a specific amount of funds to a designated
+ beneficiary.
+
+### Example
+
+1. Multiple local spends approved by spend origins and received by a beneficiary.
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #11** · Polkadot SDK<br/>
+`pallet-treasury/1ed66275/stable2409-patch6`
+
+[GitHub](https://github.com/galacticcouncil/polkadot-sdk/tree/1ed662757b03c4f17dc2429c1df84e975d98513a/substrate/frame/treasury) · [docs.rs](https://docs.rs/crate/pallet-treasury/37.0.0/source/) · [crates.io](https://crates.io/crates/pallet-treasury) · [Subscan](https://hydradx.subscan.io/runtime/Treasury)
+
+## Storage (6)
+
+### ProposalCount
+
+Number of proposals that have been made.
+
+```rust
+ProposalCount: Value<u32>
+```
+
+### Proposals
+
+Proposals that have been made.
+
+```rust
+Proposals: Map<u32 -> {
+    proposer: AccountId32,
+    value: u128,
+    beneficiary: AccountId32,
+    bond: u128,
+}> [Twox64Concat]
+```
+
+### Deactivated
+
+The amount which has been reported as inactive to Currency.
+
+```rust
+Deactivated: Value<u128>
+```
+
+### Approvals
+
+Proposal indices that have been approved but not yet awarded.
+
+```rust
+Approvals: Value<Vec<u32>>
+```
+
+### SpendCount
+
+The count of spends that have been made.
+
+```rust
+SpendCount: Value<u32>
+```
+
+### Spends
+
+Spends that have been approved and being processed.
+
+```rust
+Spends: Map<u32 -> {
+    assetKind: Null,
+    amount: u128,
+    beneficiary: AccountId32,
+    validFrom: u32,
+    expireAt: u32,
+    status: PalletTreasuryPaymentState,
+}> [Twox64Concat]
+```
+
+## Extrinsics (6)
+
+### spend_local
+
+```rust
+fn spend_local(
+    origin: OriginFor<T>,
+    amount: Compact<u128>,
+    beneficiary: AccountId32,
+)
+```
+
+### remove_approval
+
+```rust
+fn remove_approval(
+    origin: OriginFor<T>,
+    proposalId: Compact<u32>,
+)
+```
+
+### spend
+
+```rust
+fn spend(
+    origin: OriginFor<T>,
+    assetKind: Null,
+    amount: Compact<u128>,
+    beneficiary: AccountId32,
+    validFrom: Option<u32>,
+)
+```
+
+### payout
+
+```rust
+fn payout(
+    origin: OriginFor<T>,
+    index: u32,
+)
+```
+
+### check_status
+
+```rust
+fn check_status(
+    origin: OriginFor<T>,
+    index: u32,
+)
+```
+
+### void_spend
+
+```rust
+fn void_spend(
+    origin: OriginFor<T>,
+    index: u32,
+)
+```
+
+## Events (12)
+
+### Spending
+
+```rust
+Spending {
+    budgetRemaining: u128,
+}
+```
+
+### Awarded
+
+```rust
+Awarded {
+    proposalIndex: u32,
+    award: u128,
+    account: AccountId32,
+}
+```
+
+### Burnt
+
+```rust
+Burnt {
+    burntFunds: u128,
+}
+```
+
+### Rollover
+
+```rust
+Rollover {
+    rolloverBalance: u128,
+}
+```
+
+### Deposit
+
+```rust
+Deposit {
+    value: u128,
+}
+```
+
+### SpendApproved
+
+```rust
+SpendApproved {
+    proposalIndex: u32,
+    amount: u128,
+    beneficiary: AccountId32,
+}
+```
+
+### UpdatedInactive
+
+```rust
+UpdatedInactive {
+    reactivated: u128,
+    deactivated: u128,
+}
+```
+
+### AssetSpendApproved
+
+```rust
+AssetSpendApproved {
+    index: u32,
+    assetKind: Null,
+    amount: u128,
+    beneficiary: AccountId32,
+    validFrom: u32,
+    expireAt: u32,
+}
+```
+
+### AssetSpendVoided
+
+```rust
+AssetSpendVoided {
+    index: u32,
+}
+```
+
+### Paid
+
+```rust
+Paid {
+    index: u32,
+    paymentId: Null,
+}
+```
+
+### PaymentFailed
+
+```rust
+PaymentFailed {
+    index: u32,
+    paymentId: Null,
+}
+```
+
+### SpendProcessed
+
+```rust
+SpendProcessed {
+    index: u32,
+}
+```
+
+## Constants (5)
+
+### SpendPeriod
+
+Period between successive spends.
+
+```rust
+const SpendPeriod: u32
+```
+
+### Burn
+
+Percentage of spare funds (if any) that are burnt per spend period.
+
+```rust
+const Burn: Permill
+```
+
+### PalletId
+
+The treasury's pallet id, used for deriving its sovereign account ID.
+
+```rust
+const PalletId: [u8;8]
+```
+
+### MaxApprovals
+
+The maximum number of approvals that can wait in the spending queue. NOTE: This parameter is also used within the Bounties Pallet extension if enabled.
+
+```rust
+const MaxApprovals: u32
+```
+
+### PayoutPeriod
+
+The period during which an approved treasury spend has to be claimed.
+
+```rust
+const PayoutPeriod: u32
+```

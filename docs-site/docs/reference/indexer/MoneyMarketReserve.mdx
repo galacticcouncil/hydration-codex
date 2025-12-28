@@ -1,0 +1,71 @@
+---
+title: MoneyMarketReserve
+description: Indexer entity documentation
+sidebar_label: MoneyMarketReserve
+---
+
+# MoneyMarketReserve
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 12 |
+| Nullable Fields | 3 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/moneyMarketReserve.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type MoneyMarketReserve {
+  id: ID!
+  aToken: Asset!
+  underlyingAsset: Asset!
+  variableDebtToken: Asset!
+  aavePool: Aavepool
+  name: String!
+  symbol: String!
+  decimals: Int!
+  indexesHistoricalData: [MmReserveIndexesHistoricalData]!
+  field: "reserve")
+  configHistoricalData: [MmReserveConfigHistoricalData]!
+  field: "reserve")
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface MoneyMarketReserve {
+  id: string;
+  aToken: Asset;
+  underlyingAsset: Asset;
+  variableDebtToken: Asset;
+  aavePool: Aavepool | null;
+  name: string;
+  symbol: string;
+  decimals: number;
+  indexesHistoricalData: [MmReserveIndexesHistoricalData];
+  field: "reserve") | null;
+  configHistoricalData: [MmReserveConfigHistoricalData];
+  field: "reserve") | null;
+}
+```
+
+## Example Query
+
+```graphql
+query GetMoneyMarketReserves {
+  moneyMarketReserves(limit: 10) {
+    id
+    aToken
+    underlyingAsset
+    variableDebtToken
+    aavePool
+    # ... more fields
+  }
+}
+```

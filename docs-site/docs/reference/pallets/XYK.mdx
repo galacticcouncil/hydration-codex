@@ -1,0 +1,343 @@
+---
+title: XYK
+description: Runtime pallet documentation
+sidebar_label: XYK
+---
+
+# XYK
+
+### AMM XYK pallet
+
+## Overview
+AMM pallet provides functionality for managing liquidity pool and executing trades.
+
+This pallet implements AMM Api trait therefore it is possible to plug this pool implementation
+into the exchange pallet.
+
+### Terminology
+
+- **Currency** - implementation of fungible multi-currency system
+- **AssetPairAccount** / **AssetPairAccountId** - support for creating share accounts for asset pairs.
+- **NativeAssetId** - asset id native currency
+- **ShareToken** - asset id from asset registry for an asset pair
+- **TotalLiquidity** - total liquidity in a pool identified by asset pair account id
+- **PoolAssets** - asset pair in a pool identified by asset pair account id
+
+### Interface
+
+#### Dispatchable functions
+- `create_pool`
+- `add_liquidity`
+- `remove_liquidity`
+- `sell`
+- `buy`
+
+<details>
+<summary>Code Documentation</summary>
+
+### Overview
+
+XYK pallet provides functionality for managing liquidity pool and executing trades.
+
+This pallet implements AMM Api trait therefore it is possible to plug this pool implementation
+into the exchange pallet.
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #74** · HydraDX<br/>
+`pallet-xyk/4ca470c5/master`
+
+[GitHub](https://github.com/galacticcouncil/HydraDX-node/tree/4ca470c5d613d62ce52eb8645770ef5fff263111/pallets/xyk) · [Subscan](https://hydradx.subscan.io/runtime/XYK)
+
+## Storage (3)
+
+### ShareToken
+
+Asset id storage for shared pool tokens
+
+```rust
+ShareToken: Map<AccountId32 -> u32> [Blake2_128Concat]
+```
+
+### TotalLiquidity
+
+Total liquidity in a pool.
+
+```rust
+TotalLiquidity: Map<AccountId32 -> u128> [Blake2_128Concat]
+```
+
+### PoolAssets
+
+Asset pair in a pool.
+
+```rust
+PoolAssets: Map<AccountId32 -> (u32, u32)> [Blake2_128Concat]
+```
+
+**Read by SDK:** [XykPoolClient.loadPools](/reference/sdk/sdk#xykpoolclient), [XykPoolClient.isSupported](/reference/sdk/sdk-next#xykpoolclient)
+
+## Extrinsics (7)
+
+### create_pool
+
+```rust
+fn create_pool(
+    origin: OriginFor<T>,
+    assetA: u32,
+    amountA: u128,
+    assetB: u32,
+    amountB: u128,
+)
+```
+
+### add_liquidity
+
+```rust
+fn add_liquidity(
+    origin: OriginFor<T>,
+    assetA: u32,
+    assetB: u32,
+    amountA: u128,
+    amountBMaxLimit: u128,
+)
+```
+
+### remove_liquidity
+
+```rust
+fn remove_liquidity(
+    origin: OriginFor<T>,
+    assetA: u32,
+    assetB: u32,
+    shareAmount: u128,
+)
+```
+
+### sell
+
+```rust
+fn sell(
+    origin: OriginFor<T>,
+    assetIn: u32,
+    assetOut: u32,
+    amount: u128,
+    maxLimit: u128,
+    discount: bool,
+)
+```
+
+### buy
+
+```rust
+fn buy(
+    origin: OriginFor<T>,
+    assetOut: u32,
+    assetIn: u32,
+    amount: u128,
+    maxLimit: u128,
+    discount: bool,
+)
+```
+
+### add_liquidity_with_limits
+
+```rust
+fn add_liquidity_with_limits(
+    origin: OriginFor<T>,
+    assetA: u32,
+    assetB: u32,
+    amountA: u128,
+    amountBMaxLimit: u128,
+    minShares: u128,
+)
+```
+
+### remove_liquidity_with_limits
+
+```rust
+fn remove_liquidity_with_limits(
+    origin: OriginFor<T>,
+    assetA: u32,
+    assetB: u32,
+    shareAmount: u128,
+    minAmountA: u128,
+    minAmountB: u128,
+)
+```
+
+## Events (6)
+
+### LiquidityAdded
+
+```rust
+LiquidityAdded {
+    who: AccountId32,
+    assetA: u32,
+    assetB: u32,
+    amountA: u128,
+    amountB: u128,
+}
+```
+
+### LiquidityRemoved
+
+```rust
+LiquidityRemoved {
+    who: AccountId32,
+    assetA: u32,
+    assetB: u32,
+    shares: u128,
+}
+```
+
+### PoolCreated
+
+```rust
+PoolCreated {
+    who: AccountId32,
+    assetA: u32,
+    assetB: u32,
+    initialSharesAmount: u128,
+    shareToken: u32,
+    pool: AccountId32,
+}
+```
+
+### PoolDestroyed
+
+```rust
+PoolDestroyed {
+    who: AccountId32,
+    assetA: u32,
+    assetB: u32,
+    shareToken: u32,
+    pool: AccountId32,
+}
+```
+
+### SellExecuted
+
+```rust
+SellExecuted {
+    who: AccountId32,
+    assetIn: u32,
+    assetOut: u32,
+    amount: u128,
+    salePrice: u128,
+    feeAsset: u32,
+    feeAmount: u128,
+    pool: AccountId32,
+}
+```
+
+### BuyExecuted
+
+```rust
+BuyExecuted {
+    who: AccountId32,
+    assetOut: u32,
+    assetIn: u32,
+    amount: u128,
+    buyPrice: u128,
+    feeAsset: u32,
+    feeAmount: u128,
+    pool: AccountId32,
+}
+```
+
+## Constants (7)
+
+### NativeAssetId
+
+Native Asset Id
+
+```rust
+const NativeAssetId: u32
+```
+
+### GetExchangeFee
+
+Trading fee rate
+
+```rust
+const GetExchangeFee: (u32,u32)
+```
+
+### MinTradingLimit
+
+Minimum trading limit
+
+```rust
+const MinTradingLimit: u128
+```
+
+### MinPoolLiquidity
+
+Minimum pool liquidity
+
+```rust
+const MinPoolLiquidity: u128
+```
+
+### MaxInRatio
+
+Max fraction of pool to sell in single transaction
+
+```rust
+const MaxInRatio: u128
+```
+
+### MaxOutRatio
+
+Max fraction of pool to buy in single transaction
+
+```rust
+const MaxOutRatio: u128
+```
+
+### OracleSource
+
+Oracle source identifier for this pallet.
+
+```rust
+const OracleSource: [u8;8]
+```
+
+## References
+
+### SDK (2)
+
+- [sdk](/reference/sdk/sdk)
+- [sdk-next](/reference/sdk/sdk-next)
+
+### Indexer (13)
+
+- [Xykpool](/reference/indexer/Xykpool)
+- [XykpoolCreatedData](/reference/indexer/XykpoolCreatedData)
+- [XykpoolDestroyedData](/reference/indexer/XykpoolDestroyedData)
+- [XykpoolLifeState](/reference/indexer/XykpoolLifeState)
+- [XykpoolPriceHistoricalData](/reference/indexer/XykpoolPriceHistoricalData)
+- [XykpoolVolumeHistoricalData](/reference/indexer/XykpoolVolumeHistoricalData)
+- [XykpoolHistoricalData](/reference/indexer/XykpoolHistoricalData)
+- [XykGlobalFarm](/reference/indexer/XykGlobalFarm)
+- [XykYieldFarm](/reference/indexer/XykYieldFarm)
+- [XykYieldFarmDeposit](/reference/indexer/XykYieldFarmDeposit)
+- [XykYieldFarmEntry](/reference/indexer/XykYieldFarmEntry)
+- [XykYieldFarmDepositEvent](/reference/indexer/XykYieldFarmDepositEvent)
+- [OmnipoolAsset](/reference/indexer/OmnipoolAsset)
+
+### UI (9)
+
+- [useAcceptedFeePaymentAssets](/reference/hooks/transactions/useAcceptedFeePaymentAssets)
+- [useXykShareTokenEntries](/reference/hooks/xyk/useXykShareTokenEntries)
+- [useAddIsolatedLiquidity](/reference/hooks/liquidity/useAddIsolatedLiquidity)
+- [useSubmitCreateIsolatedPool](/reference/hooks/liquidity/useSubmitCreateIsolatedPool)
+- [useMarketBuyData](/reference/hooks/trade/useMarketBuyData)
+- [useMarketSellData](/reference/hooks/trade/useMarketSellData)
+- [useCalculateBuyAmount](/reference/hooks/trade/useCalculateBuyAmount)
+- [useCalculateSellAmount](/reference/hooks/trade/useCalculateSellAmount)
+- [useSwitchAssets](/reference/hooks/trade/useSwitchAssets)

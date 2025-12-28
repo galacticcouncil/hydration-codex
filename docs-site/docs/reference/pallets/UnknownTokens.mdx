@@ -1,0 +1,54 @@
+---
+title: UnknownTokens
+description: Runtime pallet documentation
+sidebar_label: UnknownTokens
+---
+
+# UnknownTokens
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this pallet does.
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #139** · ORML<br/>
+`orml-unknown-tokens/60b88b84/polkadot-stable2409`
+
+[GitHub](https://github.com/galacticcouncil/open-runtime-module-library/tree/60b88b84a6abbf8e12a884bf1c3774ff2db1f880/unknown-tokens) · [docs.rs](https://docs.rs/crate/orml-unknown-tokens/1.0.0/source/) · [crates.io](https://crates.io/crates/orml-unknown-tokens) · [Subscan](https://hydradx.subscan.io/runtime/UnknownTokens)
+
+## Storage (2)
+
+### ConcreteFungibleBalances
+
+Concrete fungible balances under a given location and a concrete fungible id. double_map: who, asset_id =\> u128
+
+```rust
+ConcreteFungibleBalances: Map<(StagingXcmV4Location, StagingXcmV4Location) -> u128> [Blake2_128Concat,  Blake2_128Concat]
+```
+
+### AbstractFungibleBalances
+
+Abstract fungible balances under a given location and a abstract fungible id. double_map: who, asset_id =\> u128
+
+```rust
+AbstractFungibleBalances: Map<(StagingXcmV4Location, Bytes) -> u128> [Blake2_128Concat,  Blake2_128Concat]
+```
+
+## Events (2)
+
+### Deposited
+
+```rust
+Deposited {
+    asset: Lookup364,
+    who: Lookup95,
+}
+```
+
+### Withdrawn
+
+```rust
+Withdrawn {
+    asset: Lookup364,
+    who: Lookup95,
+}
+```

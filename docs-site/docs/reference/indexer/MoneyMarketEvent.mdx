@@ -1,0 +1,87 @@
+---
+title: MoneyMarketEvent
+description: Indexer entity documentation
+sidebar_label: MoneyMarketEvent
+---
+
+# MoneyMarketEvent
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 20 |
+| Nullable Fields | 12 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/moneyMarketEvent.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type MoneyMarketEvent {
+  id: ID!
+  traceIds: [String!
+  contractName: EvmContractName
+  eventName: EvmEventName
+  allInvolvedAssetIds: [String!
+  allInvolvedAssetRegistryIds: [String!
+  allInvolvedAssetDetails: String @index
+  allInvolvedParticipants: [String!
+  transfer: Transfer
+  supply: MmSupply
+  withdraw: MmWithdraw
+  borrow: MmBorrow
+  repay: MmRepay
+  userEModeSet: MmUserEModeSet
+  liquidationCall: MmLiquidationCall
+  reserveUsedAsCollateralEnabled: MmReserveUsedAsCollateralEnabledEvent
+  reserveUsedAsCollateralDisabled: MmReserveUsedAsCollateralDisabledEvent
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  event: Event!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface MoneyMarketEvent {
+  id: string;
+  traceIds: [String;
+  contractName: EvmContractName | null;
+  eventName: EvmEventName | null;
+  allInvolvedAssetIds: [String;
+  allInvolvedAssetRegistryIds: [String;
+  allInvolvedAssetDetails: String @index | null;
+  allInvolvedParticipants: [String;
+  transfer: Transfer | null;
+  supply: MmSupply | null;
+  withdraw: MmWithdraw | null;
+  borrow: MmBorrow | null;
+  repay: MmRepay | null;
+  userEModeSet: MmUserEModeSet | null;
+  liquidationCall: MmLiquidationCall | null;
+  reserveUsedAsCollateralEnabled: MmReserveUsedAsCollateralEnabledEvent | null;
+  reserveUsedAsCollateralDisabled: MmReserveUsedAsCollateralDisabledEvent | null;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  event: Event;
+}
+```
+
+## Example Query
+
+```graphql
+query GetMoneyMarketEvents {
+  moneyMarketEvents(limit: 10) {
+    id
+    traceIds
+    contractName
+    eventName
+    allInvolvedAssetIds
+    # ... more fields
+  }
+}
+```

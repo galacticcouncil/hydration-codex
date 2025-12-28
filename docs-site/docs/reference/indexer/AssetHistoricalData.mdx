@@ -1,0 +1,75 @@
+---
+title: AssetHistoricalData
+description: Indexer entity documentation
+sidebar_label: AssetHistoricalData
+---
+
+# AssetHistoricalData
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 14 |
+| Nullable Fields | 4 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/assetHistoricalData.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type AssetHistoricalData {
+  id: ID!
+  asset: Asset!
+  assetRegistryId: String
+  totalIssuance: BigInt!
+  existentialDeposit: BigInt!
+  dynamicFee: AssetDynamicFee
+  usdPriceNormalised: String!
+  spotPrices: [AssetSpotPriceHistoricalData]!
+  field: "assetInHistData")
+  assetPairVolumes: [AssetAssetsPairVolume]!
+  field: "assetHistoricalData")
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  block: Block!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface AssetHistoricalData {
+  id: string;
+  asset: Asset;
+  assetRegistryId: string | null;
+  totalIssuance: bigint;
+  existentialDeposit: bigint;
+  dynamicFee: AssetDynamicFee | null;
+  usdPriceNormalised: string;
+  spotPrices: [AssetSpotPriceHistoricalData];
+  field: "assetInHistData") | null;
+  assetPairVolumes: [AssetAssetsPairVolume];
+  field: "assetHistoricalData") | null;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  block: Block;
+}
+```
+
+## Example Query
+
+```graphql
+query GetAssetHistoricalDatas {
+  assetHistoricalDatas(limit: 10) {
+    id
+    asset
+    assetRegistryId
+    totalIssuance
+    existentialDeposit
+    # ... more fields
+  }
+}
+```

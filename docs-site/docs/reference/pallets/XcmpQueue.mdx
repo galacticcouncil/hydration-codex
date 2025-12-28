@@ -1,0 +1,141 @@
+---
+title: XcmpQueue
+description: Runtime pallet documentation
+sidebar_label: XcmpQueue
+---
+
+# XcmpQueue
+
+## Release
+
+Polkadot SDK stable2409
+
+<details>
+<summary>Code Documentation</summary>
+
+A pallet which uses the XCMP transport layer to handle both incoming and outgoing XCM message
+sending and dispatch, queuing, signalling and backpressure. To do so, it implements:
+* `XcmpMessageHandler`
+* `XcmpMessageSource`
+
+Also provides an implementation of `SendXcm` which can be placed in a router tuple for relaying
+XCM over XCMP if the destination is `Parent/Parachain`. It requires an implementation of
+`XcmExecutor` for dispatching incoming XCM messages.
+
+To prevent out of memory errors on the `OutboundXcmpMessages` queue, an exponential fee factor
+(`DeliveryFeeFactor`) is set, much like the one used in DMP.
+The fee factor increases whenever the total size of messages in a particular channel passes a
+threshold. This threshold is defined as a percentage of the maximum total size the channel can
+have. More concretely, the threshold is `max_total_size` / `THRESHOLD_FACTOR`, where:
+- `max_total_size` is the maximum size, in bytes, of the channel, not number of messages.
+It is defined in the channel configuration.
+- `THRESHOLD_FACTOR` just declares which percentage of the max size is the actual threshold.
+If it's 2, then the threshold is half of the max size, if it's 4, it's a quarter, and so on.
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #111** · Polkadot SDK<br/>
+`cumulus-pallet-xcmp-queue/1ed66275/stable2409-patch6`
+
+[GitHub](https://github.com/galacticcouncil/polkadot-sdk/tree/1ed662757b03c4f17dc2429c1df84e975d98513a/cumulus/pallets/xcmp-queue) · [docs.rs](https://docs.rs/crate/cumulus-pallet-xcmp-queue/0.17.0/source/) · [crates.io](https://crates.io/crates/cumulus-pallet-xcmp-queue) · [Subscan](https://hydradx.subscan.io/runtime/XcmpQueue)
+
+## Storage (7)
+
+### InboundXcmpSuspended
+
+The suspended inbound XCMP channels. All others are not suspended. This is a `StorageValue` instead of a `StorageMap` since we expect multiple reads per block to different keys with a one byte payload. The access to `BoundedBTreeSet` will be cached within the block and therefore only included once in the proof size. NOTE: The PoV benchmarking cannot know this and will over-estimate, but the actual proof will be smaller.
+
+```rust
+InboundXcmpSuspended: Value<BTreeSet<u32>>
+```
+
+### OutboundXcmpStatus
+
+The non-empty XCMP channels in order of becoming non-empty, and the index of the first and last outbound message. If the two indices are equal, then it indicates an empty queue and there must be a non-`Ok` `OutboundStatus`. We assume queues grow no greater than 65535 items. Queue indices for normal messages begin at one; zero is reserved in case of the need to send a high-priority signal message this block. The bool is true if there is a signal message waiting to be sent.
+
+```rust
+OutboundXcmpStatus: Value<Vec<CumulusPalletXcmpQueueOutboundChannelDetails>>
+```
+
+### OutboundXcmpMessages
+
+The messages outbound in a given XCMP channel.
+
+```rust
+OutboundXcmpMessages: Map<(u32, u16) -> Bytes> [Blake2_128Concat,  Twox64Concat]
+```
+
+### SignalMessages
+
+Any signal messages waiting to be sent.
+
+```rust
+SignalMessages: Map<u32 -> Bytes> [Blake2_128Concat]
+```
+
+### QueueConfig
+
+The configuration which controls the dynamics of the outbound queue.
+
+```rust
+QueueConfig: Value<{
+    suspendThreshold: u32,
+    dropThreshold: u32,
+    resumeThreshold: u32,
+}>
+```
+
+### QueueSuspended
+
+Whether or not the XCMP queue is suspended from executing incoming XCMs or not.
+
+```rust
+QueueSuspended: Value<bool>
+```
+
+### DeliveryFeeFactor
+
+The factor to multiply the base delivery fee by.
+
+```rust
+DeliveryFeeFactor: Map<u32 -> u128> [Twox64Concat]
+```
+
+## Events (1)
+
+### XcmpMessageSent
+
+```rust
+XcmpMessageSent {
+    messageHash: [u8;32],
+}
+```
+
+## Constants (3)
+
+### MaxInboundSuspended
+
+The maximum number of inbound XCMP channels that can be suspended simultaneously. Any further channel suspensions will fail and messages may get dropped without further notice. Choosing a high value (1000) is okay; the trade-off that is described in `InboundXcmpSuspended` still applies at that scale.
+
+```rust
+const MaxInboundSuspended: u32
+```
+
+### MaxActiveOutboundChannels
+
+Maximal number of outbound XCMP channels that can have messages queued at the same time. If this is reached, then no further messages can be sent to channels that do not yet have a message queued. This should be set to the expected maximum of outbound channels which is determined by `Self::ChannelInfo`. It is important to set this large enough, since otherwise the congestion control protocol will not work as intended and messages may be dropped. This value increases the PoV and should therefore not be picked too high. Governance needs to pay attention to not open more channels than this value.
+
+```rust
+const MaxActiveOutboundChannels: u32
+```
+
+### MaxPageSize
+
+The maximal page size for HRMP message pages. A lower limit can be set dynamically, but this is the hard-limit for the PoV worst case benchmarking. The limit for the size of a message is slightly below this, since some overhead is incurred for encoding the format.
+
+```rust
+const MaxPageSize: u32
+```

@@ -1,0 +1,208 @@
+---
+title: Multisig
+description: Runtime pallet documentation
+sidebar_label: Multisig
+---
+
+# Multisig
+
+A module for doing multisig dispatch.
+
+- `Config`
+- `Call`
+
+## Overview
+
+This module contains functionality for multi-signature dispatch, a (potentially) stateful
+operation, allowing multiple signed
+origins (accounts) to coordinate and dispatch a call from a well-known origin, derivable
+deterministically from the set of account IDs and the threshold number of accounts from the
+set that must approve it. In the case that the threshold is just one then this is a stateless
+operation. This is useful for multisig wallets where cryptographic threshold signatures are
+not available or desired.
+
+## Interface
+
+### Dispatchable Functions
+
+- `as_multi` - Approve and if possible dispatch a call from a composite origin formed from a
+ number of signed origins.
+- `approve_as_multi` - Approve a call from a composite origin.
+- `cancel_as_multi` - Cancel a call from a composite origin.
+
+`Call`: ./enum.Call.html
+`Config`: ./trait.Config.html
+
+<details>
+<summary>Code Documentation</summary>
+
+A pallet for doing multisig dispatch.
+
+- `Config`
+- `Call`
+
+### Overview
+
+This pallet contains functionality for multi-signature dispatch, a (potentially) stateful
+operation, allowing multiple signed
+origins (accounts) to coordinate and dispatch a call from a well-known origin, derivable
+deterministically from the set of account IDs and the threshold number of accounts from the
+set that must approve it. In the case that the threshold is just one then this is a stateless
+operation. This is useful for multisig wallets where cryptographic threshold signatures are
+not available or desired.
+
+### Interface
+
+### Dispatchable Functions
+
+* `as_multi` - Approve and if possible dispatch a call from a composite origin formed from a
+ number of signed origins.
+* `approve_as_multi` - Approve a call from a composite origin.
+* `cancel_as_multi` - Cancel a call from a composite origin.
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #31** · Polkadot SDK<br/>
+`pallet-multisig/1ed66275/stable2409-patch6`
+
+[GitHub](https://github.com/galacticcouncil/polkadot-sdk/tree/1ed662757b03c4f17dc2429c1df84e975d98513a/substrate/frame/multisig) · [docs.rs](https://docs.rs/crate/pallet-multisig/38.0.0/source/) · [crates.io](https://crates.io/crates/pallet-multisig) · [Subscan](https://hydradx.subscan.io/runtime/Multisig)
+
+## Storage (1)
+
+### Multisigs
+
+The set of open multisig operations.
+
+```rust
+Multisigs: Map<(AccountId32,[u8;32]) -> {
+    when: PalletMultisigTimepoint,
+    deposit: u128,
+    depositor: AccountId32,
+    approvals: Vec<AccountId32>,
+}> [Twox64Concat, Blake2_128Concat]
+```
+
+## Extrinsics (4)
+
+### as_multi_threshold_1
+
+```rust
+fn as_multi_threshold_1(
+    origin: OriginFor<T>,
+    otherSignatories: Vec<AccountId32>,
+    call: Call,
+)
+```
+
+### as_multi
+
+```rust
+fn as_multi(
+    origin: OriginFor<T>,
+    threshold: u16,
+    otherSignatories: Vec<AccountId32>,
+    maybeTimepoint: Option<PalletMultisigTimepoint>,
+    call: Call,
+    maxWeight: Lookup10,
+)
+```
+
+### approve_as_multi
+
+```rust
+fn approve_as_multi(
+    origin: OriginFor<T>,
+    threshold: u16,
+    otherSignatories: Vec<AccountId32>,
+    maybeTimepoint: Option<PalletMultisigTimepoint>,
+    callHash: [u8;32],
+    maxWeight: Lookup10,
+)
+```
+
+### cancel_as_multi
+
+```rust
+fn cancel_as_multi(
+    origin: OriginFor<T>,
+    threshold: u16,
+    otherSignatories: Vec<AccountId32>,
+    timepoint: Lookup52,
+    callHash: [u8;32],
+)
+```
+
+## Events (4)
+
+### NewMultisig
+
+```rust
+NewMultisig {
+    approving: AccountId32,
+    multisig: AccountId32,
+    callHash: [u8;32],
+}
+```
+
+### MultisigApproval
+
+```rust
+MultisigApproval {
+    approving: AccountId32,
+    timepoint: Lookup52,
+    multisig: AccountId32,
+    callHash: [u8;32],
+}
+```
+
+### MultisigExecuted
+
+```rust
+MultisigExecuted {
+    approving: AccountId32,
+    timepoint: Lookup52,
+    multisig: AccountId32,
+    callHash: [u8;32],
+    result: Result<Null, SpRuntimeDispatchError>,
+}
+```
+
+### MultisigCancelled
+
+```rust
+MultisigCancelled {
+    cancelling: AccountId32,
+    timepoint: Lookup52,
+    multisig: AccountId32,
+    callHash: [u8;32],
+}
+```
+
+## Constants (3)
+
+### DepositBase
+
+The base amount of currency needed to reserve for creating a multisig execution or to store a dispatch call for later. This is held for an additional storage item whose value size is `4 + sizeof((BlockNumber, Balance, AccountId))` bytes and whose key size is `32 + sizeof(AccountId)` bytes.
+
+```rust
+const DepositBase: u128
+```
+
+### DepositFactor
+
+The amount of currency needed per unit threshold when creating a multisig execution. This is held for adding 32 bytes more into a pre-existing storage value.
+
+```rust
+const DepositFactor: u128
+```
+
+### MaxSignatories
+
+The maximum amount of signatories allowed in the multisig.
+
+```rust
+const MaxSignatories: u32
+```

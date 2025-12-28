@@ -1,0 +1,56 @@
+---
+title: StableswapCreatedData
+description: Indexer entity documentation
+sidebar_label: StableswapCreatedData
+---
+
+# StableswapCreatedData
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 3 |
+| Nullable Fields | 1 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/stableswapCreatedData.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type StableswapCreatedData {
+  eventId: String
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface StableswapCreatedData {
+  eventId: string | null;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+}
+```
+
+## Example Query
+
+```graphql
+query GetStableswapCreatedDatas {
+  stableswapCreatedDatas(limit: 10) {
+    eventId
+    paraBlockHeight
+    relayBlockHeight
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [Stableswap](/reference/pallets/Stableswap)

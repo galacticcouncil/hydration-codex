@@ -1,0 +1,62 @@
+---
+title: OmnipoolAssetRemovedData
+description: Indexer entity documentation
+sidebar_label: OmnipoolAssetRemovedData
+---
+
+# OmnipoolAssetRemovedData
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 5 |
+| Nullable Fields | 3 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/omnipoolAssetRemovedData.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type OmnipoolAssetRemovedData {
+  removedAmount: String
+  hubWithdrawn: String
+  eventId: String
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface OmnipoolAssetRemovedData {
+  removedAmount: string | null;
+  hubWithdrawn: string | null;
+  eventId: string | null;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+}
+```
+
+## Example Query
+
+```graphql
+query GetOmnipoolAssetRemovedDatas {
+  omnipoolAssetRemovedDatas(limit: 10) {
+    removedAmount
+    hubWithdrawn
+    eventId
+    paraBlockHeight
+    relayBlockHeight
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [Omnipool](/reference/pallets/Omnipool)

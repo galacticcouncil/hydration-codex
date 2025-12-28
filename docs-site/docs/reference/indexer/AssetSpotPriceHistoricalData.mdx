@@ -1,0 +1,75 @@
+---
+title: AssetSpotPriceHistoricalData
+description: Indexer entity documentation
+sidebar_label: AssetSpotPriceHistoricalData
+---
+
+# AssetSpotPriceHistoricalData
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 14 |
+| Nullable Fields | 3 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/assetSpotPriceHistoricalData.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type AssetSpotPriceHistoricalData {
+  id: ID!
+  assetInHistData: AssetHistoricalData!
+  assetIn: Asset!
+  assetOut: Asset!
+  assetInAssetRegistryId: String
+  assetOutAssetRegistryId: String
+  assetOutDecimals: Int!
+  price: BigInt!
+  priceNormalised: String!
+  values: pool address
+  priceRoute: [[String!
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  block: Block!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface AssetSpotPriceHistoricalData {
+  id: string;
+  assetInHistData: AssetHistoricalData;
+  assetIn: Asset;
+  assetOut: Asset;
+  assetInAssetRegistryId: string | null;
+  assetOutAssetRegistryId: string | null;
+  assetOutDecimals: number;
+  price: bigint;
+  priceNormalised: string;
+  values: pool address | null;
+  priceRoute: [[String;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  block: Block;
+}
+```
+
+## Example Query
+
+```graphql
+query GetAssetSpotPriceHistoricalDatas {
+  assetSpotPriceHistoricalDatas(limit: 10) {
+    id
+    assetInHistData
+    assetIn
+    assetOut
+    assetInAssetRegistryId
+    # ... more fields
+  }
+}
+```

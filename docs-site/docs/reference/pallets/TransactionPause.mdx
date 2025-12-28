@@ -1,0 +1,68 @@
+---
+title: TransactionPause
+description: Runtime pallet documentation
+sidebar_label: TransactionPause
+---
+
+# TransactionPause
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this pallet does.
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #60** · HydraDX<br/>
+`pallet-transaction-pause/4ca470c5/master`
+
+[GitHub](https://github.com/galacticcouncil/HydraDX-node/tree/4ca470c5d613d62ce52eb8645770ef5fff263111/pallets/transaction-pause) · [Subscan](https://hydradx.subscan.io/runtime/TransactionPause)
+
+## Storage (1)
+
+### PausedTransactions
+
+The paused transaction map map (PalletNameBytes, FunctionNameBytes) =\> Option\<()\>
+
+```rust
+PausedTransactions: Map<(Bytes, Bytes) -> Null> [Twox64Concat]
+```
+
+## Extrinsics (2)
+
+### pause_transaction
+
+```rust
+fn pause_transaction(
+    origin: OriginFor<T>,
+    palletName: Bytes,
+    functionName: Bytes,
+)
+```
+
+### unpause_transaction
+
+```rust
+fn unpause_transaction(
+    origin: OriginFor<T>,
+    palletName: Bytes,
+    functionName: Bytes,
+)
+```
+
+## Events (2)
+
+### TransactionPaused
+
+```rust
+TransactionPaused {
+    palletNameBytes: Bytes,
+    functionNameBytes: Bytes,
+}
+```
+
+### TransactionUnpaused
+
+```rust
+TransactionUnpaused {
+    palletNameBytes: Bytes,
+    functionNameBytes: Bytes,
+}
+```

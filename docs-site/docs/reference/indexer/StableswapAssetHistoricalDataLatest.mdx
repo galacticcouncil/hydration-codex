@@ -1,0 +1,73 @@
+---
+title: StableswapAssetHistoricalDataLatest
+description: Indexer entity documentation
+sidebar_label: StableswapAssetHistoricalDataLatest
+---
+
+# StableswapAssetHistoricalDataLatest
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 10 |
+| Nullable Fields | 2 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/stableswapAssetHistoricalDataLatest.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type StableswapAssetHistoricalDataLatest {
+  id: ID!
+  assetId: String!
+  poolId: String!
+  stableswapAssetId: String!
+  poolHistoricalDataId: String!
+  freeBalance: BigInt!
+  tradable: Int
+  tvlInRefAssetNorm: String
+  paraBlockHeight: Int!
+  blockId: String!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface StableswapAssetHistoricalDataLatest {
+  id: string;
+  assetId: string;
+  poolId: string;
+  stableswapAssetId: string;
+  poolHistoricalDataId: string;
+  freeBalance: bigint;
+  tradable: number | null;
+  tvlInRefAssetNorm: string | null;
+  paraBlockHeight: number;
+  blockId: string;
+}
+```
+
+## Example Query
+
+```graphql
+query GetStableswapAssetHistoricalDataLatests {
+  stableswapAssetHistoricalDataLatests(limit: 10) {
+    id
+    assetId
+    poolId
+    stableswapAssetId
+    poolHistoricalDataId
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [Stableswap](/reference/pallets/Stableswap)

@@ -1,0 +1,67 @@
+---
+title: AccountAssetBalanceLatest
+description: Indexer entity documentation
+sidebar_label: AccountAssetBalanceLatest
+---
+
+# AccountAssetBalanceLatest
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 10 |
+| Nullable Fields | 2 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/accountAssetBalanceLatest.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type AccountAssetBalanceLatest {
+  id: ID!
+  accountId: String!
+  assetId: String!
+  transferable: BigInt!
+  totalLocked: BigInt!
+  transferableInRefAssetNorm: String
+  totalLockedInRefAssetNorm: String
+  total: BigInt!
+  paraBlockHeight: Int!
+  blockId: String!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface AccountAssetBalanceLatest {
+  id: string;
+  accountId: string;
+  assetId: string;
+  transferable: bigint;
+  totalLocked: bigint;
+  transferableInRefAssetNorm: string | null;
+  totalLockedInRefAssetNorm: string | null;
+  total: bigint;
+  paraBlockHeight: number;
+  blockId: string;
+}
+```
+
+## Example Query
+
+```graphql
+query GetAccountAssetBalanceLatests {
+  accountAssetBalanceLatests(limit: 10) {
+    id
+    accountId
+    assetId
+    transferable
+    totalLocked
+    # ... more fields
+  }
+}
+```

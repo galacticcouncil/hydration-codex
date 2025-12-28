@@ -1,0 +1,53 @@
+---
+title: BatchLbppoolHistVolsList
+description: Indexer entity documentation
+sidebar_label: BatchLbppoolHistVolsList
+---
+
+# BatchLbppoolHistVolsList
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 4 |
+| Nullable Fields | 0 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/batchLbppoolHistVolsList.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type BatchLbppoolHistVolsList {
+  id: ID!
+  poolIds: [String!
+  batchStartParaBlockHeight: Int!
+  batchEndParaBlockHeight: Int!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface BatchLbppoolHistVolsList {
+  id: string;
+  poolIds: [String;
+  batchStartParaBlockHeight: number;
+  batchEndParaBlockHeight: number;
+}
+```
+
+## Example Query
+
+```graphql
+query GetBatchLbppoolHistVolsLists {
+  batchLbppoolHistVolsLists(limit: 10) {
+    id
+    poolIds
+    batchStartParaBlockHeight
+    batchEndParaBlockHeight
+  }
+}
+```

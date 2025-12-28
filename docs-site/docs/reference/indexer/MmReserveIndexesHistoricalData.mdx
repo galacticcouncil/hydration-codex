@@ -1,0 +1,65 @@
+---
+title: MmReserveIndexesHistoricalData
+description: Indexer entity documentation
+sidebar_label: MmReserveIndexesHistoricalData
+---
+
+# MmReserveIndexesHistoricalData
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 9 |
+| Nullable Fields | 4 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/mmReserveIndexesHistoricalData.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type MmReserveIndexesHistoricalData {
+  id: ID!
+  reserve: MoneyMarketReserve!
+  liquidityRate: BigInt
+  variableBorrowRate: BigInt
+  liquidityIndex: BigInt
+  variableBorrowIndex: BigInt
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  block: Block!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface MmReserveIndexesHistoricalData {
+  id: string;
+  reserve: MoneyMarketReserve;
+  liquidityRate: bigint | null;
+  variableBorrowRate: bigint | null;
+  liquidityIndex: bigint | null;
+  variableBorrowIndex: bigint | null;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  block: Block;
+}
+```
+
+## Example Query
+
+```graphql
+query GetMmReserveIndexesHistoricalDatas {
+  mmReserveIndexesHistoricalDatas(limit: 10) {
+    id
+    reserve
+    liquidityRate
+    variableBorrowRate
+    liquidityIndex
+    # ... more fields
+  }
+}
+```

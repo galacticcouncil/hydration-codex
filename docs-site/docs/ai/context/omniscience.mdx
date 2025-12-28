@@ -1,0 +1,83 @@
+---
+title: OMNISCIENCE.md
+description: Full stack map with cross-layer connections
+---
+
+# OMNISCIENCE.md
+
+The master context file showing how all layers connect. Load this first when working with an AI assistant on Hydration code.
+
+**Location:** `agents/contexts/OMNISCIENCE.md` (~30KB)
+
+## What It Contains
+
+- **Commit hashes** for each layer (Runtime, SDK, Indexer, UI)
+- **Coverage summary** showing SDK/Indexer coverage of runtime features
+- **Cross-layer connections** (132 documented connections)
+- **Gaps** - unindexed events and unwrapped extrinsics
+
+## When to Load
+
+- Starting any Hydration-related task
+- Understanding how features flow through the stack
+- Finding which pallet/hook/entity handles a feature
+- Identifying gaps in SDK or Indexer coverage
+
+## Coverage Summary
+
+| Metric | Count | Coverage |
+|--------|-------|----------|
+| Runtime Extrinsics | 371 | - |
+| SDK-Wrapped | 7 | 2% |
+| Runtime Events | 410 | - |
+| Indexed Events | 76 | 19% |
+| UI-Exposed Features | 50 | - |
+
+## Stack Flow
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  Runtime                                                     │
+│  371 extrinsics, 410 events                                  │
+└──────────────────────────┬──────────────────────────────────┘
+                           │
+              ┌────────────┼────────────┐
+              ▼            ▼            ▼
+┌─────────────────┐ ┌─────────────┐ ┌─────────────────────────┐
+│  SDK            │ │  Indexer    │ │                         │
+│  2% wrapped     │ │  19% indexed│ │                         │
+└────────┬────────┘ └─────────────┘ │                         │
+         │                          │                         │
+         └──────────────────────────┤                         │
+                                    ▼                         │
+                           ┌─────────────────────────┐        │
+                           │  UI                     │        │
+                           │  50 features exposed    │        │
+                           └─────────────────────────┘        │
+```
+
+## Cross-Layer Connections (Sample)
+
+| Pallet | Feature | Type | SDK | Indexer | UI |
+|--------|---------|------|-----|---------|----|
+| Omnipool | sell | extrinsic | Omnipool.sell | - | - |
+| Omnipool | buy | extrinsic | Omnipool.buy | - | - |
+| Omnipool | add_liquidity | extrinsic | - | - | AddMoneyMarketLiquidity.utils.tsx |
+| Omnipool | LiquidityAdded | event | - | parseomnipoolLiquidityAddedData | - |
+| Router | sell | extrinsic | Router.sell | - | - |
+| Router | buy | extrinsic | Router.buy | - | - |
+| DCA | schedule | extrinsic | DCA.schedule | - | - |
+
+See the full file for all 132 connections and complete gap analysis.
+
+## How to Use
+
+```
+# In Claude Code or similar
+Load: agents/contexts/OMNISCIENCE.md
+
+# Then ask questions like:
+"What SDK methods wrap Omnipool extrinsics?"
+"Which events are not indexed?"
+"How does liquidity addition flow through the stack?"
+```

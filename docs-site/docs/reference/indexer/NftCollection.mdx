@@ -1,0 +1,73 @@
+---
+title: NftCollection
+description: Indexer entity documentation
+sidebar_label: NftCollection
+---
+
+# NftCollection
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 13 |
+| Nullable Fields | 1 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/nftCollection.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type NftCollection {
+  id: ID!
+  collectionType: String!
+  ownerId: String!
+  issuerId: String!
+  adminId: String!
+  freezerId: String!
+  totalDeposit: BigInt!
+  freeHolding: Boolean!
+  isFrozen: Boolean!
+  items: Int!
+  itemMetadatas: Int!
+  attributes: Int!
+  maxSupply: BigInt
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface NftCollection {
+  id: string;
+  collectionType: string;
+  ownerId: string;
+  issuerId: string;
+  adminId: string;
+  freezerId: string;
+  totalDeposit: bigint;
+  freeHolding: boolean;
+  isFrozen: boolean;
+  items: number;
+  itemMetadatas: number;
+  attributes: number;
+  maxSupply: bigint | null;
+}
+```
+
+## Example Query
+
+```graphql
+query GetNftCollections {
+  nftCollections(limit: 10) {
+    id
+    collectionType
+    ownerId
+    issuerId
+    adminId
+    # ... more fields
+  }
+}
+```

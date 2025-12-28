@@ -1,0 +1,71 @@
+---
+title: MmBorrow
+description: Indexer entity documentation
+sidebar_label: MmBorrow
+---
+
+# MmBorrow
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 12 |
+| Nullable Fields | 4 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/mmBorrow.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type MmBorrow {
+  id: ID!
+  traceIds: [String!
+  asset: Asset!
+  account: Account!
+  accountOnBehalfOf: Account!
+  amount: BigInt
+  interestRateMode: Int
+  borrowRate: BigInt
+  referralCode: BigInt
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  event: Event!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface MmBorrow {
+  id: string;
+  traceIds: [String;
+  asset: Asset;
+  account: Account;
+  accountOnBehalfOf: Account;
+  amount: bigint | null;
+  interestRateMode: number | null;
+  borrowRate: bigint | null;
+  referralCode: bigint | null;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  event: Event;
+}
+```
+
+## Example Query
+
+```graphql
+query GetMmBorrows {
+  mmBorrows(limit: 10) {
+    id
+    traceIds
+    asset
+    account
+    accountOnBehalfOf
+    # ... more fields
+  }
+}
+```

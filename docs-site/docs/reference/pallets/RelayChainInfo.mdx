@@ -1,0 +1,30 @@
+---
+title: RelayChainInfo
+description: Runtime pallet documentation
+sidebar_label: RelayChainInfo
+---
+
+# RelayChainInfo
+
+Support pallet for a parachain. Includes various little feaures features realted to relay chain
+
+- Emits `Initialized` event in on_initialize pallet's method with informaton of current parachain block and current relay chain block.
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #201** · HydraDX<br/>
+`pallet-relaychain-info/4ca470c5/master`
+
+[GitHub](https://github.com/galacticcouncil/HydraDX-node/tree/4ca470c5d613d62ce52eb8645770ef5fff263111/pallets/relaychain-info) · [Subscan](https://hydradx.subscan.io/runtime/RelayChainInfo)
+
+## Events (1)
+
+### CurrentBlockNumbers
+
+```rust
+CurrentBlockNumbers {
+    parachainBlockNumber: u32,
+    relaychainBlockNumber: u32,
+}
+```

@@ -1,0 +1,77 @@
+---
+title: Event
+description: Indexer entity documentation
+sidebar_label: Event
+---
+
+# Event
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 12 |
+| Nullable Fields | 4 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/event.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type Event {
+  id: ID!
+  traceId: String!
+  args: String
+  indexInBlock: Int!
+  name: String!
+  group: EventGroup
+  phase: String!
+  entityTypes: [TraceEntityType]
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  block: Block!
+  call: Call
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface Event {
+  id: string;
+  traceId: string;
+  args: string | null;
+  indexInBlock: number;
+  name: string;
+  group: EventGroup | null;
+  phase: string;
+  entityTypes: [TraceEntityType] | null;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  block: Block;
+  call: Call | null;
+}
+```
+
+## Example Query
+
+```graphql
+query GetEvents {
+  events(limit: 10) {
+    id
+    traceId
+    args
+    indexInBlock
+    name
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### UI (1)
+
+- [useInvalidateStakeData](/reference/hooks/staking/useInvalidateStakeData)

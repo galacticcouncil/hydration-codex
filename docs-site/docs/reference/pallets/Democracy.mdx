@@ -1,0 +1,824 @@
+---
+title: Democracy
+description: Runtime pallet documentation
+sidebar_label: Democracy
+---
+
+# Democracy
+
+- `democracy::Config`
+- `Call`
+
+## Overview
+
+The Democracy pallet handles the administration of general stakeholder voting.
+
+There are two different queues that a proposal can be added to before it
+becomes a referendum, 1) the proposal queue consisting of all public proposals
+and 2) the external queue consisting of a single proposal that originates
+from one of the _external_ origins (such as a collective group).
+
+Every launch period - a length defined in the runtime - the Democracy pallet
+launches a referendum from a proposal that it takes from either the proposal
+queue or the external queue in turn. Any token holder in the system can vote
+on referenda. The voting system
+uses time-lock voting by allowing the token holder to set their _conviction_
+behind a vote. The conviction will dictate the length of time the tokens
+will be locked, as well as the multiplier that scales the vote power.
+
+### Terminology
+
+- **Enactment Period:** The minimum period of locking and the period between a proposal being
+approved and enacted.
+- **Lock Period:** A period of time after proposal enactment that the tokens of _winning_ voters
+will be locked.
+- **Conviction:** An indication of a voter's strength of belief in their vote. An increase
+of one in conviction indicates that a token holder is willing to lock their tokens for twice
+as many lock periods after enactment.
+- **Vote:** A value that can either be in approval ("Aye") or rejection ("Nay")
+ of a particular referendum.
+- **Proposal:** A submission to the chain that represents an action that a proposer (either an
+account or an external origin) suggests that the system adopt.
+- **Referendum:** A proposal that is in the process of being voted on for
+ either acceptance or rejection as a change to the system.
+- **Delegation:** The act of granting your voting power to the decisions of another account for
+ up to a certain conviction.
+
+### Adaptive Quorum Biasing
+
+A _referendum_ can be either simple majority-carries in which 50%+1 of the
+votes decide the outcome or _adaptive quorum biased_. Adaptive quorum biasing
+makes the threshold for passing or rejecting a referendum higher or lower
+depending on how the referendum was originally proposed. There are two types of
+adaptive quorum biasing: 1) _positive turnout bias_ makes a referendum
+require a super-majority to pass that decreases as turnout increases and
+2) _negative turnout bias_ makes a referendum require a super-majority to
+reject that decreases as turnout increases. Another way to think about the
+quorum biasing is that _positive bias_ referendums will be rejected by
+default and _negative bias_ referendums get passed by default.
+
+## Interface
+
+### Dispatchable Functions
+
+#### Public
+
+These calls can be made from any externally held account capable of creating
+a signed extrinsic.
+
+Basic actions:
+- `propose` - Submits a sensitive action, represented as a hash. Requires a deposit.
+- `second` - Signals agreement with a proposal, moves it higher on the proposal queue, and
+ requires a matching deposit to the original.
+- `vote` - Votes in a referendum, either the vote is "Aye" to enact the proposal or "Nay" to
+ keep the status quo.
+- `unvote` - Cancel a previous vote, this must be done by the voter before the vote ends.
+- `delegate` - Delegates the voting power (tokens * conviction) to another account.
+- `undelegate` - Stops the delegation of voting power to another account.
+
+Administration actions that can be done to any account:
+- `reap_vote` - Remove some account's expired votes.
+- `unlock` - Redetermine the account's balance lock, potentially making tokens available.
+
+Preimage actions:
+- `note_preimage` - Registers the preimage for an upcoming proposal, requires
+ a deposit that is returned once the proposal is enacted.
+- `note_preimage_operational` - same but provided by `T::OperationalPreimageOrigin`.
+- `note_imminent_preimage` - Registers the preimage for an upcoming proposal.
+ Does not require a deposit, but the proposal must be in the dispatch queue.
+- `note_imminent_preimage_operational` - same but provided by `T::OperationalPreimageOrigin`.
+- `reap_preimage` - Removes the preimage for an expired proposal. Will only
+ work under the condition that it's the same account that noted it and
+ after the voting period, OR it's a different account after the enactment period.
+
+#### Cancellation Origin
+
+This call can only be made by the `CancellationOrigin`.
+
+- `emergency_cancel` - Schedules an emergency cancellation of a referendum.
+ Can only happen once to a specific referendum.
+
+#### ExternalOrigin
+
+This call can only be made by the `ExternalOrigin`.
+
+- `external_propose` - Schedules a proposal to become a referendum once it is is legal
+ for an externally proposed referendum.
+
+#### External Majority Origin
+
+This call can only be made by the `ExternalMajorityOrigin`.
+
+- `external_propose_majority` - Schedules a proposal to become a majority-carries
+ referendum once it is legal for an externally proposed referendum.
+
+#### External Default Origin
+
+This call can only be made by the `ExternalDefaultOrigin`.
+
+- `external_propose_default` - Schedules a proposal to become a negative-turnout-bias
+ referendum once it is legal for an externally proposed referendum.
+
+#### Fast Track Origin
+
+This call can only be made by the `FastTrackOrigin`.
+
+- `fast_track` - Schedules the current externally proposed proposal that
+ is "majority-carries" to become a referendum immediately.
+
+#### Veto Origin
+
+This call can only be made by the `VetoOrigin`.
+
+- `veto_external` - Vetoes and blacklists the external proposal hash.
+
+#### Root
+
+- `cancel_referendum` - Removes a referendum.
+- `cancel_queued` - Cancels a proposal that is queued for enactment.
+- `clear_public_proposal` - Removes all public proposals.
+
+<details>
+<summary>Code Documentation</summary>
+
+- `Config`
+- `Call`
+
+### Overview
+
+The Democracy pallet handles the administration of general stakeholder voting.
+
+There are two different queues that a proposal can be added to before it
+becomes a referendum, 1) the proposal queue consisting of all public proposals
+and 2) the external queue consisting of a single proposal that originates
+from one of the _external_ origins (such as a collective group).
+
+Every launch period - a length defined in the runtime - the Democracy pallet
+launches a referendum from a proposal that it takes from either the proposal
+queue or the external queue in turn. Any token holder in the system can vote
+on referenda. The voting system
+uses time-lock voting by allowing the token holder to set their _conviction_
+behind a vote. The conviction will dictate the length of time the tokens
+will be locked, as well as the multiplier that scales the vote power.
+
+### Terminology
+
+- **Enactment Period:** The minimum period of locking and the period between a proposal being
+approved and enacted.
+- **Lock Period:** A period of time after proposal enactment that the tokens of _winning_ voters
+will be locked.
+- **Conviction:** An indication of a voter's strength of belief in their vote. An increase
+of one in conviction indicates that a token holder is willing to lock their tokens for twice
+as many lock periods after enactment.
+- **Vote:** A value that can either be in approval ("Aye") or rejection ("Nay") of a particular
+ referendum.
+- **Proposal:** A submission to the chain that represents an action that a proposer (either an
+account or an external origin) suggests that the system adopt.
+- **Referendum:** A proposal that is in the process of being voted on for either acceptance or
+ rejection as a change to the system.
+- **Delegation:** The act of granting your voting power to the decisions of another account for
+ up to a certain conviction.
+
+### Adaptive Quorum Biasing
+
+A _referendum_ can be either simple majority-carries in which 50%+1 of the
+votes decide the outcome or _adaptive quorum biased_. Adaptive quorum biasing
+makes the threshold for passing or rejecting a referendum higher or lower
+depending on how the referendum was originally proposed. There are two types of
+adaptive quorum biasing: 1) _positive turnout bias_ makes a referendum
+require a super-majority to pass that decreases as turnout increases and
+2) _negative turnout bias_ makes a referendum require a super-majority to
+reject that decreases as turnout increases. Another way to think about the
+quorum biasing is that _positive bias_ referendums will be rejected by
+default and _negative bias_ referendums get passed by default.
+
+### Interface
+
+### Dispatchable Functions
+
+#### Public
+
+These calls can be made from any externally held account capable of creating
+a signed extrinsic.
+
+Basic actions:
+- `propose` - Submits a sensitive action, represented as a hash. Requires a deposit.
+- `second` - Signals agreement with a proposal, moves it higher on the proposal queue, and
+ requires a matching deposit to the original.
+- `vote` - Votes in a referendum, either the vote is "Aye" to enact the proposal or "Nay" to
+ keep the status quo.
+- `unvote` - Cancel a previous vote, this must be done by the voter before the vote ends.
+- `delegate` - Delegates the voting power (tokens * conviction) to another account.
+- `undelegate` - Stops the delegation of voting power to another account.
+
+Administration actions that can be done to any account:
+- `reap_vote` - Remove some account's expired votes.
+- `unlock` - Redetermine the account's balance lock, potentially making tokens available.
+
+Preimage actions:
+- `note_preimage` - Registers the preimage for an upcoming proposal, requires a deposit that is
+ returned once the proposal is enacted.
+- `note_preimage_operational` - same but provided by `T::OperationalPreimageOrigin`.
+- `note_imminent_preimage` - Registers the preimage for an upcoming proposal. Does not require a
+ deposit, but the proposal must be in the dispatch queue.
+- `note_imminent_preimage_operational` - same but provided by `T::OperationalPreimageOrigin`.
+- `reap_preimage` - Removes the preimage for an expired proposal. Will only work under the
+ condition that it's the same account that noted it and after the voting period, OR it's a
+ different account after the enactment period.
+
+#### Cancellation Origin
+
+This call can only be made by the `CancellationOrigin`.
+
+- `emergency_cancel` - Schedules an emergency cancellation of a referendum. Can only happen once
+ to a specific referendum.
+
+#### ExternalOrigin
+
+This call can only be made by the `ExternalOrigin`.
+
+- `external_propose` - Schedules a proposal to become a referendum once it is is legal for an
+ externally proposed referendum.
+
+#### External Majority Origin
+
+This call can only be made by the `ExternalMajorityOrigin`.
+
+- `external_propose_majority` - Schedules a proposal to become a majority-carries referendum
+ once it is legal for an externally proposed referendum.
+
+#### External Default Origin
+
+This call can only be made by the `ExternalDefaultOrigin`.
+
+- `external_propose_default` - Schedules a proposal to become a negative-turnout-bias referendum
+ once it is legal for an externally proposed referendum.
+
+#### Fast Track Origin
+
+This call can only be made by the `FastTrackOrigin`.
+
+- `fast_track` - Schedules the current externally proposed proposal that is "majority-carries"
+ to become a referendum immediately.
+
+#### Veto Origin
+
+This call can only be made by the `VetoOrigin`.
+
+- `veto_external` - Vetoes and blacklists the external proposal hash.
+
+#### Root
+
+- `cancel_referendum` - Removes a referendum.
+- `cancel_queued` - Cancels a proposal that is queued for enactment.
+- `clear_public_proposal` - Removes all public proposals.
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #19** · Polkadot SDK<br/>
+`pallet-democracy/1ed66275/stable2409-patch6`
+
+[GitHub](https://github.com/galacticcouncil/polkadot-sdk/tree/1ed662757b03c4f17dc2429c1df84e975d98513a/substrate/frame/democracy) · [docs.rs](https://docs.rs/crate/pallet-democracy/38.0.0/source/) · [crates.io](https://crates.io/crates/pallet-democracy) · [Subscan](https://hydradx.subscan.io/runtime/Democracy)
+
+## Storage (12)
+
+### PublicPropCount
+
+The number of (public) proposals that have been made so far.
+
+```rust
+PublicPropCount: Value<u32>
+```
+
+### PublicProps
+
+The public proposals. Unsorted. The second item is the proposal.
+
+```rust
+PublicProps: Value<Vec<(u32, FrameSupportPreimagesBounded, AccountId32)>>
+```
+
+### DepositOf
+
+Those who have locked a deposit. TWOX-NOTE: Safe, as increasing integer keys are safe.
+
+```rust
+DepositOf: Map<u32 -> (Vec<AccountId32>, u128)> [Twox64Concat]
+```
+
+### ReferendumCount
+
+The next free referendum index, aka the number of referenda started so far.
+
+```rust
+ReferendumCount: Value<u32>
+```
+
+### LowestUnbaked
+
+The lowest referendum index representing an unbaked referendum. Equal to `ReferendumCount` if there isn't a unbaked referendum.
+
+```rust
+LowestUnbaked: Value<u32>
+```
+
+### ReferendumInfoOf
+
+Information concerning any given referendum. TWOX-NOTE: SAFE as indexes are not under an attacker’s control.
+
+```rust
+ReferendumInfoOf: Map<u32 -> {_enum: {Ongoing: PalletDemocracyReferendumStatus, Finished: {\approved\: \bool\, \end\: \u32\}}}> [Twox64Concat]
+```
+
+### VotingOf
+
+All votes for a particular voter. We store the balance for the number of votes that we have recorded. The second item is the total amount of delegations, that will be added. TWOX-NOTE: SAFE as `AccountId`s are crypto hashes anyway.
+
+```rust
+VotingOf: Map<AccountId32 -> {_enum: {Direct: {\votes\: \Vec<(u32, PalletDemocracyVoteAccountVote)>\, \delegations\: \PalletDemocracyDelegations\, \prior\: \PalletDemocracyVotePriorLock\}, Delegating: {\balance\: \u128\, \target\: \AccountId32\, \conviction\: \PalletDemocracyConviction\, \delegations\: \PalletDemocracyDelegations\, \prior\: \PalletDemocracyVotePriorLock\}}}> [Twox64Concat]
+```
+
+### LastTabledWasExternal
+
+True if the last referendum tabled was submitted externally. False if it was a public proposal.
+
+```rust
+LastTabledWasExternal: Value<bool>
+```
+
+### NextExternal
+
+The referendum to be tabled whenever it would be valid to table an external proposal. This happens when a referendum needs to be tabled and one of two conditions are met: - `LastTabledWasExternal` is `false`; or - `PublicProps` is empty.
+
+```rust
+NextExternal: Value<(FrameSupportPreimagesBounded, PalletDemocracyVoteThreshold)>
+```
+
+### Blacklist
+
+A record of who vetoed what. Maps proposal hash to a possible existent block number (until when it may not be resubmitted) and who vetoed it.
+
+```rust
+Blacklist: Map<H256 -> (u32, Vec<AccountId32>)> [Identity]
+```
+
+### Cancellations
+
+Record of all proposals that have been subject to emergency cancellation.
+
+```rust
+Cancellations: Map<H256 -> bool> [Identity]
+```
+
+### MetadataOf
+
+General information concerning any proposal or referendum. The `Hash` refers to the preimage of the `Preimages` provider which can be a JSON dump or IPFS hash of a JSON file. Consider a garbage collection for a metadata of finished referendums to `unrequest` (remove) large preimages.
+
+```rust
+MetadataOf: Map<{_enum: {External: Null, Proposal: u32, Referendum: u32}} -> H256> [Blake2_128Concat]
+```
+
+## Extrinsics (20)
+
+### propose
+
+```rust
+fn propose(
+    origin: OriginFor<T>,
+    proposal: Lookup67,
+    value: Compact<u128>,
+)
+```
+
+### second
+
+```rust
+fn second(
+    origin: OriginFor<T>,
+    proposal: Compact<u32>,
+)
+```
+
+### vote
+
+```rust
+fn vote(
+    origin: OriginFor<T>,
+    refIndex: Compact<u32>,
+    vote: Lookup44,
+)
+```
+
+### emergency_cancel
+
+```rust
+fn emergency_cancel(
+    origin: OriginFor<T>,
+    refIndex: u32,
+)
+```
+
+### external_propose
+
+```rust
+fn external_propose(
+    origin: OriginFor<T>,
+    proposal: Lookup67,
+)
+```
+
+### external_propose_majority
+
+```rust
+fn external_propose_majority(
+    origin: OriginFor<T>,
+    proposal: Lookup67,
+)
+```
+
+### external_propose_default
+
+```rust
+fn external_propose_default(
+    origin: OriginFor<T>,
+    proposal: Lookup67,
+)
+```
+
+### fast_track
+
+```rust
+fn fast_track(
+    origin: OriginFor<T>,
+    proposalHash: H256,
+    votingPeriod: u32,
+    delay: u32,
+)
+```
+
+### veto_external
+
+```rust
+fn veto_external(
+    origin: OriginFor<T>,
+    proposalHash: H256,
+)
+```
+
+### cancel_referendum
+
+```rust
+fn cancel_referendum(
+    origin: OriginFor<T>,
+    refIndex: Compact<u32>,
+)
+```
+
+### delegate
+
+```rust
+fn delegate(
+    origin: OriginFor<T>,
+    to: AccountId32,
+    conviction: Lookup160,
+    balance: u128,
+)
+```
+
+### undelegate
+
+```rust
+fn undelegate(origin: OriginFor<T>)
+```
+
+### clear_public_proposals
+
+```rust
+fn clear_public_proposals(origin: OriginFor<T>)
+```
+
+### unlock
+
+```rust
+fn unlock(
+    origin: OriginFor<T>,
+    target: AccountId32,
+)
+```
+
+### remove_vote
+
+```rust
+fn remove_vote(
+    origin: OriginFor<T>,
+    index: u32,
+)
+```
+
+### remove_other_vote
+
+```rust
+fn remove_other_vote(
+    origin: OriginFor<T>,
+    target: AccountId32,
+    index: u32,
+)
+```
+
+### blacklist
+
+```rust
+fn blacklist(
+    origin: OriginFor<T>,
+    proposalHash: H256,
+    maybeRefIndex: Option<u32>,
+)
+```
+
+### cancel_proposal
+
+```rust
+fn cancel_proposal(
+    origin: OriginFor<T>,
+    propIndex: Compact<u32>,
+)
+```
+
+### set_metadata
+
+```rust
+fn set_metadata(
+    origin: OriginFor<T>,
+    owner: Lookup46,
+    maybeHash: Option<H256>,
+)
+```
+
+### force_remove_vote
+
+```rust
+fn force_remove_vote(
+    origin: OriginFor<T>,
+    target: AccountId32,
+    index: u32,
+)
+```
+
+## Events (17)
+
+### Proposed
+
+```rust
+Proposed {
+    proposalIndex: u32,
+    deposit: u128,
+}
+```
+
+### Tabled
+
+```rust
+Tabled {
+    proposalIndex: u32,
+    deposit: u128,
+}
+```
+
+### ExternalTabled
+
+```rust
+ExternalTabled
+```
+
+### Started
+
+```rust
+Started {
+    refIndex: u32,
+    threshold: Lookup43,
+}
+```
+
+### Passed
+
+```rust
+Passed {
+    refIndex: u32,
+}
+```
+
+### NotPassed
+
+```rust
+NotPassed {
+    refIndex: u32,
+}
+```
+
+### Cancelled
+
+```rust
+Cancelled {
+    refIndex: u32,
+}
+```
+
+### Delegated
+
+```rust
+Delegated {
+    who: AccountId32,
+    target: AccountId32,
+}
+```
+
+### Undelegated
+
+```rust
+Undelegated {
+    account: AccountId32,
+}
+```
+
+### Vetoed
+
+```rust
+Vetoed {
+    who: AccountId32,
+    proposalHash: H256,
+    until: u32,
+}
+```
+
+### Blacklisted
+
+```rust
+Blacklisted {
+    proposalHash: H256,
+}
+```
+
+### Voted
+
+```rust
+Voted {
+    voter: AccountId32,
+    refIndex: u32,
+    vote: Lookup44,
+}
+```
+
+### Seconded
+
+```rust
+Seconded {
+    seconder: AccountId32,
+    propIndex: u32,
+}
+```
+
+### ProposalCanceled
+
+```rust
+ProposalCanceled {
+    propIndex: u32,
+}
+```
+
+### MetadataSet
+
+```rust
+MetadataSet {
+    owner: Lookup46,
+    hash_: H256,
+}
+```
+
+### MetadataCleared
+
+```rust
+MetadataCleared {
+    owner: Lookup46,
+    hash_: H256,
+}
+```
+
+### MetadataTransferred
+
+```rust
+MetadataTransferred {
+    prevOwner: Lookup46,
+    owner: Lookup46,
+    hash_: H256,
+}
+```
+
+## Constants (12)
+
+### EnactmentPeriod
+
+The period between a proposal being approved and enacted. It should generally be a little more than the unstake period to ensure that voting stakers have an opportunity to remove themselves from the system in the case where they are on the losing side of a vote.
+
+```rust
+const EnactmentPeriod: u32
+```
+
+### LaunchPeriod
+
+How often (in blocks) new public referenda are launched.
+
+```rust
+const LaunchPeriod: u32
+```
+
+### VotingPeriod
+
+How often (in blocks) to check for new votes.
+
+```rust
+const VotingPeriod: u32
+```
+
+### VoteLockingPeriod
+
+The minimum period of vote locking. It should be no shorter than enactment period to ensure that in the case of an approval, those successful voters are locked into the consequences that their votes entail.
+
+```rust
+const VoteLockingPeriod: u32
+```
+
+### MinimumDeposit
+
+The minimum amount to be used as a deposit for a public referendum proposal.
+
+```rust
+const MinimumDeposit: u128
+```
+
+### InstantAllowed
+
+Indicator for whether an emergency origin is even allowed to happen. Some chains may want to set this permanently to `false`, others may want to condition it on things such as an upgrade having happened recently.
+
+```rust
+const InstantAllowed: bool
+```
+
+### FastTrackVotingPeriod
+
+Minimum voting period allowed for a fast-track referendum.
+
+```rust
+const FastTrackVotingPeriod: u32
+```
+
+### CooloffPeriod
+
+Period in blocks where an external proposal may not be re-submitted after being vetoed.
+
+```rust
+const CooloffPeriod: u32
+```
+
+### MaxVotes
+
+The maximum number of votes for an account. Also used to compute weight, an overly big value can lead to extrinsic with very big weight: see `delegate` for instance.
+
+```rust
+const MaxVotes: u32
+```
+
+### MaxProposals
+
+The maximum number of public proposals that can exist at any time.
+
+```rust
+const MaxProposals: u32
+```
+
+### MaxDeposits
+
+The maximum number of deposits a public proposal may have at any time.
+
+```rust
+const MaxDeposits: u32
+```
+
+### MaxBlacklisted
+
+The maximum number of items which can be blacklisted.
+
+```rust
+const MaxBlacklisted: u32
+```
+
+## References
+
+### UI (4)
+
+- [useStake](/reference/hooks/staking/useStake)
+- [useUnstake](/reference/hooks/staking/useUnstake)
+- [useUnlockNativeLocks](/reference/hooks/wallet/useUnlockNativeLocks)
+- [useUnlockableNativeTokens](/reference/hooks/wallet/useUnlockableNativeTokens)

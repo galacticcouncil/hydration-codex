@@ -1,0 +1,73 @@
+---
+title: AccountMmPositionHistoricalData
+description: Indexer entity documentation
+sidebar_label: AccountMmPositionHistoricalData
+---
+
+# AccountMmPositionHistoricalData
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 13 |
+| Nullable Fields | 2 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/accountMmPositionHistoricalData.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type AccountMmPositionHistoricalData {
+  id: ID!
+  account: Account!
+  accountBoundEvmAddress: String
+  totalCollateralBase: String!
+  totalDebtBase: String!
+  availableBorrowsBase: String!
+  currentLiquidationThreshold: String!
+  ltv: String!
+  healthFactor: String
+  poolAddress: String!
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  block: Block!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface AccountMmPositionHistoricalData {
+  id: string;
+  account: Account;
+  accountBoundEvmAddress: string | null;
+  totalCollateralBase: string;
+  totalDebtBase: string;
+  availableBorrowsBase: string;
+  currentLiquidationThreshold: string;
+  ltv: string;
+  healthFactor: string | null;
+  poolAddress: string;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  block: Block;
+}
+```
+
+## Example Query
+
+```graphql
+query GetAccountMmPositionHistoricalDatas {
+  accountMmPositionHistoricalDatas(limit: 10) {
+    id
+    account
+    accountBoundEvmAddress
+    totalCollateralBase
+    totalDebtBase
+    # ... more fields
+  }
+}
+```

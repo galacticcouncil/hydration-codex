@@ -1,0 +1,79 @@
+---
+title: OmnipoolAssetHistoricalDataLatest
+description: Indexer entity documentation
+sidebar_label: OmnipoolAssetHistoricalDataLatest
+---
+
+# OmnipoolAssetHistoricalDataLatest
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 13 |
+| Nullable Fields | 1 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/omnipoolAssetHistoricalDataLatest.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type OmnipoolAssetHistoricalDataLatest {
+  id: ID!
+  poolHistoricalDataId: String!
+  omnipoolAssetId: String!
+  assetId: String!
+  assetCap: BigInt!
+  assetShares: BigInt!
+  assetHubReserve: BigInt!
+  assetProtocolShares: BigInt!
+  freeBalance: BigInt!
+  tradable: Int!
+  tvlInRefAssetNorm: String
+  paraBlockHeight: Int!
+  blockId: String!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface OmnipoolAssetHistoricalDataLatest {
+  id: string;
+  poolHistoricalDataId: string;
+  omnipoolAssetId: string;
+  assetId: string;
+  assetCap: bigint;
+  assetShares: bigint;
+  assetHubReserve: bigint;
+  assetProtocolShares: bigint;
+  freeBalance: bigint;
+  tradable: number;
+  tvlInRefAssetNorm: string | null;
+  paraBlockHeight: number;
+  blockId: string;
+}
+```
+
+## Example Query
+
+```graphql
+query GetOmnipoolAssetHistoricalDataLatests {
+  omnipoolAssetHistoricalDataLatests(limit: 10) {
+    id
+    poolHistoricalDataId
+    omnipoolAssetId
+    assetId
+    assetCap
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [Omnipool](/reference/pallets/Omnipool)

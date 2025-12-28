@@ -1,0 +1,103 @@
+---
+title: Asset
+description: Indexer entity documentation
+sidebar_label: Asset
+---
+
+# Asset
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 20 |
+| Nullable Fields | 15 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/asset.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type Asset {
+  id: ID!
+  assetRegistryId: String @index
+  evmAddress: String
+  multiLocationIds: [String]
+  multiLocationsMetadata: [AssetMultiLocation]
+  multiLocations: [AssetMultiLocation]
+  underlyingAsset: Asset
+  aToken: Asset
+  variableDebtToken: Asset
+  bondUnderlyingAsset: Asset
+  assetType: AssetType!
+  resourceType: ResourceType!
+  name: String
+  symbol: String
+  decimals: Int
+  xcmRateLimit: BigInt
+  isSufficient: Boolean!
+  existentialDeposit: BigInt!
+  bondMaturity: BigInt
+  note: existentialDeposit is probably taken 1:1 from the runtime
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface Asset {
+  id: string;
+  assetRegistryId: String @index | null;
+  evmAddress: string | null;
+  multiLocationIds: [String] | null;
+  multiLocationsMetadata: [AssetMultiLocation] | null;
+  multiLocations: [AssetMultiLocation] | null;
+  underlyingAsset: Asset | null;
+  aToken: Asset | null;
+  variableDebtToken: Asset | null;
+  bondUnderlyingAsset: Asset | null;
+  assetType: AssetType;
+  resourceType: ResourceType;
+  name: string | null;
+  symbol: string | null;
+  decimals: number | null;
+  xcmRateLimit: bigint | null;
+  isSufficient: boolean;
+  existentialDeposit: bigint;
+  bondMaturity: bigint | null;
+  note: existentialDeposit is probably taken 1:1 from the runtime | null;
+}
+```
+
+## Source Handlers
+
+This entity is populated by the following runtime events and handlers:
+
+| Runtime Event | Handler |
+|---------------|---------|
+| [AssetRegistry.LocationSet](/reference/pallets/AssetRegistry#locationset) | [`assetLocationSet`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/assets/assetRegistry.ts#L225) |
+| [AssetRegistry.Registered](/reference/pallets/AssetRegistry#registered) | [`assetRegistered`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/assets/assetRegistry.ts#L23) |
+| [AssetRegistry.Updated](/reference/pallets/AssetRegistry#updated) | [`assetUpdated`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/assets/assetRegistry.ts#L183) |
+
+## Example Query
+
+```graphql
+query GetAssets {
+  assets(limit: 10) {
+    id
+    assetRegistryId
+    evmAddress
+    multiLocationIds
+    multiLocationsMetadata
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [AssetRegistry](/reference/pallets/AssetRegistry)

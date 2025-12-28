@@ -1,0 +1,566 @@
+---
+title: System
+description: Runtime pallet documentation
+sidebar_label: System
+---
+
+# System
+
+The System module provides low-level access to core types and cross-cutting utilities. It acts as the base layer for
+other pallets to interact with the Substrate framework components.
+
+- `system::Config`
+
+## Overview
+
+The System module defines the core data types used in a Substrate runtime. It also provides several utility functions
+(see `Pallet`) for other FRAME pallets.
+
+In addition, it manages the storage items for extrinsics data, indexes, event records, and digest items, among other
+things that support the execution of the current block.
+
+It also handles low-level tasks like depositing logs, basic set up and take down of temporary storage entries, and
+access to previous block hashes.
+
+## Interface
+
+### Dispatchable Functions
+
+The System module does not implement any dispatchable functions.
+
+### Public Functions
+
+See the `Pallet` struct for details of
+publicly available functions.
+
+### Signed Extensions
+
+The System module defines the following extensions:
+
+ - `CheckWeight`: Checks the weight and length of the block and ensure that it does not exceed the limits.
+ - `CheckNonce`: Checks the nonce of the transaction. Contains a single payload of type `T::Nonce`.
+ - `CheckEra`: Checks the era of the transaction. Contains a single payload of type `Era`.
+ - `CheckGenesis`: Checks the provided genesis hash of the transaction. Must be a part of the signed payload of the
+ transaction.
+ - `CheckSpecVersion`: Checks that the runtime version is the same as the one used to sign the transaction.
+ - `CheckTxVersion`: Checks that the transaction version is the same as the one used to sign the transaction.
+
+Lookup the runtime aggregator file (e.g. `node/runtime`) to see the full list of signed extensions included in a chain.
+
+## Usage
+
+### Prerequisites
+
+Import the System module and derive your module's configuration trait from the system trait.
+
+### Example - Get extrinsic count and parent hash for the current block
+
+```rust
+#[frame_support::pallet]
+pub mod pallet {
+ use super::*;
+ use frame_support::pallet_prelude::*;
+ use frame_system::pallet_prelude::*;
+
+ #[pallet::config]
+ pub trait Config: frame_system::Config {}
+
+ #[pallet::pallet]
+ pub struct Pallet<T>(_);
+
+ #[pallet::call]
+ impl<T: Config> Pallet<T> {
+ #[pallet::weight(0)]
+ pub fn system_module_example(origin: OriginFor<T>) -> DispatchResult {
+ let _sender = ensure_signed(origin)?;
+ let _extrinsic_count = <system::Pallet<T>>::extrinsic_count();
+ let _parent_hash = <system::Pallet<T>>::parent_hash();
+ Ok(())
+ }
+ }
+}
+```
+
+<details>
+<summary>Code Documentation</summary>
+
+The System pallet provides low-level access to core types and cross-cutting utilities. It acts
+as the base layer for other pallets to interact with the Substrate framework components.
+
+- `Config`
+
+### Overview
+
+The System pallet defines the core data types used in a Substrate runtime. It also provides
+several utility functions (see `Pallet`) for other FRAME pallets.
+
+In addition, it manages the storage items for extrinsic data, indices, event records, and digest
+items, among other things that support the execution of the current block.
+
+It also handles low-level tasks like depositing logs, basic set up and take down of temporary
+storage entries, and access to previous block hashes.
+
+### Interface
+
+### Dispatchable Functions
+
+The System pallet provides dispatchable functions that, with the exception of `remark`, manage
+low-level or privileged functionality of a Substrate-based runtime.
+
+- `remark`: Make some on-chain remark.
+- `set_heap_pages`: Set the number of pages in the WebAssembly environment's heap.
+- `set_code`: Set the new runtime code.
+- `set_code_without_checks`: Set the new runtime code without any checks.
+- `set_storage`: Set some items of storage.
+- `kill_storage`: Kill some items from storage.
+- `kill_prefix`: Kill all storage items with a key that starts with the given prefix.
+- `remark_with_event`: Make some on-chain remark and emit an event.
+- `do_task`: Do some specified task.
+- `authorize_upgrade`: Authorize new runtime code.
+- `authorize_upgrade_without_checks`: Authorize new runtime code and an upgrade sans
+ verification.
+- `apply_authorized_upgrade`: Provide new, already-authorized runtime code.
+
+#### A Note on Upgrades
+
+The pallet provides two primary means of upgrading the runtime, a single-phase means using
+`set_code` and a two-phase means using `authorize_upgrade` followed by
+`apply_authorized_upgrade`. The first will directly attempt to apply the provided `code`
+(application may have to be scheduled, depending on the context and implementation of the
+`OnSetCode` trait).
+
+The `authorize_upgrade` route allows the authorization of a runtime's code hash. Once
+authorized, anyone may upload the correct runtime to apply the code. This pattern is useful when
+providing the runtime ahead of time may be unwieldy, for example when a large preimage (the
+code) would need to be stored on-chain or sent over a message transport protocol such as a
+bridge.
+
+The `*_without_checks` variants do not perform any version checks, so using them runs the risk
+of applying a downgrade or entirely other chain specification. They will still validate that the
+`code` meets the authorized hash.
+
+### Public Functions
+
+See the `Pallet` struct for details of publicly available functions.
+
+### Signed Extensions
+
+The System pallet defines the following extensions:
+
+ - `CheckWeight`: Checks the weight and length of the block and ensure that it does not
+ exceed the limits.
+ - `CheckNonce`: Checks the nonce of the transaction. Contains a single payload of type
+ `T::Nonce`.
+ - `CheckEra`: Checks the era of the transaction. Contains a single payload of type `Era`.
+ - `CheckGenesis`: Checks the provided genesis hash of the transaction. Must be a part of the
+ signed payload of the transaction.
+ - `CheckSpecVersion`: Checks that the runtime version is the same as the one used to sign
+ the transaction.
+ - `CheckTxVersion`: Checks that the transaction version is the same as the one used to sign
+ the transaction.
+
+Look up the runtime aggregator file (e.g. `node/runtime`) to see the full list of signed
+extensions included in a chain.
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #1** · Polkadot SDK<br/>
+`frame-system/1ed66275/stable2409-patch6`
+
+[GitHub](https://github.com/galacticcouncil/polkadot-sdk/tree/1ed662757b03c4f17dc2429c1df84e975d98513a/substrate/frame/system) · [docs.rs](https://docs.rs/crate/frame-system/38.0.0/source/) · [crates.io](https://crates.io/crates/frame-system) · [Subscan](https://hydradx.subscan.io/runtime/System)
+
+## Storage (18)
+
+### Account
+
+The full account information for a particular account ID.
+
+```rust
+Account: Map<AccountId32 -> {
+    nonce: u32,
+    consumers: u32,
+    providers: u32,
+    sufficients: u32,
+    data: PalletBalancesAccountData,
+}> [Blake2_128Concat]
+```
+
+**Read by SDK:** [BalanceClient.getSystemBalance](/reference/sdk/sdk#balanceclient), [BalanceClient.subscribeSystemBalance](/reference/sdk/sdk#balanceclient), [BalanceClient.subscribeSystemBalances](/reference/sdk/sdk#balanceclient), [BalanceClientV2.getSystemBalance](/reference/sdk/sdk#balanceclientv2), [BalanceClientV2.subscribeSystemBalance](/reference/sdk/sdk#balanceclientv2), [BaseClient.getSystemAccountBalance](/reference/sdk/xcm-cfg#baseclient)
+
+### ExtrinsicCount
+
+Total extrinsics count for the current block.
+
+```rust
+ExtrinsicCount: Value<u32>
+```
+
+### InherentsApplied
+
+Whether all inherents have been applied.
+
+```rust
+InherentsApplied: Value<bool>
+```
+
+### BlockWeight
+
+The current weight for the block.
+
+```rust
+BlockWeight: Value<{
+    normal: SpWeightsWeightV2Weight,
+    operational: SpWeightsWeightV2Weight,
+    mandatory: SpWeightsWeightV2Weight,
+}>
+```
+
+### AllExtrinsicsLen
+
+Total length (in bytes) for all extrinsics put together, for the current block.
+
+```rust
+AllExtrinsicsLen: Value<u32>
+```
+
+### BlockHash
+
+Map of block numbers to block hashes.
+
+```rust
+BlockHash: Map<u32 -> H256> [Twox64Concat]
+```
+
+### ExtrinsicData
+
+Extrinsics data for the current block (maps an extrinsic's index to its data).
+
+```rust
+ExtrinsicData: Map<u32 -> Bytes> [Twox64Concat]
+```
+
+### Number
+
+The current block number being processed. Set by `execute_block`.
+
+```rust
+Number: Value<u32>
+```
+
+**Read by SDK:** [StableSwapClient.loadPools](/reference/sdk/sdk#stableswapclient), [BalanceClient.subscribeErc20Balance](/reference/sdk/sdk-next#balanceclient)
+
+### ParentHash
+
+Hash of the previous block.
+
+```rust
+ParentHash: Value<H256>
+```
+
+### Digest
+
+Digest of the current block, also part of the block header.
+
+```rust
+Digest: Value<{logs: Vec<SpRuntimeDigestDigestItem>}>
+```
+
+### Events
+
+Events deposited for the current block. NOTE: The item is unbound and should therefore never be read on chain. It could otherwise inflate the PoV size of a block. Events have a large in-memory size. Box the events to not go out-of-memory just in case someone still reads them from within the runtime.
+
+```rust
+Events: Value<Vec<FrameSystemEventRecord>>
+```
+
+### EventCount
+
+The number of events in the `Events<T>` list.
+
+```rust
+EventCount: Value<u32>
+```
+
+### EventTopics
+
+Mapping between a topic (represented by T::Hash) and a vector of indexes of events in the `<Events<T>>` list. All topic vectors have deterministic storage locations depending on the topic. This allows light-clients to leverage the changes trie storage tracking mechanism and in case of changes fetch the list of events of interest. The value has the type `(BlockNumberFor<T>, EventIndex)` because if we used only just the `EventIndex` then in case if the topic has the same contents on the next block no notification will be triggered thus the event might be lost.
+
+```rust
+EventTopics: Map<H256 -> Vec<(u32, u32)>> [Blake2_128Concat]
+```
+
+### LastRuntimeUpgrade
+
+Stores the `spec_version` and `spec_name` of when the last runtime upgrade happened.
+
+```rust
+LastRuntimeUpgrade: Value<{specVersion: Compact<u32>, specName: Text}>
+```
+
+### UpgradedToU32RefCount
+
+True if we have upgraded so that `type RefCount` is `u32`. False (default) if not.
+
+```rust
+UpgradedToU32RefCount: Value<bool>
+```
+
+### UpgradedToTripleRefCount
+
+True if we have upgraded so that AccountInfo contains three types of `RefCount`. False (default) if not.
+
+```rust
+UpgradedToTripleRefCount: Value<bool>
+```
+
+### ExecutionPhase
+
+The execution phase of the block.
+
+```rust
+ExecutionPhase: Value<{_enum: {ApplyExtrinsic: u32, Finalization: Null, Initialization: Null}}>
+```
+
+### AuthorizedUpgrade
+
+`Some` if a code upgrade has been authorized.
+
+```rust
+AuthorizedUpgrade: Value<{codeHash: H256, checkVersion: bool}>
+```
+
+## Extrinsics (11)
+
+### remark
+
+```rust
+fn remark(
+    origin: OriginFor<T>,
+    remark: Bytes,
+)
+```
+
+### set_heap_pages
+
+```rust
+fn set_heap_pages(
+    origin: OriginFor<T>,
+    pages: u64,
+)
+```
+
+### set_code
+
+```rust
+fn set_code(
+    origin: OriginFor<T>,
+    code: Bytes,
+)
+```
+
+### set_code_without_checks
+
+```rust
+fn set_code_without_checks(
+    origin: OriginFor<T>,
+    code: Bytes,
+)
+```
+
+### set_storage
+
+```rust
+fn set_storage(
+    origin: OriginFor<T>,
+    items: Vec<(Bytes,Bytes)>,
+)
+```
+
+### kill_storage
+
+```rust
+fn kill_storage(
+    origin: OriginFor<T>,
+    keys_: Vec<Bytes>,
+)
+```
+
+### kill_prefix
+
+```rust
+fn kill_prefix(
+    origin: OriginFor<T>,
+    prefix: Bytes,
+    subkeys: u32,
+)
+```
+
+### remark_with_event
+
+```rust
+fn remark_with_event(
+    origin: OriginFor<T>,
+    remark: Bytes,
+)
+```
+
+### authorize_upgrade
+
+```rust
+fn authorize_upgrade(
+    origin: OriginFor<T>,
+    codeHash: H256,
+)
+```
+
+### authorize_upgrade_without_checks
+
+```rust
+fn authorize_upgrade_without_checks(
+    origin: OriginFor<T>,
+    codeHash: H256,
+)
+```
+
+### apply_authorized_upgrade
+
+```rust
+fn apply_authorized_upgrade(
+    origin: OriginFor<T>,
+    code: Bytes,
+)
+```
+
+## Events (7)
+
+### ExtrinsicSuccess
+
+```rust
+ExtrinsicSuccess {
+    dispatchInfo: Lookup23,
+}
+```
+
+### ExtrinsicFailed
+
+```rust
+ExtrinsicFailed {
+    dispatchError: Lookup26,
+    dispatchInfo: Lookup23,
+}
+```
+
+### CodeUpdated
+
+```rust
+CodeUpdated
+```
+
+### NewAccount
+
+```rust
+NewAccount {
+    account: AccountId32,
+}
+```
+
+### KilledAccount
+
+```rust
+KilledAccount {
+    account: AccountId32,
+}
+```
+
+### Remarked
+
+```rust
+Remarked {
+    sender: AccountId32,
+    hash_: H256,
+}
+```
+
+### UpgradeAuthorized
+
+```rust
+UpgradeAuthorized {
+    codeHash: H256,
+    checkVersion: bool,
+}
+```
+
+## Constants (6)
+
+### BlockWeights
+
+Block & extrinsics weights: base values and limits.
+
+```rust
+const BlockWeights: {"baseBlock":"SpWeightsWeightV2Weight","maxBlock":"SpWeightsWeightV2Weight","perClass":"FrameSupportDispatchPerDispatchClassWeightsPerClass"}
+```
+
+### BlockLength
+
+The maximum length of a block (in bytes).
+
+```rust
+const BlockLength: {"max":"FrameSupportDispatchPerDispatchClassU32"}
+```
+
+### BlockHashCount
+
+Maximum number of block number to block hash mappings to keep (oldest pruned first).
+
+```rust
+const BlockHashCount: u32
+```
+
+### DbWeight
+
+The weight of runtime database operations the runtime can invoke.
+
+```rust
+const DbWeight: {"read":"u64","write":"u64"}
+```
+
+### Version
+
+Get the chain's in-code version.
+
+```rust
+const Version: {"specName":"Text","implName":"Text","authoringVersion":"u32","specVersion":"u32","implVersion":"u32","apis":"Vec<([u8;8],u32)>","transactionVersion":"u32","stateVersion":"u8"}
+```
+
+### SS58Prefix
+
+The designated SS58 prefix of this chain. This replaces the "ss58Format" property declared in the chain spec. Reason is that the runtime should know about the prefix in order to make use of it as an identifier of the chain.
+
+```rust
+const SS58Prefix: u16
+```
+
+## References
+
+### SDK (3)
+
+- [sdk](/reference/sdk/sdk)
+- [sdk-next](/reference/sdk/sdk-next)
+- [xcm-cfg](/reference/sdk/xcm-cfg)
+
+### UI (11)
+
+- [useInvalidateOnBlock](/reference/hooks/chain/useInvalidateOnBlock)
+- [useProviderMetadata](/reference/hooks/chain/useProviderMetadata)
+- [useReferralRewards](/reference/hooks/utils/useReferralRewards)
+- [useStakingRewards](/reference/hooks/utils/useStakingRewards)
+- [useClaimStaking](/reference/hooks/staking/useClaimStaking)
+- [useStakingAPR](/reference/hooks/staking/useStakingAPR)
+- [useRewardsCurveData](/reference/hooks/staking/useRewardsCurveData)
+- [useUnlockableNativeTokens](/reference/hooks/wallet/useUnlockableNativeTokens)
+- [useClaimAllWalletRewards](/reference/hooks/wallet/useClaimAllWalletRewards)
+- [useWalletRewardsSectionData](/reference/hooks/wallet/useWalletRewardsSectionData)
+- [useInsufficientTransferFee](/reference/hooks/wallet/useInsufficientTransferFee)

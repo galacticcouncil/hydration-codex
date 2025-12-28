@@ -1,0 +1,71 @@
+---
+title: MmLiquidationCall
+description: Indexer entity documentation
+sidebar_label: MmLiquidationCall
+---
+
+# MmLiquidationCall
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 12 |
+| Nullable Fields | 2 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/mmLiquidationCall.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type MmLiquidationCall {
+  id: ID!
+  traceIds: [String!
+  collateralAsset: Asset!
+  debtAsset: Asset!
+  account: Account!
+  debtToCoverAmount: BigInt
+  liquidatedCollateralAmount: BigInt
+  liquidatorAccount: Account!
+  receiveAToken: Boolean!
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  event: Event!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface MmLiquidationCall {
+  id: string;
+  traceIds: [String;
+  collateralAsset: Asset;
+  debtAsset: Asset;
+  account: Account;
+  debtToCoverAmount: bigint | null;
+  liquidatedCollateralAmount: bigint | null;
+  liquidatorAccount: Account;
+  receiveAToken: boolean;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  event: Event;
+}
+```
+
+## Example Query
+
+```graphql
+query GetMmLiquidationCalls {
+  mmLiquidationCalls(limit: 10) {
+    id
+    traceIds
+    collateralAsset
+    debtAsset
+    account
+    # ... more fields
+  }
+}
+```

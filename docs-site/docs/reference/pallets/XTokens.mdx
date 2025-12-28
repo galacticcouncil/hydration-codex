@@ -1,0 +1,232 @@
+---
+title: XTokens
+description: Runtime pallet documentation
+sidebar_label: XTokens
+---
+
+# XTokens
+
+## Overview
+
+The `xtokens` module provides cross-chain token transfer functionality, by cross-consensus messages(XCM).
+
+The `xtokens` module provides functions for
+- Token transfer from parachains to relay chain.
+- Token transfer between parachains, including relay chain tokens like DOT,
+ KSM, and parachain tokens like ACA, aUSD, USDT.
+
+## Notes
+
+#### Integration tests
+
+Integration tests could be done manually after integrating `xtokens` into a runtime. To cover the full features, set up at least 4 relay chain validators and 3 collators of different parachains, and use dispatchable calls to include all these scenarios:
+
+- Transfer relay chain tokens to relay chain.
+- Transfer tokens issued by parachain A, from parachain A to parachain B.
+ - Sending the tx from parachain A.
+ - Set the destination as Parachain B.
+ - Set the currency ID as parachain A token.
+- Transfer tokens issued by parachain B, from parachain A to parachain B.
+ - Sending the tx from parachain A.
+ - Set the destination as Parachain B.
+ - Set the currency ID as parachain B token.
+- Transfer tokens issued by parachain C, from parachain A to parachain B.
+ - Sending the tx from parachain A.
+ - Set the destination as Parachain B.
+ - Set the currency ID as parachain C token.
+
+#### Transfer multiple currencies
+
+- Transfer relay chain tokens to relay chain, and use relay chain token as fee
+- Transfer relay chain tokens to parachain, and use relay chain token as fee
+- Transfer tokens issued by parachain A, from parachain A to parachain B, and use parachain A token as a fee
+- Transfer tokens issued by parachain B, from parachain A to parachain B, and use parachain B token as a fee
+- Transfer tokens issued by parachain C, from parachain A to parachain B, and use parachain C token as a fee
+- Transfer tokens issued by parachain B, from parachain A to parachain B, and use relay chain token as fee
+
+Notice, in the case of parachain A transfer parachain B token to parachain B, and use relay chain token as fee. Because fee asset is relaychain token, and non fee asset is parachain B token, this is two different chain. We call chain of fee asset as `fee_reserve`, and chain of non fee asset as `non_fee_reserve`. And in this case `fee_reserve` location is also refer to destination parachain.
+
+The current implementation sends two XCM from a sender parachain. First XCM is sent to the fee reserve chain which will also route the XCM message to the destination parachain. Second XCM directly sent to destination parachain.
+
+The fee amount in fee asset is split into two parts:
+1. Fee asset sent to fee reserve chain = fee_amount - min_xcm_fee
+2. Fee asset sent to dest reserve chain = min_xcm_fee
+
+Parachains should implement config `MinXcmFee` in `xtokens` module config:
+
+```rust
+parameter_type_with_key! {
+ pub MinXcmReserveFee: |location: Location| -> Option<u128> {
+ #[allow(clippy::match_ref_pats)] // false positive
+ match (location.parents, location.first_interior()) {
+ (1, Some(Parachain(parachains::statemine::ID))) => Some(4_000_000_000),
+ _ => None,
+ }
+ };
+}
+```
+
+If Parachain don't want have this case, can simply return None. A default implementation is provided by `DisabledParachainFee` in `xcm-support`.
+
+```rust
+parameter_type_with_key! {
+ pub ParachainMinFee: |_location: Location| -> Option<u128> {
+ None
+ };
+}
+```
+
+Notice the implementation for now also relies on `SelfLocation` which is already in `xtokens` config. The `SelfLocation` can be set to the absolute view `(1, Parachain(THIS_PARACHAIN_ID))` and refers to the sender parachain. The alternative is to set `SelfLocation` to relative view `(0, Here)` to adhere to Polkadot guidelines.
+
+We use `SelfLocation` to fund fee to sender's parachain sovereign account on destination parachain, which asset is originated from sender account on sender parachain. This means if user setup too much fee, the fee will not returned to user, instead deposit to sibling parachain sovereign account on destination parachain.
+
+<details>
+<summary>Code Documentation</summary>
+
+### Overview
+
+The xtokens module provides cross-chain token transfer functionality, by
+cross-consensus messages(XCM).
+
+The xtokens module provides functions for
+- Token transfer from parachains to relay chain.
+- Token transfer between parachains, including relay chain tokens like DOT,
+ KSM, and parachain tokens like ACA, aUSD.
+
+### Interface
+
+### Dispatchable functions
+
+- `transfer`: Transfer local assets with given `CurrencyId` and `Amount`.
+- `transfer_multiasset`: Transfer `Asset` assets.
+- `transfer_with_fee`: Transfer native currencies specifying the fee and
+ amount as separate.
+- `transfer_multiasset_with_fee`: Transfer `Asset` specifying the fee and
+ amount as separate.
+- `transfer_multicurrencies`: Transfer several currencies specifying the
+ item to be used as fee.
+- `transfer_multiassets`: Transfer several `Asset` specifying the item to be
+ used as fee.
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #137** · ORML<br/>
+`orml-xtokens/60b88b84/polkadot-stable2409`
+
+[GitHub](https://github.com/galacticcouncil/open-runtime-module-library/tree/60b88b84a6abbf8e12a884bf1c3774ff2db1f880/xtokens) · [docs.rs](https://docs.rs/crate/orml-xtokens/1.0.0/source/) · [crates.io](https://crates.io/crates/orml-xtokens) · [Subscan](https://hydradx.subscan.io/runtime/XTokens)
+
+## Extrinsics (6)
+
+### transfer
+
+```rust
+fn transfer(
+    origin: OriginFor<T>,
+    currencyId: u32,
+    amount: u128,
+    dest: Lookup305,
+    destWeightLimit: Lookup358,
+)
+```
+
+### transfer_multiasset
+
+```rust
+fn transfer_multiasset(
+    origin: OriginFor<T>,
+    asset: Lookup397,
+    dest: Lookup305,
+    destWeightLimit: Lookup358,
+)
+```
+
+### transfer_with_fee
+
+```rust
+fn transfer_with_fee(
+    origin: OriginFor<T>,
+    currencyId: u32,
+    amount: u128,
+    fee: u128,
+    dest: Lookup305,
+    destWeightLimit: Lookup358,
+)
+```
+
+### transfer_multiasset_with_fee
+
+```rust
+fn transfer_multiasset_with_fee(
+    origin: OriginFor<T>,
+    asset: Lookup397,
+    fee: Lookup397,
+    dest: Lookup305,
+    destWeightLimit: Lookup358,
+)
+```
+
+### transfer_multicurrencies
+
+```rust
+fn transfer_multicurrencies(
+    origin: OriginFor<T>,
+    currencies: Vec<(u32,u128)>,
+    feeItem: u32,
+    dest: Lookup305,
+    destWeightLimit: Lookup358,
+)
+```
+
+### transfer_multiassets
+
+```rust
+fn transfer_multiassets(
+    origin: OriginFor<T>,
+    assets: Lookup378,
+    feeItem: u32,
+    dest: Lookup305,
+    destWeightLimit: Lookup358,
+)
+```
+
+## Events (1)
+
+### TransferredAssets
+
+```rust
+TransferredAssets {
+    sender: AccountId32,
+    assets: Vec<StagingXcmV4Asset>,
+    fee: Lookup364,
+    dest: Lookup95,
+}
+```
+
+## Constants (3)
+
+### SelfLocation
+
+Self chain location.
+
+```rust
+const SelfLocation: {"parents":"u8","interior":"StagingXcmV4Junctions"}
+```
+
+### BaseXcmWeight
+
+Base XCM weight. The actually weight for an XCM message is `T::BaseXcmWeight + T::Weigher::weight(&msg)`.
+
+```rust
+const BaseXcmWeight: {"refTime":"Compact<u64>","proofSize":"Compact<u64>"}
+```
+
+### RateLimiterId
+
+The id of the RateLimiter.
+
+```rust
+const RateLimiterId: Null
+```

@@ -1,0 +1,62 @@
+---
+title: CollatorRewards
+description: Runtime pallet documentation
+sidebar_label: CollatorRewards
+---
+
+# CollatorRewards
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this pallet does.
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #57** · HydraDX<br/>
+`pallet-collator-rewards/4ca470c5/master`
+
+[GitHub](https://github.com/galacticcouncil/HydraDX-node/tree/4ca470c5d613d62ce52eb8645770ef5fff263111/pallets/collator-rewards) · [Subscan](https://hydradx.subscan.io/runtime/CollatorRewards)
+
+## Storage (1)
+
+### Collators
+
+Stores the collators per session (index).
+
+```rust
+Collators: Map<u32 -> Vec<AccountId32>> [Twox64Concat]
+```
+
+## Events (1)
+
+### CollatorRewarded
+
+```rust
+CollatorRewarded {
+    who: AccountId32,
+    amount: u128,
+    currency: u32,
+}
+```
+
+## Constants (3)
+
+### RewardPerCollator
+
+Reward amount per one collator.
+
+```rust
+const RewardPerCollator: u128
+```
+
+### RewardCurrencyId
+
+Reward Asset Id
+
+```rust
+const RewardCurrencyId: u32
+```
+
+### RewardsBag
+
+```rust
+const RewardsBag: AccountId32
+```

@@ -1,0 +1,117 @@
+---
+title: LbppoolVolumeHistoricalData
+description: Indexer entity documentation
+sidebar_label: LbppoolVolumeHistoricalData
+---
+
+# LbppoolVolumeHistoricalData
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 32 |
+| Nullable Fields | 0 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/lbppoolVolumeHistoricalData.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type LbppoolVolumeHistoricalData {
+  id: ID!
+  pool: Lbppool!
+  assetA: Asset!
+  assetB: Asset!
+  averagePrice: Float!
+  assetAVolIn: BigInt!
+  assetAVolOut: BigInt!
+  assetATotalVolIn: BigInt!
+  assetATotalVolOut: BigInt!
+  assetAFeeVol: BigInt!
+  assetBFeeVol: BigInt!
+  assetAFeesTotalVol: BigInt!
+  assetBFeesTotalVol: BigInt!
+  assetBVolIn: BigInt!
+  assetBVolOut: BigInt!
+  assetBTotalVolIn: BigInt!
+  assetBTotalVolOut: BigInt!
+  assetAVolInNorm: String!
+  assetAVolOutNorm: String!
+  assetBVolInNorm: String!
+  assetBVolOutNorm: String!
+  assetAFeeVolNorm: String!
+  assetBFeeVolNorm: String!
+  assetATotalVolInNorm: String!
+  assetATotalVolOutNorm: String!
+  assetBTotalVolInNorm: String!
+  assetBTotalVolOutNorm: String!
+  assetAFeesTotalVolNorm: String!
+  assetBFeesTotalVolNorm: String!
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  block: Block!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface LbppoolVolumeHistoricalData {
+  id: string;
+  pool: Lbppool;
+  assetA: Asset;
+  assetB: Asset;
+  averagePrice: number;
+  assetAVolIn: bigint;
+  assetAVolOut: bigint;
+  assetATotalVolIn: bigint;
+  assetATotalVolOut: bigint;
+  assetAFeeVol: bigint;
+  assetBFeeVol: bigint;
+  assetAFeesTotalVol: bigint;
+  assetBFeesTotalVol: bigint;
+  assetBVolIn: bigint;
+  assetBVolOut: bigint;
+  assetBTotalVolIn: bigint;
+  assetBTotalVolOut: bigint;
+  assetAVolInNorm: string;
+  assetAVolOutNorm: string;
+  assetBVolInNorm: string;
+  assetBVolOutNorm: string;
+  assetAFeeVolNorm: string;
+  assetBFeeVolNorm: string;
+  assetATotalVolInNorm: string;
+  assetATotalVolOutNorm: string;
+  assetBTotalVolInNorm: string;
+  assetBTotalVolOutNorm: string;
+  assetAFeesTotalVolNorm: string;
+  assetBFeesTotalVolNorm: string;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  block: Block;
+}
+```
+
+## Example Query
+
+```graphql
+query GetLbppoolVolumeHistoricalDatas {
+  lbppoolVolumeHistoricalDatas(limit: 10) {
+    id
+    pool
+    assetA
+    assetB
+    averagePrice
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [LBP](/reference/pallets/LBP)

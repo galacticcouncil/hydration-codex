@@ -1,0 +1,56 @@
+---
+title: PreprocessedDataBucket
+description: Indexer entity documentation
+sidebar_label: PreprocessedDataBucket
+---
+
+# PreprocessedDataBucket
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 5 |
+| Nullable Fields | 0 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/preprocessedDataBucket.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type PreprocessedDataBucket {
+  id: ID!
+  processorId: String!
+  paraBlockHeight: Int!
+  entityName: String!
+  data: JSON!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface PreprocessedDataBucket {
+  id: string;
+  processorId: string;
+  paraBlockHeight: number;
+  entityName: string;
+  data: object;
+}
+```
+
+## Example Query
+
+```graphql
+query GetPreprocessedDataBuckets {
+  preprocessedDataBuckets(limit: 10) {
+    id
+    processorId
+    paraBlockHeight
+    entityName
+    data
+  }
+}
+```

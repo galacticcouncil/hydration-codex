@@ -1,0 +1,62 @@
+---
+title: Hsmpool
+description: Indexer entity documentation
+sidebar_label: Hsmpool
+---
+
+# Hsmpool
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 5 |
+| Nullable Fields | 1 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/hsmpool.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type Hsmpool {
+  id: ID!
+  account: Account!
+  facilitator: AaveFacilitator!
+  collaterals: [HsmCollateral!
+  field: "pool")
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface Hsmpool {
+  id: string;
+  account: Account;
+  facilitator: AaveFacilitator;
+  collaterals: [HsmCollateral;
+  field: "pool") | null;
+}
+```
+
+## Example Query
+
+```graphql
+query GetHsmpools {
+  hsmpools(limit: 10) {
+    id
+    account
+    facilitator
+    collaterals
+    field
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [HSM](/reference/pallets/HSM)

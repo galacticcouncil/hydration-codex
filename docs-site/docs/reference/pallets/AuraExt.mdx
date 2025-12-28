@@ -1,0 +1,60 @@
+---
+title: AuraExt
+description: Runtime pallet documentation
+sidebar_label: AuraExt
+---
+
+# AuraExt
+
+## Release
+
+Polkadot SDK stable2409
+
+<details>
+<summary>Code Documentation</summary>
+
+Cumulus extension pallet for AuRa
+
+This pallet extends the Substrate AuRa pallet to make it compatible with parachains. It
+provides the `Pallet`, the `Config` and the `GenesisConfig`.
+
+It is also required that the parachain runtime uses the provided `BlockExecutor` to properly
+check the constructed block on the relay chain.
+
+```
+# struct Runtime;
+# struct Executive;
+# struct CheckInherents;
+cumulus_pallet_parachain_system::register_validate_block! {
+ Runtime = Runtime,
+ BlockExecutor = cumulus_pallet_aura_ext::BlockExecutor::<Runtime, Executive>,
+}
+```
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #169** · Polkadot SDK<br/>
+`cumulus-pallet-aura-ext/1ed66275/stable2409-patch6`
+
+[GitHub](https://github.com/galacticcouncil/polkadot-sdk/tree/1ed662757b03c4f17dc2429c1df84e975d98513a/cumulus/pallets/aura-ext) · [docs.rs](https://docs.rs/crate/cumulus-pallet-aura-ext/0.17.0/source/) · [crates.io](https://crates.io/crates/cumulus-pallet-aura-ext) · [Subscan](https://hydradx.subscan.io/runtime/AuraExt)
+
+## Storage (2)
+
+### Authorities
+
+Serves as cache for the authorities. The authorities in AuRa are overwritten in `on_initialize` when we switch to a new session, but we require the old authorities to verify the seal when validating a PoV. This will always be updated to the latest AuRa authorities in `on_finalize`.
+
+```rust
+Authorities: Value<Vec<SpConsensusAuraSr25519AppSr25519Public>>
+```
+
+### SlotInfo
+
+Current slot paired with a number of authored blocks. Updated on each block initialization.
+
+```rust
+SlotInfo: Value<(u64, u32)>
+```

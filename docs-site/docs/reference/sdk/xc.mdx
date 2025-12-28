@@ -1,0 +1,130 @@
+---
+title: "@galacticcouncil/xc"
+description: SDK package documentation
+sidebar_label: xc
+---
+
+# @galacticcouncil/xc
+
+Cross-chain ctx
+
+**Version:** 0.4.0 | **Methods:** 2
+
+**Links:** [GitHub](https://github.com/galacticcouncil/sdk/tree/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc) | [npm](https://www.npmjs.com/package/@galacticcouncil/xc)
+
+## Installation
+
+```bash
+npm install @galacticcouncil/xc
+```
+
+## Functions
+
+### createXcContext
+
+```typescript
+async function createXcContext(opts: import("/root/hydration-codex/repos/sdk/...): Promise<import("/root/hydration-codex/repos/sdk/packages/xc/src/types").XcCtx>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc/src/factory.ts#L20)
+
+### registerDexes
+
+```typescript
+async function registerDexes(config: ConfigService, opts: import("/root/hydration-codex/repos/sdk/...): Promise<void>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc/src/dex.ts#L24)
+
+## References
+
+### UI (88)
+
+- [useAccountInfo](/reference/hooks/account/useAccountInfo)
+- [useAccountOmnipoolPositions](/reference/hooks/account/useAccountOmnipoolPositions)
+- [useAccountOmnipoolMiningPositions](/reference/hooks/account/useAccountOmnipoolMiningPositions)
+- [useAccountXykMiningPositions](/reference/hooks/account/useAccountXykMiningPositions)
+- [useAccountUniques](/reference/hooks/account/useAccountUniques)
+- [useAccountPermitNonce](/reference/hooks/account/useAccountPermitNonce)
+- [useRelayChainBlockNumber](/reference/hooks/chain/useRelayChainBlockNumber)
+- [useBestNumber](/reference/hooks/chain/useBestNumber)
+- [useInvalidateOnBlock](/reference/hooks/chain/useInvalidateOnBlock)
+- [useEstimateFutureBlockTimestamp](/reference/hooks/chain/useEstimateFutureBlockTimestamp)
+- [useBlockTimestamp](/reference/hooks/chain/useBlockTimestamp)
+- [useChainSpecData](/reference/hooks/chain/useChainSpecData)
+- [useBindEvmAccount](/reference/hooks/transactions/useBindEvmAccount)
+- [usePermitNonce](/reference/hooks/transactions/usePermitNonce)
+- [useOmnipoolAssetsData](/reference/hooks/omnipool/useOmnipoolAssetsData)
+- [useMaxAddLiquidityLimit](/reference/hooks/omnipool/useMaxAddLiquidityLimit)
+- [useOmnipoolMinLiquidity](/reference/hooks/omnipool/useOmnipoolMinLiquidity)
+- [useMinWithdrawalFee](/reference/hooks/omnipool/useMinWithdrawalFee)
+- [useAssetFeeParameters](/reference/hooks/omnipool/useAssetFeeParameters)
+- [useOraclePrice](/reference/hooks/omnipool/useOraclePrice)
+- [useAcceptedFeePaymentAssets](/reference/hooks/transactions/useAcceptedFeePaymentAssets)
+- [useAccountFeePaymentAssetId](/reference/hooks/transactions/useAccountFeePaymentAssetId)
+- [useAccountFeePaymentAssets](/reference/hooks/transactions/useAccountFeePaymentAssets)
+- [useSetFeePaymentAsset](/reference/hooks/transactions/useSetFeePaymentAsset)
+- [useStableswap](/reference/hooks/stableswap/useStableswap)
+- [useStableSwapTradability](/reference/hooks/stableswap/useStableSwapTradability)
+- [useInvalidateStakeData](/reference/hooks/staking/useInvalidateStakeData)
+- [useXYKPoolWithLiquidity](/reference/hooks/xyk/useXYKPoolWithLiquidity)
+- [useXYKConsts](/reference/hooks/xyk/useXYKConsts)
+- [useXykShareTokenEntries](/reference/hooks/xyk/useXykShareTokenEntries)
+- [useBorrowIncentives](/reference/hooks/borrow/useBorrowIncentives)
+- [useBorrowReserves](/reference/hooks/borrow/useBorrowReserves)
+- [userBorrowReservesQuery](/reference/hooks/borrow/userBorrowReservesQuery)
+- [useUserBorrowReserves](/reference/hooks/borrow/useUserBorrowReserves)
+- [useBorrowUserIncentives](/reference/hooks/borrow/useBorrowUserIncentives)
+- [useGhoReserveData](/reference/hooks/borrow/useGhoReserveData)
+- [useGhoUserData](/reference/hooks/borrow/useGhoUserData)
+- [userBorrowSummaryQuery](/reference/hooks/borrow/userBorrowSummaryQuery)
+- [useUserBorrowSummary](/reference/hooks/borrow/useUserBorrowSummary)
+- [useGetClaimAllBorrowRewardsTx](/reference/hooks/borrow/useGetClaimAllBorrowRewardsTx)
+- [useClaimStaking](/reference/hooks/staking/useClaimStaking)
+- [useStake](/reference/hooks/staking/useStake)
+- [useUnstake](/reference/hooks/staking/useUnstake)
+- [useEstimateFee](/reference/hooks/transactions/useEstimateFee)
+- [useAddIsolatedLiquidityZod](/reference/hooks/liquidity/useAddIsolatedLiquidityZod)
+- [useAddIsolatedLiquidity](/reference/hooks/liquidity/useAddIsolatedLiquidity)
+- [useLiquidityOmnipoolShares](/reference/hooks/liquidity/useLiquidityOmnipoolShares)
+- [useCheckJoinOmnipoolFarm](/reference/hooks/liquidity/useCheckJoinOmnipoolFarm)
+- [useAddToOmnipoolZod](/reference/hooks/liquidity/useAddToOmnipoolZod)
+- [useAddLiquidityForm](/reference/hooks/liquidity/useAddLiquidityForm)
+- [useAddLiquidity](/reference/hooks/liquidity/useAddLiquidity)
+- [useStablepoolAddLiquidity](/reference/hooks/liquidity/useStablepoolAddLiquidity)
+- [useStablepoolAddLiquidityForm](/reference/hooks/liquidity/useStablepoolAddLiquidityForm)
+- [useAssetsToAddToMoneyMarket](/reference/hooks/liquidity/useAssetsToAddToMoneyMarket)
+- [useAssetsToAddToStablepool](/reference/hooks/liquidity/useAssetsToAddToStablepool)
+- [useIsolatedPoolForm](/reference/hooks/liquidity/useIsolatedPoolForm)
+- [useSubmitCreateIsolatedPool](/reference/hooks/liquidity/useSubmitCreateIsolatedPool)
+- [useAllowedXYKPoolAssets](/reference/hooks/liquidity/useAllowedXYKPoolAssets)
+- [useSecondsToLeft](/reference/hooks/liquidity/useSecondsToLeft)
+- [useCurrentFarmPeriod](/reference/hooks/liquidity/useCurrentFarmPeriod)
+- [useEnteredDate](/reference/hooks/liquidity/useEnteredDate)
+- [useLoyaltyRates](/reference/hooks/liquidity/useLoyaltyRates)
+- [useDepositAprs](/reference/hooks/liquidity/useDepositAprs)
+- [useExitDepositFarmsMutation](/reference/hooks/liquidity/useExitDepositFarmsMutation)
+- [useJoinOmnipoolFarms](/reference/hooks/liquidity/useJoinOmnipoolFarms)
+- [useXYKFarmMinShares](/reference/hooks/liquidity/useXYKFarmMinShares)
+- [useMinOmnipoolFarmJoin](/reference/hooks/liquidity/useMinOmnipoolFarmJoin)
+- [useJoinIsolatedPoolFarms](/reference/hooks/liquidity/useJoinIsolatedPoolFarms)
+- [useJoinFarmsForm](/reference/hooks/liquidity/useJoinFarmsForm)
+- [useLiquidityMiningRewards](/reference/hooks/liquidity/useLiquidityMiningRewards)
+- [useClaimPositionRewards](/reference/hooks/liquidity/useClaimPositionRewards)
+- [useSummarizeClaimableValues](/reference/hooks/liquidity/useSummarizeClaimableValues)
+- [useClaimFarmRewardsMutation](/reference/hooks/liquidity/useClaimFarmRewardsMutation)
+- [useRemoveSingleOmnipoolPosition](/reference/hooks/liquidity/useRemoveSingleOmnipoolPosition)
+- [useRemoveMultipleOmnipoolPositions](/reference/hooks/liquidity/useRemoveMultipleOmnipoolPositions)
+- [useRemoveLiquidityForm](/reference/hooks/liquidity/useRemoveLiquidityForm)
+- [useStablepoolRemoveLiquidity](/reference/hooks/liquidity/useStablepoolRemoveLiquidity)
+- [useRemoveStablepoolLiquidityForm](/reference/hooks/liquidity/useRemoveStablepoolLiquidityForm)
+- [useTerminateDcaSchedule](/reference/hooks/trade/useTerminateDcaSchedule)
+- [useSubmitCancelOtcOrder](/reference/hooks/trade/useSubmitCancelOtcOrder)
+- [useSubmitFillOrder](/reference/hooks/trade/useSubmitFillOrder)
+- [useSubmitPlaceOrder](/reference/hooks/trade/useSubmitPlaceOrder)
+- [useUnlockNativeLocks](/reference/hooks/wallet/useUnlockNativeLocks)
+- [useClaimAllWalletRewards](/reference/hooks/wallet/useClaimAllWalletRewards)
+- [useInsufficientTransferFee](/reference/hooks/wallet/useInsufficientTransferFee)
+- [usePaymentFees](/reference/hooks/wallet/usePaymentFees)
+- [useTransferPaymentInfo](/reference/hooks/wallet/useTransferPaymentInfo)
+- [useSubmitTransferPosition](/reference/hooks/wallet/useSubmitTransferPosition)

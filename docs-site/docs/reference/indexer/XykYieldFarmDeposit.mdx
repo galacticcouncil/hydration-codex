@@ -1,0 +1,85 @@
+---
+title: XykYieldFarmDeposit
+description: Indexer entity documentation
+sidebar_label: XykYieldFarmDeposit
+---
+
+# XykYieldFarmDeposit
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 11 |
+| Nullable Fields | 2 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/xykYieldFarmDeposit.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type XykYieldFarmDeposit {
+  id: ID!
+  nftId: String
+  xykpoolId: String!
+  accountId: String!
+  lpAssetId: String!
+  initialAmount: BigInt!
+  amount: BigInt!
+  status: YieldFarmDepositStatus!
+  entries: [XykYieldFarmEntry!
+  createdAtParaBlockHeight: Int!
+  destroyedAtParaBlockHeight: Int @index
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface XykYieldFarmDeposit {
+  id: string;
+  nftId: string | null;
+  xykpoolId: string;
+  accountId: string;
+  lpAssetId: string;
+  initialAmount: bigint;
+  amount: bigint;
+  status: YieldFarmDepositStatus;
+  entries: [XykYieldFarmEntry;
+  createdAtParaBlockHeight: number;
+  destroyedAtParaBlockHeight: Int @index | null;
+}
+```
+
+## Source Handlers
+
+This entity is populated by the following runtime events and handlers:
+
+| Runtime Event | Handler |
+|---------------|---------|
+| [XykLiquidityMining.DepositDestroyed](/reference/pallets/XYKLiquidityMining#depositdestroyed) | [`handleXylpoolLMDepositDestroyed`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/liquidity/xykpool/liquidityMining/depositsHandlers.ts#L65) |
+| [XykLiquidityMining.SharesDeposited](/reference/pallets/XYKLiquidityMining#sharesdeposited) | [`handleXylpoolLMSharesDeposited`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/liquidity/xykpool/liquidityMining/depositsHandlers.ts#L17) |
+
+## Example Query
+
+```graphql
+query GetXykYieldFarmDeposits {
+  xykYieldFarmDeposits(limit: 10) {
+    id
+    nftId
+    xykpoolId
+    accountId
+    lpAssetId
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (2)
+
+- [XYK](/reference/pallets/XYK)
+- [XYKLiquidityMining](/reference/pallets/XYKLiquidityMining)

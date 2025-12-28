@@ -1,0 +1,254 @@
+---
+title: CircuitBreaker
+description: Runtime pallet documentation
+sidebar_label: CircuitBreaker
+---
+
+# CircuitBreaker
+
+### Circuit Breaker pallet
+
+By using this pallet, we can track and limit the percentage of the liquidity of a pool that can be traded (net volume),
+added and removed in a block.
+
+Three different limits are tracked independently for all assets: trading limit, liquidity added, and liquidity removed.
+
+All trading volumes and amounts of liquidity are reset to zero at the end of block execution, so no values are actually
+stored in the database.
+
+The default percentage limits are set for all assets in the pallet config.
+To set a specific trade limit for a given asset, the `set_trade_volume_limit` extrinsic can be executed by
+`UpdateLimitsOrigin`.
+To set a specific limit for liquidity that can be added for a given asset, the `set_liquidity_limit` extrinsic can be
+executed by `UpdateLimitsOrigin`.
+
+### Issuance and Deposit Lockdown
+
+The pallet also provides a mechanism to limit asset deposits based on total issuance.
+This is achieved by implementing the `OnDeposit` hook, which is triggered whenever new assets are minted by orml tokens
+pallet.
+
+The core logic is as follows:
+
+- The pallet tracks the total issuance of an asset over a configurable period.
+- If the issuance increase within that period exceeds a specified limit, the asset is put into lockdown for a configured
+ duration.
+- When the limit is breached, the amount of the deposit that exceeded the limit is reserved on the depositor's account.
+- While an asset is in lockdown, further deposits are not permitted, and funds will be reserved further
+- Once the lockdown period has expired, anyone is able to reclaim reserved funds on behalf of the user, by calling the
+ `release_deposit` extrinsic.
+
+Additionally, an authorized origin has the ability to manage lockdowns manually:
+
+- `lockdown_asset`: This extrinsic allows an authorized account to manually place an asset into lockdown.
+- `force_lift_lockdown`: This extrinsic allows an authorized account to remove an asset from lockdown.
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #65** · HydraDX<br/>
+`pallet-circuit-breaker/4ca470c5/master`
+
+[GitHub](https://github.com/galacticcouncil/HydraDX-node/tree/4ca470c5d613d62ce52eb8645770ef5fff263111/pallets/circuit-breaker) · [Subscan](https://hydradx.subscan.io/runtime/CircuitBreaker)
+
+## Storage (7)
+
+### TradeVolumeLimitPerAsset
+
+Trade volume limits of assets set by set_trade_volume_limit. If not set, returns the default limit.
+
+```rust
+TradeVolumeLimitPerAsset: Map<u32 -> (u32, u32)> [Blake2_128Concat]
+```
+
+### AllowedTradeVolumeLimitPerAsset
+
+Trade volumes per asset
+
+```rust
+AllowedTradeVolumeLimitPerAsset: Map<u32 -> {
+    volumeIn: u128,
+    volumeOut: u128,
+    limit: u128,
+}> [Blake2_128Concat]
+```
+
+### LiquidityAddLimitPerAsset
+
+Liquidity limits of assets for adding liquidity. If not set, returns the default limit.
+
+```rust
+LiquidityAddLimitPerAsset: Map<u32 -> Option<(u32, u32)>> [Blake2_128Concat]
+```
+
+### AllowedAddLiquidityAmountPerAsset
+
+Add liquidity volumes per asset
+
+```rust
+AllowedAddLiquidityAmountPerAsset: Map<u32 -> {liquidity: u128, limit: u128}> [Blake2_128Concat]
+```
+
+### AssetLockdownState
+
+```rust
+AssetLockdownState: Map<u32 -> {_enum: {Locked: u32, Unlocked: (u32, u128)}}> [Blake2_128Concat]
+```
+
+### LiquidityRemoveLimitPerAsset
+
+Liquidity limits of assets for removing liquidity. If not set, returns the default limit.
+
+```rust
+LiquidityRemoveLimitPerAsset: Map<u32 -> Option<(u32, u32)>> [Blake2_128Concat]
+```
+
+### AllowedRemoveLiquidityAmountPerAsset
+
+Remove liquidity volumes per asset
+
+```rust
+AllowedRemoveLiquidityAmountPerAsset: Map<u32 -> {liquidity: u128, limit: u128}> [Blake2_128Concat]
+```
+
+## Extrinsics (6)
+
+### set_trade_volume_limit
+
+```rust
+fn set_trade_volume_limit(
+    origin: OriginFor<T>,
+    assetId: u32,
+    tradeVolumeLimit: (u32,u32),
+)
+```
+
+### set_add_liquidity_limit
+
+```rust
+fn set_add_liquidity_limit(
+    origin: OriginFor<T>,
+    assetId: u32,
+    liquidityLimit: Option<(u32,u32)>,
+)
+```
+
+### set_remove_liquidity_limit
+
+```rust
+fn set_remove_liquidity_limit(
+    origin: OriginFor<T>,
+    assetId: u32,
+    liquidityLimit: Option<(u32,u32)>,
+)
+```
+
+### lockdown_asset
+
+```rust
+fn lockdown_asset(
+    origin: OriginFor<T>,
+    assetId: u32,
+    until: u32,
+)
+```
+
+### force_lift_lockdown
+
+```rust
+fn force_lift_lockdown(
+    origin: OriginFor<T>,
+    assetId: u32,
+)
+```
+
+### release_deposit
+
+```rust
+fn release_deposit(
+    origin: OriginFor<T>,
+    who: AccountId32,
+    assetId: u32,
+)
+```
+
+## Events (6)
+
+### TradeVolumeLimitChanged
+
+```rust
+TradeVolumeLimitChanged {
+    assetId: u32,
+    tradeVolumeLimit: (u32,u32),
+}
+```
+
+### AddLiquidityLimitChanged
+
+```rust
+AddLiquidityLimitChanged {
+    assetId: u32,
+    liquidityLimit: Option<(u32,u32)>,
+}
+```
+
+### RemoveLiquidityLimitChanged
+
+```rust
+RemoveLiquidityLimitChanged {
+    assetId: u32,
+    liquidityLimit: Option<(u32,u32)>,
+}
+```
+
+### AssetLockdown
+
+```rust
+AssetLockdown {
+    assetId: u32,
+    until: u32,
+}
+```
+
+### AssetLockdownRemoved
+
+```rust
+AssetLockdownRemoved {
+    assetId: u32,
+}
+```
+
+### DepositReleased
+
+```rust
+DepositReleased {
+    who: AccountId32,
+    assetId: u32,
+}
+```
+
+## Constants (3)
+
+### DefaultMaxNetTradeVolumeLimitPerBlock
+
+The maximum percentage of a pool's liquidity that can be traded in a block. Represented as a non-zero fraction (nominator, denominator) with the max value being 10_000.
+
+```rust
+const DefaultMaxNetTradeVolumeLimitPerBlock: (u32,u32)
+```
+
+### DefaultMaxAddLiquidityLimitPerBlock
+
+The maximum percentage of a pool's liquidity that can be added in a block. Represented as an optional non-zero fraction (nominator, denominator) with the max value being 10_000. If set to None, the limits are not enforced.
+
+```rust
+const DefaultMaxAddLiquidityLimitPerBlock: Option<(u32,u32)>
+```
+
+### DefaultMaxRemoveLiquidityLimitPerBlock
+
+The maximum percentage of a pool's liquidity that can be removed in a block. Represented as an optional non-zero fraction (nominator, denominator) with the max value being 10_000. If set to None, the limits are not enforced.
+
+```rust
+const DefaultMaxRemoveLiquidityLimitPerBlock: Option<(u32,u32)>
+```

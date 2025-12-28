@@ -1,0 +1,85 @@
+---
+title: OmnipoolYieldFarmDeposit
+description: Indexer entity documentation
+sidebar_label: OmnipoolYieldFarmDeposit
+---
+
+# OmnipoolYieldFarmDeposit
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 11 |
+| Nullable Fields | 2 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/omnipoolYieldFarmDeposit.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type OmnipoolYieldFarmDeposit {
+  id: ID!
+  nftId: String
+  positionId: String!
+  accountId: String!
+  assetId: String!
+  status: YieldFarmDepositStatus!
+  sharesAmount: BigInt!
+  initialSharesAmount: BigInt!
+  entries: [OmnipoolYieldFarmEntry!
+  createdAtParaBlockHeight: Int!
+  destroyedAtParaBlockHeight: Int @index
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface OmnipoolYieldFarmDeposit {
+  id: string;
+  nftId: string | null;
+  positionId: string;
+  accountId: string;
+  assetId: string;
+  status: YieldFarmDepositStatus;
+  sharesAmount: bigint;
+  initialSharesAmount: bigint;
+  entries: [OmnipoolYieldFarmEntry;
+  createdAtParaBlockHeight: number;
+  destroyedAtParaBlockHeight: Int @index | null;
+}
+```
+
+## Source Handlers
+
+This entity is populated by the following runtime events and handlers:
+
+| Runtime Event | Handler |
+|---------------|---------|
+| [OmnipoolLiquidityMining.DepositDestroyed](/reference/pallets/OmnipoolLiquidityMining#depositdestroyed) | [`handleOmnipoolLMDepositDestroyed`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/liquidity/omnipool/liquidityMining/depositHandlers.ts#L69) |
+| [OmnipoolLiquidityMining.SharesDeposited](/reference/pallets/OmnipoolLiquidityMining#sharesdeposited) | [`handleOmnipoolLMSharesDeposited`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/liquidity/omnipool/liquidityMining/depositHandlers.ts#L21) |
+
+## Example Query
+
+```graphql
+query GetOmnipoolYieldFarmDeposits {
+  omnipoolYieldFarmDeposits(limit: 10) {
+    id
+    nftId
+    positionId
+    accountId
+    assetId
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (2)
+
+- [Omnipool](/reference/pallets/Omnipool)
+- [OmnipoolLiquidityMining](/reference/pallets/OmnipoolLiquidityMining)

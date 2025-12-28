@@ -1,0 +1,85 @@
+---
+title: L1-runtime.md
+description: Runtime layer context - pallets, storage, extrinsics, events
+---
+
+# L1-runtime.md
+
+Context file for the Hydration runtime layer (Substrate/Rust).
+
+**Location:** `agents/contexts/L1-runtime.md` (~11KB)
+
+## What It Contains
+
+- **All 76 pallets** with one-line descriptions
+- **Storage items** per pallet
+- **Extrinsics** (callable functions)
+- **Events** emitted by each pallet
+- **Pallet dependencies**
+
+## When to Load
+
+- Working on runtime/pallet changes
+- Understanding storage structure
+- Tracing extrinsic calls
+- Analyzing event emissions
+
+## Key Pallets
+
+| Pallet | Purpose |
+|--------|---------|
+| Omnipool | Main liquidity pool with single-sided liquidity |
+| Router | Trade routing across pools |
+| Stableswap | Stable asset pools (Curve-style) |
+| XYK | Constant product AMM pools |
+| DCA | Dollar-cost averaging schedules |
+| Staking | HDX staking for governance |
+| AssetRegistry | Token registration and metadata |
+| OmnipoolLiquidityMining | Farming rewards for Omnipool LPs |
+
+## Pallet Categories
+
+### Core DeFi
+- Omnipool, Router, Stableswap, XYK, LBP, OTC
+
+### Farming
+- OmnipoolLiquidityMining, XYKLiquidityMining, Staking
+
+### Infrastructure
+- AssetRegistry, EmaOracle, DynamicFees, CircuitBreaker
+
+### Cross-Chain
+- PolkadotXcm, XTokens, TokenGateway, Ismp
+
+### EVM
+- EVM, Ethereum, EVMAccounts
+
+## Data Flow
+
+```
+Storage ← Extrinsic → Event
+   ↑          ↓         ↓
+   └── Query  └── Execute → Emit
+```
+
+## How to Use
+
+```
+# In Claude Code or similar
+Load: agents/contexts/L1-runtime.md
+
+# Then ask questions like:
+"What storage items does Omnipool have?"
+"What events does DCA emit?"
+"Which extrinsics modify liquidity?"
+```
+
+## Related Reference Docs
+
+All pallets have detailed reference pages at `/reference/pallets/{PalletName}`:
+
+- [Omnipool](/reference/pallets/Omnipool)
+- [Router](/reference/pallets/Router)
+- [Stableswap](/reference/pallets/Stableswap)
+- [DCA](/reference/pallets/DCA)
+- [Staking](/reference/pallets/Staking)

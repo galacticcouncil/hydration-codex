@@ -1,0 +1,73 @@
+---
+title: AssetVolumeHistoricalData
+description: Indexer entity documentation
+sidebar_label: AssetVolumeHistoricalData
+---
+
+# AssetVolumeHistoricalData
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 13 |
+| Nullable Fields | 4 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/assetVolumeHistoricalData.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type AssetVolumeHistoricalData {
+  id: ID!
+  asset: Asset!
+  volumeIn: BigInt!
+  volumeOut: BigInt!
+  totalVolumeIn: BigInt!
+  totalVolumeOut: BigInt!
+  volumeInNorm: String
+  volumeOutNorm: String
+  totalVolumeInNorm: String
+  totalVolumeOutNorm: String
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  block: Block!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface AssetVolumeHistoricalData {
+  id: string;
+  asset: Asset;
+  volumeIn: bigint;
+  volumeOut: bigint;
+  totalVolumeIn: bigint;
+  totalVolumeOut: bigint;
+  volumeInNorm: string | null;
+  volumeOutNorm: string | null;
+  totalVolumeInNorm: string | null;
+  totalVolumeOutNorm: string | null;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  block: Block;
+}
+```
+
+## Example Query
+
+```graphql
+query GetAssetVolumeHistoricalDatas {
+  assetVolumeHistoricalDatas(limit: 10) {
+    id
+    asset
+    volumeIn
+    volumeOut
+    totalVolumeIn
+    # ... more fields
+  }
+}
+```

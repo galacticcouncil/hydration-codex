@@ -1,0 +1,251 @@
+---
+title: XYKWarehouseLM
+description: Runtime pallet documentation
+sidebar_label: XYKWarehouseLM
+---
+
+# XYKWarehouseLM
+
+<details>
+<summary>Code Documentation</summary>
+
+### Overview
+
+This pallet provides functionality for a liquidity mining program with a time incentive (loyalty
+factor) and multiple incentives scheme.
+Users are rewarded for each period they stay in the liq. mining program.
+
+Reward per one period is derived from the user's loyalty factor which grows with time (periods)
+the user is in the liq. mining program and the amount of LP shares the user locked into deposit.
+User's loyalty factor is reset if the user exits and reenters liquidity mining.
+User can claim rewards without resetting loyalty factor, only withdrawing shares
+is penalized by loyalty factor reset.
+The user is rewarded from the next period after they enters.
+
+Multiple Incentives
+
+This feature allows users to redeposit already deposited LP shares to multiple yield farms and
+receive incentives from these farms.
+Deposit in yield farm is called "farm entry".
+Maximal number of redepositing same LP shares is configured by variable: `MaxFarmEntriesPerDeposit`.
+Set `MaxFarmEntriesPerDeposit` to `1` to disable multiple incentives scheme. !!!NEVER set this
+variable to `0`.
+LP shares can be redeposited only to different yield farms running liquidity mining for same
+pair of assets.
+
+Notes:
+* LP shares are returned ONLY if deposit is destroyed - withdrawing LP shares can
+ be used to "free slot" for re-lock LP shares to different yield farm. Withdrawing LP shares result in
+ resetting loyalty factor for yield farm user is withdrawing from(other farm entries in the
+ deposit are not affected). If deposit has no more farm entries, deposit is destroyed and LP
+ shares are returned back to user.
+* `YieldFarm` - can be in the 3 states: [`Active`, `Stopped`, `Terminated`]
+ * `Active` - liquidity mining is running, users are able to deposit, claim and withdraw LP
+ shares. `YieldFarm` is rewarded from `GlobalFarm` in this state.
+ * `Stopped` - liquidity mining is stopped. Users can claim and withdraw LP shares from the
+ farm. Users CAN'T deposit new LP shares to stopped farm. Stopped farm is not rewarded from the
+ `GlobalFarm`.
+ Note: stopped farm can be resumed or destroyed.
+ * `Terminated` - liquidity mining is ended. User's CAN'T deposit or claim rewards from
+ stopped farm. Users CAN only withdraw LP shares(without rewards).
+ `YieldFarm` must be stopped before it can be terminated. Terminated farm stays in the storage
+ until last farm's entry is withdrawn. Last withdrawn from yield farm will remove terminated
+ farm from the storage.
+ Note: Terminated farm CAN'T be resumed.
+* `GlobalFarm` - can be in the 2 states: [`Active`, `Terminated`]
+ * `Active` - liquidity mining program is running, new yield farms can be added to the
+ global farm.
+ * `Terminated` - liquidity mining program is ended. Yield farms can't be added to the global
+ farm. Global farm MUST be empty(all yield farms in the global farm must be destroyed)
+ before it can be destroyed. Destroying global farm transfer undistributed rewards to farm's
+ owner. Terminated global farm stay in the storage until all yield farms are removed from
+ the storage. Last yield farm removal from storage triggers global farm removal from
+ storage.
+ Note: Terminated global farm CAN'T be resumed.
+* Pot - account holding all rewards allocated for all `YieldFarm`s from all `GlobalFarm`s.
+ User's rewards are transferred from `pot`'s account to user's accounts.
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #96** · HydraDX<br/>
+`warehouse-liquidity-mining/4ca470c5/master` (Instance2)
+
+[GitHub](https://github.com/galacticcouncil/HydraDX-node/tree/4ca470c5d613d62ce52eb8645770ef5fff263111/pallets/liquidity-mining) · [Subscan](https://hydradx.subscan.io/runtime/XYKWarehouseLM)
+
+## Storage (6)
+
+### FarmSequencer
+
+Id sequencer for `GlobalFarm` and `YieldFarm`.
+
+```rust
+FarmSequencer: Value<u32>
+```
+
+### DepositSequencer
+
+```rust
+DepositSequencer: Value<u128>
+```
+
+### GlobalFarm
+
+```rust
+GlobalFarm: Map<u32 -> {
+    id: u32,
+    owner: AccountId32,
+    updatedAt: u32,
+    totalSharesZ: u128,
+    accumulatedRpz: u128,
+    rewardCurrency: u32,
+    pendingRewards: u128,
+    accumulatedPaidRewards: u128,
+    yieldPerPeriod: Perquintill,
+    plannedYieldingPeriods: u32,
+    blocksPerPeriod: u32,
+    incentivizedAsset: u32,
+    maxRewardPerPeriod: u128,
+    minDeposit: u128,
+    liveYieldFarmsCount: u32,
+    totalYieldFarmsCount: u32,
+    priceAdjustment: u128,
+    state: PalletLiquidityMiningFarmState,
+}> [Blake2_128Concat]
+```
+
+**Read by SDK:** [LiquidityMiningClient.getIsolatedGlobalFarm](/reference/sdk/sdk-next#liquidityminingclient)
+
+### YieldFarm
+
+Yield farm details.
+
+```rust
+YieldFarm: Map<(AccountId32,u32,u32) -> {
+    id: u32,
+    updatedAt: u32,
+    totalShares: u128,
+    totalValuedShares: u128,
+    accumulatedRpvs: u128,
+    accumulatedRpz: u128,
+    loyaltyCurve: Option<PalletLiquidityMiningLoyaltyCurve>,
+    multiplier: u128,
+    state: PalletLiquidityMiningFarmState,
+    entriesCount: u64,
+    leftToDistribute: u128,
+    totalStopped: u32,
+}> [Blake2_128Concat, Blake2_128Concat, Blake2_128Concat]
+```
+
+**Read by SDK:** [LiquidityMiningClient.getIsolatedYieldFarm](/reference/sdk/sdk-next#liquidityminingclient)
+
+### Deposit
+
+Deposit details.
+
+```rust
+Deposit: Map<u128 -> {
+    shares: u128,
+    ammPoolId: AccountId32,
+    yieldFarmEntries: Vec<PalletLiquidityMiningYieldFarmEntry>,
+}> [Twox64Concat]
+```
+
+### ActiveYieldFarm
+
+Active(farms able to receive LP shares deposits) yield farms.
+
+```rust
+ActiveYieldFarm: Map<(AccountId32, u32) -> u32> [Blake2_128Concat,  Blake2_128Concat]
+```
+
+**Read by SDK:** [LiquidityMiningClient.getAllIsolatedFarms](/reference/sdk/sdk-next#liquidityminingclient), [LiquidityMiningClient.getIsolatedFarms](/reference/sdk/sdk-next#liquidityminingclient)
+
+## Events (3)
+
+### GlobalFarmAccRPZUpdated
+
+```rust
+GlobalFarmAccRPZUpdated {
+    globalFarmId: u32,
+    accumulatedRpz: u128,
+    totalSharesZ: u128,
+}
+```
+
+### YieldFarmAccRPVSUpdated
+
+```rust
+YieldFarmAccRPVSUpdated {
+    globalFarmId: u32,
+    yieldFarmId: u32,
+    accumulatedRpvs: u128,
+    totalValuedShares: u128,
+}
+```
+
+### AllRewardsDistributed
+
+```rust
+AllRewardsDistributed {
+    globalFarmId: u32,
+}
+```
+
+## Constants (6)
+
+### PalletId
+
+Pallet id.
+
+```rust
+const PalletId: [u8;8]
+```
+
+### TreasuryAccountId
+
+Treasury account to receive claimed rewards lower than ED
+
+```rust
+const TreasuryAccountId: AccountId32
+```
+
+### MinTotalFarmRewards
+
+Minimum total rewards to distribute from global farm during liquidity mining.
+
+```rust
+const MinTotalFarmRewards: u128
+```
+
+### MinPlannedYieldingPeriods
+
+Minimum number of periods to run liquidity mining program.
+
+```rust
+const MinPlannedYieldingPeriods: u32
+```
+
+### MaxFarmEntriesPerDeposit
+
+Maximum number of yield farms same LP shares can be re/deposited into. This value always MUST BE \>= 1.
+
+```rust
+const MaxFarmEntriesPerDeposit: u32
+```
+
+### MaxYieldFarmsPerGlobalFarm
+
+Max number of yield farms can exist in global farm. This includes all farms in the storage(active, stopped, terminated).
+
+```rust
+const MaxYieldFarmsPerGlobalFarm: u32
+```
+
+## References
+
+### SDK (1)
+
+- [sdk-next](/reference/sdk/sdk-next)

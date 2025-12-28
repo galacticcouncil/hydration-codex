@@ -1,0 +1,85 @@
+---
+title: StableswapHistoricalData
+description: Indexer entity documentation
+sidebar_label: StableswapHistoricalData
+---
+
+# StableswapHistoricalData
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 16 |
+| Nullable Fields | 3 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/stableswapHistoricalData.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type StableswapHistoricalData {
+  id: ID!
+  pool: Stableswap!
+  assetsHistoricalData: [StableswapAssetHistoricalData!
+  field: "poolHistoricalData")
+  initialAmplification: Int!
+  finalAmplification: Int!
+  initialAmplificationChangeAtBlockHeight: Int!
+  finalAmplificationChangeAtBlockHeight: Int!
+  fee: Int!
+  pegs: [[BigInt!
+  maxPegUpdate: Int
+  pegSources: [StableswapPegsSource!
+  tvlTotalInRefAssetNorm: String
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  block: Block!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface StableswapHistoricalData {
+  id: string;
+  pool: Stableswap;
+  assetsHistoricalData: [StableswapAssetHistoricalData;
+  field: "poolHistoricalData") | null;
+  initialAmplification: number;
+  finalAmplification: number;
+  initialAmplificationChangeAtBlockHeight: number;
+  finalAmplificationChangeAtBlockHeight: number;
+  fee: number;
+  pegs: [[BigInt;
+  maxPegUpdate: number | null;
+  pegSources: [StableswapPegsSource;
+  tvlTotalInRefAssetNorm: string | null;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  block: Block;
+}
+```
+
+## Example Query
+
+```graphql
+query GetStableswapHistoricalDatas {
+  stableswapHistoricalDatas(limit: 10) {
+    id
+    pool
+    assetsHistoricalData
+    field
+    initialAmplification
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [Stableswap](/reference/pallets/Stableswap)

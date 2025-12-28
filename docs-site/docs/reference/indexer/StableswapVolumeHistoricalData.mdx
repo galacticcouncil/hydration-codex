@@ -1,0 +1,79 @@
+---
+title: StableswapVolumeHistoricalData
+description: Indexer entity documentation
+sidebar_label: StableswapVolumeHistoricalData
+---
+
+# StableswapVolumeHistoricalData
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 13 |
+| Nullable Fields | 1 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/stableswapVolumeHistoricalData.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type StableswapVolumeHistoricalData {
+  id: ID!
+  pool: Stableswap!
+  assetVolumes: [StableswapAssetVolumeHistoricalData!
+  field: "volumesCollection")
+  poolVolInNorm: String!
+  poolVolOutNorm: String!
+  poolFeesVolNorm: String!
+  poolTotalVolInNorm: String!
+  poolTotalVolOutNorm: String!
+  poolTotalFeesVolNorm: String!
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  block: Block!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface StableswapVolumeHistoricalData {
+  id: string;
+  pool: Stableswap;
+  assetVolumes: [StableswapAssetVolumeHistoricalData;
+  field: "volumesCollection") | null;
+  poolVolInNorm: string;
+  poolVolOutNorm: string;
+  poolFeesVolNorm: string;
+  poolTotalVolInNorm: string;
+  poolTotalVolOutNorm: string;
+  poolTotalFeesVolNorm: string;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  block: Block;
+}
+```
+
+## Example Query
+
+```graphql
+query GetStableswapVolumeHistoricalDatas {
+  stableswapVolumeHistoricalDatas(limit: 10) {
+    id
+    pool
+    assetVolumes
+    field
+    poolVolInNorm
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [Stableswap](/reference/pallets/Stableswap)

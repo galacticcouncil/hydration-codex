@@ -1,0 +1,71 @@
+---
+title: OmnipoolYieldFarmEntry
+description: Indexer entity documentation
+sidebar_label: OmnipoolYieldFarmEntry
+---
+
+# OmnipoolYieldFarmEntry
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 9 |
+| Nullable Fields | 0 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/omnipoolYieldFarmEntry.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type OmnipoolYieldFarmEntry {
+  id: ID!
+  globalFarmId: String!
+  yieldFarmId: String!
+  valuedShares: String!
+  accumulatedRpvs: String!
+  accumulatedClaimedRewards: String!
+  enteredAtRelayBlock: String!
+  updatedAtRelayBlock: String!
+  stoppedAtCreation: String!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface OmnipoolYieldFarmEntry {
+  id: string;
+  globalFarmId: string;
+  yieldFarmId: string;
+  valuedShares: string;
+  accumulatedRpvs: string;
+  accumulatedClaimedRewards: string;
+  enteredAtRelayBlock: string;
+  updatedAtRelayBlock: string;
+  stoppedAtCreation: string;
+}
+```
+
+## Example Query
+
+```graphql
+query GetOmnipoolYieldFarmEntrys {
+  omnipoolYieldFarmEntrys(limit: 10) {
+    id
+    globalFarmId
+    yieldFarmId
+    valuedShares
+    accumulatedRpvs
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [Omnipool](/reference/pallets/Omnipool)

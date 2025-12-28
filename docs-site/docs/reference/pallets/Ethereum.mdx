@@ -1,0 +1,111 @@
+---
+title: Ethereum
+description: Runtime pallet documentation
+sidebar_label: Ethereum
+---
+
+# Ethereum
+
+The Ethereum pallet enables full Ethereum block emulation, allowing Ethereum RPCs to be activated.
+
+<details>
+<summary>Code Documentation</summary>
+
+The Ethereum pallet works together with EVM pallet to provide full emulation
+for Ethereum block processing.
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #92** · Frontier<br/>
+`pallet-ethereum/717a45f4/moonbeam-polkadot-stable2409`
+
+[GitHub](https://github.com/moonbeam-foundation/frontier/tree/717a45f4d9f6fa95d9a7b290727b1dd97ec3c6c1/frame/ethereum) · [docs.rs](https://docs.rs/crate/pallet-ethereum/4.0.0-dev/source/) · [crates.io](https://crates.io/crates/pallet-ethereum) · [Subscan](https://hydradx.subscan.io/runtime/Ethereum)
+
+## Storage (6)
+
+### Pending
+
+Current building block's transactions and receipts.
+
+```rust
+Pending: Map<u32 -> (EthereumTransactionTransactionV2, FpRpcTransactionStatus, EthereumReceiptReceiptV3)> [Identity]
+```
+
+### CounterForPending
+
+Counter for the related counted storage map
+
+```rust
+CounterForPending: Value<u32>
+```
+
+### CurrentBlock
+
+The current Ethereum block.
+
+```rust
+CurrentBlock: Value<{
+    header: EthereumHeader,
+    transactions: Vec<EthereumTransactionTransactionV2>,
+    ommers: Vec<EthereumHeader>,
+}>
+```
+
+**Read by SDK:** [EvmRpcAdapter.getBlock](/reference/sdk/sdk#evmrpcadapter)
+
+### CurrentReceipts
+
+The current Ethereum receipts.
+
+```rust
+CurrentReceipts: Value<Vec<EthereumReceiptReceiptV3>>
+```
+
+### CurrentTransactionStatuses
+
+The current transaction statuses.
+
+```rust
+CurrentTransactionStatuses: Value<Vec<FpRpcTransactionStatus>>
+```
+
+### BlockHash
+
+```rust
+BlockHash: Map<U256 -> H256> [Twox64Concat]
+```
+
+## Extrinsics (1)
+
+### transact
+
+```rust
+fn transact(
+    origin: OriginFor<T>,
+    transaction: Lookup270,
+)
+```
+
+## Events (1)
+
+### Executed
+
+```rust
+Executed {
+    from: H160,
+    to: H160,
+    transactionHash: H256,
+    exitReason: Lookup509,
+    extraData: Bytes,
+}
+```
+
+## References
+
+### SDK (2)
+
+- [sdk](/reference/sdk/sdk)
+- [sdk-next](/reference/sdk/sdk-next)

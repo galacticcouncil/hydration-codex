@@ -1,0 +1,56 @@
+---
+title: SwapAssetBalance
+description: Indexer entity documentation
+sidebar_label: SwapAssetBalance
+---
+
+# SwapAssetBalance
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 5 |
+| Nullable Fields | 0 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/swapAssetBalance.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type SwapAssetBalance {
+  id: ID!
+  swap: Swap!
+  assetBalanceType: SwapAssetBalanceType!
+  asset: Asset!
+  amount: BigInt!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface SwapAssetBalance {
+  id: string;
+  swap: Swap;
+  assetBalanceType: SwapAssetBalanceType;
+  asset: Asset;
+  amount: bigint;
+}
+```
+
+## Example Query
+
+```graphql
+query GetSwapAssetBalances {
+  swapAssetBalances(limit: 10) {
+    id
+    swap
+    assetBalanceType
+    asset
+    amount
+  }
+}
+```

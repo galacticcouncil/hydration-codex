@@ -1,0 +1,105 @@
+---
+title: ConstantsHistoricalData
+description: Indexer entity documentation
+sidebar_label: ConstantsHistoricalData
+---
+
+# ConstantsHistoricalData
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 29 |
+| Nullable Fields | 22 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/constantsHistoricalData.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type ConstantsHistoricalData {
+  id: ID!
+  lbpRepayFee: [Int!
+  lbpMaxInRatio: BigInt
+  lbpMaxOutRatio: BigInt
+  lbpMinPoolLiquidity: BigInt
+  lbpMinTradingLimit: BigInt
+  omnipoolBurnProtocolFee: Int
+  omnipoolHdxAssetId: Int
+  omnipoolHubAssetId: Int
+  omnipoolMaxInRatio: BigInt
+  omnipoolMaxOutRatio: BigInt
+  omnipoolMinimumPoolLiquidity: BigInt
+  omnipoolMinimumTradingLimit: BigInt
+  omnipoolMinWithdrawalFee: Int
+  stableswapMinTradingLimit: BigInt
+  stableswapMinPoolLiquidity: BigInt
+  stableswapAmplificationRange: [Int!
+  xykGetExchangeFee: [Int!
+  xykMaxInRatio: BigInt
+  xykMaxOutRatio: BigInt
+  xykMinPoolLiquidity: BigInt
+  xykMinTradingLimit: BigInt
+  xykNativeAssetId: Int
+  xykOracleSource: String
+  dynamicFeesAssetFeeParameters: DynamicFeesAssetFeeParameters
+  dynamicFeesProtocolFeeParameters: DynamicFeesAssetFeeParameters
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  block: Block!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface ConstantsHistoricalData {
+  id: string;
+  lbpRepayFee: [Int;
+  lbpMaxInRatio: bigint | null;
+  lbpMaxOutRatio: bigint | null;
+  lbpMinPoolLiquidity: bigint | null;
+  lbpMinTradingLimit: bigint | null;
+  omnipoolBurnProtocolFee: number | null;
+  omnipoolHdxAssetId: number | null;
+  omnipoolHubAssetId: number | null;
+  omnipoolMaxInRatio: bigint | null;
+  omnipoolMaxOutRatio: bigint | null;
+  omnipoolMinimumPoolLiquidity: bigint | null;
+  omnipoolMinimumTradingLimit: bigint | null;
+  omnipoolMinWithdrawalFee: number | null;
+  stableswapMinTradingLimit: bigint | null;
+  stableswapMinPoolLiquidity: bigint | null;
+  stableswapAmplificationRange: [Int;
+  xykGetExchangeFee: [Int;
+  xykMaxInRatio: bigint | null;
+  xykMaxOutRatio: bigint | null;
+  xykMinPoolLiquidity: bigint | null;
+  xykMinTradingLimit: bigint | null;
+  xykNativeAssetId: number | null;
+  xykOracleSource: string | null;
+  dynamicFeesAssetFeeParameters: DynamicFeesAssetFeeParameters | null;
+  dynamicFeesProtocolFeeParameters: DynamicFeesAssetFeeParameters | null;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  block: Block;
+}
+```
+
+## Example Query
+
+```graphql
+query GetConstantsHistoricalDatas {
+  constantsHistoricalDatas(limit: 10) {
+    id
+    lbpRepayFee
+    lbpMaxInRatio
+    lbpMaxOutRatio
+    lbpMinPoolLiquidity
+    # ... more fields
+  }
+}
+```

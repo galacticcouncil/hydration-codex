@@ -1,0 +1,99 @@
+---
+title: XykGlobalFarm
+description: Indexer entity documentation
+sidebar_label: XykGlobalFarm
+---
+
+# XykGlobalFarm
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 23 |
+| Nullable Fields | 18 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/xykGlobalFarm.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type XykGlobalFarm {
+  id: ID!
+  ownerAccountId: String!
+  updatedAtRelayBlock: Int
+  totalSharesZ: BigInt
+  totalRewards: BigInt
+  accumulatedRpz: BigInt
+  rewardAssetId: String
+  pendingRewards: BigInt
+  accumulatedPaidRewards: BigInt
+  yieldPerPeriod: Int
+  plannedYieldingPeriods: Int
+  blocksPerPeriod: Int
+  incentivizedAssetId: String
+  maxRewardPerPeriod: BigInt
+  minDeposit: BigInt
+  liveYieldFarmsCount: Int
+  totalYieldFarmsCount: Int
+  priceAdjustment: BigInt
+  state: FarmState!
+  yieldFarms: [XykYieldFarm] @derivedFrom(field: "globalFarm")
+  lifeStates: [FarmLifeState!
+  paraBlockHeight: Int!
+  eventId: String
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface XykGlobalFarm {
+  id: string;
+  ownerAccountId: string;
+  updatedAtRelayBlock: number | null;
+  totalSharesZ: bigint | null;
+  totalRewards: bigint | null;
+  accumulatedRpz: bigint | null;
+  rewardAssetId: string | null;
+  pendingRewards: bigint | null;
+  accumulatedPaidRewards: bigint | null;
+  yieldPerPeriod: number | null;
+  plannedYieldingPeriods: number | null;
+  blocksPerPeriod: number | null;
+  incentivizedAssetId: string | null;
+  maxRewardPerPeriod: bigint | null;
+  minDeposit: bigint | null;
+  liveYieldFarmsCount: number | null;
+  totalYieldFarmsCount: number | null;
+  priceAdjustment: bigint | null;
+  state: FarmState;
+  yieldFarms: [XykYieldFarm] @derivedFrom(field: "globalFarm") | null;
+  lifeStates: [FarmLifeState;
+  paraBlockHeight: number;
+  eventId: string | null;
+}
+```
+
+## Example Query
+
+```graphql
+query GetXykGlobalFarms {
+  xykGlobalFarms(limit: 10) {
+    id
+    ownerAccountId
+    updatedAtRelayBlock
+    totalSharesZ
+    totalRewards
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [XYK](/reference/pallets/XYK)

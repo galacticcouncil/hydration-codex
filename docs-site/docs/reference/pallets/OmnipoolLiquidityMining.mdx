@@ -1,0 +1,433 @@
+---
+title: OmnipoolLiquidityMining
+description: Runtime pallet documentation
+sidebar_label: OmnipoolLiquidityMining
+---
+
+# OmnipoolLiquidityMining
+
+<details>
+<summary>Code Documentation</summary>
+
+### Overview
+
+This pallet provides functionality for a liquidity mining program with a time incentive (loyalty
+factor) and multiple incentives scheme for Omnipools AMM.
+
+This pallet is build on top of the [pallet-liquidity-mining]
+(https://github.com/galacticcouncil/warehouse/tree/main/liquidity-mining). This liquidity
+mining pallet doesn't allow to specify `incentized_asset`. `valued_shares` are always valued in
+[LRNA]. Farm's owner is responsible for managing exchange rate(`lrna_price_adjustment`) between [LRNA] and
+`reward_currency`.
+
+### Terminology
+
+* **LP:** liquidity provider
+* **Position:** omnipool's LP position
+* **Deposit:** omnipool's position(LP shares) locked in the liquidity mining
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #63** · HydraDX<br/>
+`pallet-omnipool-liquidity-mining/4ca470c5/master`
+
+[GitHub](https://github.com/galacticcouncil/HydraDX-node/tree/4ca470c5d613d62ce52eb8645770ef5fff263111/pallets/omnipool-liquidity-mining) · [Subscan](https://hydradx.subscan.io/runtime/OmnipoolLiquidityMining)
+
+## Storage (1)
+
+### OmniPositionId
+
+Map of omnipool position's ids to LM's deposit ids.
+
+```rust
+OmniPositionId: Map<u128 -> u128> [Blake2_128Concat]
+```
+
+## Extrinsics (16)
+
+### create_global_farm
+
+```rust
+fn create_global_farm(
+    origin: OriginFor<T>,
+    totalRewards: u128,
+    plannedYieldingPeriods: u32,
+    blocksPerPeriod: u32,
+    rewardCurrency: u32,
+    owner: AccountId32,
+    yieldPerPeriod: Perquintill,
+    minDeposit: u128,
+    lrnaPriceAdjustment: u128,
+)
+```
+
+### terminate_global_farm
+
+```rust
+fn terminate_global_farm(
+    origin: OriginFor<T>,
+    globalFarmId: u32,
+)
+```
+
+### create_yield_farm
+
+```rust
+fn create_yield_farm(
+    origin: OriginFor<T>,
+    globalFarmId: u32,
+    assetId: u32,
+    multiplier: u128,
+    loyaltyCurve: Option<PalletLiquidityMiningLoyaltyCurve>,
+)
+```
+
+### update_yield_farm
+
+```rust
+fn update_yield_farm(
+    origin: OriginFor<T>,
+    globalFarmId: u32,
+    assetId: u32,
+    multiplier: u128,
+)
+```
+
+### stop_yield_farm
+
+```rust
+fn stop_yield_farm(
+    origin: OriginFor<T>,
+    globalFarmId: u32,
+    assetId: u32,
+)
+```
+
+### resume_yield_farm
+
+```rust
+fn resume_yield_farm(
+    origin: OriginFor<T>,
+    globalFarmId: u32,
+    yieldFarmId: u32,
+    assetId: u32,
+    multiplier: u128,
+)
+```
+
+### terminate_yield_farm
+
+```rust
+fn terminate_yield_farm(
+    origin: OriginFor<T>,
+    globalFarmId: u32,
+    yieldFarmId: u32,
+    assetId: u32,
+)
+```
+
+### deposit_shares
+
+```rust
+fn deposit_shares(
+    origin: OriginFor<T>,
+    globalFarmId: u32,
+    yieldFarmId: u32,
+    positionId: u128,
+)
+```
+
+### redeposit_shares
+
+```rust
+fn redeposit_shares(
+    origin: OriginFor<T>,
+    globalFarmId: u32,
+    yieldFarmId: u32,
+    depositId: u128,
+)
+```
+
+### claim_rewards
+
+```rust
+fn claim_rewards(
+    origin: OriginFor<T>,
+    depositId: u128,
+    yieldFarmId: u32,
+)
+```
+
+### withdraw_shares
+
+```rust
+fn withdraw_shares(
+    origin: OriginFor<T>,
+    depositId: u128,
+    yieldFarmId: u32,
+)
+```
+
+### update_global_farm
+
+```rust
+fn update_global_farm(
+    origin: OriginFor<T>,
+    globalFarmId: u32,
+    plannedYieldingPeriods: u32,
+    yieldPerPeriod: Perquintill,
+    minDeposit: u128,
+)
+```
+
+### join_farms
+
+```rust
+fn join_farms(
+    origin: OriginFor<T>,
+    farmEntries: Vec<(u32,u32)>,
+    positionId: u128,
+)
+```
+
+### add_liquidity_and_join_farms
+
+```rust
+fn add_liquidity_and_join_farms(
+    origin: OriginFor<T>,
+    farmEntries: Vec<(u32,u32)>,
+    asset: u32,
+    amount: u128,
+    minSharesLimit: Option<u128>,
+)
+```
+
+### exit_farms
+
+```rust
+fn exit_farms(
+    origin: OriginFor<T>,
+    depositId: u128,
+    yieldFarmIds: Vec<u32>,
+)
+```
+
+### add_liquidity_stableswap_omnipool_and_join_farms
+
+```rust
+fn add_liquidity_stableswap_omnipool_and_join_farms(
+    origin: OriginFor<T>,
+    stablePoolId: u32,
+    stableAssetAmounts: Vec<HydradxTraitsStableswapAssetAmount>,
+    farmEntries: Option<Vec<(u32,u32)>>,
+)
+```
+
+## Events (13)
+
+### GlobalFarmCreated
+
+```rust
+GlobalFarmCreated {
+    id: u32,
+    owner: AccountId32,
+    totalRewards: u128,
+    rewardCurrency: u32,
+    yieldPerPeriod: Perquintill,
+    plannedYieldingPeriods: u32,
+    blocksPerPeriod: u32,
+    maxRewardPerPeriod: u128,
+    minDeposit: u128,
+    lrnaPriceAdjustment: u128,
+}
+```
+
+### GlobalFarmUpdated
+
+```rust
+GlobalFarmUpdated {
+    id: u32,
+    plannedYieldingPeriods: u32,
+    yieldPerPeriod: Perquintill,
+    minDeposit: u128,
+}
+```
+
+### GlobalFarmTerminated
+
+```rust
+GlobalFarmTerminated {
+    globalFarmId: u32,
+    who: AccountId32,
+    rewardCurrency: u32,
+    undistributedRewards: u128,
+}
+```
+
+### YieldFarmCreated
+
+```rust
+YieldFarmCreated {
+    globalFarmId: u32,
+    yieldFarmId: u32,
+    assetId: u32,
+    multiplier: u128,
+    loyaltyCurve: Option<PalletLiquidityMiningLoyaltyCurve>,
+}
+```
+
+### YieldFarmUpdated
+
+```rust
+YieldFarmUpdated {
+    globalFarmId: u32,
+    yieldFarmId: u32,
+    assetId: u32,
+    who: AccountId32,
+    multiplier: u128,
+}
+```
+
+### YieldFarmStopped
+
+```rust
+YieldFarmStopped {
+    globalFarmId: u32,
+    yieldFarmId: u32,
+    assetId: u32,
+    who: AccountId32,
+}
+```
+
+### YieldFarmResumed
+
+```rust
+YieldFarmResumed {
+    globalFarmId: u32,
+    yieldFarmId: u32,
+    assetId: u32,
+    who: AccountId32,
+    multiplier: u128,
+}
+```
+
+### YieldFarmTerminated
+
+```rust
+YieldFarmTerminated {
+    globalFarmId: u32,
+    yieldFarmId: u32,
+    assetId: u32,
+    who: AccountId32,
+}
+```
+
+### SharesDeposited
+
+```rust
+SharesDeposited {
+    globalFarmId: u32,
+    yieldFarmId: u32,
+    depositId: u128,
+    assetId: u32,
+    who: AccountId32,
+    sharesAmount: u128,
+    positionId: u128,
+}
+```
+
+**Indexed by:** [OmnipoolYieldFarmDeposit](/reference/indexer/OmnipoolYieldFarmDeposit)
+
+### SharesRedeposited
+
+```rust
+SharesRedeposited {
+    globalFarmId: u32,
+    yieldFarmId: u32,
+    depositId: u128,
+    assetId: u32,
+    who: AccountId32,
+    sharesAmount: u128,
+    positionId: u128,
+}
+```
+
+### RewardClaimed
+
+```rust
+RewardClaimed {
+    globalFarmId: u32,
+    yieldFarmId: u32,
+    who: AccountId32,
+    claimed: u128,
+    rewardCurrency: u32,
+    depositId: u128,
+}
+```
+
+### SharesWithdrawn
+
+```rust
+SharesWithdrawn {
+    globalFarmId: u32,
+    yieldFarmId: u32,
+    who: AccountId32,
+    amount: u128,
+    depositId: u128,
+}
+```
+
+### DepositDestroyed
+
+```rust
+DepositDestroyed {
+    who: AccountId32,
+    depositId: u128,
+}
+```
+
+**Indexed by:** [OmnipoolYieldFarmDeposit](/reference/indexer/OmnipoolYieldFarmDeposit)
+
+## Constants (3)
+
+### NFTCollectionId
+
+NFT collection id for liquidity mining's deposit nfts.
+
+```rust
+const NFTCollectionId: u128
+```
+
+### OracleSource
+
+Identifier of oracle data soruce
+
+```rust
+const OracleSource: [u8;8]
+```
+
+### OraclePeriod
+
+Oracle's price aggregation period.
+
+```rust
+const OraclePeriod: {"_enum":["LastBlock","Short","TenMinutes","Hour","Day","Week"]}
+```
+
+## References
+
+### Indexer (1)
+
+- [OmnipoolYieldFarmDeposit](/reference/indexer/OmnipoolYieldFarmDeposit)
+
+### UI (6)
+
+- [useAddLiquidity](/reference/hooks/liquidity/useAddLiquidity)
+- [useStablepoolAddLiquidity](/reference/hooks/liquidity/useStablepoolAddLiquidity)
+- [useExitDepositFarmsMutation](/reference/hooks/liquidity/useExitDepositFarmsMutation)
+- [useRemoveSingleOmnipoolPosition](/reference/hooks/liquidity/useRemoveSingleOmnipoolPosition)
+- [useRemoveMultipleOmnipoolPositions](/reference/hooks/liquidity/useRemoveMultipleOmnipoolPositions)
+- [useClaimAllWalletRewards](/reference/hooks/wallet/useClaimAllWalletRewards)

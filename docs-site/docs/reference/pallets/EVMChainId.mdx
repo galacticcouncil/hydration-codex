@@ -1,0 +1,37 @@
+---
+title: EVMChainId
+description: Runtime pallet documentation
+sidebar_label: EVMChainId
+---
+
+# EVMChainId
+
+<details>
+<summary>Code Documentation</summary>
+
+The pallet that stores the numeric Ethereum-style chain id in the runtime.
+It can simplify setting up multiple networks with different chain ID by configuring the
+chain spec without requiring changes to the runtime config.
+
+**NOTE**: we recommend that the production chains still use the const parameter type, as
+this extra storage access would imply some performance penalty.
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #91** · Frontier<br/>
+`pallet-evm-chain-id/717a45f4/moonbeam-polkadot-stable2409`
+
+[GitHub](https://github.com/moonbeam-foundation/frontier/tree/717a45f4d9f6fa95d9a7b290727b1dd97ec3c6c1/frame/evm-chain-id) · [docs.rs](https://docs.rs/crate/pallet-evm-chain-id/1.0.0-dev/source/) · [crates.io](https://crates.io/crates/pallet-evm-chain-id) · [Subscan](https://hydradx.subscan.io/runtime/EVMChainId)
+
+## Storage (1)
+
+### ChainId
+
+The EVM chain ID.
+
+```rust
+ChainId: Value<u64>
+```

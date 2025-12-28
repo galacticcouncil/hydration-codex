@@ -1,0 +1,129 @@
+---
+title: Account
+description: Indexer entity documentation
+sidebar_label: Account
+---
+
+# Account
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 34 |
+| Nullable Fields | 24 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/account.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type Account {
+  id: ID!
+  accountType: AccountType!
+  boundEvmAddress: String
+  evmAddressBoundEvent: Event
+  assetBalanceHistoricalData: [AccountAssetBalanceHistoricalData]
+  field: "account")
+  balanceHistoricalData: [AccountAssetBalanceHistoricalData]
+  field: "account")
+  historicalAccountSwapFees: [AccountSwapFeeHistoricalData]
+  field: "account")
+  mmPositionHistoricalData: [AccountMmPositionHistoricalData]
+  field: "account")
+  lbppool: Lbppool
+  xykpool: Xykpool
+  omnipool: Omnipool
+  stableswap: Stableswap
+  hsmpool: Hsmpool
+  initiatedActions: [ChainActivityTrace!
+  field: "originator")
+  participatedActions: [AccountChainActivityTrace!
+  field: "account")
+  initiatedSwaps: [Swap!
+  field: "swapper")
+  filledSwaps: [Swap!
+  field: "filler")
+  transfersTo: [Transfer!
+  field: "to")
+  transfersFrom: [Transfer!
+  field: "from")
+  dcaSchedules: [DcaSchedule!
+  field: "owner")
+  otcOrders: [OtcOrder!
+  field: "owner")
+  TODO: add proxy and multisig tracking
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface Account {
+  id: string;
+  accountType: AccountType;
+  boundEvmAddress: string | null;
+  evmAddressBoundEvent: Event | null;
+  assetBalanceHistoricalData: [AccountAssetBalanceHistoricalData] | null;
+  field: "account") | null;
+  balanceHistoricalData: [AccountAssetBalanceHistoricalData] | null;
+  field: "account") | null;
+  historicalAccountSwapFees: [AccountSwapFeeHistoricalData] | null;
+  field: "account") | null;
+  mmPositionHistoricalData: [AccountMmPositionHistoricalData] | null;
+  field: "account") | null;
+  lbppool: Lbppool | null;
+  xykpool: Xykpool | null;
+  omnipool: Omnipool | null;
+  stableswap: Stableswap | null;
+  hsmpool: Hsmpool | null;
+  initiatedActions: [ChainActivityTrace;
+  field: "originator") | null;
+  participatedActions: [AccountChainActivityTrace;
+  field: "account") | null;
+  initiatedSwaps: [Swap;
+  field: "swapper") | null;
+  filledSwaps: [Swap;
+  field: "filler") | null;
+  transfersTo: [Transfer;
+  field: "to") | null;
+  transfersFrom: [Transfer;
+  field: "from") | null;
+  dcaSchedules: [DcaSchedule;
+  field: "owner") | null;
+  otcOrders: [OtcOrder;
+  field: "owner") | null;
+  TODO: add proxy and multisig tracking | null;
+}
+```
+
+## Source Handlers
+
+This entity is populated by the following runtime events and handlers:
+
+| Runtime Event | Handler |
+|---------------|---------|
+| [Evm.Log](/reference/pallets/EVM#log) | [`getOrCreateAccount`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/accounts/index.ts#L8) |
+
+## Example Query
+
+```graphql
+query GetAccounts {
+  accounts(limit: 10) {
+    id
+    accountType
+    boundEvmAddress
+    evmAddressBoundEvent
+    assetBalanceHistoricalData
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [EVM](/reference/pallets/EVM)

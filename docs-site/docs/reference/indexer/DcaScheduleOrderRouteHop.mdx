@@ -1,0 +1,76 @@
+---
+title: DcaScheduleOrderRouteHop
+description: Indexer entity documentation
+sidebar_label: DcaScheduleOrderRouteHop
+---
+
+# DcaScheduleOrderRouteHop
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 5 |
+| Nullable Fields | 3 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/dcaScheduleOrderRouteHop.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type DcaScheduleOrderRouteHop {
+  id: ID!
+  schedule: DcaSchedule!
+  poolKind: SwapFillerType
+  assetIn: Asset
+  assetOut: Asset
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface DcaScheduleOrderRouteHop {
+  id: string;
+  schedule: DcaSchedule;
+  poolKind: SwapFillerType | null;
+  assetIn: Asset | null;
+  assetOut: Asset | null;
+}
+```
+
+## Source Handlers
+
+This entity is populated by the following runtime events and handlers:
+
+| Runtime Event | Handler |
+|---------------|---------|
+| [Dca.Completed](/reference/pallets/DCA#completed) | [`handleDcaScheduleCompleted`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/dca/dcaSchedule.ts#L213) |
+| [Dca.Scheduled](/reference/pallets/DCA#scheduled) | [`handleDcaScheduleCreated`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/dca/dcaSchedule.ts#L157) |
+| [Dca.Terminated](/reference/pallets/DCA#terminated) | [`handleDcaScheduleTerminated`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/dca/dcaSchedule.ts#L247) |
+
+## Example Query
+
+```graphql
+query GetDcaScheduleOrderRouteHops {
+  dcaScheduleOrderRouteHops(limit: 10) {
+    id
+    schedule
+    poolKind
+    assetIn
+    assetOut
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [DCA](/reference/pallets/DCA)
+
+### UI (1)
+
+- [useInitialOtcOfferAmount](/reference/hooks/trade/useInitialOtcOfferAmount)

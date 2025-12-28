@@ -1,0 +1,234 @@
+---
+title: EmaOracle
+description: Runtime pallet documentation
+sidebar_label: EmaOracle
+---
+
+# EmaOracle
+
+### Overview
+
+This pallet provides exponential moving average (EMA) oracles of different periods for price,
+volume and liquidity for a combination of source and asset pair based on data coming in from
+different sources.
+
+#### Integration
+
+Data is ingested by plugging the provided `OnActivityHandler` into callbacks provided by other
+pallets (e.g. xyk pallet).
+
+It is meant to be used by other pallets via the `AggregatedOracle` and `AggregatedPriceOracle`
+traits.
+
+When integrating with this pallet take care to use the `on_trade_weight`,
+`on_liquidity_changed_weight` and `get_entry_weight` into account when calculating the weight
+for your extrinsics (that either feed data into or take data from this pallet).
+
+#### Concepts
+
+- *EMA*: Averaging via exponential decay with a smoothing factor; meaning each new value to
+ integrate into the average is multiplied with a smoothing factor between 0 and 1.
+- *Smoothing Factor*: A factor applied to each value aggregated into the averaging oracle.
+ Implicitly determines the oracle period.
+- *Period*: The window over which an oracle is averaged. Certain smoothing factors correspond to
+ an oracle period. E.g. ten minutes oracle period ≈ 0.0198
+- *Source*: The source of the data. E.g. xyk pallet.
+
+#### Implementation
+
+This pallet aggregates data in the following way: `on_trade` or `on_liquidity_changed` a new
+entry is created for the incoming data. This then updates any existing entries already present
+in storage for this block (for this combination of source and assets) or inserts it. Note that
+this aggregation is NOT based on EMA, yet, it just sums the volume and replaces price and
+liquidity with the most recent value.
+
+At the end of the block, all the entries are merged into
+permanent storage via the exponential moving average logic defined in the math package this
+pallet depens on. There is one oracle entry for each combination of `(source, asset_pair,
+period)` in storage.
+
+Oracle values are accessed lazily. This means that the storage does not contain the most recent
+value, but the value calculated the last time it was updated via trade or liquidity change. On a
+read the values are read from storage and then fast-forwarded (assuming the volume to be zero
+and the price and liquidity to be constant) to the last block. Note: The most recent oracle
+values are always from the last block. This avoids e.g. sandwiching risks. If you want current
+prices you should use a spot price or similar.
+
+<details>
+<summary>Code Documentation</summary>
+
+### Overview
+
+This pallet provides exponential moving average (EMA) oracles of different periods for price,
+volume and liquidity for a combination of source and asset pair based on data coming in from
+different sources.
+
+### Integration
+
+Data is ingested by plugging the provided `OnActivityHandler` into callbacks provided by other
+pallets (e.g. xyk pallet).
+
+It is meant to be used by other pallets via the `AggregatedOracle` and `AggregatedPriceOracle`
+traits.
+
+When integrating with this pallet take care to use the `on_trade_weight`,
+`on_liquidity_changed_weight` and `get_entry_weight` into account when calculating the weight
+for your extrinsics (that either feed data into or take data from this pallet).
+
+### Concepts
+
+- *EMA*: Averaging via exponential decay with a smoothing factor; meaning each new value to
+ integrate into the average is multiplied with a smoothing factor between 0 and 1.
+- *Smoothing Factor*: A factor applied to each value aggregated into the averaging oracle.
+ Implicitly determines the oracle period.
+- *Period*: The window over which an oracle is averaged. Certain smoothing factors correspond to
+ an oracle period. E.g. ten minutes oracle period ≈ 0.0198
+- *Source*: The source of the data. E.g. xyk pallet.
+
+### Implementation
+
+This pallet aggregates data in the following way: `on_trade` or `on_liquidity_changed` a new
+entry is created for the incoming data. This then updates any existing entries already present
+in storage for this block (for this combination of source and assets) or inserts it. Note that
+this aggregation is NOT based on EMA, yet, it just sums the volume and replaces price and
+liquidity with the most recent value.
+
+At the end of the block, all the entries are merged into permanent storage via the exponential
+moving average logic defined in the math package this pallet depens on. There is one oracle
+entry for each combination of `(source, asset_pair, period)` in storage.
+
+Oracle values are accessed lazily. This means that the storage does not contain the most recent
+value, but the value calculated the last time it was updated via trade or liquidity change. On a
+read the values are read from storage and then fast-forwarded (assuming the volume to be zero
+and the price and liquidity to be constant) to the last block. Note: The most recent oracle
+values are always from the last block. This avoids e.g. sandwiching risks. If you want current
+prices you should use a spot price or similar.
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #202** · HydraDX<br/>
+`pallet-ema-oracle/4ca470c5/master`
+
+[GitHub](https://github.com/galacticcouncil/HydraDX-node/tree/4ca470c5d613d62ce52eb8645770ef5fff263111/pallets/ema-oracle) · [Subscan](https://hydradx.subscan.io/runtime/EmaOracle)
+
+## Storage (3)
+
+### Accumulator
+
+Accumulator for oracle data in current block that will be recorded at the end of the block.
+
+```rust
+Accumulator: Value<BTreeMap<([u8;8], (u32, u32)),  PalletEmaOracleOracleEntry>>
+```
+
+### Oracles
+
+Oracle storage keyed by data source, involved asset ids and the period length of the oracle. Stores the data entry as well as the block number when the oracle was first initialized.
+
+```rust
+Oracles: Map<([u8;8], (u32, u32), HydradxTraitsOracleOraclePeriod) -> (PalletEmaOracleOracleEntry, u32)> [Twox64Concat,  Twox64Concat,  Twox64Concat]
+```
+
+**Read by SDK:** [FarmClient.getOraclePrice](/reference/sdk/sdk#farmclient), [LiquidityMiningClient.getOraclePrice](/reference/sdk/sdk-next#liquidityminingclient)
+
+### WhitelistedAssets
+
+Assets that are whitelisted and tracked by the pallet.
+
+```rust
+WhitelistedAssets: Value<BTreeSet<([u8;8], (u32, u32))>>
+```
+
+## Extrinsics (3)
+
+### add_oracle
+
+```rust
+fn add_oracle(
+    origin: OriginFor<T>,
+    source: [u8;8],
+    assets: (u32,u32),
+)
+```
+
+### remove_oracle
+
+```rust
+fn remove_oracle(
+    origin: OriginFor<T>,
+    source: [u8;8],
+    assets: (u32,u32),
+)
+```
+
+### update_bifrost_oracle
+
+```rust
+fn update_bifrost_oracle(
+    origin: OriginFor<T>,
+    assetA: Lookup305,
+    assetB: Lookup305,
+    price: (u128,u128),
+)
+```
+
+## Events (2)
+
+### AddedToWhitelist
+
+```rust
+AddedToWhitelist {
+    source: [u8;8],
+    assets: (u32,u32),
+}
+```
+
+### RemovedFromWhitelist
+
+```rust
+RemovedFromWhitelist {
+    source: [u8;8],
+    assets: (u32,u32),
+}
+```
+
+## Constants (2)
+
+### MaxAllowedPriceDifference
+
+Maximum allowed percentage difference for bifrost oracle price update
+
+```rust
+const MaxAllowedPriceDifference: Permill
+```
+
+### MaxUniqueEntries
+
+Maximum number of unique oracle entries expected in one block.
+
+```rust
+const MaxUniqueEntries: u32
+```
+
+## References
+
+### SDK (2)
+
+- [sdk](/reference/sdk/sdk)
+- [sdk-next](/reference/sdk/sdk-next)
+
+### Indexer (1)
+
+- [EmaOracleEntryHistoricalData](/reference/indexer/EmaOracleEntryHistoricalData)
+
+### UI (6)
+
+- [useOraclePrice](/reference/hooks/omnipool/useOraclePrice)
+- [useAddIsolatedLiquidity](/reference/hooks/liquidity/useAddIsolatedLiquidity)
+- [useCheckJoinOmnipoolFarm](/reference/hooks/liquidity/useCheckJoinOmnipoolFarm)
+- [useStablepoolAddLiquidity](/reference/hooks/liquidity/useStablepoolAddLiquidity)
+- [useXYKFarmMinShares](/reference/hooks/liquidity/useXYKFarmMinShares)
+- [useMinOmnipoolFarmJoin](/reference/hooks/liquidity/useMinOmnipoolFarmJoin)

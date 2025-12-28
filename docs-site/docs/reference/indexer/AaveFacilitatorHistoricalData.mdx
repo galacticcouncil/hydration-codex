@@ -1,0 +1,63 @@
+---
+title: AaveFacilitatorHistoricalData
+description: Indexer entity documentation
+sidebar_label: AaveFacilitatorHistoricalData
+---
+
+# AaveFacilitatorHistoricalData
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 8 |
+| Nullable Fields | 0 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/aaveFacilitatorHistoricalData.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type AaveFacilitatorHistoricalData {
+  id: ID!
+  facilitator: AaveFacilitator!
+  bucketCapacity: BigInt!
+  bucketLevel: BigInt!
+  paraTimestamp: DateTime!
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  block: Block!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface AaveFacilitatorHistoricalData {
+  id: string;
+  facilitator: AaveFacilitator;
+  bucketCapacity: bigint;
+  bucketLevel: bigint;
+  paraTimestamp: Date;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  block: Block;
+}
+```
+
+## Example Query
+
+```graphql
+query GetAaveFacilitatorHistoricalDatas {
+  aaveFacilitatorHistoricalDatas(limit: 10) {
+    id
+    facilitator
+    bucketCapacity
+    bucketLevel
+    paraTimestamp
+    # ... more fields
+  }
+}
+```

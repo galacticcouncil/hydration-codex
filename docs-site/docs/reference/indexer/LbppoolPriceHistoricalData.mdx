@@ -1,0 +1,71 @@
+---
+title: LbppoolPriceHistoricalData
+description: Indexer entity documentation
+sidebar_label: LbppoolPriceHistoricalData
+---
+
+# LbppoolPriceHistoricalData
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 9 |
+| Nullable Fields | 0 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/lbppoolPriceHistoricalData.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type LbppoolPriceHistoricalData {
+  id: ID!
+  pool: Lbppool!
+  assetA: Asset!
+  assetB: Asset!
+  assetABalance: BigInt!
+  assetBBalance: BigInt!
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  block: Block!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface LbppoolPriceHistoricalData {
+  id: string;
+  pool: Lbppool;
+  assetA: Asset;
+  assetB: Asset;
+  assetABalance: bigint;
+  assetBBalance: bigint;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  block: Block;
+}
+```
+
+## Example Query
+
+```graphql
+query GetLbppoolPriceHistoricalDatas {
+  lbppoolPriceHistoricalDatas(limit: 10) {
+    id
+    pool
+    assetA
+    assetB
+    assetABalance
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [LBP](/reference/pallets/LBP)

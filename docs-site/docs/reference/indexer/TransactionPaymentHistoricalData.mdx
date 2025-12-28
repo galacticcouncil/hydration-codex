@@ -1,0 +1,59 @@
+---
+title: TransactionPaymentHistoricalData
+description: Indexer entity documentation
+sidebar_label: TransactionPaymentHistoricalData
+---
+
+# TransactionPaymentHistoricalData
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 4 |
+| Nullable Fields | 1 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/transactionPaymentHistoricalData.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type TransactionPaymentHistoricalData {
+  id: ID!
+  nextFeeMultiplier: BigInt
+  paraBlockHeight: Int!
+  block: Block!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface TransactionPaymentHistoricalData {
+  id: string;
+  nextFeeMultiplier: bigint | null;
+  paraBlockHeight: number;
+  block: Block;
+}
+```
+
+## Example Query
+
+```graphql
+query GetTransactionPaymentHistoricalDatas {
+  transactionPaymentHistoricalDatas(limit: 10) {
+    id
+    nextFeeMultiplier
+    paraBlockHeight
+    block
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [TransactionPayment](/reference/pallets/TransactionPayment)

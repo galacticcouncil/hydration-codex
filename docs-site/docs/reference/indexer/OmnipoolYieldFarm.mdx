@@ -1,0 +1,87 @@
+---
+title: OmnipoolYieldFarm
+description: Indexer entity documentation
+sidebar_label: OmnipoolYieldFarm
+---
+
+# OmnipoolYieldFarm
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 17 |
+| Nullable Fields | 2 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/omnipoolYieldFarm.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type OmnipoolYieldFarm {
+  id: ID!
+  globalFarmId: String!
+  assetId: String!
+  updatedAtRelayBlock: Int!
+  totalShares: BigInt!
+  totalValuedShares: BigInt!
+  accumulatedRpvs: BigInt!
+  accumulatedRpz: BigInt!
+  multiplier: BigInt!
+  state: FarmState!
+  entriesCount: Int!
+  leftToDistribute: BigInt!
+  totalStopped: BigInt!
+  loyaltyCurve: YieldFarmLoyaltyCurve
+  lifeStates: [FarmLifeState!
+  paraBlockHeight: Int!
+  eventId: String
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface OmnipoolYieldFarm {
+  id: string;
+  globalFarmId: string;
+  assetId: string;
+  updatedAtRelayBlock: number;
+  totalShares: bigint;
+  totalValuedShares: bigint;
+  accumulatedRpvs: bigint;
+  accumulatedRpz: bigint;
+  multiplier: bigint;
+  state: FarmState;
+  entriesCount: number;
+  leftToDistribute: bigint;
+  totalStopped: bigint;
+  loyaltyCurve: YieldFarmLoyaltyCurve | null;
+  lifeStates: [FarmLifeState;
+  paraBlockHeight: number;
+  eventId: string | null;
+}
+```
+
+## Example Query
+
+```graphql
+query GetOmnipoolYieldFarms {
+  omnipoolYieldFarms(limit: 10) {
+    id
+    globalFarmId
+    assetId
+    updatedAtRelayBlock
+    totalShares
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [Omnipool](/reference/pallets/Omnipool)

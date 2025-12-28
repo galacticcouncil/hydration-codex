@@ -1,0 +1,1265 @@
+---
+title: "@galacticcouncil/xc-sdk"
+description: SDK package documentation
+sidebar_label: xc-sdk
+---
+
+# @galacticcouncil/xc-sdk
+
+Cross-chain sdk
+
+**Version:** 0.4.1 | **Methods:** 117
+
+**Links:** [GitHub](https://github.com/galacticcouncil/sdk/tree/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk) | [npm](https://www.npmjs.com/package/@galacticcouncil/xc-sdk)
+
+# Galactic XC SDK
+
+Wallet interface for asset multi-platform transfer supporting fee swaps & bridging.
+
+Wallet does not perform any signing rather provide transfer data to maintain loose coupling & interoperability with 3rd party code.
+
+## Installation
+
+Install with [npm](https://www.npmjs.com/):
+
+`npm install @galacticcouncil/xc-sdk`
+
+## API
+
+```typescript
+transfer(
+    asset: string | Asset,
+    srcAddr: string,
+    srcChain: string | AnyChain,
+    dstAddr: string,
+    dstChain: string | AnyChain
+  ): Promise<Transfer>
+subscribeBalance(
+    address: string,
+    chain: string | AnyChain,
+    observer: (balances: AssetAmount[]) => void
+  )
+```
+
+## Usage
+
+```typescript
+// Import
+import \{
+  assetsMap,
+  chainsMap,
+  routesMap,
+  dex,
+  validations,
+\} from '@galacticcouncil/xc-cfg';
+import \{ ConfigService, EvmParachain \} from '@galacticcouncil/xc-core';
+import \{ Wallet, Call \} from '@galacticcouncil/xc-sdk';
+
+// Initialize config service
+const configService = new ConfigService(\{
+  assets: assetsMap,
+  chains: chainsMap,
+  routes: routesMap,
+\});
+
+// Initialize wallet
+const wallet = new Wallet(\{
+  configService: configService,
+  transferValidations: validations,
+\});
+
+// Register dex-es
+const hydration = configService.getChain('hydration');
+const assethub = configService.getChain('assethub');
+
+wallet.registerDex(
+  new dex.HydrationDex(hydration),
+  new dex.AssethubDex(assethub)
+);
+
+// Define transfer
+const srcChain = configService.getChain('ethereum');
+const destChain = configService.getChain('hydration');
+const asset = configService.getAsset('eth');
+
+// Define source & dest accounts
+const srcAddr = 'INSERT_ADDRESS';
+const destAddr = 'INSERT_ADDRESS';
+
+// Subscribe source chain token balance
+const balanceObserver = (balances: AssetAmount[]) => console.log(balances);
+const balanceSubscription = await wallet.subscribeBalance(
+  srcAddr,
+  srcChain,
+  balanceObserver
+);
+
+// Get transfer data
+const transfer = await wallet.transfer(
+  asset,
+  srcAddr,
+  srcChain,
+  destAddr,
+  destChain
+);
+
+// Validate transfer
+const status = await transfer.validate();
+
+// Estimate fee & construct calldata with transfer amount (1 ETH)
+const fee: AssetAmount = await transfer.estimateFee('1');
+const feeInfo = [
+  'Estimated fee:',
+  fee.toDecimal(fee.decimals),
+  fee.originSymbol,
+].join(' ');
+const call: Call = await transfer.buildCall('1');
+
+// Dump transfer info
+console.log(transfer);
+console.log(status);
+console.log(feeInfo);
+console.log(call);
+
+// Unsubscribe source chain balance
+balanceSubscription.unsubscribe();
+```
+
+## Installation
+
+```bash
+npm install @galacticcouncil/xc-sdk
+```
+
+## Functions
+
+### buildBeneficiary
+
+```typescript
+function buildBeneficiary(dstAccount: string): { parents: number; interior: { type: string; value: any[]; }; }
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/substrate/utils/xcm.ts#L6)
+
+### buildXcmDest
+
+```typescript
+function buildXcmDest(dstChain: AnyParachain): { type: string; value: { parents: number; interior: { type: string; value: { typ...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/substrate/utils/xcm.ts#L20)
+
+### buildXcmMessage
+
+```typescript
+function buildXcmMessage(dstAccount: string, dstFeeLocation: any, dstFee: AssetAmount, dstRefTime: bigint, dstProofSize: bigint, dstCallEncoded: Binary): { type: string; value: ({ type: string; value: { id: any; fun: { type: string; v...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/substrate/utils/xcm.ts#L48)
+
+### calculateMax
+
+Calculate maximum allowed amount of asset to send from source to
+destination chain.
+
+```typescript
+function calculateMax(balance: AssetAmount, fee: AssetAmount, min: AssetAmount, ed: any): AssetAmount
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/transfer/utils.ts#L17)
+
+### calculateMin
+
+Calculate minimum required amount of asset to send from source to
+destination chain.
+
+```typescript
+function calculateMin(balance: AssetAmount, fee: AssetAmount, min: AssetAmount, ed: any): AssetAmount
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/transfer/utils.ts#L48)
+
+### chunkBySize
+
+```typescript
+function chunkBySize(instructions: TransactionInstruction[], maxBytes: number): TransactionInstruction[][]
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/solana/utils.ts#L17)
+
+### deserializeV0
+
+```typescript
+function deserializeV0(mssgV0: string): MessageV0
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/solana/utils.ts#L44)
+
+### formatAmount
+
+Format amount if defined
+
+```typescript
+function formatAmount(decimals: number, amount: number | undefined): bigint
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/transfer/utils.ts#L101)
+
+### formatEvmAddress
+
+Return h160 derivated address in case of Evm parachain
+
+```typescript
+async function formatEvmAddress(address: string, chain: AnyChain): Promise<string>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/transfer/utils.ts#L83)
+
+### getDeliveryFeeFromDryRun
+
+```typescript
+function getDeliveryFeeFromDryRun(events: any[]): bigint
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/substrate/utils/dryRun.ts#L3)
+
+### getErrorFromDryRun
+
+```typescript
+function getErrorFromDryRun(executionResult: any): string | undefined
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/substrate/utils/dryRun.ts#L23)
+
+### isNativeEthBridge
+
+```typescript
+function isNativeEthBridge(config: ContractConfig): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/evm/transfer/utils.ts#L3)
+
+### isPrecompile
+
+```typescript
+function isPrecompile(config: ContractConfig): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/evm/transfer/utils.ts#L18)
+
+### ixToHuman
+
+```typescript
+function ixToHuman(instructions: TransactionInstruction[]): import("/root/hydration-codex/repos/sdk/packages/xc-sdk/src/platforms/solana/types").HumanizedIx[]
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/solana/utils.ts#L5)
+
+### normalizeAssetAmount
+
+Normalize asset amount if chain uses solely chain decimals
+for balance representation of assets.
+
+```typescript
+async function normalizeAssetAmount(amount: bigint, asset: Asset, substrate: import("/root/hydration-codex/repos/sdk/...): Promise<AssetAmountParams>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/substrate/utils/amount.ts#L15)
+
+### resolveCommandsTyped
+
+```typescript
+function resolveCommandsTyped(root: { inputs: any[]; commands: any[]; }, opts: Options): any[]
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/sui/utils.ts#L9)
+
+### serializeV0
+
+```typescript
+function serializeV0(mssgV0: MessageV0): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/solana/utils.ts#L39)
+
+### TransferBuilder
+
+```typescript
+function TransferBuilder(wallet: import("/root/hydration-codex/repos/sdk/...): { assets: any; withAsset(asset: any): { sources: any; withSource(srcChain: any):...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/Wallet.utils.ts#L11)
+
+## DataOriginProcessor
+
+### getCall
+
+```typescript
+async getCall(ctx: TransferCtx): Promise<import("/root/hydration-codex/repos/sdk/packages/xc-sdk/src/platforms/types").Call>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/transfer/DataOriginProcessor.ts#L28)
+
+### getDestinationFee
+
+```typescript
+async getDestinationFee(): Promise<{ fee: AssetAmount; feeBreakdown: { [key: string]: bigint; }; }>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/transfer/DataOriginProcessor.ts#L34)
+
+### getDestinationFeeBalance
+
+```typescript
+async getDestinationFeeBalance(address: string): Promise<AssetAmount>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/transfer/DataOriginProcessor.ts#L75)
+
+### getFee
+
+```typescript
+async getFee(ctx: TransferCtx): Promise<AssetAmount>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/transfer/DataOriginProcessor.ts#L98)
+
+### getFeeAsset
+
+```typescript
+async getFeeAsset(address: string): Promise<Asset>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/transfer/DataOriginProcessor.ts#L142)
+
+### getFeeBalance
+
+```typescript
+async getFeeBalance(address: string): Promise<AssetAmount>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/transfer/DataOriginProcessor.ts#L120)
+
+### getTransact
+
+```typescript
+async getTransact(ctx: TransferCtx): Promise<any>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/transfer/DataOriginProcessor.ts#L195)
+
+## DataProcessor
+
+### getBalance
+
+```typescript
+async getBalance(address: string): Promise<AssetAmount>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/transfer/DataProcessor.ts#L34)
+
+### getEd
+
+```typescript
+async getEd(): Promise<any>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/transfer/DataProcessor.ts#L24)
+
+### getMin
+
+```typescript
+async getMin(): Promise<AssetAmount>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/transfer/DataProcessor.ts#L53)
+
+## Erc20
+
+### getBalance
+
+```typescript
+async getBalance(): Promise<bigint>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/evm/balance/Erc20.ts#L17)
+
+### getDecimals
+
+```typescript
+async getDecimals(): Promise<number>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/evm/balance/Erc20.ts#L23)
+
+## EvmBalance
+
+### getBalance
+
+```typescript
+getBalance(): Promise<bigint>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/evm/balance/EvmBalance.ts#L26)
+
+### getDecimals
+
+```typescript
+getDecimals(): Promise<number>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/evm/balance/EvmBalance.ts#L27)
+
+## EvmBalanceFactory
+
+### get
+
+```typescript
+get(client: EvmClient, config: ContractConfig): import("/root/hydration-codex/repos/sdk/packages/xc-sdk/src/platforms/evm/balanc...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/evm/balance/EvmBalanceFactory.ts#L8)
+
+## EvmClaim
+
+### redeem
+
+```typescript
+redeem(from: string, vaaRaw: string): import("/root/hydration-codex/repos/sdk/packages/xc-sdk/src/platforms/evm/types").EvmCall
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/evm/EvmClaim.ts#L16)
+
+## EvmPlatform
+
+### buildCall
+
+```typescript
+async buildCall(account: string, amount: bigint, _feeBalance: AssetAmount, config: ContractConfig): Promise<import("/root/hydration-codex/repos/sdk/packages/xc-sdk/src/platforms/evm/types").EvmCall>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/evm/EvmPlatform.ts#L34)
+
+### estimateFee
+
+```typescript
+async estimateFee(account: string, amount: bigint, feeBalance: AssetAmount, config: ContractConfig): Promise<AssetAmount>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/evm/EvmPlatform.ts#L82)
+
+### getBalance
+
+```typescript
+async getBalance(asset: Asset, config: ContractConfig): Promise<AssetAmount>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/evm/EvmPlatform.ts#L95)
+
+### subscribeBalance
+
+```typescript
+async subscribeBalance(asset: Asset, config: ContractConfig): Promise<...>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/evm/EvmPlatform.ts#L107)
+
+## EvmTransfer
+
+### decodeEvents
+
+```typescript
+decodeEvents(logs: Log[] | undefined): import("/root/hydration-codex/repos/sdk/packages/xc-sdk/src/platforms/evm/types").EvmEventLog[]
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/evm/transfer/EvmTransfer.ts#L124)
+
+### estimateFee
+
+```typescript
+async estimateFee(account: string, balance: bigint): Promise<bigint>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/evm/transfer/EvmTransfer.ts#L60)
+
+### estimateGas
+
+```typescript
+async estimateGas(account: string): Promise<bigint>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/evm/transfer/EvmTransfer.ts#L47)
+
+### getGasPrice
+
+```typescript
+async getGasPrice(): Promise<bigint>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/evm/transfer/EvmTransfer.ts#L80)
+
+### getNonce
+
+```typescript
+async getNonce(account: string): Promise<number>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/evm/transfer/EvmTransfer.ts#L84)
+
+### simulateCall
+
+```typescript
+async simulateCall(account: string): Promise<SimulateCallResult>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/evm/transfer/EvmTransfer.ts#L90)
+
+## EvmTransferFactory
+
+### get
+
+```typescript
+get(client: EvmClient, config: ContractConfig): import("/root/hydration-codex/repos/sdk/packages/xc-sdk/src/platforms/evm/transf...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/evm/transfer/EvmTransferFactory.ts#L6)
+
+## FeeSwap
+
+### getDestinationSwap
+
+Destination fee swap context
+
+Swap is enabled if following applies:
+ - account has not enough destination fee balance
+ - account has enough source fee reserves (double the fee) to buy required asset
+
+Note: Slippage can be set up to 100% in builder config (see maxAmountIn)
+
+```typescript
+async getDestinationSwap(fee: AssetAmount): Promise<any>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/FeeSwap.ts#L90)
+
+### getSwap
+
+Fee swap context
+
+```typescript
+async getSwap(fee: AssetAmount): Promise<any>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/FeeSwap.ts#L46)
+
+### isDestinationSwapSupported
+
+Swap destination fee only if:
+ - transfer asset insufficient
+ - destination fee asset is different than fee asset
+
+```typescript
+isDestinationSwapSupported(fee: AssetAmount): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/FeeSwap.ts#L118)
+
+### isSwapSupported
+
+Swap source fee only if explicitly enabled in route
+fee config
+
+```typescript
+isSwapSupported(cfg: any): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/FeeSwap.ts#L67)
+
+## Native
+
+### getBalance
+
+```typescript
+async getBalance(): Promise<bigint>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/evm/balance/Native.ts#L4)
+
+### getBalance
+
+```typescript
+async getBalance(): Promise<bigint>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/solana/balance/Native.ts#L8)
+
+### getBalance
+
+```typescript
+async getBalance(): Promise<bigint>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/sui/balance/Native.ts#L8)
+
+### getDecimals
+
+```typescript
+async getDecimals(): Promise<number>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/evm/balance/Native.ts#L13)
+
+### getDecimals
+
+```typescript
+async getDecimals(): Promise<number>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/solana/balance/Native.ts#L16)
+
+### getDecimals
+
+```typescript
+async getDecimals(): Promise<number>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/sui/balance/Native.ts#L17)
+
+## PlatformAdapter
+
+### buildCall
+
+```typescript
+async buildCall(account: string, amount: bigint, feeBalance: AssetAmount, config: BaseConfig): Promise<import("/root/hydration-codex/repos/sdk/packages/xc-sdk/src/platforms/types").Call>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/adapter.ts#L67)
+
+### estimateFee
+
+```typescript
+async estimateFee(account: string, amount: bigint, feeBalance: AssetAmount, config: BaseConfig): Promise<AssetAmount>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/adapter.ts#L81)
+
+### getBalance
+
+```typescript
+async getBalance(asset: Asset, config: BaseConfig): Promise<AssetAmount>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/adapter.ts#L95)
+
+### subscribeBalance
+
+```typescript
+async subscribeBalance(asset: Asset, config: BaseConfig): Promise<...>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/adapter.ts#L99)
+
+## SolanaBalance
+
+### getBalance
+
+```typescript
+getBalance(): Promise<bigint>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/solana/balance/SolanaBalance.ts#L28)
+
+### getDecimals
+
+```typescript
+getDecimals(): Promise<number>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/solana/balance/SolanaBalance.ts#L29)
+
+## SolanaBalanceFactory
+
+### get
+
+```typescript
+get(connection: Connection, config: SolanaQueryConfig): import("/root/hydration-codex/repos/sdk/packages/xc-sdk/src/platforms/solana/bal...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/solana/balance/SolanaBalanceFactory.ts#L10)
+
+## SolanaClaim
+
+### redeem
+
+```typescript
+async redeem(from: string, vaaRaw: string): Promise<...>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/solana/SolanaClaim.ts#L45)
+
+## SolanaLilJit
+
+### getInflightBundleStatuses
+
+```typescript
+async getInflightBundleStatuses(bundleIds: string[]): Promise<JitoBundleStatus>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/solana/SolanaLilJit.ts#L77)
+
+### getRegion
+
+```typescript
+async getRegion(): Promise<string[]>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/solana/SolanaLilJit.ts#L87)
+
+### getTipAccount
+
+```typescript
+async getTipAccount(): Promise<string[]>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/solana/SolanaLilJit.ts#L95)
+
+### sendBundle
+
+Returns bundle id
+
+```typescript
+async sendBundle(encoded: string[]): Promise<string>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/solana/SolanaLilJit.ts#L59)
+
+### simulateBundle
+
+```typescript
+async simulateBundle(encoded: string[]): Promise<JitoBundleSimulationResponse>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/solana/SolanaLilJit.ts#L67)
+
+## SolanaPlatform
+
+### buildCall
+
+```typescript
+async buildCall(account: string, _amount: bigint, _feeBalance: AssetAmount, config: ProgramConfig): Promise<...>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/solana/SolanaPlatform.ts#L38)
+
+### estimateFee
+
+```typescript
+async estimateFee(account: string, amount: bigint, feeBalance: AssetAmount, config: ProgramConfig): Promise<AssetAmount>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/solana/SolanaPlatform.ts#L70)
+
+### getBalance
+
+```typescript
+async getBalance(asset: Asset, config: SolanaQueryConfig): Promise<AssetAmount>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/solana/SolanaPlatform.ts#L102)
+
+### subscribeBalance
+
+```typescript
+async subscribeBalance(asset: Asset, config: SolanaQueryConfig): Promise<...>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/solana/SolanaPlatform.ts#L117)
+
+## SolanaTransfer
+
+### determineComputeBudget
+
+Determine compute budget from simulated transaction
+
+```typescript
+async determineComputeBudget(message: MessageV0): Promise<number>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/solana/transfer/SolanaTransfer.ts#L121)
+
+### determinePriorityFee
+
+Determine the priority fee to use for a transaction
+
+```typescript
+async determinePriorityFee(message: MessageV0, percentile: number, multiple: number, minPriorityFee: number, maxPriorityFee: number): Promise<number>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/solana/transfer/SolanaTransfer.ts#L144)
+
+### estimateFee
+
+```typescript
+async estimateFee(account: string, balance: bigint): Promise<bigint>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/solana/transfer/SolanaTransfer.ts#L45)
+
+### getPriorityMessage
+
+```typescript
+async getPriorityMessage(account: string): Promise<MessageV0>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/solana/transfer/SolanaTransfer.ts#L38)
+
+### simulateTransaction
+
+```typescript
+async simulateTransaction(account: string, message: MessageV0): Promise<SimulatedTransactionResponse>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/solana/transfer/SolanaTransfer.ts#L97)
+
+## SolanaTransferFactory
+
+### get
+
+```typescript
+get(connection: Connection, config: ProgramConfig): import("/root/hydration-codex/repos/sdk/packages/xc-sdk/src/platforms/solana/tra...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/solana/transfer/SolanaTransferFactory.ts#L8)
+
+## SubstrateClaim
+
+### redeemMrl
+
+```typescript
+redeemMrl(from: string, vaaBytes: string): import("/root/hydration-codex/repos/sdk/packages/xc-sdk/src/platforms/evm/types").EvmCall
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/substrate/SubstrateClaim.ts#L24)
+
+### redeemMrlViaXcm
+
+```typescript
+async redeemMrlViaXcm(from: string, vaaBytes: string): Promise<...>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/substrate/SubstrateClaim.ts#L42)
+
+## SubstrateExec
+
+### remoteExec
+
+```typescript
+async remoteExec(srcAccount: string, dstAccount: string, dstCall: import("/root/hydration-codex/repos/sdk/..., transfer: Promise<...>, opts: { srcFeeAsset?: any; }): Promise<...>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/substrate/SubstrateExec.ts#L21)
+
+## SubstratePlatform
+
+### buildCall
+
+```typescript
+async buildCall(account: string, _amount: bigint, feeBalance: AssetAmount, config: ExtrinsicConfig): Promise<...>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/substrate/SubstratePlatform.ts#L41)
+
+### estimateFee
+
+```typescript
+async estimateFee(account: string, _amount: bigint, feeBalance: AssetAmount, config: ExtrinsicConfig): Promise<AssetAmount>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/substrate/SubstratePlatform.ts#L95)
+
+### getBalance
+
+```typescript
+async getBalance(asset: Asset, config: SubstrateQueryConfig): Promise<AssetAmount>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/substrate/SubstratePlatform.ts#L109)
+
+### subscribeBalance
+
+```typescript
+async subscribeBalance(asset: Asset, config: SubstrateQueryConfig): Promise<...>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/substrate/SubstratePlatform.ts#L117)
+
+## SubstrateService
+
+### buildMessageId
+
+```typescript
+async buildMessageId(account: string, amount: bigint, asset: string, beneficiary: string): Promise<string>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/substrate/SubstrateService.ts#L85)
+
+### create
+
+```typescript
+async create(chain: AnyParachain): Promise<...>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/substrate/SubstrateService.ts#L37)
+
+### dryRun
+
+```typescript
+async dryRun(account: string, tx: Extrinsic): Promise<any>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/substrate/SubstrateService.ts#L112)
+
+### estimateDeliveryFee
+
+```typescript
+async estimateDeliveryFee(account: string, config: ExtrinsicConfig): Promise<bigint>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/substrate/SubstrateService.ts#L152)
+
+### estimateNetworkFee
+
+```typescript
+async estimateNetworkFee(account: string, config: ExtrinsicConfig): Promise<bigint>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/substrate/SubstrateService.ts#L134)
+
+### getAsset
+
+```typescript
+async getAsset(): Promise<Asset>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/substrate/SubstrateService.ts#L56)
+
+### getCurrency
+
+```typescript
+async getCurrency(): Promise<ChainCurrency>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/substrate/SubstrateService.ts#L49)
+
+### getDecimals
+
+```typescript
+async getDecimals(): Promise<number>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/substrate/SubstrateService.ts#L61)
+
+### getExistentialDeposit
+
+```typescript
+async getExistentialDeposit(): Promise<AssetAmount>
+```
+
+**Reads:** [Balances.ExistentialDeposit](/reference/pallets/Balances)
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/substrate/SubstrateService.ts#L66)
+
+### isDryRunSupported
+
+```typescript
+isDryRunSupported(): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/substrate/SubstrateService.ts#L81)
+
+## SuiBalance
+
+### getBalance
+
+```typescript
+getBalance(): Promise<bigint>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/sui/balance/SuiBalance.ts#L28)
+
+### getDecimals
+
+```typescript
+getDecimals(): Promise<number>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/sui/balance/SuiBalance.ts#L29)
+
+## SuiBalanceFactory
+
+### get
+
+```typescript
+get(client: SuiClient, config: SuiQueryConfig): import("/root/hydration-codex/repos/sdk/packages/xc-sdk/src/platforms/sui/balanc...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/sui/balance/SuiBalanceFactory.ts#L9)
+
+## SuiPlatform
+
+### buildCall
+
+```typescript
+async buildCall(account: string, _amount: bigint, _feeBalance: AssetAmount, config: MoveConfig): Promise<import("/root/hydration-codex/repos/sdk/packages/xc-sdk/src/platforms/sui/types").SuiCall>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/sui/SuiPlatform.ts#L34)
+
+### estimateFee
+
+```typescript
+async estimateFee(account: string, _amount: bigint, feeBalance: AssetAmount, config: MoveConfig): Promise<AssetAmount>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/sui/SuiPlatform.ts#L66)
+
+### getBalance
+
+```typescript
+async getBalance(asset: Asset, config: SuiQueryConfig): Promise<AssetAmount>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/sui/SuiPlatform.ts#L90)
+
+### subscribeBalance
+
+```typescript
+async subscribeBalance(asset: Asset, config: SuiQueryConfig): Promise<...>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/sui/SuiPlatform.ts#L102)
+
+## Token
+
+### getBalance
+
+```typescript
+async getBalance(): Promise<bigint>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/solana/balance/Token.ts#L14)
+
+### getDecimals
+
+```typescript
+async getDecimals(): Promise<number>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/platforms/solana/balance/Token.ts#L32)
+
+## Wallet
+
+### getTransferData
+
+```typescript
+async getTransferData(configs: TransferConfigs, srcAddress: string, dstAddress: string): Promise<import("/root/hydration-codex/repos/sdk/packages/xc-sdk/src/types").Transfer>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/Wallet.ts#L128)
+
+### registerDex
+
+```typescript
+registerDex(dex: Dex[]): void
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/Wallet.ts#L57)
+
+### remoteXcm
+
+```typescript
+async remoteXcm(srcAddress: string, srcChain: any, dstChain: any, dstCall: import("/root/hydration-codex/repos/sdk/..., opts: { srcFeeAsset?: any; }): Promise<...>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/Wallet.ts#L77)
+
+### subscribeBalance
+
+```typescript
+async subscribeBalance(address: string, chain: any, observer: (balances: AssetAmount[]) => void): Promise<...>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/Wallet.ts#L257)
+
+### transfer
+
+```typescript
+async transfer(asset: any, srcAddress: string, srcChain: any, dstAddress: string, dstChain: any): Promise<import("/root/hydration-codex/repos/sdk/packages/xc-sdk/src/types").Transfer>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/Wallet.ts#L61)
+
+## WormholeScan
+
+### getOperation
+
+```typescript
+async getOperation(wormholeId: string): Promise<...>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/clients/WormholeScan.ts#L132)
+
+### getOperations
+
+```typescript
+async getOperations(params: Record<string, string>): Promise<...>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/clients/WormholeScan.ts#L125)
+
+### getVaa
+
+```typescript
+async getVaa(wormholeId: string): Promise<import("/root/hydration-codex/repos/sdk/packages/xc-sdk/src/clients/WormholeScan").Vaa>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/clients/WormholeScan.ts#L108)
+
+### getVaaBytes
+
+```typescript
+async getVaaBytes(wormholeId: string): Promise<import("/root/hydration-codex/repos/sdk/packages/xc-sdk/src/clients/WormholeScan").VaaBytes>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/clients/WormholeScan.ts#L101)
+
+### getVaaByTxHash
+
+```typescript
+async getVaaByTxHash(txHash: string): Promise<import("/root/hydration-codex/repos/sdk/packages/xc-sdk/src/clients/WormholeScan").Vaa>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/clients/WormholeScan.ts#L115)
+
+### isMrlTransfer
+
+```typescript
+isMrlTransfer(payload: import("/root/hydration-codex/repos/sdk/...): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/clients/WormholeScan.ts#L139)
+
+## WormholeTransfer
+
+### getDeposits
+
+```typescript
+async getDeposits(address: string, to: string): Promise<import("/root/hydration-codex/repos/sdk/packages/xc-sdk/src/clients/types").WhTransfer[]>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/clients/WormholeTransfer.ts#L127)
+
+### getWithdraws
+
+```typescript
+async getWithdraws(address: string): Promise<import("/root/hydration-codex/repos/sdk/packages/xc-sdk/src/clients/types").WhTransfer[]>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-sdk/src/clients/WormholeTransfer.ts#L61)
+
+## References
+
+### Runtime (1)
+
+- [Balances.ExistentialDeposit](/reference/pallets/Balances)
+
+### UI (88)
+
+- [useAccountInfo](/reference/hooks/account/useAccountInfo)
+- [useAccountOmnipoolPositions](/reference/hooks/account/useAccountOmnipoolPositions)
+- [useAccountOmnipoolMiningPositions](/reference/hooks/account/useAccountOmnipoolMiningPositions)
+- [useAccountXykMiningPositions](/reference/hooks/account/useAccountXykMiningPositions)
+- [useAccountUniques](/reference/hooks/account/useAccountUniques)
+- [useAccountPermitNonce](/reference/hooks/account/useAccountPermitNonce)
+- [useRelayChainBlockNumber](/reference/hooks/chain/useRelayChainBlockNumber)
+- [useBestNumber](/reference/hooks/chain/useBestNumber)
+- [useInvalidateOnBlock](/reference/hooks/chain/useInvalidateOnBlock)
+- [useEstimateFutureBlockTimestamp](/reference/hooks/chain/useEstimateFutureBlockTimestamp)
+- [useBlockTimestamp](/reference/hooks/chain/useBlockTimestamp)
+- [useChainSpecData](/reference/hooks/chain/useChainSpecData)
+- [useBindEvmAccount](/reference/hooks/transactions/useBindEvmAccount)
+- [usePermitNonce](/reference/hooks/transactions/usePermitNonce)
+- [useOmnipoolAssetsData](/reference/hooks/omnipool/useOmnipoolAssetsData)
+- [useMaxAddLiquidityLimit](/reference/hooks/omnipool/useMaxAddLiquidityLimit)
+- [useOmnipoolMinLiquidity](/reference/hooks/omnipool/useOmnipoolMinLiquidity)
+- [useMinWithdrawalFee](/reference/hooks/omnipool/useMinWithdrawalFee)
+- [useAssetFeeParameters](/reference/hooks/omnipool/useAssetFeeParameters)
+- [useOraclePrice](/reference/hooks/omnipool/useOraclePrice)
+- [useAcceptedFeePaymentAssets](/reference/hooks/transactions/useAcceptedFeePaymentAssets)
+- [useAccountFeePaymentAssetId](/reference/hooks/transactions/useAccountFeePaymentAssetId)
+- [useAccountFeePaymentAssets](/reference/hooks/transactions/useAccountFeePaymentAssets)
+- [useSetFeePaymentAsset](/reference/hooks/transactions/useSetFeePaymentAsset)
+- [useStableswap](/reference/hooks/stableswap/useStableswap)
+- [useStableSwapTradability](/reference/hooks/stableswap/useStableSwapTradability)
+- [useInvalidateStakeData](/reference/hooks/staking/useInvalidateStakeData)
+- [useXYKPoolWithLiquidity](/reference/hooks/xyk/useXYKPoolWithLiquidity)
+- [useXYKConsts](/reference/hooks/xyk/useXYKConsts)
+- [useXykShareTokenEntries](/reference/hooks/xyk/useXykShareTokenEntries)
+- [useBorrowIncentives](/reference/hooks/borrow/useBorrowIncentives)
+- [useBorrowReserves](/reference/hooks/borrow/useBorrowReserves)
+- [userBorrowReservesQuery](/reference/hooks/borrow/userBorrowReservesQuery)
+- [useUserBorrowReserves](/reference/hooks/borrow/useUserBorrowReserves)
+- [useBorrowUserIncentives](/reference/hooks/borrow/useBorrowUserIncentives)
+- [useGhoReserveData](/reference/hooks/borrow/useGhoReserveData)
+- [useGhoUserData](/reference/hooks/borrow/useGhoUserData)
+- [userBorrowSummaryQuery](/reference/hooks/borrow/userBorrowSummaryQuery)
+- [useUserBorrowSummary](/reference/hooks/borrow/useUserBorrowSummary)
+- [useGetClaimAllBorrowRewardsTx](/reference/hooks/borrow/useGetClaimAllBorrowRewardsTx)
+- [useClaimStaking](/reference/hooks/staking/useClaimStaking)
+- [useStake](/reference/hooks/staking/useStake)
+- [useUnstake](/reference/hooks/staking/useUnstake)
+- [useEstimateFee](/reference/hooks/transactions/useEstimateFee)
+- [useAddIsolatedLiquidityZod](/reference/hooks/liquidity/useAddIsolatedLiquidityZod)
+- [useAddIsolatedLiquidity](/reference/hooks/liquidity/useAddIsolatedLiquidity)
+- [useLiquidityOmnipoolShares](/reference/hooks/liquidity/useLiquidityOmnipoolShares)
+- [useCheckJoinOmnipoolFarm](/reference/hooks/liquidity/useCheckJoinOmnipoolFarm)
+- [useAddToOmnipoolZod](/reference/hooks/liquidity/useAddToOmnipoolZod)
+- [useAddLiquidityForm](/reference/hooks/liquidity/useAddLiquidityForm)
+- [useAddLiquidity](/reference/hooks/liquidity/useAddLiquidity)
+- [useStablepoolAddLiquidity](/reference/hooks/liquidity/useStablepoolAddLiquidity)
+- [useStablepoolAddLiquidityForm](/reference/hooks/liquidity/useStablepoolAddLiquidityForm)
+- [useAssetsToAddToMoneyMarket](/reference/hooks/liquidity/useAssetsToAddToMoneyMarket)
+- [useAssetsToAddToStablepool](/reference/hooks/liquidity/useAssetsToAddToStablepool)
+- [useIsolatedPoolForm](/reference/hooks/liquidity/useIsolatedPoolForm)
+- [useSubmitCreateIsolatedPool](/reference/hooks/liquidity/useSubmitCreateIsolatedPool)
+- [useAllowedXYKPoolAssets](/reference/hooks/liquidity/useAllowedXYKPoolAssets)
+- [useSecondsToLeft](/reference/hooks/liquidity/useSecondsToLeft)
+- [useCurrentFarmPeriod](/reference/hooks/liquidity/useCurrentFarmPeriod)
+- [useEnteredDate](/reference/hooks/liquidity/useEnteredDate)
+- [useLoyaltyRates](/reference/hooks/liquidity/useLoyaltyRates)
+- [useDepositAprs](/reference/hooks/liquidity/useDepositAprs)
+- [useExitDepositFarmsMutation](/reference/hooks/liquidity/useExitDepositFarmsMutation)
+- [useJoinOmnipoolFarms](/reference/hooks/liquidity/useJoinOmnipoolFarms)
+- [useXYKFarmMinShares](/reference/hooks/liquidity/useXYKFarmMinShares)
+- [useMinOmnipoolFarmJoin](/reference/hooks/liquidity/useMinOmnipoolFarmJoin)
+- [useJoinIsolatedPoolFarms](/reference/hooks/liquidity/useJoinIsolatedPoolFarms)
+- [useJoinFarmsForm](/reference/hooks/liquidity/useJoinFarmsForm)
+- [useLiquidityMiningRewards](/reference/hooks/liquidity/useLiquidityMiningRewards)
+- [useClaimPositionRewards](/reference/hooks/liquidity/useClaimPositionRewards)
+- [useSummarizeClaimableValues](/reference/hooks/liquidity/useSummarizeClaimableValues)
+- [useClaimFarmRewardsMutation](/reference/hooks/liquidity/useClaimFarmRewardsMutation)
+- [useRemoveSingleOmnipoolPosition](/reference/hooks/liquidity/useRemoveSingleOmnipoolPosition)
+- [useRemoveMultipleOmnipoolPositions](/reference/hooks/liquidity/useRemoveMultipleOmnipoolPositions)
+- [useRemoveLiquidityForm](/reference/hooks/liquidity/useRemoveLiquidityForm)
+- [useStablepoolRemoveLiquidity](/reference/hooks/liquidity/useStablepoolRemoveLiquidity)
+- [useRemoveStablepoolLiquidityForm](/reference/hooks/liquidity/useRemoveStablepoolLiquidityForm)
+- [useTerminateDcaSchedule](/reference/hooks/trade/useTerminateDcaSchedule)
+- [useSubmitCancelOtcOrder](/reference/hooks/trade/useSubmitCancelOtcOrder)
+- [useSubmitFillOrder](/reference/hooks/trade/useSubmitFillOrder)
+- [useSubmitPlaceOrder](/reference/hooks/trade/useSubmitPlaceOrder)
+- [useUnlockNativeLocks](/reference/hooks/wallet/useUnlockNativeLocks)
+- [useClaimAllWalletRewards](/reference/hooks/wallet/useClaimAllWalletRewards)
+- [useInsufficientTransferFee](/reference/hooks/wallet/useInsufficientTransferFee)
+- [usePaymentFees](/reference/hooks/wallet/usePaymentFees)
+- [useTransferPaymentInfo](/reference/hooks/wallet/useTransferPaymentInfo)
+- [useSubmitTransferPosition](/reference/hooks/wallet/useSubmitTransferPosition)

@@ -1,0 +1,535 @@
+---
+title: PolkadotXcm
+description: Runtime pallet documentation
+sidebar_label: PolkadotXcm
+---
+
+# PolkadotXcm
+
+## Release
+
+Polkadot SDK stable2409
+
+<details>
+<summary>Code Documentation</summary>
+
+Pallet to handle XCM messages.
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #107** · Polkadot SDK<br/>
+`pallet-xcm/1ed66275/stable2409-patch6`
+
+[GitHub](https://github.com/galacticcouncil/polkadot-sdk/tree/1ed662757b03c4f17dc2429c1df84e975d98513a/polkadot/xcm/pallet-xcm) · [docs.rs](https://docs.rs/crate/pallet-xcm/17.0.1/source/) · [crates.io](https://crates.io/crates/pallet-xcm) · [Subscan](https://hydradx.subscan.io/runtime/PolkadotXcm)
+
+## Storage (14)
+
+### QueryCounter
+
+The latest available query index.
+
+```rust
+QueryCounter: Value<u64>
+```
+
+### Queries
+
+The ongoing queries.
+
+```rust
+Queries: Map<u64 -> {_enum: {Pending: {\responder\: \XcmVersionedLocation\, \maybeMatchQuerier\: \Option<XcmVersionedLocation>\, \maybeNotify\: \Option<(u8, u8)>\, \timeout\: \u32\}, VersionNotifier: {\origin\: \XcmVersionedLocation\, \isActive\: \bool\}, Ready: {\response\: \XcmVersionedResponse\, \at\: \u32\}}}> [Blake2_128Concat]
+```
+
+### AssetTraps
+
+The existing asset traps. Key is the blake2 256 hash of (origin, versioned `Assets`) pair. Value is the number of times this pair has been trapped (usually just 1 if it exists at all).
+
+```rust
+AssetTraps: Map<H256 -> u32> [Identity]
+```
+
+### SafeXcmVersion
+
+Default version to encode XCM when latest version of destination is unknown. If `None`, then the destinations whose XCM version is unknown are considered unreachable.
+
+```rust
+SafeXcmVersion: Value<u32>
+```
+
+### SupportedVersion
+
+The Latest versions that we know various locations support.
+
+```rust
+SupportedVersion: Map<(u32, XcmVersionedLocation) -> u32> [Twox64Concat,  Blake2_128Concat]
+```
+
+### VersionNotifiers
+
+All locations that we have requested version notifications from.
+
+```rust
+VersionNotifiers: Map<(u32, XcmVersionedLocation) -> u64> [Twox64Concat,  Blake2_128Concat]
+```
+
+### VersionNotifyTargets
+
+The target locations that are subscribed to our version changes, as well as the most recent of our versions we informed them of.
+
+```rust
+VersionNotifyTargets: Map<(u32, XcmVersionedLocation) -> (u64, SpWeightsWeightV2Weight, u32)> [Twox64Concat,  Blake2_128Concat]
+```
+
+### VersionDiscoveryQueue
+
+Destinations whose latest XCM version we would like to know. Duplicates not allowed, and the `u32` counter is the number of times that a send to the destination has been attempted, which is used as a prioritization.
+
+```rust
+VersionDiscoveryQueue: Value<Vec<(XcmVersionedLocation, u32)>>
+```
+
+### CurrentMigration
+
+The current migration's stage, if any.
+
+```rust
+CurrentMigration: Value<{_enum: {MigrateSupportedVersion: Null, MigrateVersionNotifiers: Null, NotifyCurrentTargets: Option<Bytes>, MigrateAndNotifyOldTargets: Null}}>
+```
+
+### RemoteLockedFungibles
+
+Fungible assets which we know are locked on a remote chain.
+
+```rust
+RemoteLockedFungibles: Map<(u32,AccountId32,XcmVersionedAssetId) -> {
+    amount: u128,
+    owner: XcmVersionedLocation,
+    locker: XcmVersionedLocation,
+    consumers: Vec<(Null,u128)>,
+}> [Twox64Concat, Blake2_128Concat, Blake2_128Concat]
+```
+
+### LockedFungibles
+
+Fungible assets which we know are locked on this chain.
+
+```rust
+LockedFungibles: Map<AccountId32 -> Vec<(u128, XcmVersionedLocation)>> [Blake2_128Concat]
+```
+
+### XcmExecutionSuspended
+
+Global suspension state of the XCM executor.
+
+```rust
+XcmExecutionSuspended: Value<bool>
+```
+
+### ShouldRecordXcm
+
+Whether or not incoming XCMs (both executed locally and received) should be recorded. Only one XCM program will be recorded at a time. This is meant to be used in runtime APIs, and it's advised it stays false for all other use cases, so as to not degrade regular performance. Only relevant if this pallet is being used as the `xcm_executor::traits::RecordXcm` implementation in the XCM executor configuration.
+
+```rust
+ShouldRecordXcm: Value<bool>
+```
+
+### RecordedXcm
+
+If `ShouldRecordXcm` is set to true, then the last XCM program executed locally will be stored here. Runtime APIs can fetch the XCM that was executed by accessing this value. Only relevant if this pallet is being used as the `xcm_executor::traits::RecordXcm` implementation in the XCM executor configuration.
+
+```rust
+RecordedXcm: Value<Vec<StagingXcmV4Instruction>>
+```
+
+## Extrinsics (14)
+
+### send
+
+```rust
+fn send(
+    origin: OriginFor<T>,
+    dest: Lookup305,
+    message: Lookup313,
+)
+```
+
+### teleport_assets
+
+```rust
+fn teleport_assets(
+    origin: OriginFor<T>,
+    dest: Lookup305,
+    beneficiary: Lookup305,
+    assets: Lookup378,
+    feeAssetItem: u32,
+)
+```
+
+### reserve_transfer_assets
+
+```rust
+fn reserve_transfer_assets(
+    origin: OriginFor<T>,
+    dest: Lookup305,
+    beneficiary: Lookup305,
+    assets: Lookup378,
+    feeAssetItem: u32,
+)
+```
+
+### execute
+
+```rust
+fn execute(
+    origin: OriginFor<T>,
+    message: Lookup379,
+    maxWeight: Lookup10,
+)
+```
+
+### force_xcm_version
+
+```rust
+fn force_xcm_version(
+    origin: OriginFor<T>,
+    location: Lookup95,
+    version: u32,
+)
+```
+
+### force_default_xcm_version
+
+```rust
+fn force_default_xcm_version(
+    origin: OriginFor<T>,
+    maybeXcmVersion: Option<u32>,
+)
+```
+
+### force_subscribe_version_notify
+
+```rust
+fn force_subscribe_version_notify(
+    origin: OriginFor<T>,
+    location: Lookup305,
+)
+```
+
+### force_unsubscribe_version_notify
+
+```rust
+fn force_unsubscribe_version_notify(
+    origin: OriginFor<T>,
+    location: Lookup305,
+)
+```
+
+### limited_reserve_transfer_assets
+
+```rust
+fn limited_reserve_transfer_assets(
+    origin: OriginFor<T>,
+    dest: Lookup305,
+    beneficiary: Lookup305,
+    assets: Lookup378,
+    feeAssetItem: u32,
+    weightLimit: Lookup358,
+)
+```
+
+### limited_teleport_assets
+
+```rust
+fn limited_teleport_assets(
+    origin: OriginFor<T>,
+    dest: Lookup305,
+    beneficiary: Lookup305,
+    assets: Lookup378,
+    feeAssetItem: u32,
+    weightLimit: Lookup358,
+)
+```
+
+### force_suspension
+
+```rust
+fn force_suspension(
+    origin: OriginFor<T>,
+    suspended: bool,
+)
+```
+
+### transfer_assets
+
+```rust
+fn transfer_assets(
+    origin: OriginFor<T>,
+    dest: Lookup305,
+    beneficiary: Lookup305,
+    assets: Lookup378,
+    feeAssetItem: u32,
+    weightLimit: Lookup358,
+)
+```
+
+### claim_assets
+
+```rust
+fn claim_assets(
+    origin: OriginFor<T>,
+    assets: Lookup378,
+    beneficiary: Lookup305,
+)
+```
+
+### transfer_assets_using_type_and_then
+
+```rust
+fn transfer_assets_using_type_and_then(
+    origin: OriginFor<T>,
+    dest: Lookup305,
+    assets: Lookup378,
+    assetsTransferType: Lookup390,
+    remoteFeesId: Lookup391,
+    feesTransferType: Lookup390,
+    customXcmOnDest: Lookup313,
+    weightLimit: Lookup358,
+)
+```
+
+## Events (24)
+
+### Attempted
+
+```rust
+Attempted {
+    outcome: Lookup526,
+}
+```
+
+### Sent
+
+```rust
+Sent {
+    origin: Lookup95,
+    destination: Lookup95,
+    message: Vec<StagingXcmV4Instruction>,
+    messageId: [u8;32],
+}
+```
+
+### UnexpectedResponse
+
+```rust
+UnexpectedResponse {
+    origin: Lookup95,
+    queryId: u64,
+}
+```
+
+### ResponseReady
+
+```rust
+ResponseReady {
+    queryId: u64,
+    response: Lookup368,
+}
+```
+
+### Notified
+
+```rust
+Notified {
+    queryId: u64,
+    palletIndex: u8,
+    callIndex: u8,
+}
+```
+
+### NotifyOverweight
+
+```rust
+NotifyOverweight {
+    queryId: u64,
+    palletIndex: u8,
+    callIndex: u8,
+    actualWeight: Lookup10,
+    maxBudgetedWeight: Lookup10,
+}
+```
+
+### NotifyDispatchError
+
+```rust
+NotifyDispatchError {
+    queryId: u64,
+    palletIndex: u8,
+    callIndex: u8,
+}
+```
+
+### NotifyDecodeFailed
+
+```rust
+NotifyDecodeFailed {
+    queryId: u64,
+    palletIndex: u8,
+    callIndex: u8,
+}
+```
+
+### InvalidResponder
+
+```rust
+InvalidResponder {
+    origin: Lookup95,
+    queryId: u64,
+    expectedLocation: Option<StagingXcmV4Location>,
+}
+```
+
+### InvalidResponderVersion
+
+```rust
+InvalidResponderVersion {
+    origin: Lookup95,
+    queryId: u64,
+}
+```
+
+### ResponseTaken
+
+```rust
+ResponseTaken {
+    queryId: u64,
+}
+```
+
+### AssetsTrapped
+
+```rust
+AssetsTrapped {
+    hash_: H256,
+    origin: Lookup95,
+    assets: Lookup378,
+}
+```
+
+### VersionChangeNotified
+
+```rust
+VersionChangeNotified {
+    destination: Lookup95,
+    result: u32,
+    cost: Vec<StagingXcmV4Asset>,
+    messageId: [u8;32],
+}
+```
+
+### SupportedVersionChanged
+
+```rust
+SupportedVersionChanged {
+    location: Lookup95,
+    version: u32,
+}
+```
+
+### NotifyTargetSendFail
+
+```rust
+NotifyTargetSendFail {
+    location: Lookup95,
+    queryId: u64,
+    error: Lookup345,
+}
+```
+
+### NotifyTargetMigrationFail
+
+```rust
+NotifyTargetMigrationFail {
+    location: Lookup305,
+    queryId: u64,
+}
+```
+
+### InvalidQuerierVersion
+
+```rust
+InvalidQuerierVersion {
+    origin: Lookup95,
+    queryId: u64,
+}
+```
+
+### InvalidQuerier
+
+```rust
+InvalidQuerier {
+    origin: Lookup95,
+    queryId: u64,
+    expectedQuerier: Lookup95,
+    maybeActualQuerier: Option<StagingXcmV4Location>,
+}
+```
+
+### VersionNotifyStarted
+
+```rust
+VersionNotifyStarted {
+    destination: Lookup95,
+    cost: Vec<StagingXcmV4Asset>,
+    messageId: [u8;32],
+}
+```
+
+### VersionNotifyRequested
+
+```rust
+VersionNotifyRequested {
+    destination: Lookup95,
+    cost: Vec<StagingXcmV4Asset>,
+    messageId: [u8;32],
+}
+```
+
+### VersionNotifyUnrequested
+
+```rust
+VersionNotifyUnrequested {
+    destination: Lookup95,
+    cost: Vec<StagingXcmV4Asset>,
+    messageId: [u8;32],
+}
+```
+
+### FeesPaid
+
+```rust
+FeesPaid {
+    paying: Lookup95,
+    fees: Vec<StagingXcmV4Asset>,
+}
+```
+
+### AssetsClaimed
+
+```rust
+AssetsClaimed {
+    hash_: H256,
+    origin: Lookup95,
+    assets: Lookup378,
+}
+```
+
+### VersionMigrationFinished
+
+```rust
+VersionMigrationFinished {
+    version: u32,
+}
+```

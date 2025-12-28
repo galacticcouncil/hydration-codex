@@ -1,0 +1,53 @@
+---
+title: LbppoolLifeState
+description: Indexer entity documentation
+sidebar_label: LbppoolLifeState
+---
+
+# LbppoolLifeState
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 2 |
+| Nullable Fields | 1 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/lbppoolLifeState.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type LbppoolLifeState {
+  created: LbppoolCreatedData!
+  destroyed: LbppoolDestroyedData
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface LbppoolLifeState {
+  created: LbppoolCreatedData;
+  destroyed: LbppoolDestroyedData | null;
+}
+```
+
+## Example Query
+
+```graphql
+query GetLbppoolLifeStates {
+  lbppoolLifeStates(limit: 10) {
+    created
+    destroyed
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [LBP](/reference/pallets/LBP)

@@ -1,0 +1,178 @@
+---
+title: Bonds
+description: Runtime pallet documentation
+sidebar_label: Bonds
+---
+
+# Bonds
+
+## Overview
+
+This pallet provides functionality to issue fungible bonds.
+Once the bonds are mature, they can be redeemed for the underlying asset.
+The pallet uses `Time` trait to get the timestamp of the last block, normally provided by the timestamp pallet.
+
+## Issuing of new bonds
+
+* When issuing new bonds, new nameless asset of the `AssetType::Bond` type is registered for the bonds.
+* New amount of bonds is issued when the underlying asset and maturity matches already registered bonds.
+* It's possible to create multiple bonds for the same underlying asset.
+* Bonds can be issued for all available asset types except the types listed by `AssetTypeBlacklist`.
+* The existential deposit of the bonds is the same as of the underlying asset.
+* A user receives the same amount of bonds as the amount of the underlying asset he provided, minus the protocol fee.
+* Maturity of bonds is represented using the Unix time in milliseconds.
+* Underlying assets are stored in the pallet account until redeemed.
+* Protocol fee is applied to the amount of the underlying asset and transferred to the fee receiver.
+* It's possible to issue new bonds for bonds that are already mature.
+
+## Redeeming of new bonds
+* Bonds can be both partially or fully redeemed.
+* The amount of the underlying asset an account receives is 1:1 to the `amount` of the bonds redeemed.
+* Anyone who holds the bonds is able to redeem them.
+
+<details>
+<summary>Code Documentation</summary>
+
+### Overview
+
+This pallet provides functionality to issue fungible bonds.
+Once the bonds are mature, they can be redeemed for the underlying asset.
+The pallet uses `Time` trait to get the timestamp of the last block, normally provided by the timestamp pallet.
+
+### Issuing of new bonds
+
+* When issuing new bonds, new nameless asset of the `AssetType::Bond` type is registered for the bonds.
+* New amount of bonds is issued when the underlying asset and maturity matches already registered bonds.
+* It's possible to create multiple bonds for the same underlying asset.
+* Bonds can be issued for all available asset types permitted by `AssetTypeWhitelist`.
+* The existential deposit of the bonds is the same as of the underlying asset.
+* A user receives the same amount of bonds as the amount of the underlying asset he provided, minus the protocol fee.
+* Maturity of bonds is represented using the Unix time in milliseconds.
+* Underlying assets are stored in the pallet account until redeemed.
+* Protocol fee is applied to the amount of the underlying asset and transferred to the fee receiver.
+* It's possible to issue new bonds for bonds that are already mature.
+
+### Redeeming of new bonds
+* Bonds can be both partially or fully redeemed.
+* The amount of the underlying asset an account receives is 1:1 to the `amount` of the bonds redeemed.
+* Anyone who holds the bonds is able to redeem them.
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #71** · HydraDX<br/>
+`pallet-bonds/4ca470c5/master`
+
+[GitHub](https://github.com/galacticcouncil/HydraDX-node/tree/4ca470c5d613d62ce52eb8645770ef5fff263111/pallets/bonds) · [Subscan](https://hydradx.subscan.io/runtime/Bonds)
+
+## Storage (2)
+
+### BondIds
+
+Registered bond ids. Maps (underlying asset ID, maturity) -\> bond ID
+
+```rust
+BondIds: Map<(u32, u64) -> u32> [Blake2_128Concat]
+```
+
+### Bonds
+
+Registered bonds. Maps bond ID -\> (underlying asset ID, maturity)
+
+```rust
+Bonds: Map<u32 -> (u32, u64)> [Blake2_128Concat]
+```
+
+**Read by SDK:** [AssetClient.safeBondsQuery](/reference/sdk/sdk#assetclient), [AssetClient.queryBonds](/reference/sdk/sdk-next#assetclient)
+
+## Extrinsics (2)
+
+### issue
+
+```rust
+fn issue(
+    origin: OriginFor<T>,
+    assetId: u32,
+    amount: u128,
+    maturity: u64,
+)
+```
+
+### redeem
+
+```rust
+fn redeem(
+    origin: OriginFor<T>,
+    bondId: u32,
+    amount: u128,
+)
+```
+
+## Events (3)
+
+### TokenCreated
+
+```rust
+TokenCreated {
+    issuer: AccountId32,
+    assetId: u32,
+    bondId: u32,
+    maturity: u64,
+}
+```
+
+### Issued
+
+```rust
+Issued {
+    issuer: AccountId32,
+    bondId: u32,
+    amount: u128,
+    fee: u128,
+}
+```
+
+### Redeemed
+
+```rust
+Redeemed {
+    who: AccountId32,
+    bondId: u32,
+    amount: u128,
+}
+```
+
+## Constants (3)
+
+### PalletId
+
+The pallet id, used for deriving its sovereign account ID.
+
+```rust
+const PalletId: [u8;8]
+```
+
+### ProtocolFee
+
+Protocol fee.
+
+```rust
+const ProtocolFee: Permill
+```
+
+### FeeReceiver
+
+Protocol fee receiver.
+
+```rust
+const FeeReceiver: AccountId32
+```
+
+## References
+
+### SDK (2)
+
+- [sdk](/reference/sdk/sdk)
+- [sdk-next](/reference/sdk/sdk-next)

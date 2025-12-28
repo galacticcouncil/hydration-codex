@@ -1,0 +1,350 @@
+---
+title: ParachainSystem
+description: Runtime pallet documentation
+sidebar_label: ParachainSystem
+---
+
+# ParachainSystem
+
+## Release
+
+Polkadot SDK stable2409
+
+<details>
+<summary>Code Documentation</summary>
+
+`cumulus-pallet-parachain-system` is a base pallet for Cumulus-based parachains.
+
+This pallet handles low-level details of being a parachain. Its responsibilities include:
+
+- ingestion of the parachain validation data;
+- ingestion and dispatch of incoming downward and lateral messages;
+- coordinating upgrades with the Relay Chain; and
+- communication of parachain outputs, such as sent messages, signaling an upgrade, etc.
+
+Users must ensure that they register this pallet as an inherent provider.
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #103** · Polkadot SDK<br/>
+`cumulus-pallet-parachain-system/1ed66275/stable2409-patch6`
+
+[GitHub](https://github.com/galacticcouncil/polkadot-sdk/tree/1ed662757b03c4f17dc2429c1df84e975d98513a/cumulus/pallets/parachain-system) · [docs.rs](https://docs.rs/crate/cumulus-pallet-parachain-system/0.17.1/source/) · [crates.io](https://crates.io/crates/cumulus-pallet-parachain-system) · [Subscan](https://hydradx.subscan.io/runtime/ParachainSystem)
+
+## Storage (24)
+
+### UnincludedSegment
+
+Latest included block descendants the runtime accepted. In other words, these are ancestors of the currently executing block which have not been included in the observed relay-chain state. The segment length is limited by the capacity returned from the `ConsensusHook` configured in the pallet.
+
+```rust
+UnincludedSegment: Value<Vec<CumulusPalletParachainSystemUnincludedSegmentAncestor>>
+```
+
+### AggregatedUnincludedSegment
+
+Storage field that keeps track of bandwidth used by the unincluded segment along with the latest HRMP watermark. Used for limiting the acceptance of new blocks with respect to relay chain constraints.
+
+```rust
+AggregatedUnincludedSegment: Value<{
+    usedBandwidth: CumulusPalletParachainSystemUnincludedSegmentUsedBandwidth,
+    hrmpWatermark: Option<u32>,
+    consumedGoAheadSignal: Option<PolkadotPrimitivesV8UpgradeGoAhead>,
+}>
+```
+
+### PendingValidationCode
+
+In case of a scheduled upgrade, this storage field contains the validation code to be applied. As soon as the relay chain gives us the go-ahead signal, we will overwrite the `:code`[sp_core::storage::well_known_keys::CODE] which will result the next block process with the new validation code. This concludes the upgrade process.
+
+```rust
+PendingValidationCode: Value<Bytes>
+```
+
+### NewValidationCode
+
+Validation code that is set by the parachain and is to be communicated to collator and consequently the relay-chain. This will be cleared in `on_initialize` of each new block if no other pallet already set the value.
+
+```rust
+NewValidationCode: Value<Bytes>
+```
+
+### ValidationData
+
+The `PersistedValidationData` set for this block. This value is expected to be set only once per block and it's never stored in the trie.
+
+```rust
+ValidationData: Value<{
+    parentHead: Bytes,
+    relayParentNumber: u32,
+    relayParentStorageRoot: H256,
+    maxPovSize: u32,
+}>
+```
+
+**Read by SDK:** [LbpPoolClient.loadPools](/reference/sdk/sdk#lbppoolclient), [LiquidityMiningClient.getRelayBlockNumber](/reference/sdk/sdk-next#liquidityminingclient)
+
+### DidSetValidationCode
+
+Were the validation data set to notify the relay chain?
+
+```rust
+DidSetValidationCode: Value<bool>
+```
+
+### LastRelayChainBlockNumber
+
+The relay chain block number associated with the last parachain block. This is updated in `on_finalize`.
+
+```rust
+LastRelayChainBlockNumber: Value<u32>
+```
+
+### UpgradeRestrictionSignal
+
+An option which indicates if the relay-chain restricts signalling a validation code upgrade. In other words, if this is `Some` and `NewValidationCode` is `Some` then the produced candidate will be invalid. This storage item is a mirror of the corresponding value for the current parachain from the relay-chain. This value is ephemeral which means it doesn't hit the storage. This value is set after the inherent.
+
+```rust
+UpgradeRestrictionSignal: Value<Option<PolkadotPrimitivesV8UpgradeRestriction>>
+```
+
+### UpgradeGoAhead
+
+Optional upgrade go-ahead signal from the relay-chain. This storage item is a mirror of the corresponding value for the current parachain from the relay-chain. This value is ephemeral which means it doesn't hit the storage. This value is set after the inherent.
+
+```rust
+UpgradeGoAhead: Value<Option<PolkadotPrimitivesV8UpgradeGoAhead>>
+```
+
+### RelayStateProof
+
+The state proof for the last relay parent block. This field is meant to be updated each block with the validation data inherent. Therefore, before processing of the inherent, e.g. in `on_initialize` this data may be stale. This data is also absent from the genesis.
+
+```rust
+RelayStateProof: Value<{trieNodes: BTreeSet<Bytes>}>
+```
+
+### RelevantMessagingState
+
+The snapshot of some state related to messaging relevant to the current parachain as per the relay parent. This field is meant to be updated each block with the validation data inherent. Therefore, before processing of the inherent, e.g. in `on_initialize` this data may be stale. This data is also absent from the genesis.
+
+```rust
+RelevantMessagingState: Value<{
+    dmqMqcHead: H256,
+    relayDispatchQueueRemainingCapacity: CumulusPalletParachainSystemRelayStateSnapshotRelayDispatchQueueRemainingCapacity,
+    ingressChannels: Vec<(u32,PolkadotPrimitivesV8AbridgedHrmpChannel)>,
+    egressChannels: Vec<(u32,PolkadotPrimitivesV8AbridgedHrmpChannel)>,
+}>
+```
+
+### HostConfiguration
+
+The parachain host configuration that was obtained from the relay parent. This field is meant to be updated each block with the validation data inherent. Therefore, before processing of the inherent, e.g. in `on_initialize` this data may be stale. This data is also absent from the genesis.
+
+```rust
+HostConfiguration: Value<{
+    maxCodeSize: u32,
+    maxHeadDataSize: u32,
+    maxUpwardQueueCount: u32,
+    maxUpwardQueueSize: u32,
+    maxUpwardMessageSize: u32,
+    maxUpwardMessageNumPerCandidate: u32,
+    hrmpMaxMessageNumPerCandidate: u32,
+    validationUpgradeCooldown: u32,
+    validationUpgradeDelay: u32,
+    asyncBackingParams: PolkadotPrimitivesV8AsyncBackingAsyncBackingParams,
+}>
+```
+
+### LastDmqMqcHead
+
+The last downward message queue chain head we have observed. This value is loaded before and saved after processing inbound downward messages carried by the system inherent.
+
+```rust
+LastDmqMqcHead: Value<H256>
+```
+
+### LastHrmpMqcHeads
+
+The message queue chain heads we have observed per each channel incoming channel. This value is loaded before and saved after processing inbound downward messages carried by the system inherent.
+
+```rust
+LastHrmpMqcHeads: Value<BTreeMap<u32,  H256>>
+```
+
+### ProcessedDownwardMessages
+
+Number of downward messages processed in a block. This will be cleared in `on_initialize` of each new block.
+
+```rust
+ProcessedDownwardMessages: Value<u32>
+```
+
+### HrmpWatermark
+
+HRMP watermark that was set in a block. This will be cleared in `on_initialize` of each new block.
+
+```rust
+HrmpWatermark: Value<u32>
+```
+
+### HrmpOutboundMessages
+
+HRMP messages that were sent in a block. This will be cleared in `on_initialize` of each new block.
+
+```rust
+HrmpOutboundMessages: Value<Vec<PolkadotCorePrimitivesOutboundHrmpMessage>>
+```
+
+### UpwardMessages
+
+Upward messages that were sent in a block. This will be cleared in `on_initialize` of each new block.
+
+```rust
+UpwardMessages: Value<Vec<Bytes>>
+```
+
+### PendingUpwardMessages
+
+Upward messages that are still pending and not yet send to the relay chain.
+
+```rust
+PendingUpwardMessages: Value<Vec<Bytes>>
+```
+
+### UpwardDeliveryFeeFactor
+
+The factor to multiply the base delivery fee by for UMP.
+
+```rust
+UpwardDeliveryFeeFactor: Value<u128>
+```
+
+### AnnouncedHrmpMessagesPerCandidate
+
+The number of HRMP messages we observed in `on_initialize` and thus used that number for announcing the weight of `on_initialize` and `on_finalize`.
+
+```rust
+AnnouncedHrmpMessagesPerCandidate: Value<u32>
+```
+
+### ReservedXcmpWeightOverride
+
+The weight we reserve at the beginning of the block for processing XCMP messages. This overrides the amount set in the Config trait.
+
+```rust
+ReservedXcmpWeightOverride: Value<{refTime: Compact<u64>, proofSize: Compact<u64>}>
+```
+
+### ReservedDmpWeightOverride
+
+The weight we reserve at the beginning of the block for processing DMP messages. This overrides the amount set in the Config trait.
+
+```rust
+ReservedDmpWeightOverride: Value<{refTime: Compact<u64>, proofSize: Compact<u64>}>
+```
+
+### CustomValidationHeadData
+
+A custom head data that should be returned as result of `validate_block`. See `Pallet::set_custom_validation_head_data` for more information.
+
+```rust
+CustomValidationHeadData: Value<Bytes>
+```
+
+## Extrinsics (2)
+
+### set_validation_data
+
+```rust
+fn set_validation_data(
+    origin: OriginFor<T>,
+    data: Lookup291,
+)
+```
+
+### sudo_send_upward_message
+
+```rust
+fn sudo_send_upward_message(
+    origin: OriginFor<T>,
+    message: Bytes,
+)
+```
+
+## Events (6)
+
+### ValidationFunctionStored
+
+```rust
+ValidationFunctionStored
+```
+
+### ValidationFunctionApplied
+
+```rust
+ValidationFunctionApplied {
+    relayChainBlockNum: u32,
+}
+```
+
+### ValidationFunctionDiscarded
+
+```rust
+ValidationFunctionDiscarded
+```
+
+### DownwardMessagesReceived
+
+```rust
+DownwardMessagesReceived {
+    count: u32,
+}
+```
+
+### DownwardMessagesProcessed
+
+```rust
+DownwardMessagesProcessed {
+    weightUsed: Lookup10,
+    dmqHead: H256,
+}
+```
+
+### UpwardMessageSent
+
+```rust
+UpwardMessageSent {
+    messageHash: Option<[u8;32]>,
+}
+```
+
+## Constants (1)
+
+### SelfParaId
+
+Returns the parachain ID we are running with.
+
+```rust
+const SelfParaId: u32
+```
+
+## References
+
+### SDK (2)
+
+- [sdk](/reference/sdk/sdk)
+- [sdk-next](/reference/sdk/sdk-next)
+
+### UI (7)
+
+- [useStakingRewards](/reference/hooks/utils/useStakingRewards)
+- [useClaimStaking](/reference/hooks/staking/useClaimStaking)
+- [useStakingAPR](/reference/hooks/staking/useStakingAPR)
+- [useRewardsCurveData](/reference/hooks/staking/useRewardsCurveData)
+- [useUnlockableNativeTokens](/reference/hooks/wallet/useUnlockableNativeTokens)
+- [useClaimAllWalletRewards](/reference/hooks/wallet/useClaimAllWalletRewards)
+- [useWalletRewardsSectionData](/reference/hooks/wallet/useWalletRewardsSectionData)

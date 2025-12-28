@@ -1,0 +1,62 @@
+---
+title: Broadcast
+description: Runtime pallet documentation
+sidebar_label: Broadcast
+---
+
+# Broadcast
+
+Support pallet for AMMs. Includes the unified event that is emitted by all AMM pallets.
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #204** · HydraDX<br/>
+`pallet-broadcast/4ca470c5/master`
+
+[GitHub](https://github.com/galacticcouncil/HydraDX-node/tree/4ca470c5d613d62ce52eb8645770ef5fff263111/pallets/broadcast) · [Subscan](https://hydradx.subscan.io/runtime/Broadcast)
+
+## Storage (3)
+
+### IncrementalId
+
+Next available incremental ID
+
+```rust
+IncrementalId: Value<u32>
+```
+
+### ExecutionContext
+
+Execution context to figure out where the trade is originated from
+
+```rust
+ExecutionContext: Value<Vec<PalletBroadcastExecutionType>>
+```
+
+### Swapper
+
+If filled, we overwrite the original swapper. Mainly used in router to not to use temporary trade account
+
+```rust
+Swapper: Value<AccountId32>
+```
+
+## Events (1)
+
+### Swapped3
+
+```rust
+Swapped3 {
+    swapper: AccountId32,
+    filler: AccountId32,
+    fillerType: Lookup553,
+    operation: Lookup554,
+    inputs: Vec<PalletBroadcastAsset>,
+    outputs: Vec<PalletBroadcastAsset>,
+    fees: Vec<PalletBroadcastFee>,
+    operationStack: Vec<PalletBroadcastExecutionType>,
+}
+```
+
+## References

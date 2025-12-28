@@ -1,0 +1,77 @@
+---
+title: StableswapLiquidityEvent
+description: Indexer entity documentation
+sidebar_label: StableswapLiquidityEvent
+---
+
+# StableswapLiquidityEvent
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 12 |
+| Nullable Fields | 1 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/stableswapLiquidityEvent.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type StableswapLiquidityEvent {
+  id: ID!
+  traceIds: [String!
+  pool: Stableswap!
+  sharesAmount: BigInt!
+  feeAmount: BigInt!
+  assetAmounts: [StableswapAssetLiquidityAmount!
+  field: "liquidityAction")
+  actionType: LiquidityActionEvent!
+  indexInBlock: Int!
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  event: Event!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface StableswapLiquidityEvent {
+  id: string;
+  traceIds: [String;
+  pool: Stableswap;
+  sharesAmount: bigint;
+  feeAmount: bigint;
+  assetAmounts: [StableswapAssetLiquidityAmount;
+  field: "liquidityAction") | null;
+  actionType: LiquidityActionEvent;
+  indexInBlock: number;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  event: Event;
+}
+```
+
+## Example Query
+
+```graphql
+query GetStableswapLiquidityEvents {
+  stableswapLiquidityEvents(limit: 10) {
+    id
+    traceIds
+    pool
+    sharesAmount
+    feeAmount
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [Stableswap](/reference/pallets/Stableswap)

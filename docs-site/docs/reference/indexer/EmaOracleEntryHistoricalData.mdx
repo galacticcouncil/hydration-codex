@@ -1,0 +1,91 @@
+---
+title: EmaOracleEntryHistoricalData
+description: Indexer entity documentation
+sidebar_label: EmaOracleEntryHistoricalData
+---
+
+# EmaOracleEntryHistoricalData
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 19 |
+| Nullable Fields | 0 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/emaOracleEntryHistoricalData.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type EmaOracleEntryHistoricalData {
+  id: ID!
+  assetA: Asset!
+  assetB: Asset!
+  assetAAssetRegistryId: String!
+  assetBAssetRegistryId: String!
+  source: String!
+  period: EmaOraclePeriod!
+  numeratorPrice: BigInt!
+  denominatorPrice: BigInt!
+  assetAInVolume: BigInt!
+  assetAOutVolume: BigInt!
+  assetBInVolume: BigInt!
+  assetBOutVolume: BigInt!
+  assetALiquidity: BigInt!
+  assetBLiquidity: BigInt!
+  updatedAtParaBlockHeight: Int!
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  block: Block!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface EmaOracleEntryHistoricalData {
+  id: string;
+  assetA: Asset;
+  assetB: Asset;
+  assetAAssetRegistryId: string;
+  assetBAssetRegistryId: string;
+  source: string;
+  period: EmaOraclePeriod;
+  numeratorPrice: bigint;
+  denominatorPrice: bigint;
+  assetAInVolume: bigint;
+  assetAOutVolume: bigint;
+  assetBInVolume: bigint;
+  assetBOutVolume: bigint;
+  assetALiquidity: bigint;
+  assetBLiquidity: bigint;
+  updatedAtParaBlockHeight: number;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  block: Block;
+}
+```
+
+## Example Query
+
+```graphql
+query GetEmaOracleEntryHistoricalDatas {
+  emaOracleEntryHistoricalDatas(limit: 10) {
+    id
+    assetA
+    assetB
+    assetAAssetRegistryId
+    assetBAssetRegistryId
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [EmaOracle](/reference/pallets/EmaOracle)

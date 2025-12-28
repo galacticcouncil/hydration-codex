@@ -1,0 +1,59 @@
+---
+title: XykpoolCreatedData
+description: Indexer entity documentation
+sidebar_label: XykpoolCreatedData
+---
+
+# XykpoolCreatedData
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 4 |
+| Nullable Fields | 1 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/xykpoolCreatedData.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type XykpoolCreatedData {
+  initialSharesAmount: String!
+  eventId: String
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface XykpoolCreatedData {
+  initialSharesAmount: string;
+  eventId: string | null;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+}
+```
+
+## Example Query
+
+```graphql
+query GetXykpoolCreatedDatas {
+  xykpoolCreatedDatas(limit: 10) {
+    initialSharesAmount
+    eventId
+    paraBlockHeight
+    relayBlockHeight
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [XYK](/reference/pallets/XYK)

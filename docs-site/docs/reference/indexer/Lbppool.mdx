@@ -1,0 +1,112 @@
+---
+title: Lbppool
+description: Indexer entity documentation
+sidebar_label: Lbppool
+---
+
+# Lbppool
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 25 |
+| Nullable Fields | 12 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/lbppool.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type Lbppool {
+  id: ID!
+  account: Account!
+  assetA: Asset!
+  assetB: Asset!
+  assetABalance: BigInt!
+  assetBBalance: BigInt!
+  owner: Account
+  feeCollector: Account
+  startBlockNumber: Int
+  endBlockNumber: Int
+  initialWeight: Int
+  finalWeight: Int
+  fee: [Int]
+  repayTarget: BigInt
+  createdAtParaBlockHeight: Int!
+  createdAtRelayBlockHeight: Int!
+  createdAtBlock: Block!
+  isDestroyed: Boolean
+  lifeStates: [LbppoolLifeState!
+  historicalBlockPrices: [LbppoolPriceHistoricalData!
+  field: "pool")
+  historicalVolume: [LbppoolVolumeHistoricalData!
+  field: "pool")
+  historicalData: [LbppoolHistoricalData!
+  field: "pool")
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface Lbppool {
+  id: string;
+  account: Account;
+  assetA: Asset;
+  assetB: Asset;
+  assetABalance: bigint;
+  assetBBalance: bigint;
+  owner: Account | null;
+  feeCollector: Account | null;
+  startBlockNumber: number | null;
+  endBlockNumber: number | null;
+  initialWeight: number | null;
+  finalWeight: number | null;
+  fee: [Int] | null;
+  repayTarget: bigint | null;
+  createdAtParaBlockHeight: number;
+  createdAtRelayBlockHeight: number;
+  createdAtBlock: Block;
+  isDestroyed: boolean | null;
+  lifeStates: [LbppoolLifeState;
+  historicalBlockPrices: [LbppoolPriceHistoricalData;
+  field: "pool") | null;
+  historicalVolume: [LbppoolVolumeHistoricalData;
+  field: "pool") | null;
+  historicalData: [LbppoolHistoricalData;
+  field: "pool") | null;
+}
+```
+
+## Source Handlers
+
+This entity is populated by the following runtime events and handlers:
+
+| Runtime Event | Handler |
+|---------------|---------|
+| [Lbp.PoolCreated](/reference/pallets/LBP#poolcreated) | [`lpbpoolCreated`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/pools/pools/lbpPool/lbpPool.ts#L242) |
+| [Lbp.PoolUpdated](/reference/pallets/LBP#poolupdated) | [`lpbpoolUpdated`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/pools/pools/lbpPool/lbpPool.ts#L326) |
+
+## Example Query
+
+```graphql
+query GetLbppools {
+  lbppools(limit: 10) {
+    id
+    account
+    assetA
+    assetB
+    assetABalance
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [LBP](/reference/pallets/LBP)

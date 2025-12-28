@@ -1,0 +1,67 @@
+---
+title: AssetsPairVolumeHistoricalData
+description: Indexer entity documentation
+sidebar_label: AssetsPairVolumeHistoricalData
+---
+
+# AssetsPairVolumeHistoricalData
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 10 |
+| Nullable Fields | 1 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/assetsPairVolumeHistoricalData.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type AssetsPairVolumeHistoricalData {
+  id: ID!
+  assetA: Asset!
+  assetB: Asset!
+  assetAVolume: BigInt!
+  assetBVolume: BigInt!
+  10: USDT) and normalised to decimal format"
+  totalVolumeNormalised: String!
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  block: Block!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface AssetsPairVolumeHistoricalData {
+  id: string;
+  assetA: Asset;
+  assetB: Asset;
+  assetAVolume: bigint;
+  assetBVolume: bigint;
+  10: USDT) and normalised to decimal format" | null;
+  totalVolumeNormalised: string;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  block: Block;
+}
+```
+
+## Example Query
+
+```graphql
+query GetAssetsPairVolumeHistoricalDatas {
+  assetsPairVolumeHistoricalDatas(limit: 10) {
+    id
+    assetA
+    assetB
+    assetAVolume
+    assetBVolume
+    # ... more fields
+  }
+}
+```

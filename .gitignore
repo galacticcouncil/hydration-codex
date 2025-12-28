@@ -8,8 +8,8 @@ docs-site/build/
 docs-site/.docusaurus/
 
 # Removed directories (consolidated)
-raw/
-docs/
+/raw/
+/docs/
 
 # Docker volumes
 .docker/

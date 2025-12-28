@@ -1,0 +1,62 @@
+---
+title: RoutedTradeAssetBalance
+description: Indexer entity documentation
+sidebar_label: RoutedTradeAssetBalance
+---
+
+# RoutedTradeAssetBalance
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 5 |
+| Nullable Fields | 0 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/routedTradeAssetBalance.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type RoutedTradeAssetBalance {
+  id: ID!
+  routedTrade: RoutedTrade!
+  assetBalanceType: SwapAssetBalanceType!
+  asset: Asset!
+  amount: BigInt!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface RoutedTradeAssetBalance {
+  id: string;
+  routedTrade: RoutedTrade;
+  assetBalanceType: SwapAssetBalanceType;
+  asset: Asset;
+  amount: bigint;
+}
+```
+
+## Example Query
+
+```graphql
+query GetRoutedTradeAssetBalances {
+  routedTradeAssetBalances(limit: 10) {
+    id
+    routedTrade
+    assetBalanceType
+    asset
+    amount
+  }
+}
+```
+
+## References
+
+### UI (1)
+
+- [useRoutedTradesData](/reference/hooks/trade/useRoutedTradesData)

@@ -1,0 +1,277 @@
+---
+title: Proxy
+description: Runtime pallet documentation
+sidebar_label: Proxy
+---
+
+# Proxy
+
+A module allowing accounts to give permission to other accounts to dispatch types of calls from
+their signed origin.
+
+The accounts to which permission is delegated may be required to announce the action that they
+wish to execute some duration prior to execution happens. In this case, the target account may
+reject the announcement and in doing so, veto the execution.
+
+- `Config`
+- `Call`
+
+## Overview
+
+## Interface
+
+### Dispatchable Functions
+
+`Call`: ./enum.Call.html
+`Config`: ./trait.Config.html
+
+<details>
+<summary>Code Documentation</summary>
+
+A pallet allowing accounts to give permission to other accounts to dispatch types of calls from
+their signed origin.
+
+The accounts to which permission is delegated may be required to announce the action that they
+wish to execute some duration prior to execution happens. In this case, the target account may
+reject the announcement and in doing so, veto the execution.
+
+- `Config`
+- `Call`
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #29** · Polkadot SDK<br/>
+`pallet-proxy/1ed66275/stable2409-patch6`
+
+[GitHub](https://github.com/galacticcouncil/polkadot-sdk/tree/1ed662757b03c4f17dc2429c1df84e975d98513a/substrate/frame/proxy) · [docs.rs](https://docs.rs/crate/pallet-proxy/38.0.0/source/) · [crates.io](https://crates.io/crates/pallet-proxy) · [Subscan](https://hydradx.subscan.io/runtime/Proxy)
+
+## Storage (2)
+
+### Proxies
+
+The set of account proxies. Maps the account which has delegated to the accounts which are being delegated to, together with the amount held on deposit.
+
+```rust
+Proxies: Map<AccountId32 -> (Vec<PalletProxyProxyDefinition>, u128)> [Twox64Concat]
+```
+
+### Announcements
+
+The announcements made by the proxy (key).
+
+```rust
+Announcements: Map<AccountId32 -> (Vec<PalletProxyAnnouncement>, u128)> [Twox64Concat]
+```
+
+## Extrinsics (10)
+
+### proxy
+
+```rust
+fn proxy(
+    origin: OriginFor<T>,
+    real: AccountId32,
+    forceProxyType: Option<HydradxRuntimeSystemProxyType>,
+    call: Call,
+)
+```
+
+### add_proxy
+
+```rust
+fn add_proxy(
+    origin: OriginFor<T>,
+    delegate: AccountId32,
+    proxyType: Lookup49,
+    delay: u32,
+)
+```
+
+### remove_proxy
+
+```rust
+fn remove_proxy(
+    origin: OriginFor<T>,
+    delegate: AccountId32,
+    proxyType: Lookup49,
+    delay: u32,
+)
+```
+
+### remove_proxies
+
+```rust
+fn remove_proxies(origin: OriginFor<T>)
+```
+
+### create_pure
+
+```rust
+fn create_pure(
+    origin: OriginFor<T>,
+    proxyType: Lookup49,
+    delay: u32,
+    index: u16,
+)
+```
+
+### kill_pure
+
+```rust
+fn kill_pure(
+    origin: OriginFor<T>,
+    spawner: AccountId32,
+    proxyType: Lookup49,
+    index: u16,
+    height: Compact<u32>,
+    extIndex: Compact<u32>,
+)
+```
+
+### announce
+
+```rust
+fn announce(
+    origin: OriginFor<T>,
+    real: AccountId32,
+    callHash: H256,
+)
+```
+
+### remove_announcement
+
+```rust
+fn remove_announcement(
+    origin: OriginFor<T>,
+    real: AccountId32,
+    callHash: H256,
+)
+```
+
+### reject_announcement
+
+```rust
+fn reject_announcement(
+    origin: OriginFor<T>,
+    delegate: AccountId32,
+    callHash: H256,
+)
+```
+
+### proxy_announced
+
+```rust
+fn proxy_announced(
+    origin: OriginFor<T>,
+    delegate: AccountId32,
+    real: AccountId32,
+    forceProxyType: Option<HydradxRuntimeSystemProxyType>,
+    call: Call,
+)
+```
+
+## Events (5)
+
+### ProxyExecuted
+
+```rust
+ProxyExecuted {
+    result: Result<Null, SpRuntimeDispatchError>,
+}
+```
+
+### PureCreated
+
+```rust
+PureCreated {
+    pure: AccountId32,
+    who: AccountId32,
+    proxyType: Lookup49,
+    disambiguationIndex: u16,
+}
+```
+
+### Announced
+
+```rust
+Announced {
+    real: AccountId32,
+    proxy: AccountId32,
+    callHash: H256,
+}
+```
+
+### ProxyAdded
+
+```rust
+ProxyAdded {
+    delegator: AccountId32,
+    delegatee: AccountId32,
+    proxyType: Lookup49,
+    delay: u32,
+}
+```
+
+### ProxyRemoved
+
+```rust
+ProxyRemoved {
+    delegator: AccountId32,
+    delegatee: AccountId32,
+    proxyType: Lookup49,
+    delay: u32,
+}
+```
+
+## Constants (6)
+
+### ProxyDepositBase
+
+The base amount of currency needed to reserve for creating a proxy. This is held for an additional storage item whose value size is `sizeof(Balance)` bytes and whose key size is `sizeof(AccountId)` bytes.
+
+```rust
+const ProxyDepositBase: u128
+```
+
+### ProxyDepositFactor
+
+The amount of currency needed per proxy added. This is held for adding 32 bytes plus an instance of `ProxyType` more into a pre-existing storage value. Thus, when configuring `ProxyDepositFactor` one should take into account `32 + proxy_type.encode().len()` bytes of data.
+
+```rust
+const ProxyDepositFactor: u128
+```
+
+### MaxProxies
+
+The maximum amount of proxies allowed for a single account.
+
+```rust
+const MaxProxies: u32
+```
+
+### MaxPending
+
+The maximum amount of time-delayed announcements that are allowed to be pending.
+
+```rust
+const MaxPending: u32
+```
+
+### AnnouncementDepositBase
+
+The base amount of currency needed to reserve for creating an announcement. This is held when a new storage item holding a `Balance` is created (typically 16 bytes).
+
+```rust
+const AnnouncementDepositBase: u128
+```
+
+### AnnouncementDepositFactor
+
+The amount of currency needed per announcement made. This is held for adding an `AccountId`, `Hash` and `BlockNumber` (typically 68 bytes) into a pre-existing storage value.
+
+```rust
+const AnnouncementDepositFactor: u128
+```

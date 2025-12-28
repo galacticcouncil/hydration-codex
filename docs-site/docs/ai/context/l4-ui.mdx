@@ -1,0 +1,109 @@
+---
+title: L4-ui.md
+description: UI layer context - React hooks, components, SDK/indexer usage
+---
+
+# L4-ui.md
+
+Context file for the Hydration UI layer (React/TypeScript).
+
+**Location:** `agents/contexts/L4-ui.md` (~93KB)
+
+## What It Contains
+
+- **All 226 React hooks** with signatures
+- **SDK method usage** per hook
+- **Indexer queries** per hook
+- **Runtime calls** made by each hook
+- **Component patterns**
+
+## When to Load
+
+- Building or modifying UI features
+- Understanding data flow in the frontend
+- Finding which hook handles a feature
+- Tracing SDK/indexer usage
+
+## Hook Categories
+
+| Category | Count | Examples |
+|----------|-------|----------|
+| liquidity | 25+ | useAddLiquidity, useRemoveLiquidity |
+| trade | 15+ | useSwap, useTrade |
+| wallet | 20+ | useWalletAssets, useAccountBalances |
+| staking | 10+ | useStake, useClaimStakingRewards |
+| borrow | 15+ | useBorrow, useRepay |
+| states | 30+ | useOmnipoolAssets, useXykPools |
+
+## Key Hooks by Feature
+
+### Trading
+- `useSwap` - Execute swaps via Router
+- `useTrade` - Trade quote and execution
+- `useTradeAssets` - Available trading pairs
+
+### Liquidity
+- `useAddLiquidity` - Add to Omnipool
+- `useRemoveLiquidity` - Remove from Omnipool
+- `useStablepoolAddLiquidity` - Add to stablepool
+
+### Farming
+- `useDepositFarms` - Deposit LP tokens to farms
+- `useClaimAllFarmRewards` - Claim farming rewards
+- `useExitDepositFarmsMutation` - Exit farm positions
+
+### Wallet
+- `useAccountBalances` - All balances for account
+- `useWalletAssets` - Wallet asset list with prices
+
+## Hook → SDK/Indexer Mapping
+
+| Hook | SDK Calls | Indexer Queries |
+|------|-----------|-----------------|
+| useSwap | Router.sell, Router.buy | - |
+| useAddLiquidity | - | OmnipoolAsset |
+| useOmnipoolPositions | - | OmnipoolPosition |
+| useTradeFees | - | SwapFee |
+
+## Common Patterns
+
+### Transaction Hooks
+
+```typescript
+// Pattern: useMutationHook
+const { mutate, isLoading, error } = useAddLiquidity();
+
+mutate({
+  assetId: 1,
+  amount: "1000000000000"
+});
+```
+
+### Query Hooks
+
+```typescript
+// Pattern: useQueryHook
+const { data, isLoading, error } = useOmnipoolAssets();
+
+// data = OmnipoolAsset[]
+```
+
+## How to Use
+
+```
+# In Claude Code or similar
+Load: agents/contexts/L4-ui.md
+
+# Then ask questions like:
+"Which hook handles swap execution?"
+"What data does useOmnipoolPositions return?"
+"How do I add liquidity in the UI?"
+```
+
+## Related Reference Docs
+
+All hooks have detailed reference pages at `/reference/hooks/{category}/{hookName}`:
+
+- [useAddLiquidity](/reference/hooks/liquidity/useAddLiquidity)
+- [useSubmitSwap](/reference/hooks/trade/useSubmitSwap)
+- [useStake](/reference/hooks/staking/useStake)

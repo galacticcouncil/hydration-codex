@@ -1,0 +1,142 @@
+---
+title: Vesting
+description: Runtime pallet documentation
+sidebar_label: Vesting
+---
+
+# Vesting
+
+## Overview
+
+Vesting module provides a means of scheduled balance lock on an account. It uses the *graded vesting* way, which unlocks a specific amount of balance every period of time, until all balance unlocked.
+
+### Vesting Schedule
+
+The schedule of a vesting is described by data structure `VestingSchedule`: from the block number of `start`, for every `period` amount of blocks, `per_period` amount of balance would unlocked, until number of periods `period_count` reached. Note in vesting schedules, *time* is measured by block number. All `VestingSchedule`s under an account could be queried in chain state.
+
+### Locks
+
+The implementation uses locks which allow tokens to be locked by other pallets that's also using locks, for example, the conviction-voting pallet.
+
+<details>
+<summary>Code Documentation</summary>
+
+### Overview
+
+Vesting module provides a means of scheduled balance lock on an account. It
+uses the *graded vesting* way, which unlocks a specific amount of balance
+every period of time, until all balance unlocked.
+
+### Vesting Schedule
+
+The schedule of a vesting is described by data structure `VestingSchedule`:
+from the block number of `start`, for every `period` amount of blocks,
+`per_period` amount of balance would unlocked, until number of periods
+`period_count` reached. Note in vesting schedules, *time* is measured by
+block number. All `VestingSchedule`s under an account could be queried in
+chain state.
+
+### Interface
+
+### Dispatchable Functions
+
+- `vested_transfer` - Add a new vesting schedule for an account.
+- `claim` - Claim unlocked balances.
+- `update_vesting_schedules` - Update all vesting schedules under an
+ account, `root` origin required.
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #81** · ORML<br/>
+`orml-vesting/60b88b84/polkadot-stable2409`
+
+[GitHub](https://github.com/galacticcouncil/open-runtime-module-library/tree/60b88b84a6abbf8e12a884bf1c3774ff2db1f880/vesting) · [docs.rs](https://docs.rs/crate/orml-vesting/1.0.0/source/) · [crates.io](https://crates.io/crates/orml-vesting) · [Subscan](https://hydradx.subscan.io/runtime/Vesting)
+
+## Storage (1)
+
+### VestingSchedules
+
+Vesting schedules of an account. VestingSchedules: map AccountId =\> Vec\<VestingSchedule\>
+
+```rust
+VestingSchedules: Map<AccountId32 -> Vec<OrmlVestingVestingSchedule>> [Blake2_128Concat]
+```
+
+## Extrinsics (4)
+
+### claim
+
+```rust
+fn claim(origin: OriginFor<T>)
+```
+
+### vested_transfer
+
+```rust
+fn vested_transfer(
+    origin: OriginFor<T>,
+    dest: AccountId32,
+    schedule: Lookup263,
+)
+```
+
+### update_vesting_schedules
+
+```rust
+fn update_vesting_schedules(
+    origin: OriginFor<T>,
+    who: AccountId32,
+    vestingSchedules: Vec<OrmlVestingVestingSchedule>,
+)
+```
+
+### claim_for
+
+```rust
+fn claim_for(
+    origin: OriginFor<T>,
+    dest: AccountId32,
+)
+```
+
+## Events (3)
+
+### VestingScheduleAdded
+
+```rust
+VestingScheduleAdded {
+    from: AccountId32,
+    to: AccountId32,
+    vestingSchedule: Lookup263,
+}
+```
+
+### Claimed
+
+```rust
+Claimed {
+    who: AccountId32,
+    amount: u128,
+}
+```
+
+### VestingSchedulesUpdated
+
+```rust
+VestingSchedulesUpdated {
+    who: AccountId32,
+}
+```
+
+## Constants (1)
+
+### MinVestedTransfer
+
+The minimum amount transferred to call `vested_transfer`.
+
+```rust
+const MinVestedTransfer: u128
+```

@@ -1,0 +1,266 @@
+---
+title: LBP
+description: Runtime pallet documentation
+sidebar_label: LBP
+---
+
+# LBP
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this pallet does.
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #73** · HydraDX<br/>
+`pallet-lbp/4ca470c5/master`
+
+[GitHub](https://github.com/galacticcouncil/HydraDX-node/tree/4ca470c5d613d62ce52eb8645770ef5fff263111/pallets/lbp) · [Subscan](https://hydradx.subscan.io/runtime/LBP)
+
+## Storage (2)
+
+### PoolData
+
+Details of a pool.
+
+```rust
+PoolData: Map<AccountId32 -> {
+    owner: AccountId32,
+    start: Option<u32>,
+    end: Option<u32>,
+    assets: (u32,u32),
+    initialWeight: u32,
+    finalWeight: u32,
+    weightCurve: PalletLbpWeightCurveType,
+    fee: (u32,u32),
+    feeCollector: AccountId32,
+    repayTarget: u128,
+}> [Blake2_128Concat]
+```
+
+**Read by SDK:** [LbpPoolClient.loadPools](/reference/sdk/sdk#lbppoolclient), [LbpPoolClient.isSupported](/reference/sdk/sdk-next#lbppoolclient)
+
+### FeeCollectorWithAsset
+
+Storage used for tracking existing fee collectors Not more than one fee collector per asset possible
+
+```rust
+FeeCollectorWithAsset: Map<(AccountId32, u32) -> bool> [Blake2_128Concat,  Blake2_128Concat]
+```
+
+## Extrinsics (6)
+
+### create_pool
+
+```rust
+fn create_pool(
+    origin: OriginFor<T>,
+    poolOwner: AccountId32,
+    assetA: u32,
+    assetAAmount: u128,
+    assetB: u32,
+    assetBAmount: u128,
+    initialWeight: u32,
+    finalWeight: u32,
+    weightCurve: Lookup244,
+    fee: (u32,u32),
+    feeCollector: AccountId32,
+    repayTarget: u128,
+)
+```
+
+### update_pool_data
+
+```rust
+fn update_pool_data(
+    origin: OriginFor<T>,
+    poolId: AccountId32,
+    poolOwner: Option<AccountId32>,
+    start: Option<u32>,
+    end: Option<u32>,
+    initialWeight: Option<u32>,
+    finalWeight: Option<u32>,
+    fee: Option<(u32,u32)>,
+    feeCollector: Option<AccountId32>,
+    repayTarget: Option<u128>,
+)
+```
+
+### add_liquidity
+
+```rust
+fn add_liquidity(
+    origin: OriginFor<T>,
+    amountA: (u32,u128),
+    amountB: (u32,u128),
+)
+```
+
+### remove_liquidity
+
+```rust
+fn remove_liquidity(
+    origin: OriginFor<T>,
+    poolId: AccountId32,
+)
+```
+
+### sell
+
+```rust
+fn sell(
+    origin: OriginFor<T>,
+    assetIn: u32,
+    assetOut: u32,
+    amount: u128,
+    maxLimit: u128,
+)
+```
+
+### buy
+
+```rust
+fn buy(
+    origin: OriginFor<T>,
+    assetOut: u32,
+    assetIn: u32,
+    amount: u128,
+    maxLimit: u128,
+)
+```
+
+## Events (6)
+
+### PoolCreated
+
+```rust
+PoolCreated {
+    pool: AccountId32,
+    data: Lookup497,
+}
+```
+
+### PoolUpdated
+
+```rust
+PoolUpdated {
+    pool: AccountId32,
+    data: Lookup497,
+}
+```
+
+### LiquidityAdded
+
+```rust
+LiquidityAdded {
+    who: AccountId32,
+    assetA: u32,
+    assetB: u32,
+    amountA: u128,
+    amountB: u128,
+}
+```
+
+### LiquidityRemoved
+
+```rust
+LiquidityRemoved {
+    who: AccountId32,
+    assetA: u32,
+    assetB: u32,
+    amountA: u128,
+    amountB: u128,
+}
+```
+
+### SellExecuted
+
+```rust
+SellExecuted {
+    who: AccountId32,
+    assetIn: u32,
+    assetOut: u32,
+    amount: u128,
+    salePrice: u128,
+    feeAsset: u32,
+    feeAmount: u128,
+}
+```
+
+### BuyExecuted
+
+```rust
+BuyExecuted {
+    who: AccountId32,
+    assetOut: u32,
+    assetIn: u32,
+    amount: u128,
+    buyPrice: u128,
+    feeAsset: u32,
+    feeAmount: u128,
+}
+```
+
+## Constants (5)
+
+### MinTradingLimit
+
+Minimum trading limit, sole purpose of this is to keep the math working
+
+```rust
+const MinTradingLimit: u128
+```
+
+### MinPoolLiquidity
+
+Minimum pool liquidity, sole purpose of this is to keep the math working
+
+```rust
+const MinPoolLiquidity: u128
+```
+
+### MaxInRatio
+
+Max fraction of pool to sell in single transaction
+
+```rust
+const MaxInRatio: u128
+```
+
+### MaxOutRatio
+
+Max fraction of pool to buy in single transaction
+
+```rust
+const MaxOutRatio: u128
+```
+
+### repay_fee
+
+```rust
+const repay_fee: (u32,u32)
+```
+
+## References
+
+### SDK (2)
+
+- [sdk](/reference/sdk/sdk)
+- [sdk-next](/reference/sdk/sdk-next)
+
+### Indexer (7)
+
+- [Lbppool](/reference/indexer/Lbppool)
+- [LbppoolCreatedData](/reference/indexer/LbppoolCreatedData)
+- [LbppoolDestroyedData](/reference/indexer/LbppoolDestroyedData)
+- [LbppoolLifeState](/reference/indexer/LbppoolLifeState)
+- [LbppoolPriceHistoricalData](/reference/indexer/LbppoolPriceHistoricalData)
+- [LbppoolVolumeHistoricalData](/reference/indexer/LbppoolVolumeHistoricalData)
+- [LbppoolHistoricalData](/reference/indexer/LbppoolHistoricalData)
+
+### UI (6)
+
+- [useAcceptedFeePaymentAssets](/reference/hooks/transactions/useAcceptedFeePaymentAssets)
+- [useMarketBuyData](/reference/hooks/trade/useMarketBuyData)
+- [useMarketSellData](/reference/hooks/trade/useMarketSellData)
+- [useCalculateBuyAmount](/reference/hooks/trade/useCalculateBuyAmount)
+- [useCalculateSellAmount](/reference/hooks/trade/useCalculateSellAmount)
+- [useSwitchAssets](/reference/hooks/trade/useSwitchAssets)

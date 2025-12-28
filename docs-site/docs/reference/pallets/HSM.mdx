@@ -1,0 +1,270 @@
+---
+title: HSM
+description: Runtime pallet documentation
+sidebar_label: HSM
+---
+
+# HSM
+
+<details>
+<summary>Code Documentation</summary>
+
+### Overview
+
+The HSM pallet implements a stability mechanism for the Hollar stablecoin within the HydraDX ecosystem.
+It provides the infrastructure to maintain Hollar's peg by managing collateral assets and
+facilitating the buying and selling of Hollar against these collaterals.
+
+The mechanism works by:
+- Managing approved collateral assets for Hollar
+- Handling minting and burning of Hollar through integration with the GHO ERC20 token contract
+- Providing buy/sell functionality for users to exchange Hollar against collateral assets
+- Executing arbitrage opportunities using flash loans to maintain price stability via offchain workers
+
+### Interface
+
+### Dispatchable Functions
+
+* `add_collateral_asset` - Add a new collateral asset for Hollar.
+* `remove_collateral_asset` - Remove a collateral asset from the approved list.
+* `update_collateral_asset` - Update parameters for an existing collateral asset.
+* `sell` - Sell Hollar in exchange for collateral, or sell collateral for Hollar.
+* `buy` - Buy Hollar with collateral, or buy collateral with Hollar.
+* `set_flash_minter` - Configure the flash loan contract address for arbitrage operations.
+* `execute_arbitrage` - Execute arbitrage opportunity between HSM and collateral stable pool using flash loans (called by offchain worker).
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #82** · HydraDX<br/>
+`pallet-hsm/4ca470c5/master`
+
+[GitHub](https://github.com/galacticcouncil/HydraDX-node/tree/4ca470c5d613d62ce52eb8645770ef5fff263111/pallets/hsm) · [Subscan](https://hydradx.subscan.io/runtime/HSM)
+
+## Storage (3)
+
+### Collaterals
+
+List of approved assets that Hollar can be purchased with This storage maps asset IDs to their collateral configuration information. Only assets in this map can be used to mint or redeem Hollar through HSM. Each collateral has specific parameters controlling its usage in the HSM mechanism.
+
+```rust
+Collaterals: Map<u32 -> {
+    poolId: u32,
+    purchaseFee: Permill,
+    maxBuyPriceCoefficient: u128,
+    buybackRate: Perbill,
+    buyBackFee: Permill,
+    maxInHolding: Option<u128>,
+}> [Blake2_128Concat]
+```
+
+**Read by SDK:** [HsmClient.loadPools](/reference/sdk/sdk#hsmclient), [HsmPoolClient.isSupported](/reference/sdk/sdk-next#hsmpoolclient), [HsmPoolClient.loadPools](/reference/sdk/sdk-next#hsmpoolclient)
+
+### HollarAmountReceived
+
+Amount of Hollar bought with an asset in a single block This storage tracks how much Hollar has been bought back by HSM for each collateral asset within the current block. This is used to enforce rate limiting on Hollar redemptions. Values are reset to zero at the end of each block in on_finalize.
+
+```rust
+HollarAmountReceived: Map<u32 -> u128> [Blake2_128Concat]
+```
+
+### FlashMinter
+
+Address of the flash loan receiver.
+
+```rust
+FlashMinter: Value<H160>
+```
+
+## Extrinsics (7)
+
+### add_collateral_asset
+
+```rust
+fn add_collateral_asset(
+    origin: OriginFor<T>,
+    assetId: u32,
+    poolId: u32,
+    purchaseFee: Permill,
+    maxBuyPriceCoefficient: u128,
+    buyBackFee: Permill,
+    buybackRate: Perbill,
+    maxInHolding: Option<u128>,
+)
+```
+
+### remove_collateral_asset
+
+```rust
+fn remove_collateral_asset(
+    origin: OriginFor<T>,
+    assetId: u32,
+)
+```
+
+### update_collateral_asset
+
+```rust
+fn update_collateral_asset(
+    origin: OriginFor<T>,
+    assetId: u32,
+    purchaseFee: Option<Permill>,
+    maxBuyPriceCoefficient: Option<u128>,
+    buyBackFee: Option<Permill>,
+    buybackRate: Option<Perbill>,
+    maxInHolding: Option<Option<u128>>,
+)
+```
+
+### sell
+
+```rust
+fn sell(
+    origin: OriginFor<T>,
+    assetIn: u32,
+    assetOut: u32,
+    amountIn: u128,
+    slippageLimit: u128,
+)
+```
+
+### buy
+
+```rust
+fn buy(
+    origin: OriginFor<T>,
+    assetIn: u32,
+    assetOut: u32,
+    amountOut: u128,
+    slippageLimit: u128,
+)
+```
+
+### execute_arbitrage
+
+```rust
+fn execute_arbitrage(
+    origin: OriginFor<T>,
+    collateralAssetId: u32,
+    arbitrage: Option<PalletHsmArbitrage>,
+)
+```
+
+### set_flash_minter
+
+```rust
+fn set_flash_minter(
+    origin: OriginFor<T>,
+    flashMinterAddr: H160,
+)
+```
+
+## Events (5)
+
+### CollateralAdded
+
+```rust
+CollateralAdded {
+    assetId: u32,
+    poolId: u32,
+    purchaseFee: Permill,
+    maxBuyPriceCoefficient: u128,
+    buyBackFee: Permill,
+    buybackRate: Perbill,
+}
+```
+
+### CollateralRemoved
+
+```rust
+CollateralRemoved {
+    assetId: u32,
+}
+```
+
+### CollateralUpdated
+
+```rust
+CollateralUpdated {
+    assetId: u32,
+    purchaseFee: Option<Permill>,
+    maxBuyPriceCoefficient: Option<u128>,
+    buyBackFee: Option<Permill>,
+    buybackRate: Option<Perbill>,
+    maxInHolding: Option<Option<u128>>,
+}
+```
+
+### ArbitrageExecuted
+
+```rust
+ArbitrageExecuted {
+    arbitrage: u8,
+    assetId: u32,
+    hollarAmount: u128,
+    profit: u128,
+}
+```
+
+### FlashMinterSet
+
+```rust
+FlashMinterSet {
+    flashMinter: H160,
+}
+```
+
+## Constants (5)
+
+### HollarId
+
+Asset ID of Hollar
+
+```rust
+const HollarId: u32
+```
+
+### PalletId
+
+Pallet ID to determine HSM account
+
+```rust
+const PalletId: [u8;8]
+```
+
+### MinArbitrageAmount
+
+```rust
+const MinArbitrageAmount: u128
+```
+
+### FlashLoanReceiver
+
+```rust
+const FlashLoanReceiver: H160
+```
+
+### GasLimit
+
+The gas limit for the execution of EVM calls
+
+```rust
+const GasLimit: u64
+```
+
+## References
+
+### SDK (2)
+
+- [sdk](/reference/sdk/sdk)
+- [sdk-next](/reference/sdk/sdk-next)
+
+### Indexer (5)
+
+- [Hsmpool](/reference/indexer/Hsmpool)
+- [HsmCollateral](/reference/indexer/HsmCollateral)
+- [HsmpoolHistoricalData](/reference/indexer/HsmpoolHistoricalData)
+- [HsmCollateralConfigHistoricalData](/reference/indexer/HsmCollateralConfigHistoricalData)
+- [HsmpoolAssetHistoricalData](/reference/indexer/HsmpoolAssetHistoricalData)

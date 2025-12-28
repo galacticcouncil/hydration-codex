@@ -1,0 +1,99 @@
+---
+title: Aura
+description: Runtime pallet documentation
+sidebar_label: Aura
+---
+
+# Aura
+
+- `aura::Config`
+- `Pallet`
+
+## Overview
+
+The Aura module extends Aura consensus by managing offline reporting.
+
+## Interface
+
+### Public Functions
+
+- `slot_duration` - Determine the Aura slot-duration based on the Timestamp module configuration.
+
+## Related Modules
+
+- [Timestamp](https://docs.rs/pallet-timestamp/latest/pallet_timestamp/): The Timestamp module is used in Aura to track
+consensus rounds (via `slots`).
+
+## References
+
+If you're interested in hacking on this module, it is useful to understand the interaction with
+`substrate/primitives/inherents/src/lib.rs` and, specifically, the required implementation of
+`ProvideInherent` and
+`ProvideInherentData` to create and
+check inherents.
+
+<details>
+<summary>Code Documentation</summary>
+
+- `Config`
+- `Pallet`
+
+### Overview
+
+The Aura module extends Aura consensus by managing offline reporting.
+
+### Interface
+
+### Public Functions
+
+- `slot_duration` - Determine the Aura slot-duration based on the Timestamp module
+ configuration.
+
+### Related Modules
+
+- `Timestamp`: The Timestamp module is used in Aura to track
+consensus rounds (via `slots`).
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #167** · Polkadot SDK<br/>
+`pallet-aura/1ed66275/stable2409-patch6`
+
+[GitHub](https://github.com/galacticcouncil/polkadot-sdk/tree/1ed662757b03c4f17dc2429c1df84e975d98513a/substrate/frame/aura) · [docs.rs](https://docs.rs/crate/pallet-aura/37.0.0/source/) · [crates.io](https://crates.io/crates/pallet-aura) · [Subscan](https://hydradx.subscan.io/runtime/Aura)
+
+## Storage (2)
+
+### Authorities
+
+The current authority set.
+
+```rust
+Authorities: Value<Vec<SpConsensusAuraSr25519AppSr25519Public>>
+```
+
+### CurrentSlot
+
+The current slot of this block. This will be set in `on_initialize`.
+
+```rust
+CurrentSlot: Value<u64>
+```
+
+## Constants (1)
+
+### SlotDuration
+
+The slot duration Aura should run with, expressed in milliseconds. The effective value of this type should not change while the chain is running. For backwards compatibility either use `MinimumPeriodTimesTwo` or a const.
+
+```rust
+const SlotDuration: u64
+```
+
+## References
+
+### SDK (1)
+
+- [sdk-next](/reference/sdk/sdk-next)

@@ -1,0 +1,1123 @@
+---
+title: "@galacticcouncil/xcm-core"
+description: SDK package documentation
+sidebar_label: xcm-core
+---
+
+# @galacticcouncil/xcm-core
+
+Cross-chain sdk core
+
+**Version:** 8.9.0 | **Methods:** 117
+
+**Links:** [GitHub](https://github.com/galacticcouncil/sdk/tree/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core) | [npm](https://www.npmjs.com/package/@galacticcouncil/xcm-core)
+
+# Galactic XCM core
+
+Cross-chain core definitions & types. Backbone for sdk & config module.
+
+## Installation
+
+Install with [npm](https://www.npmjs.com/):
+
+`npm install @galacticcouncil/xcm-core`
+
+## Installation
+
+```bash
+npm install @galacticcouncil/xcm-core
+```
+
+## Functions
+
+### ConfigBuilder
+
+```typescript
+function ConfigBuilder(service: import("/root/hydration-codex/repos/sdk/...): { assets: (ecosystem?: import("/root/hydration-codex/repos/sdk/packages/xcm-core...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/config/ConfigBuilder.ts#L8)
+
+### convertDecimals
+
+```typescript
+function convertDecimals(number: string | bigint, decimals: number, targetDecimals: number): bigint
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/utils/big.ts#L32)
+
+### createPayload
+
+```typescript
+function createPayload(parachain: import("/root/hydration-codex/repos/sdk/..., address: string, isEthereumStyle: boolean): VersionedUserAction
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/utils/mrl.ts#L21)
+
+### decodePayload
+
+```typescript
+function decodePayload(payloadHex: string): import("/root/hydration-codex/node_modules/@polkadot/types-codec/types/helpers").AnyJson
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/utils/mrl.ts#L59)
+
+### findGeneralIndex
+
+```typescript
+function findGeneralIndex(multilocation: object): any
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/utils/multilocation.ts#L34)
+
+### findGlobalConsensus
+
+```typescript
+function findGlobalConsensus(multilocation: object): any
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/utils/multilocation.ts#L19)
+
+### findNestedKey
+
+```typescript
+function findNestedKey(multilocation: object, keyToFind: any): any
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/utils/multilocation.ts#L6)
+
+### findPalletInstance
+
+```typescript
+function findPalletInstance(multilocation: object): any
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/utils/multilocation.ts#L29)
+
+### findParachain
+
+```typescript
+function findParachain(multilocation: object): any
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/utils/multilocation.ts#L24)
+
+### getMultilocationDerivatedAccount
+
+Multilocation-derivative account - an account computed when executing remote calls
+via XCM.
+
+```typescript
+function getMultilocationDerivatedAccount(parachainId: number | undefined, address: string, parents: number, isEthereumStyle: boolean): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/utils/account.ts#L19)
+
+### getSovereignAccounts
+
+Sovereign account — an account each chain in the ecosystem has, one for the relay chain
+and the other for other parachains. The account is owned by root and can only be used
+through SUDO (if available) or democracy (technical committee or referenda). The sovereign
+account typically signs XCM messages in other chains in the ecosystem.
+
+```typescript
+function getSovereignAccounts(parachainId: number): { generic: string; moonbeam: string; relay: string; }
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/utils/account.ts#L71)
+
+### h160ToH256
+
+Convert an H160 hex string into a zero-padded
+32-byte (H256) hex string.
+
+```typescript
+function h160ToH256(addr: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/utils/address.ts#L38)
+
+### hasDecimalOverflow
+
+```typescript
+function hasDecimalOverflow(fl: string | number, maxDecimal: number): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/utils/big.ts#L42)
+
+### toBigInt
+
+```typescript
+function toBigInt(amount: string | number | bigint, decimals: number): bigint
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/utils/big.ts#L18)
+
+### toDecimal
+
+```typescript
+function toDecimal(number: string | number | bigint, decimals: number, maxDecimal: number, roundType: any): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/utils/big.ts#L5)
+
+## Asset
+
+### isEqual
+
+```typescript
+isEqual(asset: import("/root/hydration-codex/repos/sdk/...): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/asset/Asset.ts#L16)
+
+## AssetAmount
+
+### copyWith
+
+```typescript
+copyWith(params: Partial<import("/root/hydration-codex/re...): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/asset/AssetAmount").AssetAmount
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/asset/AssetAmount.ts#L52)
+
+### fromAsset
+
+```typescript
+fromAsset(asset: import("/root/hydration-codex/repos/sdk/..., params: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/asset/AssetAmount").AssetAmount
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/asset/AssetAmount.ts#L37)
+
+### isEqual
+
+```typescript
+isEqual(asset: import("/root/hydration-codex/repos/sdk/...): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/asset/AssetAmount.ts#L48)
+
+### isSame
+
+```typescript
+isSame(asset: import("/root/hydration-codex/repos/sdk/...): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/asset/AssetAmount.ts#L44)
+
+### padByPct
+
+```typescript
+padByPct(pct: bigint): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/asset/AssetAmount").AssetAmount
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/asset/AssetAmount.ts#L59)
+
+### toBig
+
+```typescript
+toBig(): Big
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/asset/AssetAmount.ts#L66)
+
+### toBigDecimal
+
+```typescript
+toBigDecimal(maxDecimal: number | undefined, roundType: any): Big
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/asset/AssetAmount.ts#L70)
+
+### toDecimal
+
+```typescript
+toDecimal(maxDecimal: number | undefined, roundType: any): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/asset/AssetAmount.ts#L74)
+
+## BaseConfig
+
+### toString
+
+```typescript
+toString(): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/config/definition/base/BaseConfig.ts#L22)
+
+## Chain
+
+### getAsset
+
+```typescript
+getAsset(key: string): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/asset/Asset").Asset | undefined
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/chain/Chain.ts#L128)
+
+### getAssetDecimals
+
+```typescript
+getAssetDecimals(asset: import("/root/hydration-codex/repos/sdk/...): number | undefined
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/chain/Chain.ts#L136)
+
+### getAssetId
+
+```typescript
+getAssetId(asset: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/chain/Chain").ChainAssetId
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/chain/Chain.ts#L132)
+
+### getAssetMin
+
+```typescript
+getAssetMin(asset: import("/root/hydration-codex/repos/sdk/...): number
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/chain/Chain.ts#L140)
+
+### getBalanceAssetId
+
+```typescript
+getBalanceAssetId(asset: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/chain/Chain").ChainAssetId
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/chain/Chain.ts#L144)
+
+### getCurrency
+
+```typescript
+getCurrency(): Promise<import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/chain/Chain").ChainCurrency>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/chain/Chain.ts#L92)
+
+### getType
+
+```typescript
+getType(): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/chain/Chain").ChainType
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/chain/Chain.ts#L91)
+
+### isEvm
+
+```typescript
+isEvm(): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/chain/Chain.ts#L101)
+
+### isEvmChain
+
+```typescript
+isEvmChain(): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/chain/Chain.ts#L116)
+
+### isEvmParachain
+
+```typescript
+isEvmParachain(): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/chain/Chain.ts#L120)
+
+### isParachain
+
+```typescript
+isParachain(): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/chain/Chain.ts#L124)
+
+### isSolana
+
+```typescript
+isSolana(): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/chain/Chain.ts#L108)
+
+### isSubstrate
+
+```typescript
+isSubstrate(): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/chain/Chain.ts#L94)
+
+### isSui
+
+```typescript
+isSui(): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/chain/Chain.ts#L112)
+
+### updateAsset
+
+```typescript
+updateAsset(asset: T): void
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/chain/Chain.ts#L148)
+
+## ChainRoutes
+
+### getAssetDestinationRoutes
+
+```typescript
+getAssetDestinationRoutes(asset: import("/root/hydration-codex/repos/sdk/..., destination: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/config/definition/...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/config/definition/ChainRoutes.ts#L67)
+
+### getAssetDestinations
+
+```typescript
+getAssetDestinations(asset: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/chain/types").AnyChain[]
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/config/definition/ChainRoutes.ts#L63)
+
+### getAssetRoutes
+
+```typescript
+getAssetRoutes(asset: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/config/definition/...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/config/definition/ChainRoutes.ts#L57)
+
+### getRoutes
+
+```typescript
+getRoutes(): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/config/definition/...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/config/definition/ChainRoutes.ts#L46)
+
+### getUniqueRoutes
+
+```typescript
+getUniqueRoutes(): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/config/definition/...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/config/definition/ChainRoutes.ts#L50)
+
+## ConfigService
+
+### getAsset
+
+```typescript
+getAsset(keyOrAsset: string | import("/root/hydration-codex/r...): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/asset/Asset").Asset
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/config/ConfigService.ts#L41)
+
+### getAssetRoutes
+
+```typescript
+getAssetRoutes(asset: import("/root/hydration-codex/repos/sdk/..., source: import("/root/hydration-codex/repos/sdk/..., destination: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/config/definition/...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/config/ConfigService.ts#L86)
+
+### getChain
+
+```typescript
+getChain(keyOrChain: string | import("/root/hydration-codex/r...): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/chain/types").AnyChain
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/config/ConfigService.ts#L51)
+
+### getChainRoutes
+
+```typescript
+getChainRoutes(keyOrChain: string | import("/root/hydration-codex/r...): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/config/definition/...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/config/ConfigService.ts#L61)
+
+### getDestinationChains
+
+```typescript
+getDestinationChains(asset: import("/root/hydration-codex/repos/sdk/..., source: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/chain/types").AnyChain[]
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/config/ConfigService.ts#L81)
+
+### getEcosystemAssets
+
+```typescript
+getEcosystemAssets(ecosystem: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/asset/Asset").Asset[]
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/config/ConfigService.ts#L25)
+
+### getSourceChains
+
+```typescript
+getSourceChains(asset: import("/root/hydration-codex/repos/sdk/..., ecosystem: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/chain/types").AnyChain[]
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/config/ConfigService.ts#L71)
+
+### updateAsset
+
+```typescript
+updateAsset(asset: import("/root/hydration-codex/repos/sdk/...): void
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/config/ConfigService.ts#L95)
+
+### updateChain
+
+```typescript
+updateChain(chain: import("/root/hydration-codex/repos/sdk/...): void
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/config/ConfigService.ts#L99)
+
+### updateChainRoute
+
+```typescript
+updateChainRoute(chain: import("/root/hydration-codex/repos/sdk/..., route: import("/root/hydration-codex/repos/sdk/...): void
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/config/ConfigService.ts#L107)
+
+### updateRoutes
+
+```typescript
+updateRoutes(routes: import("/root/hydration-codex/repos/sdk/...): void
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/config/ConfigService.ts#L103)
+
+## ContractConfig
+
+### encodeFunctionData
+
+```typescript
+encodeFunctionData(): any
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/config/definition/contract/ContractConfig.ts#L29)
+
+## DexFactory
+
+### get
+
+```typescript
+get(key: string): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/chain/dex/types").Dex | undefined
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/chain/dex/factory.ts#L23)
+
+### getInstance
+
+```typescript
+getInstance(): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/chain/dex/factory").DexFactory
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/chain/dex/factory.ts#L15)
+
+### register
+
+```typescript
+register(dex: import("/root/hydration-codex/repos/sdk/...): void
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/chain/dex/factory.ts#L19)
+
+## Erc20Client
+
+### allowance
+
+```typescript
+async allowance(owner: string, spender: string): Promise<bigint>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/evm/Erc20Client.ts#L63)
+
+### approve
+
+```typescript
+approve(spender: string, amount: bigint): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/evm/Erc20Client.ts#L74)
+
+### balanceOf
+
+```typescript
+async balanceOf(account: string): Promise<bigint>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/evm/Erc20Client.ts#L42)
+
+### decimals
+
+```typescript
+async decimals(): Promise<number>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/evm/Erc20Client.ts#L53)
+
+## EvmAddr
+
+### isValid
+
+```typescript
+isValid(address: string): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/utils/address.ts#L83)
+
+## EvmChain
+
+### getCurrency
+
+```typescript
+async getCurrency(): Promise<import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/chain/Chain").ChainCurrency>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/chain/EvmChain.ts#L68)
+
+### getType
+
+```typescript
+getType(): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/chain/Chain").ChainType
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/chain/EvmChain.ts#L64)
+
+## EvmClient
+
+### getProvider
+
+```typescript
+getProvider(): PublicClient
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/evm/EvmClient.ts#L38)
+
+### getSigner
+
+```typescript
+getSigner(address: string): WalletClient
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/evm/EvmClient.ts#L58)
+
+### getWsProvider
+
+```typescript
+getWsProvider(): PublicClient
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/evm/EvmClient.ts#L51)
+
+## EvmParachain
+
+### getDerivatedAddress
+
+```typescript
+async getDerivatedAddress(address: string): Promise<string>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/chain/EvmParachain.ts#L47)
+
+### getType
+
+```typescript
+getType(): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/chain/Chain").ChainType
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/chain/EvmParachain.ts#L43)
+
+## Hyperbridge
+
+### fromChain
+
+```typescript
+fromChain(chain: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/bridge/hyperbridge").Hyperbridge
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/bridge/hyperbridge.ts#L26)
+
+### getAssetId
+
+```typescript
+getAssetId(symbol: string): `0x${string}`
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/bridge/hyperbridge.ts#L53)
+
+### getConsensusId
+
+```typescript
+getConsensusId(): number
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/bridge/hyperbridge.ts#L37)
+
+### getDest
+
+```typescript
+getDest(chain: import("/root/hydration-codex/repos/sdk/...): any
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/bridge/hyperbridge.ts#L57)
+
+### getFeeAsset
+
+```typescript
+getFeeAsset(): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/asset/Asset").Asset
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/bridge/hyperbridge.ts#L49)
+
+### getGateway
+
+```typescript
+getGateway(): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/bridge/hyperbridge.ts#L41)
+
+### getIsmpHost
+
+```typescript
+getIsmpHost(): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/bridge/hyperbridge.ts#L45)
+
+### isKnown
+
+```typescript
+isKnown(chain: import("/root/hydration-codex/repos/sdk/...): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/bridge/hyperbridge.ts#L33)
+
+## Parachain
+
+### findAssetById
+
+```typescript
+findAssetById(id: string): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/chain/Parachain")....
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/chain/Parachain.ts#L122)
+
+### getAssetXcmLocation
+
+```typescript
+getAssetXcmLocation(asset: import("/root/hydration-codex/repos/sdk/...): Record<string, import("/root/hydration-codex/node_modules/@polkadot/types-codec/...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/chain/Parachain.ts#L110)
+
+### getCurrency
+
+```typescript
+async getCurrency(): Promise<import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/chain/Chain").ChainCurrency>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/chain/Parachain.ts#L98)
+
+### getMetadataAssetId
+
+```typescript
+getMetadataAssetId(asset: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/chain/Chain").ChainAssetId
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/chain/Parachain.ts#L114)
+
+### getMinAssetId
+
+```typescript
+getMinAssetId(asset: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/chain/Chain").ChainAssetId
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/chain/Parachain.ts#L118)
+
+### getType
+
+```typescript
+getType(): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/chain/Chain").ChainType
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/chain/Parachain.ts#L94)
+
+## Snowbridge
+
+### fromChain
+
+```typescript
+fromChain(chain: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/bridge/snowbridge").Snowbridge
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/bridge/snowbridge.ts#L17)
+
+### getConsensusId
+
+```typescript
+getConsensusId(): number
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/bridge/snowbridge.ts#L28)
+
+### getGateway
+
+```typescript
+getGateway(): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/bridge/snowbridge.ts#L32)
+
+### isKnown
+
+```typescript
+isKnown(chain: import("/root/hydration-codex/repos/sdk/...): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/bridge/snowbridge.ts#L24)
+
+## SolanaAddr
+
+### encodePubKey
+
+```typescript
+encodePubKey(pubKey: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/utils/address.ts#L105)
+
+### getPubKey
+
+```typescript
+getPubKey(address: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/utils/address.ts#L100)
+
+### isValid
+
+```typescript
+isValid(address: string): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/utils/address.ts#L91)
+
+## SolanaChain
+
+### getCurrency
+
+```typescript
+async getCurrency(): Promise<import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/chain/Chain").ChainCurrency>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/chain/SolanaChain.ts#L48)
+
+### getType
+
+```typescript
+getType(): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/chain/Chain").ChainType
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/chain/SolanaChain.ts#L44)
+
+## Ss58Addr
+
+### encodePubKey
+
+```typescript
+encodePubKey(pubKey: string, ss58Prefix: number): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/utils/address.ts#L73)
+
+### getPubKey
+
+```typescript
+getPubKey(address: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/utils/address.ts#L68)
+
+### isValid
+
+```typescript
+isValid(address: string): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/utils/address.ts#L64)
+
+## SubstrateApis
+
+### api
+
+```typescript
+async api(ws: string | string[], maxRetries: number | undefined, metadata: Record<string, `0x${string}`> | undefined): Promise<import("/root/hydration-codex/node_modules/@polkadot/api/promise/Api").ApiPromise>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/substrate/SubstrateApis.ts#L87)
+
+### createCacheKey
+
+```typescript
+createCacheKey(endpoints: string[]): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/substrate/SubstrateApis.ts#L35)
+
+### findCacheKey
+
+```typescript
+findCacheKey(endpoints: string[]): string | null
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/substrate/SubstrateApis.ts#L39)
+
+### getInstance
+
+```typescript
+getInstance(): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/substrate/Substrat...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/substrate/SubstrateApis.ts#L31)
+
+### getPromise
+
+```typescript
+async getPromise(endpoints: string[], maxRetries: number | undefined, metadata: Record<string, `0x${string}`> | undefined): Promise<import("/root/hydration-codex/node_modules/@polkadot/api/promise/Api").ApiPromise>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/substrate/SubstrateApis.ts#L50)
+
+### release
+
+```typescript
+async release(): Promise<void>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/substrate/SubstrateApis.ts#L111)
+
+## SuiAddr
+
+### isValid
+
+```typescript
+isValid(address: string): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/utils/address.ts#L115)
+
+## SuiChain
+
+### getCurrency
+
+```typescript
+async getCurrency(): Promise<import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/chain/Chain").ChainCurrency>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/chain/SuiChain.ts#L40)
+
+### getType
+
+```typescript
+getType(): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/chain/Chain").ChainType
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/chain/SuiChain.ts#L36)
+
+## TransferValidation
+
+### check
+
+```typescript
+check(ctx: import("/root/hydration-codex/repos/sdk/...): void
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/config/validation.ts#L43)
+
+### validate
+
+```typescript
+validate(ctx: import("/root/hydration-codex/repos/sdk/...): void
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/config/validation.ts#L41)
+
+## TransferValidator
+
+### validate
+
+```typescript
+async validate(ctx: import("/root/hydration-codex/repos/sdk/...): Promise<...>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/config/validation.ts#L57)
+
+## Wormhole
+
+### fromChain
+
+```typescript
+fromChain(chain: import("/root/hydration-codex/repos/sdk/...): import("/root/hydration-codex/repos/sdk/packages/xcm-core/src/bridge/wormhole").Wormhole
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/bridge/wormhole.ts#L37)
+
+### getCoreBridge
+
+```typescript
+getCoreBridge(): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/bridge/wormhole.ts#L52)
+
+### getTokenBridge
+
+```typescript
+getTokenBridge(): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/bridge/wormhole.ts#L56)
+
+### getTokenRelayer
+
+```typescript
+getTokenRelayer(): string | undefined
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/bridge/wormhole.ts#L60)
+
+### getWormholeId
+
+```typescript
+getWormholeId(): number
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/bridge/wormhole.ts#L48)
+
+### isKnown
+
+```typescript
+isKnown(chain: import("/root/hydration-codex/repos/sdk/...): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/bridge/wormhole.ts#L44)
+
+### normalizeAddress
+
+Format chain native address to Wormhole address
+
+```typescript
+normalizeAddress(address: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xcm-core/src/bridge/wormhole.ts#L73)
+
+## References
+
+### UI (88)
+
+- [useAccountInfo](/reference/hooks/account/useAccountInfo)
+- [useAccountOmnipoolPositions](/reference/hooks/account/useAccountOmnipoolPositions)
+- [useAccountOmnipoolMiningPositions](/reference/hooks/account/useAccountOmnipoolMiningPositions)
+- [useAccountXykMiningPositions](/reference/hooks/account/useAccountXykMiningPositions)
+- [useAccountUniques](/reference/hooks/account/useAccountUniques)
+- [useAccountPermitNonce](/reference/hooks/account/useAccountPermitNonce)
+- [useRelayChainBlockNumber](/reference/hooks/chain/useRelayChainBlockNumber)
+- [useBestNumber](/reference/hooks/chain/useBestNumber)
+- [useInvalidateOnBlock](/reference/hooks/chain/useInvalidateOnBlock)
+- [useEstimateFutureBlockTimestamp](/reference/hooks/chain/useEstimateFutureBlockTimestamp)
+- [useBlockTimestamp](/reference/hooks/chain/useBlockTimestamp)
+- [useChainSpecData](/reference/hooks/chain/useChainSpecData)
+- [useBindEvmAccount](/reference/hooks/transactions/useBindEvmAccount)
+- [usePermitNonce](/reference/hooks/transactions/usePermitNonce)
+- [useOmnipoolAssetsData](/reference/hooks/omnipool/useOmnipoolAssetsData)
+- [useMaxAddLiquidityLimit](/reference/hooks/omnipool/useMaxAddLiquidityLimit)
+- [useOmnipoolMinLiquidity](/reference/hooks/omnipool/useOmnipoolMinLiquidity)
+- [useMinWithdrawalFee](/reference/hooks/omnipool/useMinWithdrawalFee)
+- [useAssetFeeParameters](/reference/hooks/omnipool/useAssetFeeParameters)
+- [useOraclePrice](/reference/hooks/omnipool/useOraclePrice)
+- [useAcceptedFeePaymentAssets](/reference/hooks/transactions/useAcceptedFeePaymentAssets)
+- [useAccountFeePaymentAssetId](/reference/hooks/transactions/useAccountFeePaymentAssetId)
+- [useAccountFeePaymentAssets](/reference/hooks/transactions/useAccountFeePaymentAssets)
+- [useSetFeePaymentAsset](/reference/hooks/transactions/useSetFeePaymentAsset)
+- [useStableswap](/reference/hooks/stableswap/useStableswap)
+- [useStableSwapTradability](/reference/hooks/stableswap/useStableSwapTradability)
+- [useInvalidateStakeData](/reference/hooks/staking/useInvalidateStakeData)
+- [useXYKPoolWithLiquidity](/reference/hooks/xyk/useXYKPoolWithLiquidity)
+- [useXYKConsts](/reference/hooks/xyk/useXYKConsts)
+- [useXykShareTokenEntries](/reference/hooks/xyk/useXykShareTokenEntries)
+- [useBorrowIncentives](/reference/hooks/borrow/useBorrowIncentives)
+- [useBorrowReserves](/reference/hooks/borrow/useBorrowReserves)
+- [userBorrowReservesQuery](/reference/hooks/borrow/userBorrowReservesQuery)
+- [useUserBorrowReserves](/reference/hooks/borrow/useUserBorrowReserves)
+- [useBorrowUserIncentives](/reference/hooks/borrow/useBorrowUserIncentives)
+- [useGhoReserveData](/reference/hooks/borrow/useGhoReserveData)
+- [useGhoUserData](/reference/hooks/borrow/useGhoUserData)
+- [userBorrowSummaryQuery](/reference/hooks/borrow/userBorrowSummaryQuery)
+- [useUserBorrowSummary](/reference/hooks/borrow/useUserBorrowSummary)
+- [useGetClaimAllBorrowRewardsTx](/reference/hooks/borrow/useGetClaimAllBorrowRewardsTx)
+- [useClaimStaking](/reference/hooks/staking/useClaimStaking)
+- [useStake](/reference/hooks/staking/useStake)
+- [useUnstake](/reference/hooks/staking/useUnstake)
+- [useEstimateFee](/reference/hooks/transactions/useEstimateFee)
+- [useAddIsolatedLiquidityZod](/reference/hooks/liquidity/useAddIsolatedLiquidityZod)
+- [useAddIsolatedLiquidity](/reference/hooks/liquidity/useAddIsolatedLiquidity)
+- [useLiquidityOmnipoolShares](/reference/hooks/liquidity/useLiquidityOmnipoolShares)
+- [useCheckJoinOmnipoolFarm](/reference/hooks/liquidity/useCheckJoinOmnipoolFarm)
+- [useAddToOmnipoolZod](/reference/hooks/liquidity/useAddToOmnipoolZod)
+- [useAddLiquidityForm](/reference/hooks/liquidity/useAddLiquidityForm)
+- [useAddLiquidity](/reference/hooks/liquidity/useAddLiquidity)
+- [useStablepoolAddLiquidity](/reference/hooks/liquidity/useStablepoolAddLiquidity)
+- [useStablepoolAddLiquidityForm](/reference/hooks/liquidity/useStablepoolAddLiquidityForm)
+- [useAssetsToAddToMoneyMarket](/reference/hooks/liquidity/useAssetsToAddToMoneyMarket)
+- [useAssetsToAddToStablepool](/reference/hooks/liquidity/useAssetsToAddToStablepool)
+- [useIsolatedPoolForm](/reference/hooks/liquidity/useIsolatedPoolForm)
+- [useSubmitCreateIsolatedPool](/reference/hooks/liquidity/useSubmitCreateIsolatedPool)
+- [useAllowedXYKPoolAssets](/reference/hooks/liquidity/useAllowedXYKPoolAssets)
+- [useSecondsToLeft](/reference/hooks/liquidity/useSecondsToLeft)
+- [useCurrentFarmPeriod](/reference/hooks/liquidity/useCurrentFarmPeriod)
+- [useEnteredDate](/reference/hooks/liquidity/useEnteredDate)
+- [useLoyaltyRates](/reference/hooks/liquidity/useLoyaltyRates)
+- [useDepositAprs](/reference/hooks/liquidity/useDepositAprs)
+- [useExitDepositFarmsMutation](/reference/hooks/liquidity/useExitDepositFarmsMutation)
+- [useJoinOmnipoolFarms](/reference/hooks/liquidity/useJoinOmnipoolFarms)
+- [useXYKFarmMinShares](/reference/hooks/liquidity/useXYKFarmMinShares)
+- [useMinOmnipoolFarmJoin](/reference/hooks/liquidity/useMinOmnipoolFarmJoin)
+- [useJoinIsolatedPoolFarms](/reference/hooks/liquidity/useJoinIsolatedPoolFarms)
+- [useJoinFarmsForm](/reference/hooks/liquidity/useJoinFarmsForm)
+- [useLiquidityMiningRewards](/reference/hooks/liquidity/useLiquidityMiningRewards)
+- [useClaimPositionRewards](/reference/hooks/liquidity/useClaimPositionRewards)
+- [useSummarizeClaimableValues](/reference/hooks/liquidity/useSummarizeClaimableValues)
+- [useClaimFarmRewardsMutation](/reference/hooks/liquidity/useClaimFarmRewardsMutation)
+- [useRemoveSingleOmnipoolPosition](/reference/hooks/liquidity/useRemoveSingleOmnipoolPosition)
+- [useRemoveMultipleOmnipoolPositions](/reference/hooks/liquidity/useRemoveMultipleOmnipoolPositions)
+- [useRemoveLiquidityForm](/reference/hooks/liquidity/useRemoveLiquidityForm)
+- [useStablepoolRemoveLiquidity](/reference/hooks/liquidity/useStablepoolRemoveLiquidity)
+- [useRemoveStablepoolLiquidityForm](/reference/hooks/liquidity/useRemoveStablepoolLiquidityForm)
+- [useTerminateDcaSchedule](/reference/hooks/trade/useTerminateDcaSchedule)
+- [useSubmitCancelOtcOrder](/reference/hooks/trade/useSubmitCancelOtcOrder)
+- [useSubmitFillOrder](/reference/hooks/trade/useSubmitFillOrder)
+- [useSubmitPlaceOrder](/reference/hooks/trade/useSubmitPlaceOrder)
+- [useUnlockNativeLocks](/reference/hooks/wallet/useUnlockNativeLocks)
+- [useClaimAllWalletRewards](/reference/hooks/wallet/useClaimAllWalletRewards)
+- [useInsufficientTransferFee](/reference/hooks/wallet/useInsufficientTransferFee)
+- [usePaymentFees](/reference/hooks/wallet/usePaymentFees)
+- [useTransferPaymentInfo](/reference/hooks/wallet/useTransferPaymentInfo)
+- [useSubmitTransferPosition](/reference/hooks/wallet/useSubmitTransferPosition)

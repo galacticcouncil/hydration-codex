@@ -1,0 +1,67 @@
+---
+title: Omnipool
+description: Indexer entity documentation
+sidebar_label: Omnipool
+---
+
+# Omnipool
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 7 |
+| Nullable Fields | 4 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/omnipool.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type Omnipool {
+  id: ID!
+  account: Account!
+  isDestroyed: Boolean
+  destroyedAtParaBlockHeight: Int
+  destroyedAtBlock: Block
+  assets: [OmnipoolAsset!
+  field: "pool")
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface Omnipool {
+  id: string;
+  account: Account;
+  isDestroyed: boolean | null;
+  destroyedAtParaBlockHeight: number | null;
+  destroyedAtBlock: Block | null;
+  assets: [OmnipoolAsset;
+  field: "pool") | null;
+}
+```
+
+## Example Query
+
+```graphql
+query GetOmnipools {
+  omnipools(limit: 10) {
+    id
+    account
+    isDestroyed
+    destroyedAtParaBlockHeight
+    destroyedAtBlock
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [Omnipool](/reference/pallets/Omnipool)

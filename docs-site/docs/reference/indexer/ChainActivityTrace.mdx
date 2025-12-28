@@ -1,0 +1,83 @@
+---
+title: ChainActivityTrace
+description: Indexer entity documentation
+sidebar_label: ChainActivityTrace
+---
+
+# ChainActivityTrace
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 18 |
+| Nullable Fields | 10 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/chainActivityTrace.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type ChainActivityTrace {
+  id: ID!
+  Batch: 1419/Router:1420/Omnipool:1421
+  Omnipool: 20554
+  operationIds: [String!
+  id: //context:<call>/<extrinsic_id>/<call_id>/<call_id>/<call_id>
+  id: //context:<event>/<block_id>:<group_name>/<event_index>
+  id: //context:call/0003396328-000002-70ca4/0003396328-000002-70ca4-000002/0003396328-000002-70ca4-000003/0003681428-fa806-000020
+  id: //context:event/0003396328-70ca4:buyback/2
+  traceIds: [String!
+  originator: Account
+  participants: [AccountChainActivityTrace!
+  field: "chainActivityTrace")
+  participantAccounts: [String!
+  childTraces: [ChainActivityTraceRelation] @derivedFrom(field: "parentTrace")
+  parentTraces: [ChainActivityTraceRelation] @derivedFrom(field: "childTrace")
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  block: Block!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface ChainActivityTrace {
+  id: string;
+  Batch: 1419/Router:1420/Omnipool:1421 | null;
+  Omnipool: 20554 | null;
+  operationIds: [String;
+  id: //context:<call>/<extrinsic_id>/<call_id>/<call_id>/<call_id> | null;
+  id: //context:<event>/<block_id>:<group_name>/<event_index> | null;
+  id: //context:call/0003396328-000002-70ca4/0003396328-000002-70ca4-000002/0003396328-000002-70ca4-000003/0003681428-fa806-000020 | null;
+  id: //context:event/0003396328-70ca4:buyback/2 | null;
+  traceIds: [String;
+  originator: Account | null;
+  participants: [AccountChainActivityTrace;
+  field: "chainActivityTrace") | null;
+  participantAccounts: [String;
+  childTraces: [ChainActivityTraceRelation] @derivedFrom(field: "parentTrace") | null;
+  parentTraces: [ChainActivityTraceRelation] @derivedFrom(field: "childTrace") | null;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  block: Block;
+}
+```
+
+## Example Query
+
+```graphql
+query GetChainActivityTraces {
+  chainActivityTraces(limit: 10) {
+    id
+    Batch
+    Omnipool
+    operationIds
+    id
+    # ... more fields
+  }
+}
+```

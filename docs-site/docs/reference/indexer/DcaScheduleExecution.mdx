@@ -1,0 +1,75 @@
+---
+title: DcaScheduleExecution
+description: Indexer entity documentation
+sidebar_label: DcaScheduleExecution
+---
+
+# DcaScheduleExecution
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 6 |
+| Nullable Fields | 4 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/dcaScheduleExecution.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type DcaScheduleExecution {
+  id: ID!
+  schedule: DcaSchedule!
+  status: DcaScheduleExecutionStatus @index
+  amountOut: BigInt
+  amountIn: BigInt
+  events: [DcaScheduleExecutionEvent] @derivedFrom(field: "scheduleExecution")
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface DcaScheduleExecution {
+  id: string;
+  schedule: DcaSchedule;
+  status: DcaScheduleExecutionStatus @index | null;
+  amountOut: bigint | null;
+  amountIn: bigint | null;
+  events: [DcaScheduleExecutionEvent] @derivedFrom(field: "scheduleExecution") | null;
+}
+```
+
+## Source Handlers
+
+This entity is populated by the following runtime events and handlers:
+
+| Runtime Event | Handler |
+|---------------|---------|
+| [Dca.ExecutionPlanned](/reference/pallets/DCA#executionplanned) | [`handleDcaScheduleExecutionPlanned`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/dca/dcaScheduleExecution.ts#L47) |
+| [Dca.TradeExecuted](/reference/pallets/DCA#tradeexecuted) | [`handleDcaTradeExecuted`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/dca/dcaScheduleExecution.ts#L110) |
+| [Dca.TradeFailed](/reference/pallets/DCA#tradefailed) | [`handleDcaTradeFailed`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/dca/dcaScheduleExecution.ts#L174) |
+
+## Example Query
+
+```graphql
+query GetDcaScheduleExecutions {
+  dcaScheduleExecutions(limit: 10) {
+    id
+    schedule
+    status
+    amountOut
+    amountIn
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [DCA](/reference/pallets/DCA)

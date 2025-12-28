@@ -1,0 +1,97 @@
+---
+title: HsmpoolAssetHistoricalData
+description: Indexer entity documentation
+sidebar_label: HsmpoolAssetHistoricalData
+---
+
+# HsmpoolAssetHistoricalData
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 22 |
+| Nullable Fields | 3 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/hsmpoolAssetHistoricalData.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type HsmpoolAssetHistoricalData {
+  id: ID!
+  asset: Asset!
+  collateral: HsmCollateral
+  facilitatorHistData: AaveFacilitatorHistoricalData
+  freeBalance: BigInt!
+  tvlInRefAssetNorm: String
+  assetVolIn: BigInt!
+  assetVolOut: BigInt!
+  assetFeeVol: BigInt!
+  assetTotalVolIn: BigInt!
+  assetTotalVolOut: BigInt!
+  assetTotalFeesVol: BigInt!
+  assetVolInNorm: String!
+  assetVolOutNorm: String!
+  assetFeeVolNorm: String!
+  assetTotalVolInNorm: String!
+  assetTotalVolOutNorm: String!
+  assetTotalFeesVolNorm: String!
+  paraTimestamp: DateTime!
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  block: Block!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface HsmpoolAssetHistoricalData {
+  id: string;
+  asset: Asset;
+  collateral: HsmCollateral | null;
+  facilitatorHistData: AaveFacilitatorHistoricalData | null;
+  freeBalance: bigint;
+  tvlInRefAssetNorm: string | null;
+  assetVolIn: bigint;
+  assetVolOut: bigint;
+  assetFeeVol: bigint;
+  assetTotalVolIn: bigint;
+  assetTotalVolOut: bigint;
+  assetTotalFeesVol: bigint;
+  assetVolInNorm: string;
+  assetVolOutNorm: string;
+  assetFeeVolNorm: string;
+  assetTotalVolInNorm: string;
+  assetTotalVolOutNorm: string;
+  assetTotalFeesVolNorm: string;
+  paraTimestamp: Date;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  block: Block;
+}
+```
+
+## Example Query
+
+```graphql
+query GetHsmpoolAssetHistoricalDatas {
+  hsmpoolAssetHistoricalDatas(limit: 10) {
+    id
+    asset
+    collateral
+    facilitatorHistData
+    freeBalance
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [HSM](/reference/pallets/HSM)

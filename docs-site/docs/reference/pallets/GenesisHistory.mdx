@@ -1,0 +1,28 @@
+---
+title: GenesisHistory
+description: Runtime pallet documentation
+sidebar_label: GenesisHistory
+---
+
+# GenesisHistory
+
+### Genesis history pallet
+
+## Overview
+Pallet to support storing previous genesis hash and last block hash in case of re-genesis.
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #55** · HydraDX<br/>
+`pallet-genesis-history/4ca470c5/master`
+
+[GitHub](https://github.com/galacticcouncil/HydraDX-node/tree/4ca470c5d613d62ce52eb8645770ef5fff263111/pallets/genesis-history) · [Subscan](https://hydradx.subscan.io/runtime/GenesisHistory)
+
+## Storage (1)
+
+### PreviousChain
+
+```rust
+PreviousChain: Value<{genesisHash: H256, lastBlockHash: H256}>
+```

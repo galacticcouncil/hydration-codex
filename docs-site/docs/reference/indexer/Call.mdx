@@ -1,0 +1,79 @@
+---
+title: Call
+description: Indexer entity documentation
+sidebar_label: Call
+---
+
+# Call
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 16 |
+| Nullable Fields | 8 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/call.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type Call {
+  id: ID!
+  traceId: String!
+  args: String
+  success: Boolean
+  name: String!
+  originKind: String!
+  originValueKind: String
+  originValue: String
+  entityTypes: [TraceEntityType]
+  subcalls: [Call] @derivedFrom(field: "parent")
+  events: [Event] @derivedFrom(field: "call")
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  block: Block!
+  extrinsic: Extrinsic!
+  parent: Call
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface Call {
+  id: string;
+  traceId: string;
+  args: string | null;
+  success: boolean | null;
+  name: string;
+  originKind: string;
+  originValueKind: string | null;
+  originValue: string | null;
+  entityTypes: [TraceEntityType] | null;
+  subcalls: [Call] @derivedFrom(field: "parent") | null;
+  events: [Event] @derivedFrom(field: "call") | null;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  block: Block;
+  extrinsic: Extrinsic;
+  parent: Call | null;
+}
+```
+
+## Example Query
+
+```graphql
+query GetCalls {
+  calls(limit: 10) {
+    id
+    traceId
+    args
+    success
+    name
+    # ... more fields
+  }
+}
+```

@@ -1,0 +1,269 @@
+---
+title: TechnicalCommittee
+description: Runtime pallet documentation
+sidebar_label: TechnicalCommittee
+---
+
+# TechnicalCommittee
+
+Collective system: Members of a set of account IDs can make their collective feelings known
+through dispatched calls from one of two specialized origins.
+
+The membership can be provided in one of two ways: either directly, using the Root-dispatchable
+function `set_members`, or indirectly, through implementing the `ChangeMembers`.
+The pallet assumes that the amount of members stays at or below `MaxMembers` for its weight
+calculations, but enforces this neither in `set_members` nor in `change_members_sorted`.
+
+A "prime" member may be set to help determine the default vote behavior based on chain
+config. If `PrimeDefaultVote` is used, the prime vote acts as the default vote in case of any
+abstentions after the voting period. If `MoreThanMajorityThenPrimeDefaultVote` is used, then
+abstentions will first follow the majority of the collective voting, and then the prime
+member.
+
+Voting happens through motions comprising a proposal (i.e. a dispatchable) plus a
+number of approvals required for it to pass and be called. Motions are open for members to
+vote on for a minimum period given by `MotionDuration`. As soon as the required number of
+approvals is given, the motion is closed and executed. If the number of approvals is not reached
+during the voting period, then `close` may be called by any account in order to force the end
+the motion explicitly. If a prime member is defined, then their vote is used instead of any
+abstentions and the proposal is executed if there are enough approvals counting the new votes.
+
+If there are not, or if no prime member is set, then the motion is dropped without being executed.
+
+<details>
+<summary>Code Documentation</summary>
+
+Collective system: Members of a set of account IDs can make their collective feelings known
+through dispatched calls from one of two specialized origins.
+
+The membership can be provided in one of two ways: either directly, using the Root-dispatchable
+function `set_members`, or indirectly, through implementing the `ChangeMembers`.
+The pallet assumes that the amount of members stays at or below `MaxMembers` for its weight
+calculations, but enforces this neither in `set_members` nor in `change_members_sorted`.
+
+A "prime" member may be set to help determine the default vote behavior based on chain
+config. If `PrimeDefaultVote` is used, the prime vote acts as the default vote in case of any
+abstentions after the voting period. If `MoreThanMajorityThenPrimeDefaultVote` is used, then
+abstentions will first follow the majority of the collective voting, and then the prime
+member.
+
+Voting happens through motions comprising a proposal (i.e. a curried dispatchable) plus a
+number of approvals required for it to pass and be called. Motions are open for members to
+vote on for a minimum period given by `MotionDuration`. As soon as the needed number of
+approvals is given, the motion is closed and executed. If the number of approvals is not reached
+during the voting period, then `close` may be called by any account in order to force the end
+the motion explicitly. If a prime member is defined then their vote is used in place of any
+abstentions and the proposal is executed if there are enough approvals counting the new votes.
+
+If there are not, or if no prime is set, then the motion is dropped without being executed.
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #25** · Polkadot SDK<br/>
+`pallet-collective/1ed66275/stable2409-patch6` (Instance2)
+
+[GitHub](https://github.com/galacticcouncil/polkadot-sdk/tree/1ed662757b03c4f17dc2429c1df84e975d98513a/substrate/frame/collective) · [docs.rs](https://docs.rs/crate/pallet-collective/38.0.0/source/) · [crates.io](https://crates.io/crates/pallet-collective) · [Subscan](https://hydradx.subscan.io/runtime/TechnicalCommittee)
+
+## Storage (6)
+
+### Proposals
+
+The hashes of the active proposals.
+
+```rust
+Proposals: Value<Vec<H256>>
+```
+
+### ProposalOf
+
+Actual proposal for a given hash, if it's current.
+
+```rust
+ProposalOf: Map<H256 -> Call> [Identity]
+```
+
+### Voting
+
+Votes on a given proposal, if it is ongoing.
+
+```rust
+Voting: Map<H256 -> {
+    index: u32,
+    threshold: u32,
+    ayes: Vec<AccountId32>,
+    nays: Vec<AccountId32>,
+    end: u32,
+}> [Identity]
+```
+
+### ProposalCount
+
+Proposals so far.
+
+```rust
+ProposalCount: Value<u32>
+```
+
+### Members
+
+The current members of the collective. This is stored sorted (just by value).
+
+```rust
+Members: Value<Vec<AccountId32>>
+```
+
+### Prime
+
+The prime member that helps determine the default vote behavior in case of abstentions.
+
+```rust
+Prime: Value<AccountId32>
+```
+
+## Extrinsics (6)
+
+### set_members
+
+```rust
+fn set_members(
+    origin: OriginFor<T>,
+    newMembers: Vec<AccountId32>,
+    prime: Option<AccountId32>,
+    oldCount: u32,
+)
+```
+
+### execute
+
+```rust
+fn execute(
+    origin: OriginFor<T>,
+    proposal: Call,
+    lengthBound: Compact<u32>,
+)
+```
+
+### propose
+
+```rust
+fn propose(
+    origin: OriginFor<T>,
+    threshold: Compact<u32>,
+    proposal: Call,
+    lengthBound: Compact<u32>,
+)
+```
+
+### vote
+
+```rust
+fn vote(
+    origin: OriginFor<T>,
+    proposal: H256,
+    index: Compact<u32>,
+    approve: bool,
+)
+```
+
+### disapprove_proposal
+
+```rust
+fn disapprove_proposal(
+    origin: OriginFor<T>,
+    proposalHash: H256,
+)
+```
+
+### close
+
+```rust
+fn close(
+    origin: OriginFor<T>,
+    proposalHash: H256,
+    index: Compact<u32>,
+    proposalWeightBound: Lookup10,
+    lengthBound: Compact<u32>,
+)
+```
+
+## Events (7)
+
+### Proposed
+
+```rust
+Proposed {
+    account: AccountId32,
+    proposalIndex: u32,
+    proposalHash: H256,
+    threshold: u32,
+}
+```
+
+### Voted
+
+```rust
+Voted {
+    account: AccountId32,
+    proposalHash: H256,
+    voted: bool,
+    yes: u32,
+    no: u32,
+}
+```
+
+### Approved
+
+```rust
+Approved {
+    proposalHash: H256,
+}
+```
+
+### Disapproved
+
+```rust
+Disapproved {
+    proposalHash: H256,
+}
+```
+
+### Executed
+
+```rust
+Executed {
+    proposalHash: H256,
+    result: Result<Null, SpRuntimeDispatchError>,
+}
+```
+
+### MemberExecuted
+
+```rust
+MemberExecuted {
+    proposalHash: H256,
+    result: Result<Null, SpRuntimeDispatchError>,
+}
+```
+
+### Closed
+
+```rust
+Closed {
+    proposalHash: H256,
+    yes: u32,
+    no: u32,
+}
+```
+
+## Constants (1)
+
+### MaxProposalWeight
+
+The maximum weight of a dispatch call that can be proposed and executed.
+
+```rust
+const MaxProposalWeight: {"refTime":"Compact<u64>","proofSize":"Compact<u64>"}
+```

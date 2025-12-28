@@ -1,0 +1,51 @@
+---
+title: CumulusXcm
+description: Runtime pallet documentation
+sidebar_label: CumulusXcm
+---
+
+# CumulusXcm
+
+## Release
+
+Polkadot SDK stable2409
+
+<details>
+<summary>Code Documentation</summary>
+
+Pallet for stuff specific to parachains' usage of XCM. Right now that's just the origin
+used by parachains when receiving `Transact` messages from other parachains or the Relay chain
+which must be natively represented.
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #109** · Polkadot SDK<br/>
+`cumulus-pallet-xcm/1ed66275/stable2409-patch6`
+
+[GitHub](https://github.com/galacticcouncil/polkadot-sdk/tree/1ed662757b03c4f17dc2429c1df84e975d98513a/cumulus/pallets/xcm) · [docs.rs](https://docs.rs/crate/cumulus-pallet-xcm/0.17.0/source/) · [crates.io](https://crates.io/crates/cumulus-pallet-xcm) · [Subscan](https://hydradx.subscan.io/runtime/CumulusXcm)
+
+## Events (3)
+
+### InvalidFormat
+
+```rust
+InvalidFormat
+```
+
+### UnsupportedVersion
+
+```rust
+UnsupportedVersion
+```
+
+### ExecutedDownward
+
+```rust
+ExecutedDownward {
+    field: [u8;32],
+    field: Lookup526,
+}
+```

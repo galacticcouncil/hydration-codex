@@ -1,0 +1,204 @@
+---
+title: StateTrieMigration
+description: Runtime pallet documentation
+sidebar_label: StateTrieMigration
+---
+
+# StateTrieMigration
+
+## Release
+
+Polkadot SDK stable2409
+
+<details>
+<summary>Code Documentation</summary>
+
+Reads and writes all keys and values in the entire state in a systematic way. This is useful for
+upgrading a chain to `sp-core::StateVersion::V1`, where all keys need to be touched.
+
+### Migration Types
+
+This pallet provides 2 ways to do this, each of which is suited for a particular use-case, and
+can be enabled independently.
+
+### Auto migration
+
+This system will try and migrate all keys by continuously using `on_initialize`. It is only
+sensible for a relay chain or a solo chain, where going slightly over weight is not a problem.
+It can be configured so that the migration takes at most `n` items and tries to not go over `x`
+bytes, but the latter is not guaranteed.
+
+For example, if a chain contains keys of 1 byte size, the `on_initialize` could read up to `x -
+1` bytes from `n` different keys, while the next key is suddenly `:code:`, and there is no way
+to bail out of this.
+
+### Signed migration
+
+As a backup, the migration process can be set in motion via signed transactions that basically
+say in advance how many items and how many bytes they will consume, and pay for it as well. This
+can be a good safe alternative, if the former system is not desirable.
+
+The (minor) caveat of this approach is that we cannot know in advance how many bytes reading a
+certain number of keys will incur. To overcome this, the runtime needs to configure this pallet
+with a `SignedDepositPerItem`. This is the per-item deposit that the origin of the signed
+migration transactions need to have in their account (on top of the normal fee) and if the size
+witness data that they claim is incorrect, this deposit is slashed.
+
+---
+
+Initially, this pallet does not contain any auto migration. They must be manually enabled by the
+`ControlOrigin`.
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #35** · Polkadot SDK<br/>
+`pallet-state-trie-migration/1ed66275/stable2409-patch6`
+
+[GitHub](https://github.com/galacticcouncil/polkadot-sdk/tree/1ed662757b03c4f17dc2429c1df84e975d98513a/substrate/frame/state-trie-migration) · [docs.rs](https://docs.rs/crate/pallet-state-trie-migration/40.0.0/source/) · [crates.io](https://crates.io/crates/pallet-state-trie-migration) · [Subscan](https://hydradx.subscan.io/runtime/StateTrieMigration)
+
+## Storage (3)
+
+### MigrationProcess
+
+Migration progress. This stores the snapshot of the last migrated keys. It can be set into motion and move forward by any of the means provided by this pallet.
+
+```rust
+MigrationProcess: Value<{
+    _alias: {size_:size},
+    progressTop: PalletStateTrieMigrationProgress,
+    progressChild: PalletStateTrieMigrationProgress,
+    size_: u32,
+    topItems: u32,
+    childItems: u32,
+}>
+```
+
+### AutoLimits
+
+The limits that are imposed on automatic migrations. If set to None, then no automatic migration happens.
+
+```rust
+AutoLimits: Value<Option<PalletStateTrieMigrationMigrationLimits>>
+```
+
+### SignedMigrationMaxLimits
+
+The maximum limits that the signed migration could use. If not set, no signed submission is allowed.
+
+```rust
+SignedMigrationMaxLimits: Value<{
+    _alias: {size_:size},
+    size_: u32,
+    item: u32,
+}>
+```
+
+## Extrinsics (6)
+
+### control_auto_migration
+
+```rust
+fn control_auto_migration(
+    origin: OriginFor<T>,
+    maybeConfig: Option<PalletStateTrieMigrationMigrationLimits>,
+)
+```
+
+### continue_migrate
+
+```rust
+fn continue_migrate(
+    origin: OriginFor<T>,
+    limits: Lookup171,
+    realSizeUpper: u32,
+    witnessTask: Lookup172,
+)
+```
+
+### migrate_custom_top
+
+```rust
+fn migrate_custom_top(
+    origin: OriginFor<T>,
+    keys_: Vec<Bytes>,
+    witnessSize: u32,
+)
+```
+
+### migrate_custom_child
+
+```rust
+fn migrate_custom_child(
+    origin: OriginFor<T>,
+    root: Bytes,
+    childKeys: Vec<Bytes>,
+    totalSize: u32,
+)
+```
+
+### set_signed_max_limits
+
+```rust
+fn set_signed_max_limits(
+    origin: OriginFor<T>,
+    limits: Lookup171,
+)
+```
+
+### force_set_progress
+
+```rust
+fn force_set_progress(
+    origin: OriginFor<T>,
+    progressTop: Lookup173,
+    progressChild: Lookup173,
+)
+```
+
+## Events (4)
+
+### Migrated
+
+```rust
+Migrated {
+    top: u32,
+    child: u32,
+    compute: Lookup61,
+}
+```
+
+### Slashed
+
+```rust
+Slashed {
+    who: AccountId32,
+    amount: u128,
+}
+```
+
+### AutoMigrationFinished
+
+```rust
+AutoMigrationFinished
+```
+
+### Halted
+
+```rust
+Halted {
+    error: Lookup62,
+}
+```
+
+## Constants (1)
+
+### MaxKeyLen
+
+Maximal number of bytes that a key can have. FRAME itself does not limit the key length. The concrete value must therefore depend on your storage usage. A `frame_support::storage::StorageNMap` for example can have an arbitrary number of keys which are then hashed and concatenated, resulting in arbitrarily long keys. Use the *state migration RPC* to retrieve the length of the longest key in your storage: [https://github.com/paritytech/substrate/issues/11642](https://github.com/paritytech/substrate/issues/11642) The migration will halt with a `Halted` event if this value is too small. Since there is no real penalty from over-estimating, it is advised to use a large value. The default is 512 byte. Some key lengths for reference: - `frame_support::storage::StorageValue`: 32 byte - `frame_support::storage::StorageMap`: 64 byte - `frame_support::storage::StorageDoubleMap`: 96 byte For more info see [https://www.shawntabrizi.com/blog/substrate/querying-subs...](https://www.shawntabrizi.com/blog/substrate/querying-substrate-storage-via-rpc/)
+
+```rust
+const MaxKeyLen: u32
+```

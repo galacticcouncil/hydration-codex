@@ -1,0 +1,833 @@
+---
+title: Uniques
+description: Runtime pallet documentation
+sidebar_label: Uniques
+---
+
+# Uniques
+
+A simple, secure module for dealing with non-fungible assets.
+
+## Overview
+
+The Uniques module provides functionality for non-fungible tokens' management, including:
+
+* Collection Creation
+* Item Minting
+* Item Transfers
+* Item Trading methods
+* Attributes Management
+* Item Burning
+
+To use it in your runtime, you need to implement
+`uniques::Config`.
+
+The supported dispatchable functions are documented in the
+`uniques::Call` enum.
+
+### Terminology
+
+* **Collection creation:** The creation of a new collection.
+* **Item minting:** The action of creating a new item within a collection.
+* **Item transfer:** The action of sending an item from one account to another.
+* **Item burning:** The destruction of an item.
+* **Non-fungible token (NFT):** An item for which each unit has unique characteristics. There is exactly one instance of
+ such an item in existence and there is exactly one owning account.
+
+### Goals
+
+The Uniques pallet in Substrate is designed to make the following possible:
+
+* Allow accounts to permissionlessly create NFT collections.
+* Allow a named (permissioned) account to mint and burn unique items within a collection.
+* Move items between accounts permissionlessly.
+* Allow a named (permissioned) account to freeze and unfreeze unique items within a collection or the entire collection.
+* Allow the owner of an item to delegate the ability to transfer the item to some named third-party.
+
+## Interface
+
+### Permissionless dispatchables
+* `create`: Create a new collection by placing a deposit.
+* `transfer`: Transfer an item to a new owner.
+* `redeposit`: Update the deposit amount of an item, potentially freeing funds.
+* `approve_transfer`: Name a delegate who may authorise a transfer.
+* `cancel_approval`: Revert the effects of a previous `approve_transfer`.
+
+### Permissioned dispatchables
+* `destroy`: Destroy a collection.
+* `mint`: Mint a new item within a collection.
+* `burn`: Burn an item within a collection.
+* `freeze`: Prevent an individual item from being transferred.
+* `thaw`: Revert the effects of a previous `freeze`.
+* `freeze_collection`: Prevent all items within a collection from being transferred.
+* `thaw_collection`: Revert the effects of a previous `freeze_collection`.
+* `transfer_ownership`: Alter the owner of a collection, moving all associated deposits.
+* `set_team`: Alter the permissioned accounts of a collection.
+
+### Metadata (permissioned) dispatchables
+* `set_attribute`: Set an attribute of an item or collection.
+* `clear_attribute`: Remove an attribute of an item or collection.
+* `set_metadata`: Set general metadata of an item.
+* `clear_metadata`: Remove general metadata of an item.
+* `set_collection_metadata`: Set general metadata of a collection.
+* `clear_collection_metadata`: Remove general metadata of a collection.
+
+### Force (i.e. governance) dispatchables
+* `force_create`: Create a new collection.
+* `force_asset_status`: Alter the underlying characteristics of a collection.
+
+Please refer to the `Call` enum
+and its associated variants for documentation on each function.
+
+## Related Modules
+
+* `System`
+* `Support`
+* `Assets`
+
+<details>
+<summary>Code Documentation</summary>
+
+A simple, secure module for dealing with non-fungible items.
+
+### Related Modules
+
+* ``System``
+* ``Support``
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #32** · Polkadot SDK<br/>
+`pallet-uniques/1ed66275/stable2409-patch6`
+
+[GitHub](https://github.com/galacticcouncil/polkadot-sdk/tree/1ed662757b03c4f17dc2429c1df84e975d98513a/substrate/frame/uniques) · [docs.rs](https://docs.rs/crate/pallet-uniques/38.0.0/source/) · [crates.io](https://crates.io/crates/pallet-uniques) · [Subscan](https://hydradx.subscan.io/runtime/Uniques)
+
+## Storage (10)
+
+### Class
+
+Details of a collection.
+
+```rust
+Class: Map<u128 -> {
+    owner: AccountId32,
+    issuer: AccountId32,
+    admin: AccountId32,
+    freezer: AccountId32,
+    totalDeposit: u128,
+    freeHolding: bool,
+    items: u32,
+    itemMetadatas: u32,
+    attributes: u32,
+    isFrozen: bool,
+}> [Blake2_128Concat]
+```
+
+### OwnershipAcceptance
+
+The collection, if any, of which an account is willing to take ownership.
+
+```rust
+OwnershipAcceptance: Map<AccountId32 -> u128> [Blake2_128Concat]
+```
+
+### Account
+
+The items held by any given account; set out this way so that items owned by a single account can be enumerated.
+
+```rust
+Account: Map<(AccountId32, u128, u128) -> Null> [Blake2_128Concat,  Blake2_128Concat,  Blake2_128Concat]
+```
+
+**Read by SDK:** [StakingClient.getUniques](/reference/sdk/sdk-next#stakingclient)
+
+### ClassAccount
+
+The collections owned by any given account; set out this way so that collections owned by a single account can be enumerated.
+
+```rust
+ClassAccount: Map<(AccountId32, u128) -> Null> [Blake2_128Concat,  Blake2_128Concat]
+```
+
+### Asset
+
+The items in existence and their ownership details.
+
+```rust
+Asset: Map<(u128,u128) -> {
+    owner: AccountId32,
+    approved: Option<AccountId32>,
+    isFrozen: bool,
+    deposit: u128,
+}> [Blake2_128Concat, Blake2_128Concat]
+```
+
+### ClassMetadataOf
+
+Metadata of a collection.
+
+```rust
+ClassMetadataOf: Map<u128 -> {
+    deposit: u128,
+    data: Bytes,
+    isFrozen: bool,
+}> [Blake2_128Concat]
+```
+
+### InstanceMetadataOf
+
+Metadata of an item.
+
+```rust
+InstanceMetadataOf: Map<(u128,u128) -> {
+    deposit: u128,
+    data: Bytes,
+    isFrozen: bool,
+}> [Blake2_128Concat, Blake2_128Concat]
+```
+
+### Attribute
+
+Attributes of a collection.
+
+```rust
+Attribute: Map<(u128, Option<u128>, Bytes) -> (Bytes, u128)> [Blake2_128Concat,  Blake2_128Concat,  Blake2_128Concat]
+```
+
+### ItemPriceOf
+
+Price of an asset instance.
+
+```rust
+ItemPriceOf: Map<(u128, u128) -> (u128, Option<AccountId32>)> [Blake2_128Concat,  Blake2_128Concat]
+```
+
+### CollectionMaxSupply
+
+Keeps track of the number of items a collection might have.
+
+```rust
+CollectionMaxSupply: Map<u128 -> u32> [Blake2_128Concat]
+```
+
+## Extrinsics (26)
+
+### create
+
+```rust
+fn create(
+    origin: OriginFor<T>,
+    collection: u128,
+    admin: AccountId32,
+)
+```
+
+### force_create
+
+```rust
+fn force_create(
+    origin: OriginFor<T>,
+    collection: u128,
+    owner: AccountId32,
+    freeHolding: bool,
+)
+```
+
+### destroy
+
+```rust
+fn destroy(
+    origin: OriginFor<T>,
+    collection: u128,
+    witness: Lookup168,
+)
+```
+
+### mint
+
+```rust
+fn mint(
+    origin: OriginFor<T>,
+    collection: u128,
+    item: u128,
+    owner: AccountId32,
+)
+```
+
+### burn
+
+```rust
+fn burn(
+    origin: OriginFor<T>,
+    collection: u128,
+    item: u128,
+    checkOwner: Option<AccountId32>,
+)
+```
+
+### transfer
+
+```rust
+fn transfer(
+    origin: OriginFor<T>,
+    collection: u128,
+    item: u128,
+    dest: AccountId32,
+)
+```
+
+### redeposit
+
+```rust
+fn redeposit(
+    origin: OriginFor<T>,
+    collection: u128,
+    items: Vec<u128>,
+)
+```
+
+### freeze
+
+```rust
+fn freeze(
+    origin: OriginFor<T>,
+    collection: u128,
+    item: u128,
+)
+```
+
+### thaw
+
+```rust
+fn thaw(
+    origin: OriginFor<T>,
+    collection: u128,
+    item: u128,
+)
+```
+
+### freeze_collection
+
+```rust
+fn freeze_collection(
+    origin: OriginFor<T>,
+    collection: u128,
+)
+```
+
+### thaw_collection
+
+```rust
+fn thaw_collection(
+    origin: OriginFor<T>,
+    collection: u128,
+)
+```
+
+### transfer_ownership
+
+```rust
+fn transfer_ownership(
+    origin: OriginFor<T>,
+    collection: u128,
+    newOwner: AccountId32,
+)
+```
+
+### set_team
+
+```rust
+fn set_team(
+    origin: OriginFor<T>,
+    collection: u128,
+    issuer: AccountId32,
+    admin: AccountId32,
+    freezer: AccountId32,
+)
+```
+
+### approve_transfer
+
+```rust
+fn approve_transfer(
+    origin: OriginFor<T>,
+    collection: u128,
+    item: u128,
+    delegate: AccountId32,
+)
+```
+
+### cancel_approval
+
+```rust
+fn cancel_approval(
+    origin: OriginFor<T>,
+    collection: u128,
+    item: u128,
+    maybeCheckDelegate: Option<AccountId32>,
+)
+```
+
+### force_item_status
+
+```rust
+fn force_item_status(
+    origin: OriginFor<T>,
+    collection: u128,
+    owner: AccountId32,
+    issuer: AccountId32,
+    admin: AccountId32,
+    freezer: AccountId32,
+    freeHolding: bool,
+    isFrozen: bool,
+)
+```
+
+### set_attribute
+
+```rust
+fn set_attribute(
+    origin: OriginFor<T>,
+    collection: u128,
+    maybeItem: Option<u128>,
+    key: Bytes,
+    value: Bytes,
+)
+```
+
+### clear_attribute
+
+```rust
+fn clear_attribute(
+    origin: OriginFor<T>,
+    collection: u128,
+    maybeItem: Option<u128>,
+    key: Bytes,
+)
+```
+
+### set_metadata
+
+```rust
+fn set_metadata(
+    origin: OriginFor<T>,
+    collection: u128,
+    item: u128,
+    data: Bytes,
+    isFrozen: bool,
+)
+```
+
+### clear_metadata
+
+```rust
+fn clear_metadata(
+    origin: OriginFor<T>,
+    collection: u128,
+    item: u128,
+)
+```
+
+### set_collection_metadata
+
+```rust
+fn set_collection_metadata(
+    origin: OriginFor<T>,
+    collection: u128,
+    data: Bytes,
+    isFrozen: bool,
+)
+```
+
+### clear_collection_metadata
+
+```rust
+fn clear_collection_metadata(
+    origin: OriginFor<T>,
+    collection: u128,
+)
+```
+
+### set_accept_ownership
+
+```rust
+fn set_accept_ownership(
+    origin: OriginFor<T>,
+    maybeCollection: Option<u128>,
+)
+```
+
+### set_collection_max_supply
+
+```rust
+fn set_collection_max_supply(
+    origin: OriginFor<T>,
+    collection: u128,
+    maxSupply: u32,
+)
+```
+
+### set_price
+
+```rust
+fn set_price(
+    origin: OriginFor<T>,
+    collection: u128,
+    item: u128,
+    price: Option<u128>,
+    whitelistedBuyer: Option<AccountId32>,
+)
+```
+
+### buy_item
+
+```rust
+fn buy_item(
+    origin: OriginFor<T>,
+    collection: u128,
+    item: u128,
+    bidPrice: u128,
+)
+```
+
+## Events (27)
+
+### Created
+
+```rust
+Created {
+    collection: u128,
+    creator: AccountId32,
+    owner: AccountId32,
+}
+```
+
+### ForceCreated
+
+```rust
+ForceCreated {
+    collection: u128,
+    owner: AccountId32,
+}
+```
+
+### Destroyed
+
+```rust
+Destroyed {
+    collection: u128,
+}
+```
+
+### Issued
+
+```rust
+Issued {
+    collection: u128,
+    item: u128,
+    owner: AccountId32,
+}
+```
+
+### Transferred
+
+```rust
+Transferred {
+    collection: u128,
+    item: u128,
+    from: AccountId32,
+    to: AccountId32,
+}
+```
+
+### Burned
+
+```rust
+Burned {
+    collection: u128,
+    item: u128,
+    owner: AccountId32,
+}
+```
+
+### Frozen
+
+```rust
+Frozen {
+    collection: u128,
+    item: u128,
+}
+```
+
+### Thawed
+
+```rust
+Thawed {
+    collection: u128,
+    item: u128,
+}
+```
+
+### CollectionFrozen
+
+```rust
+CollectionFrozen {
+    collection: u128,
+}
+```
+
+### CollectionThawed
+
+```rust
+CollectionThawed {
+    collection: u128,
+}
+```
+
+### OwnerChanged
+
+```rust
+OwnerChanged {
+    collection: u128,
+    newOwner: AccountId32,
+}
+```
+
+### TeamChanged
+
+```rust
+TeamChanged {
+    collection: u128,
+    issuer: AccountId32,
+    admin: AccountId32,
+    freezer: AccountId32,
+}
+```
+
+### ApprovedTransfer
+
+```rust
+ApprovedTransfer {
+    collection: u128,
+    item: u128,
+    owner: AccountId32,
+    delegate: AccountId32,
+}
+```
+
+### ApprovalCancelled
+
+```rust
+ApprovalCancelled {
+    collection: u128,
+    item: u128,
+    owner: AccountId32,
+    delegate: AccountId32,
+}
+```
+
+### ItemStatusChanged
+
+```rust
+ItemStatusChanged {
+    collection: u128,
+}
+```
+
+### CollectionMetadataSet
+
+```rust
+CollectionMetadataSet {
+    collection: u128,
+    data: Bytes,
+    isFrozen: bool,
+}
+```
+
+### CollectionMetadataCleared
+
+```rust
+CollectionMetadataCleared {
+    collection: u128,
+}
+```
+
+### MetadataSet
+
+```rust
+MetadataSet {
+    collection: u128,
+    item: u128,
+    data: Bytes,
+    isFrozen: bool,
+}
+```
+
+### MetadataCleared
+
+```rust
+MetadataCleared {
+    collection: u128,
+    item: u128,
+}
+```
+
+### Redeposited
+
+```rust
+Redeposited {
+    collection: u128,
+    successfulItems: Vec<u128>,
+}
+```
+
+### AttributeSet
+
+```rust
+AttributeSet {
+    collection: u128,
+    maybeItem: Option<u128>,
+    key: Bytes,
+    value: Bytes,
+}
+```
+
+### AttributeCleared
+
+```rust
+AttributeCleared {
+    collection: u128,
+    maybeItem: Option<u128>,
+    key: Bytes,
+}
+```
+
+### OwnershipAcceptanceChanged
+
+```rust
+OwnershipAcceptanceChanged {
+    who: AccountId32,
+    maybeCollection: Option<u128>,
+}
+```
+
+### CollectionMaxSupplySet
+
+```rust
+CollectionMaxSupplySet {
+    collection: u128,
+    maxSupply: u32,
+}
+```
+
+### ItemPriceSet
+
+```rust
+ItemPriceSet {
+    collection: u128,
+    item: u128,
+    price: u128,
+    whitelistedBuyer: Option<AccountId32>,
+}
+```
+
+### ItemPriceRemoved
+
+```rust
+ItemPriceRemoved {
+    collection: u128,
+    item: u128,
+}
+```
+
+### ItemBought
+
+```rust
+ItemBought {
+    collection: u128,
+    item: u128,
+    price: u128,
+    seller: AccountId32,
+    buyer: AccountId32,
+}
+```
+
+## Constants (8)
+
+### CollectionDeposit
+
+The basic amount of funds that must be reserved for collection.
+
+```rust
+const CollectionDeposit: u128
+```
+
+### ItemDeposit
+
+The basic amount of funds that must be reserved for an item.
+
+```rust
+const ItemDeposit: u128
+```
+
+### MetadataDepositBase
+
+The basic amount of funds that must be reserved when adding metadata to your item.
+
+```rust
+const MetadataDepositBase: u128
+```
+
+### AttributeDepositBase
+
+The basic amount of funds that must be reserved when adding an attribute to an item.
+
+```rust
+const AttributeDepositBase: u128
+```
+
+### DepositPerByte
+
+The additional funds that must be reserved for the number of bytes store in metadata, either "normal" metadata or attribute metadata.
+
+```rust
+const DepositPerByte: u128
+```
+
+### StringLimit
+
+The maximum length of data stored on-chain.
+
+```rust
+const StringLimit: u32
+```
+
+### KeyLimit
+
+The maximum length of an attribute key.
+
+```rust
+const KeyLimit: u32
+```
+
+### ValueLimit
+
+The maximum length of an attribute value.
+
+```rust
+const ValueLimit: u32
+```
+
+## References
+
+### SDK (1)
+
+- [sdk-next](/reference/sdk/sdk-next)
+
+### UI (2)
+
+- [useStakingAPR](/reference/hooks/staking/useStakingAPR)
+- [useRewardsCurveData](/reference/hooks/staking/useRewardsCurveData)

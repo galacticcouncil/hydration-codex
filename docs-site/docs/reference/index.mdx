@@ -1,0 +1,32 @@
+---
+title: Reference
+description: Detailed reference documentation organized by layer
+---
+
+# Reference
+
+Complete reference documentation for the Hydration Protocol stack.
+
+## Stack
+
+| Layer | Count | Description |
+|-------|-------|-------------|
+| [Runtime](/category/runtime) | 76 pallets | Substrate runtime (Rust) |
+| [SDK](/reference/sdk/sdk) | 245 methods | TypeScript SDK |
+| [Indexer](/category/indexer) | 123 entities | GraphQL historical data |
+| [UI](/category/ui) | 226 hooks | React frontend |
+
+```mermaid
+flowchart LR
+    Runtime["Runtime (76)"] --> SDK["SDK (245)"]
+    Runtime --> Indexer["Indexer (123)"]
+    SDK --> UI["UI (226)"]
+    Indexer --> UI
+```
+
+## Quick Find
+
+Use search to find any entity:
+- `Omnipool` → Runtime pallet
+- `OmnipoolAsset` → Indexer entity
+- `useSwap` → UI hook

@@ -1,0 +1,109 @@
+---
+title: MmReserveConfigHistoricalData
+description: Indexer entity documentation
+sidebar_label: MmReserveConfigHistoricalData
+---
+
+# MmReserveConfigHistoricalData
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 31 |
+| Nullable Fields | 25 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/mmReserveConfigHistoricalData.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type MmReserveConfigHistoricalData {
+  id: ID!
+  reserve: MoneyMarketReserve!
+  interestRateStrategyAddress: String!
+  priceOracle: String
+  reserveFactor: BigInt
+  usageAsCollateralEnabled: Boolean
+  borrowingEnabled: Boolean
+  isActive: Boolean
+  isFrozen: Boolean
+  isPaused: Boolean
+  isSiloedBorrowing: Boolean
+  accruedToTreasury: BigInt
+  unbacked: BigInt
+  flashLoanEnabled: Boolean
+  debtCeiling: BigInt
+  debtCeilingDecimals: BigInt
+  eModeCategoryId: Int
+  borrowCap: BigInt
+  supplyCap: BigInt
+  borrowableInIsolation: Boolean
+  baseLTVasCollateral: BigInt
+  reserveLiquidationThreshold: BigInt
+  reserveLiquidationBonus: BigInt
+  variableRateSlope1: BigInt
+  variableRateSlope2: BigInt
+  baseVariableBorrowRate: BigInt
+  optimalUsageRatio: BigInt
+  lastUpdateTimestamp: DateTime
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  block: Block!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface MmReserveConfigHistoricalData {
+  id: string;
+  reserve: MoneyMarketReserve;
+  interestRateStrategyAddress: string;
+  priceOracle: string | null;
+  reserveFactor: bigint | null;
+  usageAsCollateralEnabled: boolean | null;
+  borrowingEnabled: boolean | null;
+  isActive: boolean | null;
+  isFrozen: boolean | null;
+  isPaused: boolean | null;
+  isSiloedBorrowing: boolean | null;
+  accruedToTreasury: bigint | null;
+  unbacked: bigint | null;
+  flashLoanEnabled: boolean | null;
+  debtCeiling: bigint | null;
+  debtCeilingDecimals: bigint | null;
+  eModeCategoryId: number | null;
+  borrowCap: bigint | null;
+  supplyCap: bigint | null;
+  borrowableInIsolation: boolean | null;
+  baseLTVasCollateral: bigint | null;
+  reserveLiquidationThreshold: bigint | null;
+  reserveLiquidationBonus: bigint | null;
+  variableRateSlope1: bigint | null;
+  variableRateSlope2: bigint | null;
+  baseVariableBorrowRate: bigint | null;
+  optimalUsageRatio: bigint | null;
+  lastUpdateTimestamp: Date | null;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  block: Block;
+}
+```
+
+## Example Query
+
+```graphql
+query GetMmReserveConfigHistoricalDatas {
+  mmReserveConfigHistoricalDatas(limit: 10) {
+    id
+    reserve
+    interestRateStrategyAddress
+    priceOracle
+    reserveFactor
+    # ... more fields
+  }
+}
+```

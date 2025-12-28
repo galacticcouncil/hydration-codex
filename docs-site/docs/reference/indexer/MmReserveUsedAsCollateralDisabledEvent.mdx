@@ -1,0 +1,61 @@
+---
+title: MmReserveUsedAsCollateralDisabledEvent
+description: Indexer entity documentation
+sidebar_label: MmReserveUsedAsCollateralDisabledEvent
+---
+
+# MmReserveUsedAsCollateralDisabledEvent
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 7 |
+| Nullable Fields | 0 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/mmReserveUsedAsCollateralDisabledEvent.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type MmReserveUsedAsCollateralDisabledEvent {
+  id: ID!
+  traceIds: [String!
+  account: Account!
+  asset: Asset!
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  event: Event!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface MmReserveUsedAsCollateralDisabledEvent {
+  id: string;
+  traceIds: [String;
+  account: Account;
+  asset: Asset;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  event: Event;
+}
+```
+
+## Example Query
+
+```graphql
+query GetMmReserveUsedAsCollateralDisabledEvents {
+  mmReserveUsedAsCollateralDisabledEvents(limit: 10) {
+    id
+    traceIds
+    account
+    asset
+    paraBlockHeight
+    # ... more fields
+  }
+}
+```

@@ -1,0 +1,65 @@
+---
+title: Block
+description: Indexer entity documentation
+sidebar_label: Block
+---
+
+# Block
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 9 |
+| Nullable Fields | 4 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/block.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type Block {
+  id: ID!
+  extrinsics: [Extrinsic] @derivedFrom(field: "block")
+  calls: [Call] @derivedFrom(field: "block")
+  events: [Event] @derivedFrom(field: "block")
+  chainActivityTraces: [ChainActivityTrace] @derivedFrom(field: "block")
+  height: Int!
+  hash: String!
+  timestamp: DateTime!
+  relayBlockHeight: Int!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface Block {
+  id: string;
+  extrinsics: [Extrinsic] @derivedFrom(field: "block") | null;
+  calls: [Call] @derivedFrom(field: "block") | null;
+  events: [Event] @derivedFrom(field: "block") | null;
+  chainActivityTraces: [ChainActivityTrace] @derivedFrom(field: "block") | null;
+  height: number;
+  hash: string;
+  timestamp: Date;
+  relayBlockHeight: number;
+}
+```
+
+## Example Query
+
+```graphql
+query GetBlocks {
+  blocks(limit: 10) {
+    id
+    extrinsics
+    calls
+    events
+    chainActivityTraces
+    # ... more fields
+  }
+}
+```

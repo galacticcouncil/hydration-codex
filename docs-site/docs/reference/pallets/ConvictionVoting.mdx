@@ -1,0 +1,191 @@
+---
+title: ConvictionVoting
+description: Runtime pallet documentation
+sidebar_label: ConvictionVoting
+---
+
+# ConvictionVoting
+
+- `assembly::Config`
+- `Call`
+
+## Overview
+
+Pallet for voting in referenda.
+
+## Release
+
+Polkadot SDK stable2409
+
+<details>
+<summary>Code Documentation</summary>
+
+- `Config`
+- `Call`
+
+### Overview
+
+Pallet for managing actual voting in polls.
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #36** · Polkadot SDK<br/>
+`pallet-conviction-voting/1ed66275/stable2409-patch6`
+
+[GitHub](https://github.com/galacticcouncil/polkadot-sdk/tree/1ed662757b03c4f17dc2429c1df84e975d98513a/substrate/frame/conviction-voting) · [docs.rs](https://docs.rs/crate/pallet-conviction-voting/38.0.0/source/) · [crates.io](https://crates.io/crates/pallet-conviction-voting) · [Subscan](https://hydradx.subscan.io/runtime/ConvictionVoting)
+
+## Storage (2)
+
+### VotingFor
+
+All voting for a particular voter in a particular voting class. We store the balance for the number of votes that we have recorded.
+
+```rust
+VotingFor: Map<(AccountId32, u16) -> {_enum: {Casting: PalletConvictionVotingVoteCasting, Delegating: PalletConvictionVotingVoteDelegating}}> [Twox64Concat,  Twox64Concat]
+```
+
+### ClassLocksFor
+
+The voting classes which have a non-zero lock requirement and the lock amounts which they require. The actual amount locked on behalf of this pallet should always be the maximum of this list.
+
+```rust
+ClassLocksFor: Map<AccountId32 -> Vec<(u16, u128)>> [Twox64Concat]
+```
+
+## Extrinsics (7)
+
+### vote
+
+```rust
+fn vote(
+    origin: OriginFor<T>,
+    pollIndex: Compact<u32>,
+    vote: Lookup64,
+)
+```
+
+### delegate
+
+```rust
+fn delegate(
+    origin: OriginFor<T>,
+    class: u16,
+    to: AccountId32,
+    conviction: Lookup176,
+    balance: u128,
+)
+```
+
+### undelegate
+
+```rust
+fn undelegate(
+    origin: OriginFor<T>,
+    class: u16,
+)
+```
+
+### unlock
+
+```rust
+fn unlock(
+    origin: OriginFor<T>,
+    class: u16,
+    target: AccountId32,
+)
+```
+
+### remove_vote
+
+```rust
+fn remove_vote(
+    origin: OriginFor<T>,
+    class: Option<u16>,
+    index: u32,
+)
+```
+
+### remove_other_vote
+
+```rust
+fn remove_other_vote(
+    origin: OriginFor<T>,
+    target: AccountId32,
+    class: u16,
+    index: u32,
+)
+```
+
+### force_remove_vote
+
+```rust
+fn force_remove_vote(
+    origin: OriginFor<T>,
+    target: AccountId32,
+    class: u16,
+    index: u32,
+)
+```
+
+## Events (4)
+
+### Delegated
+
+```rust
+Delegated {
+    field: AccountId32,
+    field: AccountId32,
+}
+```
+
+### Undelegated
+
+```rust
+Undelegated
+```
+
+### Voted
+
+```rust
+Voted {
+    who: AccountId32,
+    vote: Lookup64,
+}
+```
+
+### VoteRemoved
+
+```rust
+VoteRemoved {
+    who: AccountId32,
+    vote: Lookup64,
+}
+```
+
+## Constants (2)
+
+### MaxVotes
+
+The maximum number of concurrent votes an account may have. Also used to compute weight, an overly large value can lead to extrinsics with large weight estimation: see `delegate` for instance.
+
+```rust
+const MaxVotes: u32
+```
+
+### VoteLockingPeriod
+
+The minimum period of vote locking. It should be no shorter than enactment period to ensure that in the case of an approval, those successful voters are locked into the consequences that their votes entail.
+
+```rust
+const VoteLockingPeriod: u32
+```
+
+## References
+
+### UI (2)
+
+- [useStake](/reference/hooks/staking/useStake)
+- [useUnstake](/reference/hooks/staking/useUnstake)

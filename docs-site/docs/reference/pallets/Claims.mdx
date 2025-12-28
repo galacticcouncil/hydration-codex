@@ -1,0 +1,53 @@
+---
+title: Claims
+description: Runtime pallet documentation
+sidebar_label: Claims
+---
+
+# Claims
+
+### Claims pallet
+
+## Overview
+Claims pallet provides functionality for claiming xHDX token acquired in LBP.
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #53** · HydraDX<br/>
+`pallet-claims/4ca470c5/master`
+
+[GitHub](https://github.com/galacticcouncil/HydraDX-node/tree/4ca470c5d613d62ce52eb8645770ef5fff263111/pallets/claims) · [Subscan](https://hydradx.subscan.io/runtime/Claims)
+
+## Storage (1)
+
+### Claims
+
+Asset id storage for each shared token
+
+```rust
+Claims: Map<[u8;20] -> u128> [Blake2_128Concat]
+```
+
+## Extrinsics (1)
+
+### claim
+
+```rust
+fn claim(
+    origin: OriginFor<T>,
+    ethereumSignature: [u8;65],
+)
+```
+
+## Events (1)
+
+### Claim
+
+```rust
+Claim {
+    field: AccountId32,
+    field: [u8;20],
+    field: u128,
+}
+```

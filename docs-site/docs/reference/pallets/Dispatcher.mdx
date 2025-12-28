@@ -1,0 +1,121 @@
+---
+title: Dispatcher
+description: Runtime pallet documentation
+sidebar_label: Dispatcher
+---
+
+# Dispatcher
+
+This pallet enables specific OpenGov tracks to dispatch Runtime calls as predefined origins. 
+
+The pallet supports the following dispatchables:
+* `dispatch_as_treasury` - allows the `Treasury` track to dispatch calls as the Treasury account on Hydration (`7L53bUTBopuwFt3mKUfmkzgGLayYa1Yvn1hAg9v5UMrQzTfh`)
+* `dispatch_as_aave_manager` - allows the `EconomicParameters` track to dispatch calls as the Money Market authority on Hydration (`add addr`)
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #40** · HydraDX<br/>
+`pallet-dispatcher/4ca470c5/master`
+
+[GitHub](https://github.com/galacticcouncil/HydraDX-node/tree/4ca470c5d613d62ce52eb8645770ef5fff263111/pallets/dispatcher) · [Subscan](https://hydradx.subscan.io/runtime/Dispatcher)
+
+## Storage (3)
+
+### AaveManagerAccount
+
+```rust
+AaveManagerAccount: Value<AccountId32>
+```
+
+### ExtraGas
+
+```rust
+ExtraGas: Value<u64>
+```
+
+### LastEvmCallExitReason
+
+```rust
+LastEvmCallExitReason: Value<{_enum: {Succeed: EvmCoreErrorExitSucceed, Error: EvmCoreErrorExitError, Revert: EvmCoreErrorExitRevert, Fatal: EvmCoreErrorExitFatal}}>
+```
+
+## Extrinsics (5)
+
+### dispatch_as_treasury
+
+```rust
+fn dispatch_as_treasury(
+    origin: OriginFor<T>,
+    call: Call,
+)
+```
+
+### dispatch_as_aave_manager
+
+```rust
+fn dispatch_as_aave_manager(
+    origin: OriginFor<T>,
+    call: Call,
+)
+```
+
+### note_aave_manager
+
+```rust
+fn note_aave_manager(
+    origin: OriginFor<T>,
+    account: AccountId32,
+)
+```
+
+### dispatch_with_extra_gas
+
+```rust
+fn dispatch_with_extra_gas(
+    origin: OriginFor<T>,
+    call: Call,
+    extraGas: u64,
+)
+```
+
+### dispatch_evm_call
+
+```rust
+fn dispatch_evm_call(
+    origin: OriginFor<T>,
+    call: Call,
+)
+```
+
+## Events (2)
+
+### TreasuryManagerCallDispatched
+
+```rust
+TreasuryManagerCallDispatched {
+    callHash: H256,
+    result: Result<FrameSupportDispatchPostDispatchInfo, SpRuntimeDispatchErrorWithPostInfo>,
+}
+```
+
+### AaveManagerCallDispatched
+
+```rust
+AaveManagerCallDispatched {
+    callHash: H256,
+    result: Result<FrameSupportDispatchPostDispatchInfo, SpRuntimeDispatchErrorWithPostInfo>,
+}
+```
+
+## References
+
+### Indexer (1)
+
+- [DispatchError](/reference/indexer/DispatchError)
+
+### UI (3)
+
+- [useGetClaimAllBorrowRewardsTx](/reference/hooks/borrow/useGetClaimAllBorrowRewardsTx)
+- [useSubmitFillOrder](/reference/hooks/trade/useSubmitFillOrder)
+- [useSubmitPlaceOrder](/reference/hooks/trade/useSubmitPlaceOrder)

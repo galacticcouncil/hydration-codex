@@ -1,0 +1,56 @@
+---
+title: LbppoolDestroyedData
+description: Indexer entity documentation
+sidebar_label: LbppoolDestroyedData
+---
+
+# LbppoolDestroyedData
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 3 |
+| Nullable Fields | 1 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/lbppoolDestroyedData.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type LbppoolDestroyedData {
+  eventId: String
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface LbppoolDestroyedData {
+  eventId: string | null;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+}
+```
+
+## Example Query
+
+```graphql
+query GetLbppoolDestroyedDatas {
+  lbppoolDestroyedDatas(limit: 10) {
+    eventId
+    paraBlockHeight
+    relayBlockHeight
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [LBP](/reference/pallets/LBP)

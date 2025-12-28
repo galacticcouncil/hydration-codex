@@ -1,0 +1,69 @@
+---
+title: HsmpoolHistoricalData
+description: Indexer entity documentation
+sidebar_label: HsmpoolHistoricalData
+---
+
+# HsmpoolHistoricalData
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 8 |
+| Nullable Fields | 0 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/hsmpoolHistoricalData.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type HsmpoolHistoricalData {
+  id: ID!
+  pool: Hsmpool!
+  bucketCapacity: BigInt!
+  bucketLevel: BigInt!
+  paraTimestamp: DateTime!
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  block: Block!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface HsmpoolHistoricalData {
+  id: string;
+  pool: Hsmpool;
+  bucketCapacity: bigint;
+  bucketLevel: bigint;
+  paraTimestamp: Date;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  block: Block;
+}
+```
+
+## Example Query
+
+```graphql
+query GetHsmpoolHistoricalDatas {
+  hsmpoolHistoricalDatas(limit: 10) {
+    id
+    pool
+    bucketCapacity
+    bucketLevel
+    paraTimestamp
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [HSM](/reference/pallets/HSM)

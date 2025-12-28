@@ -1,0 +1,59 @@
+---
+title: ChainActivityTraceRelation
+description: Indexer entity documentation
+sidebar_label: ChainActivityTraceRelation
+---
+
+# ChainActivityTraceRelation
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 6 |
+| Nullable Fields | 0 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/chainActivityTraceRelation.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type ChainActivityTraceRelation {
+  id: ID!
+  parentTrace: ChainActivityTrace!
+  childTrace: ChainActivityTrace!
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  block: Block!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface ChainActivityTraceRelation {
+  id: string;
+  parentTrace: ChainActivityTrace;
+  childTrace: ChainActivityTrace;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  block: Block;
+}
+```
+
+## Example Query
+
+```graphql
+query GetChainActivityTraceRelations {
+  chainActivityTraceRelations(limit: 10) {
+    id
+    parentTrace
+    childTrace
+    paraBlockHeight
+    relayBlockHeight
+    # ... more fields
+  }
+}
+```

@@ -1,0 +1,117 @@
+---
+title: DcaSchedule
+description: Indexer entity documentation
+sidebar_label: DcaSchedule
+---
+
+# DcaSchedule
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 27 |
+| Nullable Fields | 19 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/dcaSchedule.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type DcaSchedule {
+  id: ID!
+  operationId: String
+  traceIds: [String!
+  status: DcaScheduleStatus @index
+  owner: Account!
+  startExecutionBlock: Int
+  period: Int
+  totalAmount: BigInt
+  slippage: Int
+  maxRetries: Int
+  stabilityThreshold: Int
+  totalExecutedAmountIn: BigInt
+  totalExecutedAmountOut: BigInt
+  assetIn: Asset
+  amountIn: BigInt
+  maxAmountIn: BigInt
+  assetOut: Asset
+  amountOut: BigInt
+  minAmountOut: BigInt
+  orderType: DcaScheduleOrderType!
+  orderRouteHops: [DcaScheduleOrderRouteHop] @derivedFrom(field: "schedule")
+  executions: [DcaScheduleExecution] @derivedFrom(field: "schedule")
+  events: [DcaScheduleEvent!
+  field: "schedule")
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  event: Event!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface DcaSchedule {
+  id: string;
+  operationId: string | null;
+  traceIds: [String;
+  status: DcaScheduleStatus @index | null;
+  owner: Account;
+  startExecutionBlock: number | null;
+  period: number | null;
+  totalAmount: bigint | null;
+  slippage: number | null;
+  maxRetries: number | null;
+  stabilityThreshold: number | null;
+  totalExecutedAmountIn: bigint | null;
+  totalExecutedAmountOut: bigint | null;
+  assetIn: Asset | null;
+  amountIn: bigint | null;
+  maxAmountIn: bigint | null;
+  assetOut: Asset | null;
+  amountOut: bigint | null;
+  minAmountOut: bigint | null;
+  orderType: DcaScheduleOrderType;
+  orderRouteHops: [DcaScheduleOrderRouteHop] @derivedFrom(field: "schedule") | null;
+  executions: [DcaScheduleExecution] @derivedFrom(field: "schedule") | null;
+  events: [DcaScheduleEvent;
+  field: "schedule") | null;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  event: Event;
+}
+```
+
+## Source Handlers
+
+This entity is populated by the following runtime events and handlers:
+
+| Runtime Event | Handler |
+|---------------|---------|
+| [Dca.Completed](/reference/pallets/DCA#completed) | [`handleDcaScheduleCompleted`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/dca/dcaSchedule.ts#L213) |
+| [Dca.Scheduled](/reference/pallets/DCA#scheduled) | [`handleDcaScheduleCreated`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/dca/dcaSchedule.ts#L157) |
+| [Dca.Terminated](/reference/pallets/DCA#terminated) | [`handleDcaScheduleTerminated`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/dca/dcaSchedule.ts#L247) |
+
+## Example Query
+
+```graphql
+query GetDcaSchedules {
+  dcaSchedules(limit: 10) {
+    id
+    operationId
+    traceIds
+    status
+    owner
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [DCA](/reference/pallets/DCA)

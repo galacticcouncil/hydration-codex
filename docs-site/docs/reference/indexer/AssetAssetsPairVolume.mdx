@@ -1,0 +1,53 @@
+---
+title: AssetAssetsPairVolume
+description: Indexer entity documentation
+sidebar_label: AssetAssetsPairVolume
+---
+
+# AssetAssetsPairVolume
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 4 |
+| Nullable Fields | 0 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/assetAssetsPairVolume.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type AssetAssetsPairVolume {
+  id: ID!
+  assetHistoricalData: AssetHistoricalData!
+  assetsPairVolumeHistoricalData: AssetsPairVolumeHistoricalData!
+  paraBlockHeight: Int!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface AssetAssetsPairVolume {
+  id: string;
+  assetHistoricalData: AssetHistoricalData;
+  assetsPairVolumeHistoricalData: AssetsPairVolumeHistoricalData;
+  paraBlockHeight: number;
+}
+```
+
+## Example Query
+
+```graphql
+query GetAssetAssetsPairVolumes {
+  assetAssetsPairVolumes(limit: 10) {
+    id
+    assetHistoricalData
+    assetsPairVolumeHistoricalData
+    paraBlockHeight
+  }
+}
+```

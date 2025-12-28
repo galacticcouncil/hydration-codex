@@ -1,0 +1,208 @@
+---
+title: MultiTransactionPayment
+description: Runtime pallet documentation
+sidebar_label: MultiTransactionPayment
+---
+
+# MultiTransactionPayment
+
+## Transaction multi payment
+
+### Overview
+
+This pallet provides functionality to accepted transaction fees in other currencies.
+
+Extends substrate's `transaction-payment` pallet.
+
+### Interface
+Extends `transaction-payment` interface to add functionality to set desired currency and to add members who can add or remove accepted currencies.
+
+- `set_currency` - set selected currency in whci all transactions fees will be paid. Balance of selected currency must be non-zero.
+- `add_member` - only root can perform this action
+- `remove_member` - only root can perform this action
+
+### Implementation details
+
+Transaction fees are paid in native currency by default. This pallet allows to set a different currency to pay fees with for an account. 
+
+When the transaction fees is being paid and chosen currency is not native currency - swap is executed to obtain fee amount in native currency first.
+
+The swap (or buy) is done via selected AMM pool.
+
+Subsequently, the fee is paid in native currency.
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #203** · HydraDX<br/>
+`pallet-transaction-multi-payment/4ca470c5/master`
+
+[GitHub](https://github.com/galacticcouncil/HydraDX-node/tree/4ca470c5d613d62ce52eb8645770ef5fff263111/pallets/transaction-multi-payment) · [Subscan](https://hydradx.subscan.io/runtime/MultiTransactionPayment)
+
+## Storage (4)
+
+### AccountCurrencyMap
+
+Account currency map
+
+```rust
+AccountCurrencyMap: Map<AccountId32 -> u32> [Blake2_128Concat]
+```
+
+**Read by SDK:** [HydrationClient.getFeeAsset](/reference/sdk/xcm-cfg#hydrationclient)
+
+### AcceptedCurrencies
+
+Curated list of currencies which fees can be paid mapped to corresponding fallback price
+
+```rust
+AcceptedCurrencies: Map<u32 -> u128> [Twox64Concat]
+```
+
+### AcceptedCurrencyPrice
+
+Asset prices from the spot price provider or the fallback price if the price is not available. Updated at the beginning of every block.
+
+```rust
+AcceptedCurrencyPrice: Map<u32 -> u128> [Twox64Concat]
+```
+
+### TransactionCurrencyOverride
+
+```rust
+TransactionCurrencyOverride: Map<AccountId32 -> u32> [Twox64Concat]
+```
+
+## Extrinsics (5)
+
+### set_currency
+
+```rust
+fn set_currency(
+    origin: OriginFor<T>,
+    currency: u32,
+)
+```
+
+### add_currency
+
+```rust
+fn add_currency(
+    origin: OriginFor<T>,
+    currency: u32,
+    price: u128,
+)
+```
+
+### remove_currency
+
+```rust
+fn remove_currency(
+    origin: OriginFor<T>,
+    currency: u32,
+)
+```
+
+### reset_payment_currency
+
+```rust
+fn reset_payment_currency(
+    origin: OriginFor<T>,
+    accountId: AccountId32,
+)
+```
+
+### dispatch_permit
+
+```rust
+fn dispatch_permit(
+    origin: OriginFor<T>,
+    from: H160,
+    to: H160,
+    value: U256,
+    data: Bytes,
+    gasLimit: u64,
+    deadline: U256,
+    v: u8,
+    r: H256,
+    s: H256,
+)
+```
+
+## Events (4)
+
+### CurrencySet
+
+```rust
+CurrencySet {
+    accountId: AccountId32,
+    assetId: u32,
+}
+```
+
+### CurrencyAdded
+
+```rust
+CurrencyAdded {
+    assetId: u32,
+}
+```
+
+### CurrencyRemoved
+
+```rust
+CurrencyRemoved {
+    assetId: u32,
+}
+```
+
+### FeeWithdrawn
+
+```rust
+FeeWithdrawn {
+    accountId: AccountId32,
+    assetId: u32,
+    nativeFeeAmount: u128,
+    nonNativeFeeAmount: u128,
+    destinationAccountId: AccountId32,
+}
+```
+
+## Constants (3)
+
+### NativeAssetId
+
+Native Asset
+
+```rust
+const NativeAssetId: u32
+```
+
+### PolkadotNativeAssetId
+
+Polkadot Native Asset (DOT)
+
+```rust
+const PolkadotNativeAssetId: u32
+```
+
+### EvmAssetId
+
+EVM Asset
+
+```rust
+const EvmAssetId: u32
+```
+
+## References
+
+### SDK (1)
+
+- [xcm-cfg](/reference/sdk/xcm-cfg)
+
+### UI (4)
+
+- [useAcceptedFeePaymentAssets](/reference/hooks/transactions/useAcceptedFeePaymentAssets)
+- [useSetFeePaymentAsset](/reference/hooks/transactions/useSetFeePaymentAsset)
+- [useEstimateFee](/reference/hooks/transactions/useEstimateFee)
+- [useSignAndSubmit](/reference/hooks/transactions/useSignAndSubmit)

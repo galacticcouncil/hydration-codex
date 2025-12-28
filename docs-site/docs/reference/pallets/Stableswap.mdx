@@ -1,0 +1,512 @@
+---
+title: Stableswap
+description: Runtime pallet documentation
+sidebar_label: Stableswap
+---
+
+# Stableswap
+
+Curve/stableswap AMM implementation.
+
+## Overview
+
+Curve style AMM at is designed to provide highly efficient and low-slippage trades for stablecoins.
+
+### Drifting peg
+It is possible to create a pool with so called drifting peg.
+Source of target peg for each asset must be provided. Either constant value or external oracle.
+First asset in the pool is considered as a base asset and all other assets are pegged to it. Therefore peg of the first asset must be 1.
+
+### Stableswap Hooks
+
+Stableswap pallet supports multiple hooks which are triggerred on certain operations:
+- on_liquidity_changed - called when liquidity is added or removed from the pool
+- on_trade - called when trade is executed
+
+This is currently used to update on-chain oracle.
+
+### Terminology
+
+* **LP** - liquidity provider
+* **Share Token** - a token representing share asset of specific pool. Each pool has its own share token.
+* **Amplification** - curve AMM pool amplification parameter
+
+## Assumptions
+
+Maximum number of assets in pool is 5 (`MAX_ASSETS_IN_POOL` constant).
+
+A pool can be created only by allowed `AuthorityOrigin`.
+
+First LP to provide liquidity must add initial liquidity of all pool assets. Subsequent calls to add_liquidity, LP can provide only 1 asset.
+
+Initial liquidity is first liquidity added to the pool (that is first call of `add_liquidity`).
+
+LP is given certain amount of shares by minting a pool's share token.
+
+When LP decides to withdraw liquidity, it receives selected asset or all assets proportionality.
+
+<details>
+<summary>Code Documentation</summary>
+
+Curve/stableswap AMM implementation.
+
+### Overview
+
+Curve style AMM at is designed to provide highly efficient and low-slippage trades for stablecoins.
+
+### Drifting peg
+It is possible to create a pool with so called drifting peg.
+Source of target peg for each asset must be provided. Either constant value or external oracle.
+
+### Stableswap Hooks
+
+Stableswap pallet supports multiple hooks which are triggerred on certain operations:
+- on_liquidity_changed - called when liquidity is added or removed from the pool
+- on_trade - called when trade is executed
+
+This is currently used to update on-chain oracle.
+
+### Terminology
+
+* **LP** - liquidity provider
+* **Share Token** - a token representing share asset of specific pool. Each pool has its own share token.
+* **Amplification** - curve AMM pool amplification parameter
+
+### Assumptions
+
+Maximum number of assets in pool is 5 (`MAX_ASSETS_IN_POOL` constant).
+
+A pool can be created only by allowed `AuthorityOrigin`.
+
+First LP to provide liquidity must add initial liquidity of all pool assets. Subsequent calls to add_liquidity, LP can provide only 1 asset.
+
+Initial liquidity is first liquidity added to the pool (that is first call of `add_assets_liquidity`).
+
+LP is given certain amount of shares by minting a pool's share token.
+
+When LP decides to withdraw liquidity, it receives selected asset or all assets proportionality.
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #70** · HydraDX<br/>
+`pallet-stableswap/4ca470c5/master`
+
+[GitHub](https://github.com/galacticcouncil/HydraDX-node/tree/4ca470c5d613d62ce52eb8645770ef5fff263111/pallets/stableswap) · [Subscan](https://hydradx.subscan.io/runtime/Stableswap)
+
+## Storage (4)
+
+### Pools
+
+Existing pools
+
+```rust
+Pools: Map<u32 -> {
+    assets: Vec<u32>,
+    initialAmplification: u16,
+    finalAmplification: u16,
+    initialBlock: u32,
+    finalBlock: u32,
+    fee: Permill,
+}> [Blake2_128Concat]
+```
+
+**Read by SDK:** [AssetClient.safeSharesQuery](/reference/sdk/sdk#assetclient), [StableSwapClient.loadPools](/reference/sdk/sdk#stableswapclient), [AssetClient.queryShares](/reference/sdk/sdk-next#assetclient), [StableSwapClient.isSupported](/reference/sdk/sdk-next#stableswapclient)
+
+### PoolPegs
+
+Pool peg info.
+
+```rust
+PoolPegs: Map<u32 -> {
+    source: Vec<PalletStableswapPegSource>,
+    maxPegUpdate: Perbill,
+    current: Vec<(u128,u128)>,
+}> [Blake2_128Concat]
+```
+
+### AssetTradability
+
+Tradability state of pool assets.
+
+```rust
+AssetTradability: Map<(u32, u32) -> {bits: u8}> [Blake2_128Concat,  Blake2_128Concat]
+```
+
+### PoolSnapshots
+
+Temporary pool state storage. Used to save a state of pool in a single block.
+
+```rust
+PoolSnapshots: Map<u32 -> {
+    assets: Vec<u32>,
+    reserves: Vec<HydraDxMathStableswapTypesAssetReserve>,
+    amplification: u128,
+    fee: Permill,
+    pegs: Vec<(u128,u128)>,
+    shareIssuance: u128,
+}> [Blake2_128Concat]
+```
+
+## Extrinsics (15)
+
+### create_pool
+
+```rust
+fn create_pool(
+    origin: OriginFor<T>,
+    shareAsset: u32,
+    assets: Vec<u32>,
+    amplification: u16,
+    fee: Permill,
+)
+```
+
+### update_pool_fee
+
+```rust
+fn update_pool_fee(
+    origin: OriginFor<T>,
+    poolId: u32,
+    fee: Permill,
+)
+```
+
+### update_amplification
+
+```rust
+fn update_amplification(
+    origin: OriginFor<T>,
+    poolId: u32,
+    finalAmplification: u16,
+    startBlock: u32,
+    endBlock: u32,
+)
+```
+
+### add_liquidity
+
+```rust
+fn add_liquidity(
+    origin: OriginFor<T>,
+    poolId: u32,
+    assets: Vec<HydradxTraitsStableswapAssetAmount>,
+)
+```
+
+### add_liquidity_shares
+
+```rust
+fn add_liquidity_shares(
+    origin: OriginFor<T>,
+    poolId: u32,
+    shares: u128,
+    assetId: u32,
+    maxAssetAmount: u128,
+)
+```
+
+### remove_liquidity_one_asset
+
+```rust
+fn remove_liquidity_one_asset(
+    origin: OriginFor<T>,
+    poolId: u32,
+    assetId: u32,
+    shareAmount: u128,
+    minAmountOut: u128,
+)
+```
+
+### withdraw_asset_amount
+
+```rust
+fn withdraw_asset_amount(
+    origin: OriginFor<T>,
+    poolId: u32,
+    assetId: u32,
+    amount: u128,
+    maxShareAmount: u128,
+)
+```
+
+### sell
+
+```rust
+fn sell(
+    origin: OriginFor<T>,
+    poolId: u32,
+    assetIn: u32,
+    assetOut: u32,
+    amountIn: u128,
+    minBuyAmount: u128,
+)
+```
+
+### buy
+
+```rust
+fn buy(
+    origin: OriginFor<T>,
+    poolId: u32,
+    assetOut: u32,
+    assetIn: u32,
+    amountOut: u128,
+    maxSellAmount: u128,
+)
+```
+
+### set_asset_tradable_state
+
+```rust
+fn set_asset_tradable_state(
+    origin: OriginFor<T>,
+    poolId: u32,
+    assetId: u32,
+    state: Lookup234,
+)
+```
+
+### remove_liquidity
+
+```rust
+fn remove_liquidity(
+    origin: OriginFor<T>,
+    poolId: u32,
+    shareAmount: u128,
+    minAmountsOut: Vec<HydradxTraitsStableswapAssetAmount>,
+)
+```
+
+### create_pool_with_pegs
+
+```rust
+fn create_pool_with_pegs(
+    origin: OriginFor<T>,
+    shareAsset: u32,
+    assets: Vec<u32>,
+    amplification: u16,
+    fee: Permill,
+    pegSource: Vec<PalletStableswapPegSource>,
+    maxPegUpdate: Perbill,
+)
+```
+
+### add_assets_liquidity
+
+```rust
+fn add_assets_liquidity(
+    origin: OriginFor<T>,
+    poolId: u32,
+    assets: Vec<HydradxTraitsStableswapAssetAmount>,
+    minShares: u128,
+)
+```
+
+### update_asset_peg_source
+
+```rust
+fn update_asset_peg_source(
+    origin: OriginFor<T>,
+    poolId: u32,
+    assetId: u32,
+    pegSource: Lookup236,
+)
+```
+
+### update_pool_max_peg_update
+
+```rust
+fn update_pool_max_peg_update(
+    origin: OriginFor<T>,
+    poolId: u32,
+    maxPegUpdate: Perbill,
+)
+```
+
+## Events (11)
+
+### PoolCreated
+
+```rust
+PoolCreated {
+    poolId: u32,
+    assets: Vec<u32>,
+    amplification: u16,
+    fee: Permill,
+    peg: Option<PalletStableswapPoolPegInfo>,
+}
+```
+
+### FeeUpdated
+
+```rust
+FeeUpdated {
+    poolId: u32,
+    fee: Permill,
+}
+```
+
+### LiquidityAdded
+
+```rust
+LiquidityAdded {
+    poolId: u32,
+    who: AccountId32,
+    shares: u128,
+    assets: Vec<HydradxTraitsStableswapAssetAmount>,
+}
+```
+
+### LiquidityRemoved
+
+```rust
+LiquidityRemoved {
+    poolId: u32,
+    who: AccountId32,
+    shares: u128,
+    amounts: Vec<HydradxTraitsStableswapAssetAmount>,
+    fee: u128,
+}
+```
+
+### SellExecuted
+
+```rust
+SellExecuted {
+    who: AccountId32,
+    poolId: u32,
+    assetIn: u32,
+    assetOut: u32,
+    amountIn: u128,
+    amountOut: u128,
+    fee: u128,
+}
+```
+
+### BuyExecuted
+
+```rust
+BuyExecuted {
+    who: AccountId32,
+    poolId: u32,
+    assetIn: u32,
+    assetOut: u32,
+    amountIn: u128,
+    amountOut: u128,
+    fee: u128,
+}
+```
+
+### TradableStateUpdated
+
+```rust
+TradableStateUpdated {
+    poolId: u32,
+    assetId: u32,
+    state: Lookup234,
+}
+```
+
+### AmplificationChanging
+
+```rust
+AmplificationChanging {
+    poolId: u32,
+    currentAmplification: u16,
+    finalAmplification: u16,
+    startBlock: u32,
+    endBlock: u32,
+}
+```
+
+### PoolDestroyed
+
+```rust
+PoolDestroyed {
+    poolId: u32,
+}
+```
+
+### PoolPegSourceUpdated
+
+```rust
+PoolPegSourceUpdated {
+    poolId: u32,
+    assetId: u32,
+    pegSource: Lookup236,
+}
+```
+
+### PoolMaxPegUpdateUpdated
+
+```rust
+PoolMaxPegUpdateUpdated {
+    poolId: u32,
+    maxPegUpdate: Perbill,
+}
+```
+
+## Constants (3)
+
+### MinPoolLiquidity
+
+Minimum pool liquidity
+
+```rust
+const MinPoolLiquidity: u128
+```
+
+### MinTradingLimit
+
+Minimum trading amount
+
+```rust
+const MinTradingLimit: u128
+```
+
+### AmplificationRange
+
+Amplification inclusive range. Pool's amp can be selected from the range only.
+
+```rust
+const AmplificationRange: RangeInclusive<u16>
+```
+
+## References
+
+### SDK (2)
+
+- [sdk](/reference/sdk/sdk)
+- [sdk-next](/reference/sdk/sdk-next)
+
+### Indexer (13)
+
+- [Stableswap](/reference/indexer/Stableswap)
+- [StableswapCreatedData](/reference/indexer/StableswapCreatedData)
+- [StableswapDestroyedData](/reference/indexer/StableswapDestroyedData)
+- [StableswapLifeState](/reference/indexer/StableswapLifeState)
+- [StableswapAsset](/reference/indexer/StableswapAsset)
+- [StableswapVolumeHistoricalData](/reference/indexer/StableswapVolumeHistoricalData)
+- [StableswapAssetVolumeHistoricalData](/reference/indexer/StableswapAssetVolumeHistoricalData)
+- [StableswapLiquidityEvent](/reference/indexer/StableswapLiquidityEvent)
+- [StableswapAssetLiquidityAmount](/reference/indexer/StableswapAssetLiquidityAmount)
+- [StableswapPegsSource](/reference/indexer/StableswapPegsSource)
+- [StableswapHistoricalData](/reference/indexer/StableswapHistoricalData)
+- [StableswapAssetHistoricalData](/reference/indexer/StableswapAssetHistoricalData)
+- [StableswapAssetHistoricalDataLatest](/reference/indexer/StableswapAssetHistoricalDataLatest)
+
+### UI (10)
+
+- [useAcceptedFeePaymentAssets](/reference/hooks/transactions/useAcceptedFeePaymentAssets)
+- [useStableswap](/reference/hooks/stableswap/useStableswap)
+- [useStableSwapTradability](/reference/hooks/stableswap/useStableSwapTradability)
+- [useStablepoolAddLiquidity](/reference/hooks/liquidity/useStablepoolAddLiquidity)
+- [useStablepoolRemoveLiquidity](/reference/hooks/liquidity/useStablepoolRemoveLiquidity)
+- [useMarketBuyData](/reference/hooks/trade/useMarketBuyData)
+- [useMarketSellData](/reference/hooks/trade/useMarketSellData)
+- [useCalculateBuyAmount](/reference/hooks/trade/useCalculateBuyAmount)
+- [useCalculateSellAmount](/reference/hooks/trade/useCalculateSellAmount)
+- [useSwitchAssets](/reference/hooks/trade/useSwitchAssets)

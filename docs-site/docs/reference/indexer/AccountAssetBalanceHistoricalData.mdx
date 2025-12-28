@@ -1,0 +1,67 @@
+---
+title: AccountAssetBalanceHistoricalData
+description: Indexer entity documentation
+sidebar_label: AccountAssetBalanceHistoricalData
+---
+
+# AccountAssetBalanceHistoricalData
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 10 |
+| Nullable Fields | 2 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/accountAssetBalanceHistoricalData.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type AccountAssetBalanceHistoricalData {
+  id: ID!
+  account: Account!
+  asset: Asset!
+  transferable: BigInt!
+  totalLocked: BigInt!
+  transferableInRefAssetNorm: String
+  totalLockedInRefAssetNorm: String
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  block: Block!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface AccountAssetBalanceHistoricalData {
+  id: string;
+  account: Account;
+  asset: Asset;
+  transferable: bigint;
+  totalLocked: bigint;
+  transferableInRefAssetNorm: string | null;
+  totalLockedInRefAssetNorm: string | null;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  block: Block;
+}
+```
+
+## Example Query
+
+```graphql
+query GetAccountAssetBalanceHistoricalDatas {
+  accountAssetBalanceHistoricalDatas(limit: 10) {
+    id
+    account
+    asset
+    transferable
+    totalLocked
+    # ... more fields
+  }
+}
+```

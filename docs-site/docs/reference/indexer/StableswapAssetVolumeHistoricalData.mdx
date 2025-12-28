@@ -1,0 +1,89 @@
+---
+title: StableswapAssetVolumeHistoricalData
+description: Indexer entity documentation
+sidebar_label: StableswapAssetVolumeHistoricalData
+---
+
+# StableswapAssetVolumeHistoricalData
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 18 |
+| Nullable Fields | 0 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/stableswapAssetVolumeHistoricalData.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type StableswapAssetVolumeHistoricalData {
+  id: ID!
+  volumesCollection: StableswapVolumeHistoricalData!
+  asset: Asset!
+  assetFeeVol: BigInt!
+  assetTotalFeesVol: BigInt!
+  assetVolIn: BigInt!
+  assetVolOut: BigInt!
+  assetTotalVolIn: BigInt!
+  assetTotalVolOut: BigInt!
+  assetVolInNorm: String!
+  assetVolOutNorm: String!
+  assetFeeVolNorm: String!
+  assetTotalVolInNorm: String!
+  assetTotalVolOutNorm: String!
+  assetTotalFeesVolNorm: String!
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  block: Block!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface StableswapAssetVolumeHistoricalData {
+  id: string;
+  volumesCollection: StableswapVolumeHistoricalData;
+  asset: Asset;
+  assetFeeVol: bigint;
+  assetTotalFeesVol: bigint;
+  assetVolIn: bigint;
+  assetVolOut: bigint;
+  assetTotalVolIn: bigint;
+  assetTotalVolOut: bigint;
+  assetVolInNorm: string;
+  assetVolOutNorm: string;
+  assetFeeVolNorm: string;
+  assetTotalVolInNorm: string;
+  assetTotalVolOutNorm: string;
+  assetTotalFeesVolNorm: string;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  block: Block;
+}
+```
+
+## Example Query
+
+```graphql
+query GetStableswapAssetVolumeHistoricalDatas {
+  stableswapAssetVolumeHistoricalDatas(limit: 10) {
+    id
+    volumesCollection
+    asset
+    assetFeeVol
+    assetTotalFeesVol
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [Stableswap](/reference/pallets/Stableswap)

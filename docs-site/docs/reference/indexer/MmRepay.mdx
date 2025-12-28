@@ -1,0 +1,67 @@
+---
+title: MmRepay
+description: Indexer entity documentation
+sidebar_label: MmRepay
+---
+
+# MmRepay
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 10 |
+| Nullable Fields | 2 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/mmRepay.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type MmRepay {
+  id: ID!
+  traceIds: [String!
+  asset: Asset!
+  account: Account!
+  repayerAccount: Account!
+  amount: BigInt
+  useATokens: Boolean
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  event: Event!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface MmRepay {
+  id: string;
+  traceIds: [String;
+  asset: Asset;
+  account: Account;
+  repayerAccount: Account;
+  amount: bigint | null;
+  useATokens: boolean | null;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  event: Event;
+}
+```
+
+## Example Query
+
+```graphql
+query GetMmRepays {
+  mmRepays(limit: 10) {
+    id
+    traceIds
+    asset
+    account
+    repayerAccount
+    # ... more fields
+  }
+}
+```

@@ -1,0 +1,75 @@
+---
+title: HsmCollateralConfigHistoricalData
+description: Indexer entity documentation
+sidebar_label: HsmCollateralConfigHistoricalData
+---
+
+# HsmCollateralConfigHistoricalData
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 11 |
+| Nullable Fields | 0 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/hsmCollateralConfigHistoricalData.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type HsmCollateralConfigHistoricalData {
+  id: ID!
+  collateral: HsmCollateral!
+  purchaseFee: BigInt!
+  maxBuyPriceCoefficient: BigInt!
+  buybackRate: BigInt!
+  buyBackFee: BigInt!
+  maxInHolding: BigInt!
+  paraTimestamp: DateTime!
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  block: Block!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface HsmCollateralConfigHistoricalData {
+  id: string;
+  collateral: HsmCollateral;
+  purchaseFee: bigint;
+  maxBuyPriceCoefficient: bigint;
+  buybackRate: bigint;
+  buyBackFee: bigint;
+  maxInHolding: bigint;
+  paraTimestamp: Date;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  block: Block;
+}
+```
+
+## Example Query
+
+```graphql
+query GetHsmCollateralConfigHistoricalDatas {
+  hsmCollateralConfigHistoricalDatas(limit: 10) {
+    id
+    collateral
+    purchaseFee
+    maxBuyPriceCoefficient
+    buybackRate
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [HSM](/reference/pallets/HSM)

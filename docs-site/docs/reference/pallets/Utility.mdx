@@ -1,0 +1,219 @@
+---
+title: Utility
+description: Runtime pallet documentation
+sidebar_label: Utility
+---
+
+# Utility
+
+A stateless module with helpers for dispatch management which does no re-authentication.
+
+- `utility::Config`
+- `Call`
+
+## Overview
+
+This module contains two basic pieces of functionality:
+- Batch dispatch: A stateless operation, allowing any origin to execute multiple calls in a
+ single dispatch. This can be useful to amalgamate proposals, combining `set_code` with
+ corresponding `set_storage`s, for efficient multiple payouts with just a single signature
+ verify, or in combination with one of the other two dispatch functionality.
+- Pseudonymal dispatch: A stateless operation, allowing a signed origin to execute a call from
+ an alternative signed origin. Each account has 2 * 2**16 possible "pseudonyms" (alternative
+ account IDs) and these can be stacked. This can be useful as a key management tool, where you
+ need multiple distinct accounts (e.g. as controllers for many staking accounts), but where
+ it's perfectly fine to have each of them controlled by the same underlying keypair.
+ Derivative accounts are, for the purposes of proxy filtering considered exactly the same as
+ the origin and are thus hampered with the origin's filters.
+
+Since proxy filters are respected in all dispatches of this module, it should never need to be
+filtered by any proxy.
+
+Pre- and post-hooks can be configured via `BatchHook` associated type.
+They are triggered for each batch call: `batch`, `batch_all`, and `force_batch`. Use the unit type `()` if no behavior is required.
+
+## Interface
+
+### Dispatchable Functions
+
+#### For batch dispatch
+- `batch` - Dispatch multiple calls from the sender's origin.
+
+#### For pseudonymal dispatch
+- `as_derivative` - Dispatch a call from a derivative signed origin.
+
+`Call`: ./enum.Call.html
+`Config`: ./trait.Config.html
+
+<details>
+<summary>Code Documentation</summary>
+
+A stateless pallet with helpers for dispatch management which does no re-authentication.
+
+- `Config`
+- `Call`
+
+### Overview
+
+This pallet contains two basic pieces of functionality:
+- Batch dispatch: A stateless operation, allowing any origin to execute multiple calls in a
+ single dispatch. This can be useful to amalgamate proposals, combining `set_code` with
+ corresponding `set_storage`s, for efficient multiple payouts with just a single signature
+ verify, or in combination with one of the other two dispatch functionality.
+- Pseudonymal dispatch: A stateless operation, allowing a signed origin to execute a call from
+ an alternative signed origin. Each account has 2 * 2**16 possible "pseudonyms" (alternative
+ account IDs) and these can be stacked. This can be useful as a key management tool, where you
+ need multiple distinct accounts (e.g. as controllers for many staking accounts), but where
+ it's perfectly fine to have each of them controlled by the same underlying keypair. Derivative
+ accounts are, for the purposes of proxy filtering considered exactly the same as the origin
+ and are thus hampered with the origin's filters.
+
+Since proxy filters are respected in all dispatches of this pallet, it should never need to be
+filtered by any proxy.
+
+### Interface
+
+### Dispatchable Functions
+
+#### For batch dispatch
+* `batch` - Dispatch multiple calls from the sender's origin.
+
+#### For pseudonymal dispatch
+* `as_derivative` - Dispatch a call from a derivative signed origin.
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #13** · Polkadot SDK<br/>
+`pallet-utility/1ed66275/stable2409-patch6`
+
+[GitHub](https://github.com/galacticcouncil/polkadot-sdk/tree/1ed662757b03c4f17dc2429c1df84e975d98513a/substrate/frame/utility) · [docs.rs](https://docs.rs/crate/pallet-utility/38.0.0/source/) · [crates.io](https://crates.io/crates/pallet-utility) · [Subscan](https://hydradx.subscan.io/runtime/Utility)
+
+## Extrinsics (6)
+
+### batch
+
+```rust
+fn batch(
+    origin: OriginFor<T>,
+    calls: Vec<Call>,
+)
+```
+
+### as_derivative
+
+```rust
+fn as_derivative(
+    origin: OriginFor<T>,
+    index: u16,
+    call: Call,
+)
+```
+
+### batch_all
+
+```rust
+fn batch_all(
+    origin: OriginFor<T>,
+    calls: Vec<Call>,
+)
+```
+
+### dispatch_as
+
+```rust
+fn dispatch_as(
+    origin: OriginFor<T>,
+    asOrigin: Lookup89,
+    call: Call,
+)
+```
+
+### force_batch
+
+```rust
+fn force_batch(
+    origin: OriginFor<T>,
+    calls: Vec<Call>,
+)
+```
+
+### with_weight
+
+```rust
+fn with_weight(
+    origin: OriginFor<T>,
+    call: Call,
+    weight: Lookup10,
+)
+```
+
+## Events (6)
+
+### BatchInterrupted
+
+```rust
+BatchInterrupted {
+    index: u32,
+    error: Lookup26,
+}
+```
+
+### BatchCompleted
+
+```rust
+BatchCompleted
+```
+
+### BatchCompletedWithErrors
+
+```rust
+BatchCompletedWithErrors
+```
+
+### ItemCompleted
+
+```rust
+ItemCompleted
+```
+
+### ItemFailed
+
+```rust
+ItemFailed {
+    error: Lookup26,
+}
+```
+
+### DispatchedAs
+
+```rust
+DispatchedAs {
+    result: Result<Null, SpRuntimeDispatchError>,
+}
+```
+
+## Constants (1)
+
+### batched_calls_limit
+
+The limit on the number of batched calls.
+
+```rust
+const batched_calls_limit: u32
+```
+
+## References
+
+### UI (8)
+
+- [useStake](/reference/hooks/staking/useStake)
+- [useUnstake](/reference/hooks/staking/useUnstake)
+- [useExitDepositFarmsMutation](/reference/hooks/liquidity/useExitDepositFarmsMutation)
+- [useClaimFarmRewardsMutation](/reference/hooks/liquidity/useClaimFarmRewardsMutation)
+- [useRemoveSingleOmnipoolPosition](/reference/hooks/liquidity/useRemoveSingleOmnipoolPosition)
+- [useRemoveMultipleOmnipoolPositions](/reference/hooks/liquidity/useRemoveMultipleOmnipoolPositions)
+- [useUnlockNativeLocks](/reference/hooks/wallet/useUnlockNativeLocks)
+- [useClaimAllWalletRewards](/reference/hooks/wallet/useClaimAllWalletRewards)

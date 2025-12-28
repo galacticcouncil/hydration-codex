@@ -1,0 +1,605 @@
+---
+title: Omnipool
+description: Runtime pallet documentation
+sidebar_label: Omnipool
+---
+
+# Omnipool
+
+Omnipool implementation
+
+### Overview
+
+Omnipool is type of AMM where all assets are pooled together into one single pool.
+
+Each asset is internally paired with so called Hub Asset ( LRNA ). When a liquidity is provided, corresponding
+amount of hub asset is minted. When a liquidity is removed, corresponding amount of hub asset is burned.
+
+Liquidity provider can provide any asset of their choice to the Omnipool and in return
+they will receive pool shares for this single asset.
+
+The position is represented as a NFT token which stores the amount of shares distributed
+and the price of the asset at the time of provision.
+
+For traders this means that they can benefit from non-fragmented liquidity.
+They can send any token to the pool using the swap mechanism
+and in return they will receive the token of their choice in the appropriate quantity.
+
+Omnipool is implemented with concrete Balance type: u128.
+
+#### Imbalance mechanism
+The Imbalance mechanism is designed to stabilize the value of LRNA. By design it is a weak and passive mechanism,
+and is specifically meant to deal with one cause of LRNA volatility: LRNA being sold back to the pool.
+
+Imbalance is always negative, internally represented by a special type `SimpleImbalance` which uses unsigned integer and boolean flag.
+This was done initially because of the intention that in future imbalance can also become positive.
+
+#### Omnipool Hooks
+
+Omnipool pallet supports multiple hooks which are triggerred on certain operations:
+- on_liquidity_changed - called when liquidity is added or removed from the pool
+- on_trade - called when trade is executed
+- on_trade_fee - called after successful trade with fee amount that can be taken out of the pool if needed.
+
+This is currently used to update on-chain oracle and in the circuit breaker.
+
+### Terminology
+
+* **LP:** liquidity provider
+* **Position:** a moment when LP added liquidity to the pool. It stores amount,shares and price at the time
+ of provision
+* **Hub Asset:** dedicated 'hub' token for trade executions (LRNA)
+* **Native Asset:** governance token
+* **Imbalance:** Tracking of hub asset imbalance.
+
+### Assumptions
+
+Below are assumptions that must be held when using this pallet.
+
+* Initial liquidity of new token being added to Omnipool must be transferred manually to pool account prior to calling add_token.
+* All tokens added to the pool must be first registered in Asset Registry.
+
+### Interface
+
+#### Dispatchable Functions
+
+* `add_token` - Adds token to the pool. Initial liquidity must be transffered to pool account prior to calling add_token.
+* `add_liquidity` - Adds liquidity of selected asset to the pool. Mints corresponding position NFT.
+* `remove_liquidity` - Removes liquidity of selected position from the pool. Partial withdrawals are allowed.
+* `sell` - Trades an asset in for asset out by selling given amount of asset in.
+* `buy` - Trades an asset in for asset out by buying given amount of asset out.
+* `set_asset_tradable_state` - Updates asset's tradable state with new flags. This allows/forbids asset operation such SELL,BUY,ADD or REMOVE liquidtityy.
+* `refund_refused_asset` - Refunds the initial liquidity amount sent to pool account prior to add_token if the token has been refused to be added.
+* `sacrifice_position` - Destroys a position and position's shares become protocol's shares.
+* `withdraw_protocol_liquidity` - Withdraws protocol's liquidity from the pool. Used to withdraw liquidity from sacrificed position.
+
+<details>
+<summary>Code Documentation</summary>
+
+Omnipool implementation
+
+### Overview
+
+Omnipool is type of AMM where all assets are pooled together into one single pool.
+
+Each asset is internally paired with so called Hub Asset ( LRNA ). When a liquidity is provided, corresponding
+amount of hub asset is minted. When a liquidity is removed, corresponding amount of hub asset is burned.
+
+Liquidity provider can provide any asset of their choice to the Omnipool and in return
+they will receive pool shares for this single asset.
+
+The position is represented as a NFT token which stores the amount of shares distributed
+and the price of the asset at the time of provision.
+
+For traders this means that they can benefit from non-fragmented liquidity.
+They can send any token to the pool using the swap mechanism
+and in return they will receive the token of their choice in the appropriate quantity.
+
+Omnipool is implemented with concrete Balance type: u128.
+
+### Omnipool Hooks
+
+Omnipool pallet supports multiple hooks which are triggerred on certain operations:
+- on_liquidity_changed - called when liquidity is added or removed from the pool
+- on_trade - called when trade is executed
+- on_trade_fee - called after successful trade with fee amount that can be taken out of the pool if needed.
+
+This is currently used to update on-chain oracle and in the circuit breaker.
+
+### Terminology
+
+* **LP:** liquidity provider
+* **Position:** a moment when LP added liquidity to the pool. It stores amount,shares and price at the time
+ of provision
+* **Hub Asset:** dedicated 'hub' token for trade executions (LRNA)
+* **Native Asset:** governance token
+
+### Assumptions
+
+Below are assumptions that must be held when using this pallet.
+
+* Initial liquidity of new token being added to Omnipool must be transferred manually to pool account prior to calling add_token.
+* All tokens added to the pool must be first registered in Asset Registry.
+
+### Interface
+
+### Dispatchable Functions
+
+* `add_token` - Adds token to the pool. Initial liquidity must be transffered to pool account prior to calling add_token.
+* `add_liquidity` - Adds liquidity of selected asset to the pool. Mints corresponding position NFT.
+* `remove_liquidity` - Removes liquidity of selected position from the pool. Partial withdrawals are allowed.
+* `remove_all_liquidity` - Removes all liquidity from a selected position.
+* `sell` - Trades an asset in for asset out by selling given amount of asset in.
+* `buy` - Trades an asset in for asset out by buying given amount of asset out.
+* `set_asset_tradable_state` - Updates asset's tradable state with new flags. This allows/forbids asset operation such SELL,BUY,ADD or REMOVE liquidtityy.
+* `refund_refused_asset` - Refunds the initial liquidity amount sent to pool account prior to add_token if the token has been refused to be added.
+* `sacrifice_position` - Destroys a position and position's shares become protocol's shares.
+* `withdraw_protocol_liquidity` - Withdraws protocol's liquidity from the pool. Used to withdraw liquidity from sacrificed position.
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #59** · HydraDX<br/>
+`pallet-omnipool/4ca470c5/master`
+
+[GitHub](https://github.com/galacticcouncil/HydraDX-node/tree/4ca470c5d613d62ce52eb8645770ef5fff263111/pallets/omnipool) · [Subscan](https://hydradx.subscan.io/runtime/Omnipool)
+
+## Storage (4)
+
+### Assets
+
+State of an asset in the omnipool
+
+```rust
+Assets: Map<u32 -> {
+    hubReserve: u128,
+    shares: u128,
+    protocolShares: u128,
+    cap: u128,
+    tradable: PalletOmnipoolTradability,
+}> [Blake2_128Concat]
+```
+
+**Read by SDK:** [OmniPoolClient.loadPools](/reference/sdk/sdk#omnipoolclient), [OmniPoolClient.isSupported](/reference/sdk/sdk-next#omnipoolclient)
+
+### HubAssetTradability
+
+Tradable state of hub asset.
+
+```rust
+HubAssetTradability: Value<{bits: u8}>
+```
+
+**Read by SDK:** [OmniPoolClient.loadPools](/reference/sdk/sdk#omnipoolclient)
+
+### Positions
+
+LP positions. Maps NFT instance id to corresponding position
+
+```rust
+Positions: Map<u128 -> {
+    assetId: u32,
+    amount: u128,
+    shares: u128,
+    price: (u128,u128),
+}> [Blake2_128Concat]
+```
+
+### NextPositionId
+
+Position ids sequencer
+
+```rust
+NextPositionId: Value<u128>
+```
+
+## Extrinsics (13)
+
+### add_token
+
+```rust
+fn add_token(
+    origin: OriginFor<T>,
+    asset: u32,
+    initialPrice: u128,
+    weightCap: Permill,
+    positionOwner: AccountId32,
+)
+```
+
+### add_liquidity
+
+```rust
+fn add_liquidity(
+    origin: OriginFor<T>,
+    asset: u32,
+    amount: u128,
+)
+```
+
+### remove_liquidity
+
+```rust
+fn remove_liquidity(
+    origin: OriginFor<T>,
+    positionId: u128,
+    amount: u128,
+)
+```
+
+### sacrifice_position
+
+```rust
+fn sacrifice_position(
+    origin: OriginFor<T>,
+    positionId: u128,
+)
+```
+
+### sell
+
+```rust
+fn sell(
+    origin: OriginFor<T>,
+    assetIn: u32,
+    assetOut: u32,
+    amount: u128,
+    minBuyAmount: u128,
+)
+```
+
+### buy
+
+```rust
+fn buy(
+    origin: OriginFor<T>,
+    assetOut: u32,
+    assetIn: u32,
+    amount: u128,
+    maxSellAmount: u128,
+)
+```
+
+### set_asset_tradable_state
+
+```rust
+fn set_asset_tradable_state(
+    origin: OriginFor<T>,
+    assetId: u32,
+    state: Lookup201,
+)
+```
+
+### refund_refused_asset
+
+```rust
+fn refund_refused_asset(
+    origin: OriginFor<T>,
+    assetId: u32,
+    amount: u128,
+    recipient: AccountId32,
+)
+```
+
+### set_asset_weight_cap
+
+```rust
+fn set_asset_weight_cap(
+    origin: OriginFor<T>,
+    assetId: u32,
+    cap: Permill,
+)
+```
+
+### withdraw_protocol_liquidity
+
+```rust
+fn withdraw_protocol_liquidity(
+    origin: OriginFor<T>,
+    assetId: u32,
+    amount: u128,
+    price: (u128,u128),
+    dest: AccountId32,
+)
+```
+
+### remove_token
+
+```rust
+fn remove_token(
+    origin: OriginFor<T>,
+    assetId: u32,
+    beneficiary: AccountId32,
+)
+```
+
+### add_liquidity_with_limit
+
+```rust
+fn add_liquidity_with_limit(
+    origin: OriginFor<T>,
+    asset: u32,
+    amount: u128,
+    minSharesLimit: u128,
+)
+```
+
+### remove_liquidity_with_limit
+
+```rust
+fn remove_liquidity_with_limit(
+    origin: OriginFor<T>,
+    positionId: u128,
+    amount: u128,
+    minLimit: u128,
+)
+```
+
+## Events (13)
+
+### TokenAdded
+
+```rust
+TokenAdded {
+    assetId: u32,
+    initialAmount: u128,
+    initialPrice: u128,
+}
+```
+
+### TokenRemoved
+
+```rust
+TokenRemoved {
+    assetId: u32,
+    amount: u128,
+    hubWithdrawn: u128,
+}
+```
+
+### LiquidityAdded
+
+```rust
+LiquidityAdded {
+    who: AccountId32,
+    assetId: u32,
+    amount: u128,
+    positionId: u128,
+}
+```
+
+### LiquidityRemoved
+
+```rust
+LiquidityRemoved {
+    who: AccountId32,
+    positionId: u128,
+    assetId: u32,
+    sharesRemoved: u128,
+    fee: u128,
+}
+```
+
+### ProtocolLiquidityRemoved
+
+```rust
+ProtocolLiquidityRemoved {
+    who: AccountId32,
+    assetId: u32,
+    amount: u128,
+    hubAmount: u128,
+    sharesRemoved: u128,
+}
+```
+
+### SellExecuted
+
+```rust
+SellExecuted {
+    who: AccountId32,
+    assetIn: u32,
+    assetOut: u32,
+    amountIn: u128,
+    amountOut: u128,
+    hubAmountIn: u128,
+    hubAmountOut: u128,
+    assetFeeAmount: u128,
+    protocolFeeAmount: u128,
+}
+```
+
+**Indexed by:** [OmnipoolAsset](/reference/indexer/OmnipoolAsset)
+
+### BuyExecuted
+
+```rust
+BuyExecuted {
+    who: AccountId32,
+    assetIn: u32,
+    assetOut: u32,
+    amountIn: u128,
+    amountOut: u128,
+    hubAmountIn: u128,
+    hubAmountOut: u128,
+    assetFeeAmount: u128,
+    protocolFeeAmount: u128,
+}
+```
+
+**Indexed by:** [OmnipoolAsset](/reference/indexer/OmnipoolAsset)
+
+### PositionCreated
+
+```rust
+PositionCreated {
+    positionId: u128,
+    owner: AccountId32,
+    asset: u32,
+    amount: u128,
+    shares: u128,
+    price: u128,
+}
+```
+
+### PositionDestroyed
+
+```rust
+PositionDestroyed {
+    positionId: u128,
+    owner: AccountId32,
+}
+```
+
+### PositionUpdated
+
+```rust
+PositionUpdated {
+    positionId: u128,
+    owner: AccountId32,
+    asset: u32,
+    amount: u128,
+    shares: u128,
+    price: u128,
+}
+```
+
+### TradableStateUpdated
+
+```rust
+TradableStateUpdated {
+    assetId: u32,
+    state: Lookup201,
+}
+```
+
+### AssetRefunded
+
+```rust
+AssetRefunded {
+    assetId: u32,
+    amount: u128,
+    recipient: AccountId32,
+}
+```
+
+### AssetWeightCapUpdated
+
+```rust
+AssetWeightCapUpdated {
+    assetId: u32,
+    cap: Permill,
+}
+```
+
+## Constants (9)
+
+### HdxAssetId
+
+Native Asset ID
+
+```rust
+const HdxAssetId: u32
+```
+
+### HubAssetId
+
+Hub Asset ID
+
+```rust
+const HubAssetId: u32
+```
+
+### MinWithdrawalFee
+
+Minimum withdrawal fee
+
+```rust
+const MinWithdrawalFee: Permill
+```
+
+### MinimumTradingLimit
+
+Minimum trading limit
+
+```rust
+const MinimumTradingLimit: u128
+```
+
+### MinimumPoolLiquidity
+
+Minimum pool liquidity which can be added
+
+```rust
+const MinimumPoolLiquidity: u128
+```
+
+### MaxInRatio
+
+Max fraction of asset reserve to sell in single transaction
+
+```rust
+const MaxInRatio: u128
+```
+
+### MaxOutRatio
+
+Max fraction of asset reserve to buy in single transaction
+
+```rust
+const MaxOutRatio: u128
+```
+
+### NFTCollectionId
+
+Non fungible class id
+
+```rust
+const NFTCollectionId: u128
+```
+
+### BurnProtocolFee
+
+```rust
+const BurnProtocolFee: Permill
+```
+
+## References
+
+### SDK (2)
+
+- [sdk](/reference/sdk/sdk)
+- [sdk-next](/reference/sdk/sdk-next)
+
+### Indexer (17)
+
+- [Omnipool](/reference/indexer/Omnipool)
+- [OmnipoolAsset](/reference/indexer/OmnipoolAsset)
+- [OmnipoolAssetAddedData](/reference/indexer/OmnipoolAssetAddedData)
+- [OmnipoolAssetRemovedData](/reference/indexer/OmnipoolAssetRemovedData)
+- [OmnipoolAssetLifeState](/reference/indexer/OmnipoolAssetLifeState)
+- [OmnipoolAssetVolumeHistoricalData](/reference/indexer/OmnipoolAssetVolumeHistoricalData)
+- [OmnipoolHistoricalData](/reference/indexer/OmnipoolHistoricalData)
+- [OmnipoolAssetHistoricalData](/reference/indexer/OmnipoolAssetHistoricalData)
+- [OmnipoolAssetHistoricalDataLatest](/reference/indexer/OmnipoolAssetHistoricalDataLatest)
+- [OmnipoolLiquidityPosition](/reference/indexer/OmnipoolLiquidityPosition)
+- [OmnipoolLiquidityPositionEvent](/reference/indexer/OmnipoolLiquidityPositionEvent)
+- [OmnipoolAssetLiquidityEvent](/reference/indexer/OmnipoolAssetLiquidityEvent)
+- [OmnipoolGlobalFarm](/reference/indexer/OmnipoolGlobalFarm)
+- [OmnipoolYieldFarm](/reference/indexer/OmnipoolYieldFarm)
+- [OmnipoolYieldFarmDeposit](/reference/indexer/OmnipoolYieldFarmDeposit)
+- [OmnipoolYieldFarmDepositEvent](/reference/indexer/OmnipoolYieldFarmDepositEvent)
+- [OmnipoolYieldFarmEntry](/reference/indexer/OmnipoolYieldFarmEntry)
+
+### UI (9)
+
+- [useAcceptedFeePaymentAssets](/reference/hooks/transactions/useAcceptedFeePaymentAssets)
+- [useAddLiquidity](/reference/hooks/liquidity/useAddLiquidity)
+- [useRemoveSingleOmnipoolPosition](/reference/hooks/liquidity/useRemoveSingleOmnipoolPosition)
+- [useRemoveMultipleOmnipoolPositions](/reference/hooks/liquidity/useRemoveMultipleOmnipoolPositions)
+- [useMarketBuyData](/reference/hooks/trade/useMarketBuyData)
+- [useMarketSellData](/reference/hooks/trade/useMarketSellData)
+- [useCalculateBuyAmount](/reference/hooks/trade/useCalculateBuyAmount)
+- [useCalculateSellAmount](/reference/hooks/trade/useCalculateSellAmount)
+- [useSwitchAssets](/reference/hooks/trade/useSwitchAssets)

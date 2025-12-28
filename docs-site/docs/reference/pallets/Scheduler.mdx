@@ -1,0 +1,333 @@
+---
+title: Scheduler
+description: Runtime pallet documentation
+sidebar_label: Scheduler
+---
+
+# Scheduler
+
+A module for scheduling dispatches.
+
+- `scheduler::Config`
+- `Call`
+- `Module`
+
+## Overview
+
+This module exposes capabilities for scheduling dispatches to occur at a
+specified block number or at a specified period. These scheduled dispatches
+may be named or anonymous and may be canceled.
+
+**NOTE:** The scheduled calls will be dispatched with the default filter
+for the origin: namely `frame_system::Config::BaseCallFilter` for all origin
+except root which will get no filter. And not the filter contained in origin
+use to call `fn schedule`.
+
+If a call is scheduled using proxy or whatever mechanism which adds filter,
+then those filter will not be used when dispatching the schedule call.
+
+## Interface
+
+### Dispatchable Functions
+
+- `schedule` - schedule a dispatch, which may be periodic, to occur at a
+ specified block and with a specified priority.
+- `cancel` - cancel a scheduled dispatch, specified by block number and
+ index.
+- `schedule_named` - augments the `schedule` interface with an additional
+ `Vec<u8>` parameter that can be used for identification.
+- `cancel_named` - the named complement to the cancel function.
+
+<details>
+<summary>Code Documentation</summary>
+
+\> Made with *Substrate*, for *Polkadot*.
+
+[![github]](https://github.com/paritytech/polkadot-sdk/tree/master/substrate/frame/scheduler) -
+[![polkadot]](https://polkadot.network)
+
+[polkadot]: https://img.shields.io/badge/polkadot-E6007A?style=for-the-badge&logo=polkadot&logoColor=white
+[github]: https://img.shields.io/badge/github-8da0cb?style=for-the-badge&labelColor=555555&logo=github
+
+# Scheduler Pallet
+
+A Pallet for scheduling runtime calls.
+
+### Overview
+
+This Pallet exposes capabilities for scheduling runtime calls to occur at a specified block
+number or at a specified period. These scheduled runtime calls may be named or anonymous and may
+be canceled.
+
+__NOTE:__ Instead of using the filter contained in the origin to call `fn schedule`, scheduled
+runtime calls will be dispatched with the default filter for the origin: namely
+`frame_system::Config::BaseCallFilter` for all origin types (except root which will get no
+filter).
+
+If a call is scheduled using proxy or whatever mechanism which adds filter, then those filter
+will not be used when dispatching the schedule runtime call.
+
+### Examples
+
+1. Scheduling a runtime call at a specific block.
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #5** · Polkadot SDK<br/>
+`pallet-scheduler/1ed66275/stable2409-patch6`
+
+[GitHub](https://github.com/galacticcouncil/polkadot-sdk/tree/1ed662757b03c4f17dc2429c1df84e975d98513a/substrate/frame/scheduler) · [docs.rs](https://docs.rs/crate/pallet-scheduler/39.0.0/source/) · [crates.io](https://crates.io/crates/pallet-scheduler) · [Subscan](https://hydradx.subscan.io/runtime/Scheduler)
+
+## Storage (4)
+
+### IncompleteSince
+
+```rust
+IncompleteSince: Value<u32>
+```
+
+### Agenda
+
+Items to be executed, indexed by the block number that they should be executed on.
+
+```rust
+Agenda: Map<u32 -> Vec<Option<PalletSchedulerScheduled>>> [Twox64Concat]
+```
+
+### Retries
+
+Retry configurations for items to be executed, indexed by task address.
+
+```rust
+Retries: Map<(u32,u32) -> {
+    totalRetries: u8,
+    remaining: u8,
+    period: u32,
+}> [Blake2_128Concat]
+```
+
+### Lookup
+
+Lookup from a name to the block number and index of the task. For v3 -\> v4 the previously unbounded identities are Blake2-256 hashed to form the v4 identities.
+
+```rust
+Lookup: Map<[u8;32] -> (u32, u32)> [Twox64Concat]
+```
+
+## Extrinsics (10)
+
+### schedule
+
+```rust
+fn schedule(
+    origin: OriginFor<T>,
+    when: u32,
+    maybePeriodic: Option<(u32,u32)>,
+    priority: u8,
+    call: Call,
+)
+```
+
+### cancel
+
+```rust
+fn cancel(
+    origin: OriginFor<T>,
+    when: u32,
+    index: u32,
+)
+```
+
+### schedule_named
+
+```rust
+fn schedule_named(
+    origin: OriginFor<T>,
+    id: [u8;32],
+    when: u32,
+    maybePeriodic: Option<(u32,u32)>,
+    priority: u8,
+    call: Call,
+)
+```
+
+### cancel_named
+
+```rust
+fn cancel_named(
+    origin: OriginFor<T>,
+    id: [u8;32],
+)
+```
+
+### schedule_after
+
+```rust
+fn schedule_after(
+    origin: OriginFor<T>,
+    after: u32,
+    maybePeriodic: Option<(u32,u32)>,
+    priority: u8,
+    call: Call,
+)
+```
+
+### schedule_named_after
+
+```rust
+fn schedule_named_after(
+    origin: OriginFor<T>,
+    id: [u8;32],
+    after: u32,
+    maybePeriodic: Option<(u32,u32)>,
+    priority: u8,
+    call: Call,
+)
+```
+
+### set_retry
+
+```rust
+fn set_retry(
+    origin: OriginFor<T>,
+    task: (u32,u32),
+    retries: u8,
+    period: u32,
+)
+```
+
+### set_retry_named
+
+```rust
+fn set_retry_named(
+    origin: OriginFor<T>,
+    id: [u8;32],
+    retries: u8,
+    period: u32,
+)
+```
+
+### cancel_retry
+
+```rust
+fn cancel_retry(
+    origin: OriginFor<T>,
+    task: (u32,u32),
+)
+```
+
+### cancel_retry_named
+
+```rust
+fn cancel_retry_named(
+    origin: OriginFor<T>,
+    id: [u8;32],
+)
+```
+
+## Events (9)
+
+### Scheduled
+
+```rust
+Scheduled {
+    when: u32,
+    index: u32,
+}
+```
+
+### Canceled
+
+```rust
+Canceled {
+    when: u32,
+    index: u32,
+}
+```
+
+### Dispatched
+
+```rust
+Dispatched {
+    task: (u32,u32),
+    id: Option<[u8;32]>,
+    result: Result<Null, SpRuntimeDispatchError>,
+}
+```
+
+### RetrySet
+
+```rust
+RetrySet {
+    task: (u32,u32),
+    id: Option<[u8;32]>,
+    period: u32,
+    retries: u8,
+}
+```
+
+### RetryCancelled
+
+```rust
+RetryCancelled {
+    task: (u32,u32),
+    id: Option<[u8;32]>,
+}
+```
+
+### CallUnavailable
+
+```rust
+CallUnavailable {
+    task: (u32,u32),
+    id: Option<[u8;32]>,
+}
+```
+
+### PeriodicFailed
+
+```rust
+PeriodicFailed {
+    task: (u32,u32),
+    id: Option<[u8;32]>,
+}
+```
+
+### RetryFailed
+
+```rust
+RetryFailed {
+    task: (u32,u32),
+    id: Option<[u8;32]>,
+}
+```
+
+### PermanentlyOverweight
+
+```rust
+PermanentlyOverweight {
+    task: (u32,u32),
+    id: Option<[u8;32]>,
+}
+```
+
+## Constants (2)
+
+### MaximumWeight
+
+The maximum weight that may be scheduled per block for any dispatchables.
+
+```rust
+const MaximumWeight: {"refTime":"Compact<u64>","proofSize":"Compact<u64>"}
+```
+
+### MaxScheduledPerBlock
+
+The maximum number of scheduled calls in the queue for a single block. NOTE: + Dependent pallets' benchmarks might require a higher limit for the setting. Set a higher limit under `runtime-benchmarks` feature.
+
+```rust
+const MaxScheduledPerBlock: u32
+```

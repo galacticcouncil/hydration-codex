@@ -1,0 +1,39 @@
+---
+title: OrmlXcm
+description: Runtime pallet documentation
+sidebar_label: OrmlXcm
+---
+
+# OrmlXcm
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this pallet does.
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #135** · ORML<br/>
+`orml-xcm/60b88b84/polkadot-stable2409`
+
+[GitHub](https://github.com/galacticcouncil/open-runtime-module-library/tree/60b88b84a6abbf8e12a884bf1c3774ff2db1f880/xcm) · [docs.rs](https://docs.rs/crate/orml-xcm/1.0.0/source/) · [crates.io](https://crates.io/crates/orml-xcm) · [Subscan](https://hydradx.subscan.io/runtime/OrmlXcm)
+
+## Extrinsics (1)
+
+### send_as_sovereign
+
+```rust
+fn send_as_sovereign(
+    origin: OriginFor<T>,
+    dest: Lookup305,
+    message: Lookup313,
+)
+```
+
+## Events (1)
+
+### Sent
+
+```rust
+Sent {
+    to: Lookup95,
+    message: Vec<StagingXcmV4Instruction>,
+}
+```

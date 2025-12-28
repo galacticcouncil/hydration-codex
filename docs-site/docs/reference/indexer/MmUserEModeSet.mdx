@@ -1,0 +1,61 @@
+---
+title: MmUserEModeSet
+description: Indexer entity documentation
+sidebar_label: MmUserEModeSet
+---
+
+# MmUserEModeSet
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 7 |
+| Nullable Fields | 1 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/mmUserEModeSet.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type MmUserEModeSet {
+  id: ID!
+  traceIds: [String!
+  account: Account!
+  categoryId: Int
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  event: Event!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface MmUserEModeSet {
+  id: string;
+  traceIds: [String;
+  account: Account;
+  categoryId: number | null;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  event: Event;
+}
+```
+
+## Example Query
+
+```graphql
+query GetMmUserEModeSets {
+  mmUserEModeSets(limit: 10) {
+    id
+    traceIds
+    account
+    categoryId
+    paraBlockHeight
+    # ... more fields
+  }
+}
+```

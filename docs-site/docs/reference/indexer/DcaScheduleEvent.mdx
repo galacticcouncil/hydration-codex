@@ -1,0 +1,69 @@
+---
+title: DcaScheduleEvent
+description: Indexer entity documentation
+sidebar_label: DcaScheduleEvent
+---
+
+# DcaScheduleEvent
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 8 |
+| Nullable Fields | 1 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/dcaScheduleEvent.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type DcaScheduleEvent {
+  id: ID!
+  traceIds: [String!
+  schedule: DcaSchedule!
+  eventName: DcaScheduleStatus!
+  errorState: DispatchError
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  event: Event!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface DcaScheduleEvent {
+  id: string;
+  traceIds: [String;
+  schedule: DcaSchedule;
+  eventName: DcaScheduleStatus;
+  errorState: DispatchError | null;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  event: Event;
+}
+```
+
+## Example Query
+
+```graphql
+query GetDcaScheduleEvents {
+  dcaScheduleEvents(limit: 10) {
+    id
+    traceIds
+    schedule
+    eventName
+    errorState
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [DCA](/reference/pallets/DCA)

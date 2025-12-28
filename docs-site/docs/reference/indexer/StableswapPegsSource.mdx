@@ -1,0 +1,62 @@
+---
+title: StableswapPegsSource
+description: Indexer entity documentation
+sidebar_label: StableswapPegsSource
+---
+
+# StableswapPegsSource
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 5 |
+| Nullable Fields | 3 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/stableswapPegsSource.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type StableswapPegsSource {
+  sourceKind: String!
+  oracleName: String
+  oraclePeriod: EmaOraclePeriod
+  oracleAsset: String
+  valuePoints: [String!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface StableswapPegsSource {
+  sourceKind: string;
+  oracleName: string | null;
+  oraclePeriod: EmaOraclePeriod | null;
+  oracleAsset: string | null;
+  valuePoints: [String;
+}
+```
+
+## Example Query
+
+```graphql
+query GetStableswapPegsSources {
+  stableswapPegsSources(limit: 10) {
+    sourceKind
+    oracleName
+    oraclePeriod
+    oracleAsset
+    valuePoints
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [Stableswap](/reference/pallets/Stableswap)

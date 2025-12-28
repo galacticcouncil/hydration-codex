@@ -1,0 +1,50 @@
+---
+title: AssetMultiLocation
+description: Indexer entity documentation
+sidebar_label: AssetMultiLocation
+---
+
+# AssetMultiLocation
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 3 |
+| Nullable Fields | 0 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/assetMultiLocation.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type AssetMultiLocation {
+  parents: Int!
+  hierarchyLevel: String!
+  interior: [AssetMultiLocationsInterior!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface AssetMultiLocation {
+  parents: number;
+  hierarchyLevel: string;
+  interior: [AssetMultiLocationsInterior;
+}
+```
+
+## Example Query
+
+```graphql
+query GetAssetMultiLocations {
+  assetMultiLocations(limit: 10) {
+    parents
+    hierarchyLevel
+    interior
+  }
+}
+```

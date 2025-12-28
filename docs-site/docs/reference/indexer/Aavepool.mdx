@@ -1,0 +1,59 @@
+---
+title: Aavepool
+description: Indexer entity documentation
+sidebar_label: Aavepool
+---
+
+# Aavepool
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 6 |
+| Nullable Fields | 2 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/aavepool.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type Aavepool {
+  id: ID!
+  reserveAsset: Asset!
+  aToken: Asset!
+  moneyMarketReserve: MoneyMarketReserve
+  historicalData: [AavepoolHistoricalData!
+  field: "pool")
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface Aavepool {
+  id: string;
+  reserveAsset: Asset;
+  aToken: Asset;
+  moneyMarketReserve: MoneyMarketReserve | null;
+  historicalData: [AavepoolHistoricalData;
+  field: "pool") | null;
+}
+```
+
+## Example Query
+
+```graphql
+query GetAavepools {
+  aavepools(limit: 10) {
+    id
+    reserveAsset
+    aToken
+    moneyMarketReserve
+    historicalData
+    # ... more fields
+  }
+}
+```

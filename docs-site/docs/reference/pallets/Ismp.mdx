@@ -1,0 +1,389 @@
+---
+title: Ismp
+description: Runtime pallet documentation
+sidebar_label: Ismp
+---
+
+# Ismp
+
+The interoperable state machine protocol implementation for substrate-based chains. This pallet provides the ability to
+
+1. Track the finalized state of a remote state machine (blockchain) through the use of consensus proofs which attest to a finalized "state commitment".
+2. Execute incoming ISMP-compliant messages from a connected chain, through the use of state proofs which are verified through a known, previously finalized state commitment.
+3. Dispatch ISMP requests and responses to a connected chain.
+
+## Overview
+
+The ISMP Pallet provides calls which allow for:
+
+- Creating consensus clients with their respective unbonding, challenge periods and any initial state machine commitments.
+- Updating consensus clients metadata
+- Executing ISMP-compliant Messages
+- Funding in-flight messages (Request or Response)
+
+To use it in your runtime, you need to implement the ismp
+`pallet_ismp::Config`. The supported dispatchable functions are documented in the
+`pallet_ismp::Call` enum.
+
+### Terminology
+
+- **ISMP:** Interoperable State Machine Protocol, is a framework for secure, cross-chain interoperability. Providing both messaging and state reading capabilities.
+- **State Commitment:** This refers to a cryptographic commitment of an entire blockchain state, otherwise known as state root.
+- **State Machine:** This refers to the blockchain itself, we identify blockchains as state machines.
+- **Consensus State:** This is the minimum data required by consensus client to verify consensus proofs which attest to a newly finalized state.
+- **Consensus Client:** This is an algorithm that verifies consensus proofs of a particular consensus mechanism.
+- **Unbonding Period:** Refers to how long it takes for validators to unstake their funds from the connected chain.
+- **Challenge Period:** A configurable value for how long to wait for state commitments to be challenged, before they can be used to verify incoming requests/responses.
+
+### Dispatchable Functions
+
+- `handle` - Handles incoming ISMP messages.
+- `handle_unsigned` Unsigned variant for handling incoming messages, enabled by `feature = ["unsigned"]`
+- `create_consensus_client` - Handles creation of various properties for a particular consensus client. Can only be called by the `AdminOrigin`.
+- `update_consensus_state` - Updates consensus client properties in storage. Can only be called by the `AdminOrigin`.
+- `fund_message` - In cases where the initially provided relayer fees have now become insufficient, due to a transaction fee spike on the destination chain. Allows a user to add more funds to the request to be used for delivery and execution. Should never be called on a completed request.
+
+Please refer to the `Call` enum and its associated
+variants for documentation on each function.
+
+### Runtime Configuration
+
+The following example shows how to configure `pallet-ismp` in your runtime
+
+```rust,ignore
+use frame_support::parameter_types;
+use frame_system::EnsureRoot;
+use ismp::Error;
+use ismp::host::StateMachine;
+use ismp::module::IsmpModule;
+use ismp::router::{IsmpRouter, Post, Response, Timeout};
+
+parameter_types! {
+ // The hyperbridge parachain on Polkadot
+ pub const Coprocessor: Option<StateMachine> = Some(StateMachine::Polkadot(3367));
+ // The host state machine of this pallet
+ pub const HostStateMachine: StateMachine = StateMachine::Polkadot(1000); // your paraId here
+}
+
+impl pallet_ismp::Config for Runtime {
+ // configure the runtime event
+ type RuntimeEvent = RuntimeEvent;
+ // Permissioned origin who can create or update consensus clients
+ type AdminOrigin = EnsureRoot<AccountId>;
+ // The state machine identifier for this state machine
+ type HostStateMachine = HostStateMachine;
+ // The pallet_timestamp pallet
+ type TimestampProvider = Timestamp;
+ // The currency implementation that is offered to relayers
+ type Currency = Balances;
+ // The balance type for the currency implementation
+ type Balance = Balance;
+ // Router implementation for routing requests/responses to their respective modules
+ type Router = Router;
+ // Optional coprocessor for incoming requests/responses
+ type Coprocessor = Coprocessor;
+ // Supported consensus clients
+ type ConsensusClients = (
+ // as an example, the parachain consensus client
+ ismp_parachain::ParachainConsensusClient<Runtime, IsmpParachain>,
+ );
+ // Offchain database implementation. Outgoing requests and responses are
+ // inserted in this database, while their commitments are stored onchain.
+ type OffchainDB = ();
+ // Weight provider for local modules
+ type WeightProvider = ();
+}
+
+#[derive(Default)]
+struct Router;
+impl IsmpRouter for Router {
+ fn module_for_id(&self, id: Vec<u8>) -> Result<Box<dyn IsmpModule>, Error> {
+ let module = match id.as_slice() {
+ YOUR_MODULE_ID => Box::new(YourModule::default()),
+ _ => Err(Error::ModuleNotFound(id))?
+ };
+ Ok(module)
+ }
+}
+
+/// Some custom module capable of processing some incoming/request or response.
+/// This could also be a pallet itself.
+#[derive(Default)]
+struct YourModule;
+
+pub const YOUR_MODULE_ID: &'static [u8] = &[12, 24, 36, 48];
+
+impl IsmpModule for YourModule {
+ /// Called by the ISMP hanlder, to notify module of a new POST request
+ /// the module may choose to respond immediately, or in a later block
+ fn on_accept(&self, request: Post) -> Result<(), Error> {
+ // do something useful with the request
+ Ok(())
+ }
+
+ /// Called by the ISMP hanlder, to notify module of a response to a previously
+ /// sent out request
+ fn on_response(&self, response: Response) -> Result<(), Error> {
+ // do something useful with the response
+ Ok(())
+ }
+
+ /// Called by the ISMP hanlder, to notify module of requests that were previously
+ /// sent but have now timed-out
+ fn on_timeout(&self, request: Timeout) -> Result<(), Error> {
+ // revert any state changes that were made prior to dispatching the request
+ Ok(())
+ }
+}
+```
+
+## License
+
+This library is licensed under the Apache 2.0 License, Copyright (c) 2025 Polytope Labs.
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #180** · Hyperbridge<br/>
+`pallet-ismp/e5f75aa9/polkadot-stable2409`
+
+[GitHub](https://github.com/polytope-labs/hyperbridge/tree/e5f75aa977b96fbf30fc7aeb501ea7d8ca7c0a68/modules/pallets/ismp) · [docs.rs](https://docs.rs/crate/pallet-ismp/16.1.0/source/) · [crates.io](https://crates.io/crates/pallet-ismp) · [Subscan](https://hydradx.subscan.io/runtime/Ismp)
+
+## Storage (12)
+
+### StateCommitments
+
+Holds a map of state machine heights to their verified state commitments. These state commitments end up here after they are successfully verified by a `ConsensusClient`
+
+```rust
+StateCommitments: Map<{id: IsmpConsensusStateMachineId, height: u64} -> {timestamp: u64, overlayRoot: Option<H256>, stateRoot: H256}> [Blake2_128Concat]
+```
+
+### ConsensusStates
+
+Holds a map of consensus state identifiers to their consensus state.
+
+```rust
+ConsensusStates: Map<[u8;4] -> Bytes> [Twox64Concat]
+```
+
+### ConsensusStateClient
+
+A mapping of consensus state identifier to it's associated consensus client identifier
+
+```rust
+ConsensusStateClient: Map<[u8;4] -> [u8;4]> [Blake2_128Concat]
+```
+
+### UnbondingPeriod
+
+A mapping of consensus state identifiers to their unbonding periods
+
+```rust
+UnbondingPeriod: Map<[u8;4] -> u64> [Blake2_128Concat]
+```
+
+### ChallengePeriod
+
+A mapping of state machine Ids to their challenge periods
+
+```rust
+ChallengePeriod: Map<{stateId: IsmpHostStateMachine, consensusStateId: [u8;4]} -> u64> [Blake2_128Concat]
+```
+
+### FrozenConsensusClients
+
+Holds a map of consensus clients frozen due to byzantine behaviour
+
+```rust
+FrozenConsensusClients: Map<[u8;4] -> bool> [Blake2_128Concat]
+```
+
+### LatestStateMachineHeight
+
+The latest verified height for a state machine
+
+```rust
+LatestStateMachineHeight: Map<{stateId: IsmpHostStateMachine, consensusStateId: [u8;4]} -> u64> [Blake2_128Concat]
+```
+
+### ConsensusClientUpdateTime
+
+Holds the timestamp at which a consensus client was recently updated. Used in ensuring that the configured challenge period elapses.
+
+```rust
+ConsensusClientUpdateTime: Map<[u8;4] -> u64> [Twox64Concat]
+```
+
+### StateMachineUpdateTime
+
+Holds the timestamp at which a state machine height was updated. Used in ensuring that the configured challenge period elapses.
+
+```rust
+StateMachineUpdateTime: Map<{id: IsmpConsensusStateMachineId, height: u64} -> u64> [Twox64Concat]
+```
+
+### Responded
+
+Tracks requests that have been responded to The key is the request commitment
+
+```rust
+Responded: Map<H256 -> bool> [Identity]
+```
+
+### Nonce
+
+Latest nonce for messages sent from this chain
+
+```rust
+Nonce: Value<u64>
+```
+
+### ChildTrieRoot
+
+The child trie root of messages
+
+```rust
+ChildTrieRoot: Value<H256>
+```
+
+## Extrinsics (4)
+
+### handle_unsigned
+
+```rust
+fn handle_unsigned(
+    origin: OriginFor<T>,
+    messages: Vec<IsmpMessagingMessage>,
+)
+```
+
+### create_consensus_client
+
+```rust
+fn create_consensus_client(
+    origin: OriginFor<T>,
+    message: Lookup429,
+)
+```
+
+### update_consensus_state
+
+```rust
+fn update_consensus_state(
+    origin: OriginFor<T>,
+    message: Lookup437,
+)
+```
+
+### fund_message
+
+```rust
+fn fund_message(
+    origin: OriginFor<T>,
+    message: Lookup439,
+)
+```
+
+## Events (13)
+
+### StateMachineUpdated
+
+```rust
+StateMachineUpdated {
+    stateMachineId: Lookup414,
+    latestHeight: u64,
+}
+```
+
+### StateCommitmentVetoed
+
+```rust
+StateCommitmentVetoed {
+    height: Lookup413,
+    fisherman: Bytes,
+}
+```
+
+### ConsensusClientCreated
+
+```rust
+ConsensusClientCreated {
+    consensusClientId: [u8;4],
+}
+```
+
+### ConsensusClientFrozen
+
+```rust
+ConsensusClientFrozen {
+    consensusClientId: [u8;4],
+}
+```
+
+### Response
+
+```rust
+Response {
+    destChain: Lookup411,
+    sourceChain: Lookup411,
+    requestNonce: u64,
+    commitment: H256,
+    reqCommitment: H256,
+}
+```
+
+### Request
+
+```rust
+Request {
+    destChain: Lookup411,
+    sourceChain: Lookup411,
+    requestNonce: u64,
+    commitment: H256,
+}
+```
+
+### Errors
+
+```rust
+Errors {
+    errors: Vec<PalletIsmpErrorsHandlingError>,
+}
+```
+
+### PostRequestHandled
+
+```rust
+PostRequestHandled
+```
+
+### PostResponseHandled
+
+```rust
+PostResponseHandled
+```
+
+### GetRequestHandled
+
+```rust
+GetRequestHandled
+```
+
+### PostRequestTimeoutHandled
+
+```rust
+PostRequestTimeoutHandled
+```
+
+### PostResponseTimeoutHandled
+
+```rust
+PostResponseTimeoutHandled
+```
+
+### GetRequestTimeoutHandled
+
+```rust
+GetRequestTimeoutHandled
+```

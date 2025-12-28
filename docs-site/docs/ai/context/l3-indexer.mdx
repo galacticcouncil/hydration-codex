@@ -1,0 +1,112 @@
+---
+title: L3-indexer.md
+description: Indexer layer context - GraphQL entities and event handlers
+---
+
+# L3-indexer.md
+
+Context file for the Hydration indexer layer (Squid/GraphQL).
+
+**Location:** `agents/contexts/L3-indexer.md` (~67KB)
+
+## What It Contains
+
+- **All 123 GraphQL entities** with field definitions
+- **Event handlers** mapping runtime events to entities
+- **Entity relationships** (foreign keys, arrays)
+- **Query patterns** for common use cases
+
+## When to Load
+
+- Building UIs that query historical data
+- Understanding what data is indexed
+- Finding which events are tracked
+- Designing new indexer handlers
+
+## Key Entities
+
+| Entity | Purpose | Key Fields |
+|--------|---------|------------|
+| OmnipoolAsset | Assets in Omnipool | assetId, balance, hubReserve |
+| OmnipoolPosition | LP positions | owner, shares, assetId |
+| Swap | Trade history | assetIn, assetOut, amounts |
+| StablepoolAsset | Stablepool assets | poolId, assetId, balance |
+| LbpPool | LBP pools | assets, weights, fees |
+| XykPool | XYK pools | assetA, assetB, shares |
+
+## Entity Categories
+
+### Omnipool
+- OmnipoolAsset, OmnipoolPosition, OmnipoolAssetData
+
+### Stableswap
+- StablepoolAsset, StablepoolAssetData
+
+### XYK
+- XykPool, XykPoolAsset
+
+### LBP
+- LbpPool, LbpPoolAsset
+
+### Trading
+- Swap, SwapFee, TradeVolume
+
+### DCA
+- DcaSchedule, DcaExecution
+
+### Farming
+- OmnipoolYieldFarm, OmnipoolYieldFarmDeposit
+- XykYieldFarm, XykYieldFarmDeposit
+
+## Event → Entity Mapping
+
+| Runtime Event | Handler | Entity Updated |
+|---------------|---------|----------------|
+| Omnipool.LiquidityAdded | parseomnipoolLiquidityAddedData | OmnipoolAsset |
+| Omnipool.SellExecuted | parseomnipoolSellExecutedData | Swap |
+| Stableswap.LiquidityAdded | parsestableswapLiquidityAddedData | StablepoolAsset |
+| XYK.PoolCreated | parsexykPoolCreatedData | XykPool |
+
+## GraphQL Query Examples
+
+```graphql
+# Get all Omnipool assets
+query {
+  omnipoolAssets {
+    assetId
+    balance
+    hubReserve
+  }
+}
+
+# Get swap history for an account
+query {
+  swaps(where: { account_eq: "..." }) {
+    assetIn
+    assetOut
+    amountIn
+    amountOut
+    blockNumber
+  }
+}
+```
+
+## How to Use
+
+```
+# In Claude Code or similar
+Load: agents/contexts/L3-indexer.md
+
+# Then ask questions like:
+"What entity stores LP positions?"
+"Which events update swap history?"
+"How do I query farming rewards?"
+```
+
+## Related Reference Docs
+
+All entities have detailed reference pages at `/reference/indexer/{EntityName}`:
+
+- [OmnipoolAsset](/reference/indexer/OmnipoolAsset)
+- [Swap](/reference/indexer/Swap)
+- [Xykpool](/reference/indexer/Xykpool)

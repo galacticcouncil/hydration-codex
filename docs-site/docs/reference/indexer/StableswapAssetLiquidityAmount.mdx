@@ -1,0 +1,59 @@
+---
+title: StableswapAssetLiquidityAmount
+description: Indexer entity documentation
+sidebar_label: StableswapAssetLiquidityAmount
+---
+
+# StableswapAssetLiquidityAmount
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 4 |
+| Nullable Fields | 0 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/stableswapAssetLiquidityAmount.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type StableswapAssetLiquidityAmount {
+  id: ID!
+  liquidityAction: StableswapLiquidityEvent!
+  asset: Asset!
+  amount: BigInt!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface StableswapAssetLiquidityAmount {
+  id: string;
+  liquidityAction: StableswapLiquidityEvent;
+  asset: Asset;
+  amount: bigint;
+}
+```
+
+## Example Query
+
+```graphql
+query GetStableswapAssetLiquidityAmounts {
+  stableswapAssetLiquidityAmounts(limit: 10) {
+    id
+    liquidityAction
+    asset
+    amount
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [Stableswap](/reference/pallets/Stableswap)

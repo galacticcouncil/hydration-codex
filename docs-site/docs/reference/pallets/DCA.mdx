@@ -1,0 +1,418 @@
+---
+title: DCA
+description: Runtime pallet documentation
+sidebar_label: DCA
+---
+
+# DCA
+
+## Overview
+
+The DCA pallet provides dollar-cost averaging functionality, allowing users to perform repeating orders. 
+This pallet enables the creation, execution and termination of schedules.
+
+## Creating a Schedule
+
+Users can create a DCA schedule, which is planned to execute in a specific block. 
+If the block is not specified, the execution is planned for the next block. 
+In case the given block is full, the execution will be scheduled for the subsequent block.
+
+Upon creating a schedule, the user specifies a budget (`total_amount`) that will be reserved. 
+The currency of this reservation is the sold (`amount_in`) currency.
+
+### Executing a Schedule
+
+Orders are executed during block initialization and are sorted based on randomness derived from the relay chain block hash.
+
+A trade is executed and replanned as long as there is remaining budget from the initial allocation.
+
+For both successful and failed trades, a fee is deducted from the schedule owner. 
+The fee is deducted in the sold (`amount_in`) currency.
+
+In case of insufficient asset as `asset_in`, the fee is still taken from the sold currency, 
+but the amount is swapped for DOT as we don't want to accumulate insufficient assets in treasury.
+
+A trade can fail due to two main reasons:
+
+1. Price Stability Error: If the price difference between the short oracle price and the last block oracle price 
+exceeds the specified threshold. The user can customize this threshold, 
+or the default value from the pallet configuration will be used.
+2. Slippage Error: If the minimum amount out (sell) or maximum amount in (buy) slippage limits are not reached. 
+These limits are calculated based on the last block's oracle price and the user-specified slippage. 
+If no slippage is specified, the default value from the pallet configuration will be used.
+
+If a trade fails due to these errors, the trade will be retried. 
+If the number of retries reaches the maximum number of retries, the schedule will be permanently terminated. 
+In the case of a successful trade, the retry counter is reset.
+
+If a trade fails due to other types of errors, the order is terminated without any retry logic.
+
+## Terminating a Schedule
+
+Both users and technical origin can terminate a DCA schedule. However, users can only terminate schedules that they own.
+
+Once a schedule is terminated, it is completely and permanently removed from the blockchain.
+
+<details>
+<summary>Code Documentation</summary>
+
+### Overview
+
+The DCA pallet provides dollar-cost averaging functionality, allowing users to perform repeating orders.
+This pallet enables the creation, execution and termination of schedules.
+
+### Creating a Schedule
+
+Users can create a DCA schedule, which is planned to execute in a specific block.
+If the block is not specified, the execution is planned for the next block.
+In case the given block is full, the execution will be scheduled for the subsequent block.
+
+Upon creating a schedule, the user specifies a budget (`total_amount`) that will be reserved.
+`total_amount` can be zero, in which case the schedule will be executed until it is terminated.
+The currency of this reservation is the sold (`amount_in`) currency.
+
+### Executing a Schedule
+
+Orders are executed during block initialization and are sorted based on randomness derived from the relay chain block hash.
+
+When the `total_amount` is not zero, trades are executed as long as there is budget remaining from the initial allocation.
+
+For both successful and failed trades, a fee is deducted from the schedule owner.
+The fee is deducted in the sold (`amount_in`) currency.
+
+A trade can fail due to two main reasons:
+
+1. Price Stability Error: If the price difference between the short oracle price and the current price
+ exceeds the specified threshold. The user can customize this threshold,
+ or the default value from the pallet configuration will be used.
+2. Slippage Error: If the minimum amount out (sell) or maximum amount in (buy) slippage limits are not reached.
+ These limits are calculated based on the last block's oracle price and the user-specified slippage.
+ If no slippage is specified, the default value from the pallet configuration will be used.
+
+If a trade fails due to these errors, the trade will be retried.
+If the number of retries reaches the maximum number of retries, the schedule will be permanently terminated.
+In the case of a successful trade, the retry counter is reset.
+
+If a trade fails due to other types of errors, the order is terminated without any retry logic.
+
+### Terminating a Schedule
+
+Both users and TerminateOrigin can terminate a DCA schedule. However, users can only terminate schedules that they own themselves
+
+Once a schedule is terminated, it is completely and permanently removed from the blockchain.
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #66** · HydraDX<br/>
+`pallet-dca/4ca470c5/master`
+
+[GitHub](https://github.com/galacticcouncil/HydraDX-node/tree/4ca470c5d613d62ce52eb8645770ef5fff263111/pallets/dca) · [Subscan](https://hydradx.subscan.io/runtime/DCA)
+
+## Storage (7)
+
+### ScheduleIdSequencer
+
+Id sequencer for schedules
+
+```rust
+ScheduleIdSequencer: Value<u32>
+```
+
+### Schedules
+
+Storing schedule details
+
+```rust
+Schedules: Map<u32 -> {
+    owner: AccountId32,
+    period: u32,
+    totalAmount: u128,
+    maxRetries: Option<u8>,
+    stabilityThreshold: Option<Permill>,
+    slippage: Option<Permill>,
+    order: PalletDcaOrder,
+}> [Blake2_128Concat]
+```
+
+### ScheduleOwnership
+
+Storing schedule ownership
+
+```rust
+ScheduleOwnership: Map<(AccountId32, u32) -> Null> [Blake2_128Concat,  Twox64Concat]
+```
+
+### RemainingAmounts
+
+Keep tracking the remaining amounts to spend for DCA schedules
+
+```rust
+RemainingAmounts: Map<u32 -> u128> [Blake2_128Concat]
+```
+
+### RetriesOnError
+
+Keep tracking the retry on error flag for DCA schedules
+
+```rust
+RetriesOnError: Map<u32 -> u8> [Blake2_128Concat]
+```
+
+### ScheduleExecutionBlock
+
+Keep tracking the blocknumber when the schedule is planned to be executed
+
+```rust
+ScheduleExecutionBlock: Map<u32 -> u32> [Blake2_128Concat]
+```
+
+### ScheduleIdsPerBlock
+
+Keep tracking of the schedule ids to be executed in the block
+
+```rust
+ScheduleIdsPerBlock: Map<u32 -> Vec<u32>> [Blake2_128Concat]
+```
+
+## Extrinsics (3)
+
+### schedule
+
+```rust
+fn schedule(
+    origin: OriginFor<T>,
+    schedule: Lookup287,
+    startExecutionBlock: Option<u32>,
+)
+```
+
+### terminate
+
+```rust
+fn terminate(
+    origin: OriginFor<T>,
+    scheduleId: u32,
+    nextExecutionBlock: Option<u32>,
+)
+```
+
+### unlock_reserves
+
+```rust
+fn unlock_reserves(
+    origin: OriginFor<T>,
+    who: AccountId32,
+    assetId: u32,
+)
+```
+
+## Events (9)
+
+### ExecutionStarted
+
+```rust
+ExecutionStarted {
+    id: u32,
+    block: u32,
+}
+```
+
+### Scheduled
+
+```rust
+Scheduled {
+    id: u32,
+    who: AccountId32,
+    period: u32,
+    totalAmount: u128,
+    order: Lookup288,
+}
+```
+
+### ExecutionPlanned
+
+```rust
+ExecutionPlanned {
+    id: u32,
+    who: AccountId32,
+    block: u32,
+}
+```
+
+### TradeExecuted
+
+```rust
+TradeExecuted {
+    id: u32,
+    who: AccountId32,
+    amountIn: u128,
+    amountOut: u128,
+}
+```
+
+### TradeFailed
+
+```rust
+TradeFailed {
+    id: u32,
+    who: AccountId32,
+    error: Lookup26,
+}
+```
+
+### Terminated
+
+```rust
+Terminated {
+    id: u32,
+    who: AccountId32,
+    error: Lookup26,
+}
+```
+
+### Completed
+
+```rust
+Completed {
+    id: u32,
+    who: AccountId32,
+}
+```
+
+### RandomnessGenerationFailed
+
+```rust
+RandomnessGenerationFailed {
+    block: u32,
+    error: Lookup26,
+}
+```
+
+### ReserveUnlocked
+
+```rust
+ReserveUnlocked {
+    who: AccountId32,
+    assetId: u32,
+}
+```
+
+## Constants (12)
+
+### MaxPriceDifferenceBetweenBlocks
+
+Max price difference allowed between blocks
+
+```rust
+const MaxPriceDifferenceBetweenBlocks: Permill
+```
+
+### MaxConfigurablePriceDifferenceBetweenBlocks
+
+Max configurable price difference allowed between blocks
+
+```rust
+const MaxConfigurablePriceDifferenceBetweenBlocks: Permill
+```
+
+### MaxSchedulePerBlock
+
+The number of max schedules to be executed per block
+
+```rust
+const MaxSchedulePerBlock: u32
+```
+
+### MaxNumberOfRetriesOnError
+
+The number of max retries in case of trade limit error
+
+```rust
+const MaxNumberOfRetriesOnError: u8
+```
+
+### MinimalPeriod
+
+Minimal period between executions
+
+```rust
+const MinimalPeriod: u32
+```
+
+### BumpChance
+
+Chance of the random rescheduling
+
+```rust
+const BumpChance: Percent
+```
+
+### MinimumTradingLimit
+
+Minimum trading limit for a single trade
+
+```rust
+const MinimumTradingLimit: u128
+```
+
+### NativeAssetId
+
+Native Asset Id
+
+```rust
+const NativeAssetId: u32
+```
+
+### PolkadotNativeAssetId
+
+Polkadot Native Asset Id (DOT)
+
+```rust
+const PolkadotNativeAssetId: u32
+```
+
+### MinBudgetInNativeCurrency
+
+Minimum budget to be able to schedule a DCA, specified in native currency
+
+```rust
+const MinBudgetInNativeCurrency: u128
+```
+
+### FeeReceiver
+
+The fee receiver for transaction fees
+
+```rust
+const FeeReceiver: AccountId32
+```
+
+### NamedReserveId
+
+Named reserve identifier to store named reserves for orders of each users
+
+```rust
+const NamedReserveId: [u8;8]
+```
+
+## References
+
+### SDK (1)
+
+- [sdk-next](/reference/sdk/sdk-next)
+
+### Indexer (6)
+
+- [DcaSchedule](/reference/indexer/DcaSchedule)
+- [DcaScheduleOrderRouteHop](/reference/indexer/DcaScheduleOrderRouteHop)
+- [DcaScheduleEvent](/reference/indexer/DcaScheduleEvent)
+- [DcaScheduleExecution](/reference/indexer/DcaScheduleExecution)
+- [DcaScheduleExecutionEvent](/reference/indexer/DcaScheduleExecutionEvent)
+- [DispatchError](/reference/indexer/DispatchError)
+
+### UI (1)
+
+- [useTerminateDcaSchedule](/reference/hooks/trade/useTerminateDcaSchedule)

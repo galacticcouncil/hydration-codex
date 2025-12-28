@@ -1,0 +1,71 @@
+---
+title: Transfer
+description: Indexer entity documentation
+sidebar_label: Transfer
+---
+
+# Transfer
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 12 |
+| Nullable Fields | 0 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/transfer.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type Transfer {
+  id: ID!
+  traceIds: [String!
+  asset: Asset!
+  assetType: AssetType!
+  from: Account!
+  to: Account!
+  amount: BigInt!
+  txFee: BigInt!
+  paraTimestamp: DateTime!
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  event: Event!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface Transfer {
+  id: string;
+  traceIds: [String;
+  asset: Asset;
+  assetType: AssetType;
+  from: Account;
+  to: Account;
+  amount: bigint;
+  txFee: bigint;
+  paraTimestamp: Date;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  event: Event;
+}
+```
+
+## Example Query
+
+```graphql
+query GetTransfers {
+  transfers(limit: 10) {
+    id
+    traceIds
+    asset
+    assetType
+    from
+    # ... more fields
+  }
+}
+```

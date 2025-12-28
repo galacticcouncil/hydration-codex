@@ -1,0 +1,91 @@
+---
+title: LbppoolHistoricalData
+description: Indexer entity documentation
+sidebar_label: LbppoolHistoricalData
+---
+
+# LbppoolHistoricalData
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 19 |
+| Nullable Fields | 4 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/lbppoolHistoricalData.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type LbppoolHistoricalData {
+  id: ID!
+  pool: Lbppool!
+  assetA: Asset!
+  assetB: Asset!
+  assetABalance: BigInt!
+  assetBBalance: BigInt!
+  owner: Account!
+  feeCollector: Account
+  startBlockNumber: Int
+  endBlockNumber: Int
+  initialWeight: Int!
+  finalWeight: Int!
+  repayTarget: BigInt!
+  weightCurve: String!
+  fee: [Int!
+  tvlInRefAssetNorm: String
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  block: Block!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface LbppoolHistoricalData {
+  id: string;
+  pool: Lbppool;
+  assetA: Asset;
+  assetB: Asset;
+  assetABalance: bigint;
+  assetBBalance: bigint;
+  owner: Account;
+  feeCollector: Account | null;
+  startBlockNumber: number | null;
+  endBlockNumber: number | null;
+  initialWeight: number;
+  finalWeight: number;
+  repayTarget: bigint;
+  weightCurve: string;
+  fee: [Int;
+  tvlInRefAssetNorm: string | null;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  block: Block;
+}
+```
+
+## Example Query
+
+```graphql
+query GetLbppoolHistoricalDatas {
+  lbppoolHistoricalDatas(limit: 10) {
+    id
+    pool
+    assetA
+    assetB
+    assetABalance
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [LBP](/reference/pallets/LBP)

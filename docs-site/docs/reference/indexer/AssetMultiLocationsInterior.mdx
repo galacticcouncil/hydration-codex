@@ -1,0 +1,77 @@
+---
+title: AssetMultiLocationsInterior
+description: Indexer entity documentation
+sidebar_label: AssetMultiLocationsInterior
+---
+
+# AssetMultiLocationsInterior
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 15 |
+| Nullable Fields | 14 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/assetMultiLocationsInterior.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type AssetMultiLocationsInterior {
+  kind: AssetMultiLocationsInteriorKind!
+  network: String
+  id: String
+  index: String
+  key: String
+  value: String
+  valueJson: JSON
+  data: String
+  part: String
+  nom: String
+  denom: String
+  count: String
+  blockNumber: String
+  blockHash: String
+  chainId: String
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface AssetMultiLocationsInterior {
+  kind: AssetMultiLocationsInteriorKind;
+  network: string | null;
+  id: string | null;
+  index: string | null;
+  key: string | null;
+  value: string | null;
+  valueJson: object | null;
+  data: string | null;
+  part: string | null;
+  nom: string | null;
+  denom: string | null;
+  count: string | null;
+  blockNumber: string | null;
+  blockHash: string | null;
+  chainId: string | null;
+}
+```
+
+## Example Query
+
+```graphql
+query GetAssetMultiLocationsInteriors {
+  assetMultiLocationsInteriors(limit: 10) {
+    kind
+    network
+    id
+    index
+    key
+    # ... more fields
+  }
+}
+```

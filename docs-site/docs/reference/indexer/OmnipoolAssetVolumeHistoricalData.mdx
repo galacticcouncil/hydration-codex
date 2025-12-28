@@ -1,0 +1,87 @@
+---
+title: OmnipoolAssetVolumeHistoricalData
+description: Indexer entity documentation
+sidebar_label: OmnipoolAssetVolumeHistoricalData
+---
+
+# OmnipoolAssetVolumeHistoricalData
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 17 |
+| Nullable Fields | 0 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/omnipoolAssetVolumeHistoricalData.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type OmnipoolAssetVolumeHistoricalData {
+  id: ID!
+  omnipoolAsset: OmnipoolAsset!
+  assetVolIn: BigInt!
+  assetVolOut: BigInt!
+  assetTotalVolIn: BigInt!
+  assetTotalVolOut: BigInt!
+  assetFeeVol: BigInt!
+  assetTotalFeesVol: BigInt!
+  assetVolInNorm: String!
+  assetVolOutNorm: String!
+  assetFeeVolNorm: String!
+  assetTotalVolInNorm: String!
+  assetTotalVolOutNorm: String!
+  assetTotalFeesVolNorm: String!
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  block: Block!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface OmnipoolAssetVolumeHistoricalData {
+  id: string;
+  omnipoolAsset: OmnipoolAsset;
+  assetVolIn: bigint;
+  assetVolOut: bigint;
+  assetTotalVolIn: bigint;
+  assetTotalVolOut: bigint;
+  assetFeeVol: bigint;
+  assetTotalFeesVol: bigint;
+  assetVolInNorm: string;
+  assetVolOutNorm: string;
+  assetFeeVolNorm: string;
+  assetTotalVolInNorm: string;
+  assetTotalVolOutNorm: string;
+  assetTotalFeesVolNorm: string;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  block: Block;
+}
+```
+
+## Example Query
+
+```graphql
+query GetOmnipoolAssetVolumeHistoricalDatas {
+  omnipoolAssetVolumeHistoricalDatas(limit: 10) {
+    id
+    omnipoolAsset
+    assetVolIn
+    assetVolOut
+    assetTotalVolIn
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [Omnipool](/reference/pallets/Omnipool)

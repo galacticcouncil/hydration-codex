@@ -1,0 +1,102 @@
+---
+title: Xykpool
+description: Indexer entity documentation
+sidebar_label: Xykpool
+---
+
+# Xykpool
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 19 |
+| Nullable Fields | 5 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/xykpool.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type Xykpool {
+  id: ID!
+  account: Account!
+  assetA: Asset!
+  assetB: Asset!
+  assetABalance: BigInt!
+  assetBBalance: BigInt!
+  shareToken: Asset!
+  tvlInRefAssetNorm: String
+  createdAtParaBlockHeight: Int!
+  createdAtRelayBlockHeight: Int!
+  createdAtBlock: Block!
+  isDestroyed: Boolean
+  lifeStates: [XykpoolLifeState!
+  historicalBlockPrices: [XykpoolPriceHistoricalData!
+  field: "pool")
+  historicalVolume: [XykpoolVolumeHistoricalData!
+  field: "pool")
+  historicalData: [XykpoolHistoricalData!
+  field: "pool")
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface Xykpool {
+  id: string;
+  account: Account;
+  assetA: Asset;
+  assetB: Asset;
+  assetABalance: bigint;
+  assetBBalance: bigint;
+  shareToken: Asset;
+  tvlInRefAssetNorm: string | null;
+  createdAtParaBlockHeight: number;
+  createdAtRelayBlockHeight: number;
+  createdAtBlock: Block;
+  isDestroyed: boolean | null;
+  lifeStates: [XykpoolLifeState;
+  historicalBlockPrices: [XykpoolPriceHistoricalData;
+  field: "pool") | null;
+  historicalVolume: [XykpoolVolumeHistoricalData;
+  field: "pool") | null;
+  historicalData: [XykpoolHistoricalData;
+  field: "pool") | null;
+}
+```
+
+## Source Handlers
+
+This entity is populated by the following runtime events and handlers:
+
+| Runtime Event | Handler |
+|---------------|---------|
+| [Xyk.BuyExecuted](/reference/pallets/XYK#buyexecuted) | [`xykSellExecuted`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/buySellOperations/xykPoolOperations/xykPoolOperation.ts#L84) |
+| [Xyk.PoolCreated](/reference/pallets/XYK#poolcreated) | [`xykPoolCreated`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/pools/pools/xykPool/xykPool.ts#L229) |
+| [Xyk.PoolDestroyed](/reference/pallets/XYK#pooldestroyed) | [`xykPoolDestroyed`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/pools/pools/xykPool/xykPool.ts#L301) |
+| [Xyk.SellExecuted](/reference/pallets/XYK#sellexecuted) | [`xykSellExecuted`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/buySellOperations/xykPoolOperations/xykPoolOperation.ts#L84) |
+
+## Example Query
+
+```graphql
+query GetXykpools {
+  xykpools(limit: 10) {
+    id
+    account
+    assetA
+    assetB
+    assetABalance
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [XYK](/reference/pallets/XYK)

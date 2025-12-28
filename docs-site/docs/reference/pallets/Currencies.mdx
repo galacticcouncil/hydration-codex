@@ -1,0 +1,162 @@
+---
+title: Currencies
+description: Runtime pallet documentation
+sidebar_label: Currencies
+---
+
+# Currencies
+
+## Overview
+
+The currencies module provides a mixed currencies system, by configuring a native currency which implements `BasicCurrencyExtended`, and a multi-currency which implements `MultiCurrency`.
+
+It also provides an adapter, to adapt `frame_support::traits::Currency` implementations into `BasicCurrencyExtended`.
+
+The currencies module provides functionality of both `MultiCurrencyExtended` and `BasicCurrencyExtended`, via unified interfaces, and all calls would be delegated to the underlying multi-currency and base currency system. A native currency ID could be set by `Config::GetNativeCurrencyId`, to identify the native currency.
+
+<details>
+<summary>Code Documentation</summary>
+
+### Overview
+
+The currencies module provides a mixed currencies system, by configuring a
+native currency which implements `BasicCurrencyExtended`, and a
+multi-currency which implements `MultiCurrency`.
+
+It also provides an adapter, to adapt `frame_support::traits::Currency`
+implementations into `BasicCurrencyExtended`.
+
+The currencies module provides functionality of both `MultiCurrencyExtended`
+and `BasicCurrencyExtended`, via unified interfaces, and all calls would be
+delegated to the underlying multi-currency and base currency system.
+A native currency ID could be set by `Config::GetNativeCurrencyId`, to
+identify the native currency.
+
+### Implementations
+
+The currencies module provides implementations for following traits.
+
+- `MultiCurrency` - Abstraction over a fungible multi-currency system.
+- `MultiCurrencyExtended` - Extended `MultiCurrency` with additional helper
+ types and methods, like updating balance
+ by a given signed integer amount.
+
+### Interface
+
+### Dispatchable Functions
+
+- `transfer` - Transfer some balance to another account, in a given
+ currency.
+- `transfer_native_currency` - Transfer some balance to another account, in
+ native currency set in
+ `Config::NativeCurrency`.
+- `update_balance` - Update balance by signed integer amount, in a given
+ currency, root origin required.
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #79** · HydraDX<br/>
+`pallet-currencies/4ca470c5/master`
+
+[GitHub](https://github.com/galacticcouncil/HydraDX-node/tree/4ca470c5d613d62ce52eb8645770ef5fff263111/pallets/currencies) · [Subscan](https://hydradx.subscan.io/runtime/Currencies)
+
+## Extrinsics (3)
+
+### transfer
+
+```rust
+fn transfer(
+    origin: OriginFor<T>,
+    dest: AccountId32,
+    currencyId: u32,
+    amount: Compact<u128>,
+)
+```
+
+### transfer_native_currency
+
+```rust
+fn transfer_native_currency(
+    origin: OriginFor<T>,
+    dest: AccountId32,
+    amount: Compact<u128>,
+)
+```
+
+### update_balance
+
+```rust
+fn update_balance(
+    origin: OriginFor<T>,
+    who: AccountId32,
+    currencyId: u32,
+    amount: i128,
+)
+```
+
+## Events (4)
+
+### Transferred
+
+```rust
+Transferred {
+    currencyId: u32,
+    from: AccountId32,
+    to: AccountId32,
+    amount: u128,
+}
+```
+
+### BalanceUpdated
+
+```rust
+BalanceUpdated {
+    currencyId: u32,
+    who: AccountId32,
+    amount: i128,
+}
+```
+
+### Deposited
+
+```rust
+Deposited {
+    currencyId: u32,
+    who: AccountId32,
+    amount: u128,
+}
+```
+
+### Withdrawn
+
+```rust
+Withdrawn {
+    currencyId: u32,
+    who: AccountId32,
+    amount: u128,
+}
+```
+
+## Constants (2)
+
+### ReserveAccount
+
+```rust
+const ReserveAccount: AccountId32
+```
+
+### GetNativeCurrencyId
+
+```rust
+const GetNativeCurrencyId: u32
+```
+
+## References
+
+### UI (2)
+
+- [useTransferPaymentInfo](/reference/hooks/wallet/useTransferPaymentInfo)
+- [useSubmitTransferPosition](/reference/hooks/wallet/useSubmitTransferPosition)

@@ -1,0 +1,105 @@
+---
+title: TransactionPayment
+description: Runtime pallet documentation
+sidebar_label: TransactionPayment
+---
+
+# TransactionPayment
+
+This pallet provides the basic logic needed to pay the absolute minimum amount needed for a
+transaction to be included. This includes:
+ - _weight fee_: A fee proportional to amount of weight a transaction consumes.
+ - _length fee_: A fee proportional to the encoded length of the transaction.
+ - _tip_: An optional tip. Tip increases the priority of the transaction, giving it a higher
+ chance to be included by the transaction queue.
+
+Additionally, this pallet allows one to configure:
+ - The mapping between one unit of weight to one unit of fee via `Config::WeightToFee`.
+ - A means of updating the fee for the next block, via defining a multiplier, based on the
+ final state of the chain at the end of the previous block. This can be configured via
+ `Config::FeeMultiplierUpdate`
+
+<details>
+<summary>Code Documentation</summary>
+
+This pallet provides the basic logic needed to pay the absolute minimum amount needed for a
+transaction to be included. This includes:
+ - _base fee_: This is the minimum amount a user pays for a transaction. It is declared
+ as a base _weight_ in the runtime and converted to a fee using `WeightToFee`.
+ - _weight fee_: A fee proportional to amount of weight a transaction consumes.
+ - _length fee_: A fee proportional to the encoded length of the transaction.
+ - _tip_: An optional tip. Tip increases the priority of the transaction, giving it a higher
+ chance to be included by the transaction queue.
+
+The base fee and adjusted weight and length fees constitute the _inclusion fee_, which is
+the minimum fee for a transaction to be included in a block.
+
+The formula of final fee:
+ 
+
+```ignore
+inclusion_fee = base_fee + length_fee + [targeted_fee_adjustment * weight_fee];
+ final_fee = inclusion_fee + tip;
+```
+
+ - `targeted_fee_adjustment`: This is a multiplier that can tune the final fee based on
+ the congestion of the network.
+
+Additionally, this pallet allows one to configure:
+ - The mapping between one unit of weight to one unit of fee via `Config::WeightToFee`.
+ - A means of updating the fee for the next block, via defining a multiplier, based on the
+ final state of the chain at the end of the previous block. This can be configured via
+ `Config::FeeMultiplierUpdate`
+ - How the fees are paid via `Config::OnChargeTransaction`.
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #9** · Polkadot SDK<br/>
+`pallet-transaction-payment/1ed66275/stable2409-patch6`
+
+[GitHub](https://github.com/galacticcouncil/polkadot-sdk/tree/1ed662757b03c4f17dc2429c1df84e975d98513a/substrate/frame/transaction-payment) · [docs.rs](https://docs.rs/crate/pallet-transaction-payment/38.0.2/source/) · [crates.io](https://crates.io/crates/pallet-transaction-payment) · [Subscan](https://hydradx.subscan.io/runtime/TransactionPayment)
+
+## Storage (2)
+
+### NextFeeMultiplier
+
+```rust
+NextFeeMultiplier: Value<u128>
+```
+
+### StorageVersion
+
+```rust
+StorageVersion: Value<{_enum: [V1Ancient, V2]}>
+```
+
+## Events (1)
+
+### TransactionFeePaid
+
+```rust
+TransactionFeePaid {
+    who: AccountId32,
+    actualFee: u128,
+    tip: u128,
+}
+```
+
+## Constants (1)
+
+### OperationalFeeMultiplier
+
+A fee multiplier for `Operational` extrinsics to compute "virtual tip" to boost their `priority` This value is multiplied by the `final_fee` to obtain a "virtual tip" that is later added to a tip component in regular `priority` calculations. It means that a `Normal` transaction can front-run a similarly-sized `Operational` extrinsic (with no tip), by including a tip value greater than the virtual tip. ```rust,ignore // For `Normal` let priority = priority_calc(tip); // For `Operational` let virtual_tip = (inclusion_fee + tip) * OperationalFeeMultiplier; let priority = priority_calc(tip + virtual_tip); ``` Note that since we use `final_fee` the multiplier applies also to the regular `tip` sent with the transaction. So, not only does the transaction get a priority bump based on the `inclusion_fee`, but we also amplify the impact of tips applied to `Operational` transactions.
+
+```rust
+const OperationalFeeMultiplier: u8
+```
+
+## References
+
+### Indexer (1)
+
+- [TransactionPaymentHistoricalData](/reference/indexer/TransactionPaymentHistoricalData)

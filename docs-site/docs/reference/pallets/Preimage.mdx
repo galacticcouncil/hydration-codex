@@ -1,0 +1,130 @@
+---
+title: Preimage
+description: Runtime pallet documentation
+sidebar_label: Preimage
+---
+
+# Preimage
+
+## Release
+
+Polkadot SDK stable2409
+
+<details>
+<summary>Code Documentation</summary>
+
+- `Config`
+- `Call`
+
+### Overview
+
+The Preimage pallet allows for the users and the runtime to store the preimage
+of a hash on chain. This can be used by other pallets for storing and managing
+large byte-blobs.
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #15** · Polkadot SDK<br/>
+`pallet-preimage/1ed66275/stable2409-patch6`
+
+[GitHub](https://github.com/galacticcouncil/polkadot-sdk/tree/1ed662757b03c4f17dc2429c1df84e975d98513a/substrate/frame/preimage) · [docs.rs](https://docs.rs/crate/pallet-preimage/38.0.0/source/) · [crates.io](https://crates.io/crates/pallet-preimage) · [Subscan](https://hydradx.subscan.io/runtime/Preimage)
+
+## Storage (3)
+
+### StatusFor
+
+The request status of a given hash.
+
+```rust
+StatusFor: Map<H256 -> {_enum: {Unrequested: {\deposit\: \(AccountId32, u128)\, \len\: \u32\}, Requested: {\deposit\: \Option<(AccountId32, u128)>\, \count\: \u32\, \len\: \Option<u32>\}}}> [Identity]
+```
+
+### RequestStatusFor
+
+The request status of a given hash.
+
+```rust
+RequestStatusFor: Map<H256 -> {_enum: {Unrequested: {\ticket\: \(AccountId32, u128)\, \len\: \u32\}, Requested: {\maybeTicket\: \Option<(AccountId32, u128)>\, \count\: \u32\, \maybeLen\: \Option<u32>\}}}> [Identity]
+```
+
+### PreimageFor
+
+```rust
+PreimageFor: Map<(H256, u32) -> Bytes> [Identity]
+```
+
+## Extrinsics (5)
+
+### note_preimage
+
+```rust
+fn note_preimage(
+    origin: OriginFor<T>,
+    bytes: Bytes,
+)
+```
+
+### unnote_preimage
+
+```rust
+fn unnote_preimage(
+    origin: OriginFor<T>,
+    hash_: H256,
+)
+```
+
+### request_preimage
+
+```rust
+fn request_preimage(
+    origin: OriginFor<T>,
+    hash_: H256,
+)
+```
+
+### unrequest_preimage
+
+```rust
+fn unrequest_preimage(
+    origin: OriginFor<T>,
+    hash_: H256,
+)
+```
+
+### ensure_updated
+
+```rust
+fn ensure_updated(
+    origin: OriginFor<T>,
+    hashes: Vec<H256>,
+)
+```
+
+## Events (3)
+
+### Noted
+
+```rust
+Noted {
+    hash_: H256,
+}
+```
+
+### Requested
+
+```rust
+Requested {
+    hash_: H256,
+}
+```
+
+### Cleared
+
+```rust
+Cleared {
+    hash_: H256,
+}
+```

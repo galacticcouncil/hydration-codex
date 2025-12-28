@@ -1,0 +1,73 @@
+---
+title: Stableswap
+description: Indexer entity documentation
+sidebar_label: Stableswap
+---
+
+# Stableswap
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 10 |
+| Nullable Fields | 2 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/stableswap.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type Stableswap {
+  id: ID!
+  account: Account!
+  shareToken: Asset!
+  createdAtParaBlockHeight: Int!
+  createdAtRelayBlockHeight: Int!
+  createdAtBlock: Block!
+  isDestroyed: Boolean
+  lifeStates: [StableswapLifeState!
+  assets: [StableswapAsset!
+  field: "pool")
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface Stableswap {
+  id: string;
+  account: Account;
+  shareToken: Asset;
+  createdAtParaBlockHeight: number;
+  createdAtRelayBlockHeight: number;
+  createdAtBlock: Block;
+  isDestroyed: boolean | null;
+  lifeStates: [StableswapLifeState;
+  assets: [StableswapAsset;
+  field: "pool") | null;
+}
+```
+
+## Example Query
+
+```graphql
+query GetStableswaps {
+  stableswaps(limit: 10) {
+    id
+    account
+    shareToken
+    createdAtParaBlockHeight
+    createdAtRelayBlockHeight
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [Stableswap](/reference/pallets/Stableswap)

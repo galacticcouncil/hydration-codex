@@ -1,0 +1,177 @@
+---
+title: Router
+description: Runtime pallet documentation
+sidebar_label: Router
+---
+
+# Router
+
+## Overview
+
+### Storing routes
+This pallet is responsible for storing the best routes for asset pairs. 
+
+The new route is validated by being executed it in a dry-run mode
+
+If there is no route explicitly set for an asset pair, then we use the omnipool route as default.
+
+When a new route is set, we compare it to the existing (or default) route.
+The comparison happens by calculating sell amount_outs for the routes, but also for the inversed routes.
+
+The route is stored in an ordered manner, based on the oder of the ids in the asset pair.
+
+If the route is set successfully, then the fee is paid back.
+
+If the route setting fails, it emits event `RouteUpdateIsNotSuccessful`
+
+### Force insert route
+The route can be force inserted for any asset pair by technical origin without involving any validation.
+
+### Providing routes
+This pallet is also responsible for providing the best routes for asset pairs.
+
+If no on-chain route present, then omnipool route is provided as default.
+
+### Executing routes
+This pallet is also responsible for executing a series of trades specified in the route.
+The specific price calculations and execution logics are implemented by the AMM pools
+configured for the pallet.
+
+If no route is specified for a route execution, then the on-chain route is used.
+If not on-chain is present, then omnipool is used as default
+
+Both buy and sell trades are supported. 
+
+There is also a `sell_all` extrinsic, which sells all the reducible `asset_in` balance of the user.
+
+### Weight calculation
+The extrinsic weights are calculated based on the size of the route.
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #67** · HydraDX<br/>
+`pallet-route-executor/4ca470c5/master`
+
+[GitHub](https://github.com/galacticcouncil/HydraDX-node/tree/4ca470c5d613d62ce52eb8645770ef5fff263111/pallets/route-executor) · [Subscan](https://hydradx.subscan.io/runtime/Router)
+
+## Storage (1)
+
+### Routes
+
+Storing routes for asset pairs
+
+```rust
+Routes: Map<{assetIn: u32, assetOut: u32} -> Vec<HydradxTraitsRouterTrade>> [Blake2_128Concat]
+```
+
+## Extrinsics (5)
+
+### sell
+
+```rust
+fn sell(
+    origin: OriginFor<T>,
+    assetIn: u32,
+    assetOut: u32,
+    amountIn: u128,
+    minAmountOut: u128,
+    route: Vec<HydradxTraitsRouterTrade>,
+)
+```
+
+### buy
+
+```rust
+fn buy(
+    origin: OriginFor<T>,
+    assetIn: u32,
+    assetOut: u32,
+    amountOut: u128,
+    maxAmountIn: u128,
+    route: Vec<HydradxTraitsRouterTrade>,
+)
+```
+
+### set_route
+
+```rust
+fn set_route(
+    origin: OriginFor<T>,
+    assetPair: Lookup227,
+    newRoute: Vec<HydradxTraitsRouterTrade>,
+)
+```
+
+### force_insert_route
+
+```rust
+fn force_insert_route(
+    origin: OriginFor<T>,
+    assetPair: Lookup227,
+    newRoute: Vec<HydradxTraitsRouterTrade>,
+)
+```
+
+### sell_all
+
+```rust
+fn sell_all(
+    origin: OriginFor<T>,
+    assetIn: u32,
+    assetOut: u32,
+    minAmountOut: u128,
+    route: Vec<HydradxTraitsRouterTrade>,
+)
+```
+
+## Events (2)
+
+### Executed
+
+```rust
+Executed {
+    assetIn: u32,
+    assetOut: u32,
+    amountIn: u128,
+    amountOut: u128,
+    eventId: u32,
+}
+```
+
+### RouteUpdated
+
+```rust
+RouteUpdated {
+    assetIds: Vec<u32>,
+}
+```
+
+## Constants (2)
+
+### NativeAssetId
+
+Native Asset Id
+
+```rust
+const NativeAssetId: u32
+```
+
+### OraclePeriod
+
+Oracle's price aggregation period.
+
+```rust
+const OraclePeriod: {"_enum":["LastBlock","Short","TenMinutes","Hour","Day","Week"]}
+```
+
+## References
+
+### UI (6)
+
+- [useAcceptedFeePaymentAssets](/reference/hooks/transactions/useAcceptedFeePaymentAssets)
+- [useMarketBuyData](/reference/hooks/trade/useMarketBuyData)
+- [useMarketSellData](/reference/hooks/trade/useMarketSellData)
+- [useCalculateBuyAmount](/reference/hooks/trade/useCalculateBuyAmount)
+- [useCalculateSellAmount](/reference/hooks/trade/useCalculateSellAmount)
+- [useSwitchAssets](/reference/hooks/trade/useSwitchAssets)

@@ -1,0 +1,89 @@
+---
+title: L2-sdk.md
+description: SDK layer context - packages, methods, API calls
+---
+
+# L2-sdk.md
+
+Context file for the Hydration SDK layer (TypeScript).
+
+**Location:** `agents/contexts/L2-sdk.md` (~5KB)
+
+## What It Contains
+
+- **All SDK packages** with descriptions
+- **Method signatures** for each package
+- **Runtime pallet mappings** (which extrinsics each method wraps)
+- **WASM math functions** available
+
+## When to Load
+
+- Building applications with the SDK
+- Understanding how SDK wraps runtime calls
+- Finding the right method for a task
+- Working with math/calculation functions
+
+## SDK Packages
+
+| Package | Purpose |
+|---------|---------|
+| @galacticcouncil/sdk | Core SDK with all modules |
+| @galacticcouncil/xcm-sdk | Cross-chain transfers |
+| @galacticcouncil/xcm-cfg | XCM chain configurations |
+| @galacticcouncil/math-* | WASM math libraries |
+
+## Core SDK Modules
+
+### Trading
+- `Router.sell()` - Sell with optimal routing
+- `Router.buy()` - Buy with optimal routing
+- `Omnipool.sell()` - Direct Omnipool sell
+- `Omnipool.buy()` - Direct Omnipool buy
+
+### DCA
+- `DCA.schedule()` - Create DCA schedule
+
+### Dispatcher
+- `Dispatcher.dispatch_with_extra_gas()` - Dispatch with extra gas
+
+## XCM SDK
+
+For cross-chain transfers:
+
+```typescript
+import { Wallet } from '@galacticcouncil/xcm-sdk';
+
+const wallet = new Wallet({
+  config: ConfigService,
+  signer: polkadotSigner
+});
+
+// Transfer DOT from Polkadot to Hydration
+const transfer = await wallet.transfer({
+  asset: 'DOT',
+  amount: '10000000000',
+  srcChain: 'polkadot',
+  dstChain: 'hydration',
+  dstAddress: '...'
+});
+```
+
+## How to Use
+
+```
+# In Claude Code or similar
+Load: agents/contexts/L2-sdk.md
+
+# Then ask questions like:
+"How do I execute a swap with the SDK?"
+"What parameters does Router.sell need?"
+"How do I do cross-chain transfers?"
+```
+
+## Related Reference Docs
+
+All SDK packages have detailed reference pages:
+
+- [SDK Core](/reference/sdk/sdk)
+- [XCM SDK](/reference/sdk/xcm-sdk)
+- [XCM Config](/reference/sdk/xcm-cfg)

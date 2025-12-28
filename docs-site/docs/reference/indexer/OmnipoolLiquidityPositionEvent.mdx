@@ -1,0 +1,75 @@
+---
+title: OmnipoolLiquidityPositionEvent
+description: Indexer entity documentation
+sidebar_label: OmnipoolLiquidityPositionEvent
+---
+
+# OmnipoolLiquidityPositionEvent
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 11 |
+| Nullable Fields | 5 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/omnipoolLiquidityPositionEvent.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type OmnipoolLiquidityPositionEvent {
+  id: ID!
+  traceIds: [String!
+  position: OmnipoolLiquidityPosition!
+  eventName: OmnipoolLiquidityPositionStatus!
+  accountId: String
+  assetId: String
+  amount: BigInt
+  sharesAmount: BigInt
+  price: BigInt
+  paraBlockHeight: Int!
+  eventId: String!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface OmnipoolLiquidityPositionEvent {
+  id: string;
+  traceIds: [String;
+  position: OmnipoolLiquidityPosition;
+  eventName: OmnipoolLiquidityPositionStatus;
+  accountId: string | null;
+  assetId: string | null;
+  amount: bigint | null;
+  sharesAmount: bigint | null;
+  price: bigint | null;
+  paraBlockHeight: number;
+  eventId: string;
+}
+```
+
+## Example Query
+
+```graphql
+query GetOmnipoolLiquidityPositionEvents {
+  omnipoolLiquidityPositionEvents(limit: 10) {
+    id
+    traceIds
+    position
+    eventName
+    accountId
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [Omnipool](/reference/pallets/Omnipool)

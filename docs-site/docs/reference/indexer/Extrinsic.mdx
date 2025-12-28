@@ -1,0 +1,61 @@
+---
+title: Extrinsic
+description: Indexer entity documentation
+sidebar_label: Extrinsic
+---
+
+# Extrinsic
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 7 |
+| Nullable Fields | 1 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/extrinsic.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type Extrinsic {
+  id: ID!
+  hash: String!
+  indexInBlock: Int!
+  calls: [Call] @derivedFrom(field: "extrinsic")
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  block: Block!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface Extrinsic {
+  id: string;
+  hash: string;
+  indexInBlock: number;
+  calls: [Call] @derivedFrom(field: "extrinsic") | null;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  block: Block;
+}
+```
+
+## Example Query
+
+```graphql
+query GetExtrinsics {
+  extrinsics(limit: 10) {
+    id
+    hash
+    indexInBlock
+    calls
+    paraBlockHeight
+    # ... more fields
+  }
+}
+```

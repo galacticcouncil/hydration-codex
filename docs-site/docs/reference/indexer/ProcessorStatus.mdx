@@ -1,0 +1,73 @@
+---
+title: ProcessorStatus
+description: Indexer entity documentation
+sidebar_label: ProcessorStatus
+---
+
+# ProcessorStatus
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 10 |
+| Nullable Fields | 6 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/processorStatus.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type ProcessorStatus {
+  id: ID!
+  assetsLastUpdatedAtBlock: Int!
+  poolsDestroyedUpdatedAtBlock: Int
+  initialIndexingStartedAt: DateTime!
+  initialIndexingFinishedAt: DateTime
+  latestProcessedBlock: Int!
+  stableswapHistDataLatestBlock: Int
+  omnipoolHistDataLatestBlock: Int
+  xykpoolHistDataLatestBlock: Int
+  aavepoolHistDataLatestBlock: Int
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface ProcessorStatus {
+  id: string;
+  assetsLastUpdatedAtBlock: number;
+  poolsDestroyedUpdatedAtBlock: number | null;
+  initialIndexingStartedAt: Date;
+  initialIndexingFinishedAt: Date | null;
+  latestProcessedBlock: number;
+  stableswapHistDataLatestBlock: number | null;
+  omnipoolHistDataLatestBlock: number | null;
+  xykpoolHistDataLatestBlock: number | null;
+  aavepoolHistDataLatestBlock: number | null;
+}
+```
+
+## Example Query
+
+```graphql
+query GetProcessorStatuss {
+  processorStatuss(limit: 10) {
+    id
+    assetsLastUpdatedAtBlock
+    poolsDestroyedUpdatedAtBlock
+    initialIndexingStartedAt
+    initialIndexingFinishedAt
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### UI (1)
+
+- [useInitialOtcOfferAmount](/reference/hooks/trade/useInitialOtcOfferAmount)

@@ -1,0 +1,65 @@
+---
+title: AccountAssetSwapFeeHistoricalData
+description: Indexer entity documentation
+sidebar_label: AccountAssetSwapFeeHistoricalData
+---
+
+# AccountAssetSwapFeeHistoricalData
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 9 |
+| Nullable Fields | 0 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/accountAssetSwapFeeHistoricalData.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type AccountAssetSwapFeeHistoricalData {
+  id: ID!
+  collection: AccountSwapFeeHistoricalData!
+  account: Account!
+  asset: Asset!
+  amount: BigInt!
+  totalAmount: BigInt!
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  block: Block!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface AccountAssetSwapFeeHistoricalData {
+  id: string;
+  collection: AccountSwapFeeHistoricalData;
+  account: Account;
+  asset: Asset;
+  amount: bigint;
+  totalAmount: bigint;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  block: Block;
+}
+```
+
+## Example Query
+
+```graphql
+query GetAccountAssetSwapFeeHistoricalDatas {
+  accountAssetSwapFeeHistoricalDatas(limit: 10) {
+    id
+    collection
+    account
+    asset
+    amount
+    # ... more fields
+  }
+}
+```

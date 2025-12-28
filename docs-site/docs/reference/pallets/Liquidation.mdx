@@ -1,0 +1,112 @@
+---
+title: Liquidation
+description: Runtime pallet documentation
+sidebar_label: Liquidation
+---
+
+# Liquidation
+
+## Description
+The pallet uses mechanism similar to a flash loan to liquidate a MM position.
+
+## Notes
+The pallet requires the money market contract to be deployed and enabled.
+
+## Dispatchable functions
+* `liquidate` - Liquidates an existing MM position. Performs flash loan to get funds.
+
+<details>
+<summary>Code Documentation</summary>
+
+### Description
+The pallet uses mechanism similar to a flash loan to liquidate a MM position.
+
+### Notes
+The pallet requires the money market contract to be deployed and enabled.
+
+### Dispatchable functions
+* `liquidate` - Liquidates an existing MM position. Performs flash loan to get funds.
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #76** · HydraDX<br/>
+`pallet-liquidation/4ca470c5/master`
+
+[GitHub](https://github.com/galacticcouncil/HydraDX-node/tree/4ca470c5d613d62ce52eb8645770ef5fff263111/pallets/liquidation) · [Subscan](https://hydradx.subscan.io/runtime/Liquidation)
+
+## Storage (1)
+
+### BorrowingContract
+
+Borrowing market contract address
+
+```rust
+BorrowingContract: Value<H160>
+```
+
+## Extrinsics (2)
+
+### liquidate
+
+```rust
+fn liquidate(
+    origin: OriginFor<T>,
+    collateralAsset: u32,
+    debtAsset: u32,
+    user: H160,
+    debtToCover: u128,
+    route: Vec<HydradxTraitsRouterTrade>,
+)
+```
+
+### set_borrowing_contract
+
+```rust
+fn set_borrowing_contract(
+    origin: OriginFor<T>,
+    contract: H160,
+)
+```
+
+## Events (1)
+
+### Liquidated
+
+```rust
+Liquidated {
+    user: H160,
+    collateralAsset: u32,
+    debtAsset: u32,
+    debtToCover: u128,
+    profit: u128,
+}
+```
+
+## Constants (3)
+
+### GasLimit
+
+The gas limit for the execution of the liquidation call.
+
+```rust
+const GasLimit: u64
+```
+
+### ProfitReceiver
+
+Account who receives the profit.
+
+```rust
+const ProfitReceiver: AccountId32
+```
+
+### HollarId
+
+Asset ID of Hollar
+
+```rust
+const HollarId: u32
+```

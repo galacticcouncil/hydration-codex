@@ -1,0 +1,89 @@
+---
+title: RoutedTrade
+description: Indexer entity documentation
+sidebar_label: RoutedTrade
+---
+
+# RoutedTrade
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 18 |
+| Nullable Fields | 4 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/routedTrade.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type RoutedTrade {
+  id: ID!
+  routeId: String
+  inputs: [RoutedTradeAssetBalance] @derivedFrom(field: "routedTrade")
+  outputs: [RoutedTradeAssetBalance] @derivedFrom(field: "routedTrade")
+  inputAssetIds: [String!
+  inputAssetRegistryIds: [String!
+  outputAssetIds: [String!
+  outputAssetRegistryIds: [String!
+  allInvolvedAssetIds: [String!
+  allInvolvedAssetRegistryIds: [String!
+  participantSwappers: [String!
+  participantFillers: [String!
+  feeRecipients: [String!
+  swaps: [Swap!
+  field: "routedTrade")
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  block: Block!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface RoutedTrade {
+  id: string;
+  routeId: string | null;
+  inputs: [RoutedTradeAssetBalance] @derivedFrom(field: "routedTrade") | null;
+  outputs: [RoutedTradeAssetBalance] @derivedFrom(field: "routedTrade") | null;
+  inputAssetIds: [String;
+  inputAssetRegistryIds: [String;
+  outputAssetIds: [String;
+  outputAssetRegistryIds: [String;
+  allInvolvedAssetIds: [String;
+  allInvolvedAssetRegistryIds: [String;
+  participantSwappers: [String;
+  participantFillers: [String;
+  feeRecipients: [String;
+  swaps: [Swap;
+  field: "routedTrade") | null;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  block: Block;
+}
+```
+
+## Example Query
+
+```graphql
+query GetRoutedTrades {
+  routedTrades(limit: 10) {
+    id
+    routeId
+    inputs
+    outputs
+    inputAssetIds
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### UI (1)
+
+- [useRoutedTradesData](/reference/hooks/trade/useRoutedTradesData)

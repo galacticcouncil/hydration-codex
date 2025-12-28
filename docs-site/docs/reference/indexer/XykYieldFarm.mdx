@@ -1,0 +1,91 @@
+---
+title: XykYieldFarm
+description: Indexer entity documentation
+sidebar_label: XykYieldFarm
+---
+
+# XykYieldFarm
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 19 |
+| Nullable Fields | 2 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/xykYieldFarm.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type XykYieldFarm {
+  id: ID!
+  globalFarm: XykGlobalFarm!
+  allInvolvedAssetIds: [String!
+  allInvolvedAssetRegistryIds: [String!
+  xykpoolId: String!
+  state: FarmState!
+  updatedAtRelayBlock: Int!
+  totalShares: BigInt!
+  totalValuedShares: BigInt!
+  accumulatedRpvs: BigInt!
+  accumulatedRpz: BigInt!
+  multiplier: BigInt!
+  entriesCount: Int!
+  leftToDistribute: BigInt!
+  totalStopped: BigInt!
+  loyaltyCurve: YieldFarmLoyaltyCurve
+  lifeStates: [FarmLifeState!
+  paraBlockHeight: Int!
+  eventId: String
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface XykYieldFarm {
+  id: string;
+  globalFarm: XykGlobalFarm;
+  allInvolvedAssetIds: [String;
+  allInvolvedAssetRegistryIds: [String;
+  xykpoolId: string;
+  state: FarmState;
+  updatedAtRelayBlock: number;
+  totalShares: bigint;
+  totalValuedShares: bigint;
+  accumulatedRpvs: bigint;
+  accumulatedRpz: bigint;
+  multiplier: bigint;
+  entriesCount: number;
+  leftToDistribute: bigint;
+  totalStopped: bigint;
+  loyaltyCurve: YieldFarmLoyaltyCurve | null;
+  lifeStates: [FarmLifeState;
+  paraBlockHeight: number;
+  eventId: string | null;
+}
+```
+
+## Example Query
+
+```graphql
+query GetXykYieldFarms {
+  xykYieldFarms(limit: 10) {
+    id
+    globalFarm
+    allInvolvedAssetIds
+    allInvolvedAssetRegistryIds
+    xykpoolId
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [XYK](/reference/pallets/XYK)

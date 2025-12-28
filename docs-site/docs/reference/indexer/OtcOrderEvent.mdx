@@ -1,0 +1,94 @@
+---
+title: OtcOrderEvent
+description: Indexer entity documentation
+sidebar_label: OtcOrderEvent
+---
+
+# OtcOrderEvent
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 13 |
+| Nullable Fields | 7 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/otcOrderEvent.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type OtcOrderEvent {
+  id: ID!
+  operationId: String @index
+  traceIds: [String!
+  order: OtcOrder!
+  eventName: OtcOrderStatus @index
+  amountIn: BigInt
+  amountOut: BigInt
+  fee: BigInt
+  filler: Account
+  swap: Swap
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  event: Event!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface OtcOrderEvent {
+  id: string;
+  operationId: String @index | null;
+  traceIds: [String;
+  order: OtcOrder;
+  eventName: OtcOrderStatus @index | null;
+  amountIn: bigint | null;
+  amountOut: bigint | null;
+  fee: bigint | null;
+  filler: Account | null;
+  swap: Swap | null;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  event: Event;
+}
+```
+
+## Source Handlers
+
+This entity is populated by the following runtime events and handlers:
+
+| Runtime Event | Handler |
+|---------------|---------|
+| [Otc.Cancelled](/reference/pallets/OTC#cancelled) | [`handleOtcOrderCancelled`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/otc/index.ts#L31) |
+| [Otc.Filled](/reference/pallets/OTC#filled) | [`handleOtcOrderFilled`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/otc/index.ts#L36) |
+| [Otc.PartiallyFilled](/reference/pallets/OTC#partiallyfilled) | [`handleOtcOrderPartiallyFilled`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/otc/index.ts#L43) |
+| [Otc.Placed](/reference/pallets/OTC#placed) | [`handleOtcOrderPlaced`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/otc/index.ts#L26) |
+
+## Example Query
+
+```graphql
+query GetOtcOrderEvents {
+  otcOrderEvents(limit: 10) {
+    id
+    operationId
+    traceIds
+    order
+    eventName
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [OTC](/reference/pallets/OTC)
+
+### UI (1)
+
+- [useInitialOtcOfferAmount](/reference/hooks/trade/useInitialOtcOfferAmount)

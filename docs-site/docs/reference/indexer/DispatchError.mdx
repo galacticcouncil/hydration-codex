@@ -1,0 +1,70 @@
+---
+title: DispatchError
+description: Indexer entity documentation
+sidebar_label: DispatchError
+---
+
+# DispatchError
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 3 |
+| Nullable Fields | 3 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/dispatchError.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type DispatchError {
+  kind: String
+  index: Int
+  error: String
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface DispatchError {
+  kind: string | null;
+  index: number | null;
+  error: string | null;
+}
+```
+
+## Source Handlers
+
+This entity is populated by the following runtime events and handlers:
+
+| Runtime Event | Handler |
+|---------------|---------|
+| [Dca.Completed](/reference/pallets/DCA#completed) | [`handleDcaScheduleCompleted`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/dca/dcaSchedule.ts#L213) |
+| [Dca.ExecutionPlanned](/reference/pallets/DCA#executionplanned) | [`handleDcaScheduleExecutionPlanned`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/dca/dcaScheduleExecution.ts#L47) |
+| [Dca.Scheduled](/reference/pallets/DCA#scheduled) | [`handleDcaScheduleCreated`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/dca/dcaSchedule.ts#L157) |
+| [Dca.Terminated](/reference/pallets/DCA#terminated) | [`handleDcaScheduleTerminated`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/dca/dcaSchedule.ts#L247) |
+| [Dca.TradeExecuted](/reference/pallets/DCA#tradeexecuted) | [`handleDcaTradeExecuted`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/dca/dcaScheduleExecution.ts#L110) |
+| [Dca.TradeFailed](/reference/pallets/DCA#tradefailed) | [`handleDcaTradeFailed`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/dca/dcaScheduleExecution.ts#L174) |
+
+## Example Query
+
+```graphql
+query GetDispatchErrors {
+  dispatchErrors(limit: 10) {
+    kind
+    index
+    error
+  }
+}
+```
+
+## References
+
+### Runtime (2)
+
+- [Dispatcher](/reference/pallets/Dispatcher)
+- [DCA](/reference/pallets/DCA)

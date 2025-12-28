@@ -1,0 +1,93 @@
+---
+title: Swap
+description: Indexer entity documentation
+sidebar_label: Swap
+---
+
+# Swap
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 23 |
+| Nullable Fields | 8 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/swap.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type Swap {
+  id: ID!
+  operationId: String
+  traceIds: [String!
+  swapIndex: Int
+  swapper: Account!
+  filler: Account!
+  fillerType: SwapFillerType!
+  operationType: TradeOperationType!
+  inputs: [SwapAssetBalance!
+  field: "swap")
+  outputs: [SwapAssetBalance!
+  field: "swap")
+  fees: [SwapFee!
+  field: "swap")
+  allInvolvedAssetIds: [String!
+  allInvolvedAssetRegistryIds: [String!
+  dcaScheduleExecutionEvent: DcaScheduleExecutionEvent
+  otcOrderFulfillment: OtcOrderEvent
+  routedTrade: RoutedTrade
+  paraTimestamp: DateTime!
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  event: Event!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface Swap {
+  id: string;
+  operationId: string | null;
+  traceIds: [String;
+  swapIndex: number | null;
+  swapper: Account;
+  filler: Account;
+  fillerType: SwapFillerType;
+  operationType: TradeOperationType;
+  inputs: [SwapAssetBalance;
+  field: "swap") | null;
+  outputs: [SwapAssetBalance;
+  field: "swap") | null;
+  fees: [SwapFee;
+  field: "swap") | null;
+  allInvolvedAssetIds: [String;
+  allInvolvedAssetRegistryIds: [String;
+  dcaScheduleExecutionEvent: DcaScheduleExecutionEvent | null;
+  otcOrderFulfillment: OtcOrderEvent | null;
+  routedTrade: RoutedTrade | null;
+  paraTimestamp: Date;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  event: Event;
+}
+```
+
+## Example Query
+
+```graphql
+query GetSwaps {
+  swaps(limit: 10) {
+    id
+    operationId
+    traceIds
+    swapIndex
+    swapper
+    # ... more fields
+  }
+}
+```

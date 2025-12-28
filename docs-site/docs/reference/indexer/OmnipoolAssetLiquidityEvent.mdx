@@ -1,0 +1,75 @@
+---
+title: OmnipoolAssetLiquidityEvent
+description: Indexer entity documentation
+sidebar_label: OmnipoolAssetLiquidityEvent
+---
+
+# OmnipoolAssetLiquidityEvent
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 11 |
+| Nullable Fields | 2 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/omnipoolAssetLiquidityEvent.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type OmnipoolAssetLiquidityEvent {
+  id: ID!
+  traceIds: [String!
+  assetId: String!
+  actionType: LiquidityActionEvent!
+  accountId: String!
+  positionId: String!
+  positionEvent: OmnipoolLiquidityPositionEvent
+  amount: BigInt!
+  fee: BigInt
+  paraBlockHeight: Int!
+  eventId: String!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface OmnipoolAssetLiquidityEvent {
+  id: string;
+  traceIds: [String;
+  assetId: string;
+  actionType: LiquidityActionEvent;
+  accountId: string;
+  positionId: string;
+  positionEvent: OmnipoolLiquidityPositionEvent | null;
+  amount: bigint;
+  fee: bigint | null;
+  paraBlockHeight: number;
+  eventId: string;
+}
+```
+
+## Example Query
+
+```graphql
+query GetOmnipoolAssetLiquidityEvents {
+  omnipoolAssetLiquidityEvents(limit: 10) {
+    id
+    traceIds
+    assetId
+    actionType
+    accountId
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [Omnipool](/reference/pallets/Omnipool)

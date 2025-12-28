@@ -1,0 +1,89 @@
+---
+title: OmnipoolAsset
+description: Indexer entity documentation
+sidebar_label: OmnipoolAsset
+---
+
+# OmnipoolAsset
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 12 |
+| Nullable Fields | 3 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/omnipoolAsset.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type OmnipoolAsset {
+  id: ID!
+  pool: Omnipool!
+  asset: Asset!
+  addedAtParaBlockHeight: Int!
+  addedAtRelayBlockHeight: Int!
+  addedAtBlock: Block!
+  isRemoved: Boolean
+  lifeStates: [OmnipoolAssetLifeState!
+  historicalVolume: [OmnipoolAssetVolumeHistoricalData!
+  field: "omnipoolAsset")
+  historicalData: [OmnipoolAssetHistoricalData!
+  field: "omnipoolAsset")
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface OmnipoolAsset {
+  id: string;
+  pool: Omnipool;
+  asset: Asset;
+  addedAtParaBlockHeight: number;
+  addedAtRelayBlockHeight: number;
+  addedAtBlock: Block;
+  isRemoved: boolean | null;
+  lifeStates: [OmnipoolAssetLifeState;
+  historicalVolume: [OmnipoolAssetVolumeHistoricalData;
+  field: "omnipoolAsset") | null;
+  historicalData: [OmnipoolAssetHistoricalData;
+  field: "omnipoolAsset") | null;
+}
+```
+
+## Source Handlers
+
+This entity is populated by the following runtime events and handlers:
+
+| Runtime Event | Handler |
+|---------------|---------|
+| [Omnipool.BuyExecuted](/reference/pallets/Omnipool#buyexecuted) | [`omnipoolBuySellExecuted`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/buySellOperations/omnipoolOperations/index.ts#L47) |
+| [Omnipool.SellExecuted](/reference/pallets/Omnipool#sellexecuted) | [`omnipoolBuySellExecuted`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/buySellOperations/omnipoolOperations/index.ts#L47) |
+| [Xyk.BuyExecuted](/reference/pallets/XYK#buyexecuted) | [`xykSellExecuted`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/buySellOperations/xykPoolOperations/xykPoolOperation.ts#L84) |
+| [Xyk.SellExecuted](/reference/pallets/XYK#sellexecuted) | [`xykSellExecuted`](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/handlers/buySellOperations/xykPoolOperations/xykPoolOperation.ts#L84) |
+
+## Example Query
+
+```graphql
+query GetOmnipoolAssets {
+  omnipoolAssets(limit: 10) {
+    id
+    pool
+    asset
+    addedAtParaBlockHeight
+    addedAtRelayBlockHeight
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (2)
+
+- [Omnipool](/reference/pallets/Omnipool)
+- [XYK](/reference/pallets/XYK)

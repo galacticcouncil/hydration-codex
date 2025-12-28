@@ -1,0 +1,1088 @@
+---
+title: "@galacticcouncil/xc-cfg"
+description: SDK package documentation
+sidebar_label: xc-cfg
+---
+
+# @galacticcouncil/xc-cfg
+
+Cross-chain hydradx & basilisk dapp configuration
+
+**Version:** 0.4.2 | **Methods:** 115
+
+**Links:** [GitHub](https://github.com/galacticcouncil/sdk/tree/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg) | [npm](https://www.npmjs.com/package/@galacticcouncil/xc-cfg)
+
+## Installation
+
+```bash
+npm install @galacticcouncil/xc-cfg
+```
+
+## Functions
+
+### assetConversion
+
+```typescript
+function assetConversion(): { swapTokensForExactTokens: (opts: SwapOpts) => ExtrinsicConfigBuilder; }
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/assetConversion.ts#L51)
+
+### AssetMinBuilder
+
+```typescript
+function AssetMinBuilder(): { assetRegistry: typeof assetRegistry; assets: typeof assets; }
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/AssetMinBuilder.ts#L6)
+
+### assets
+
+```typescript
+function assets(): { transfer: () => ExtrinsicConfigBuilder; }
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/assets.ts#L36)
+
+### balance
+
+```typescript
+function balance(): BalanceConfigBuilder
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/configs/kusama/basilisk/configs.ts#L7)
+
+### balance
+
+```typescript
+function balance(): BalanceConfigBuilder
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/configs/polkadot/hydration/configs.ts#L7)
+
+### BalanceBuilder
+
+```typescript
+function BalanceBuilder(): { evm: typeof import("/root/hydration-codex/repos/sdk/packages/xc-cfg/src/builde...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/BalanceBuilder.ts#L6)
+
+### balances
+
+```typescript
+function balances(): { transferAll: (keepAlive?: boolean) => ExtrinsicConfigBuilder; }
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/balances.ts#L25)
+
+### Batch
+
+```typescript
+function Batch(): { batchAll: (configs: ContractConfigBuilder[]) => ContractConfigBuilder; }
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/contracts/Batch.ts#L33)
+
+### bridgeLocation
+
+```typescript
+function bridgeLocation(ethChainId: number): { parents: number; interior: any; }
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/xcm/utils/instructions.ts#L15)
+
+### buildERC20TransferFromPara
+
+```typescript
+function buildERC20TransferFromPara(asset: Asset, chain: Parachain): XcmV4Instruction[]
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/xcm/builder/buildERC20TransferFromPara.ts#L24)
+
+### buildParaERC20Received
+
+```typescript
+function buildParaERC20Received(asset: Asset, chain: Parachain): XcmV4Instruction[]
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/xcm/builder/buildParaERC20Received.ts#L22)
+
+### ContractBuilder
+
+```typescript
+function ContractBuilder(): { Batch: () => { batchAll: (configs: ContractConfigBuilder[]) => ContractConfigB...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/ContractBuilder.ts#L7)
+
+### Erc20
+
+```typescript
+function Erc20(): { approve: (getSpender: (ctx: Wh) => string | undefined) => ContractConfigBuilder; }
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/contracts/Erc20.ts#L10)
+
+### erc20Location
+
+```typescript
+function erc20Location(ethChainId: number, tokenAddress: string): { parents: number; interior: any; }
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/xcm/utils/instructions.ts#L29)
+
+### erc20LocationReanchored
+
+```typescript
+function erc20LocationReanchored(tokenAddress: string): { parents: number; interior: any; }
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/xcm/utils/instructions.ts#L43)
+
+### ethereumXcm
+
+```typescript
+function ethereumXcm(): { transact: (config: ContractConfigBuilder) => ExtrinsicConfigBuilder; }
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/xcm/ethereumXcm.ts#L57)
+
+### evm
+
+```typescript
+function evm(): { erc20: typeof erc20; native: typeof native; }
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/balance/evm.ts#L7)
+
+### ExtrinsicBuilder
+
+```typescript
+function ExtrinsicBuilder(): { assetConversion: () => { swapTokensForExactTokens: (opts: SwapOpts) => Extrins...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/ExtrinsicBuilder.ts#L14)
+
+### ExtrinsicDecorator
+
+```typescript
+function ExtrinsicDecorator(predicate: (params: ExtrinsicConfigBuilderParams) => boolean, extrinsic: ExtrinsicConfigBuilder): { prior: (config: ExtrinsicConfigBuilder) => ExtrinsicConfigBuilder; priorMulti:...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/ExtrinsicBuilder.ts#L28)
+
+### fee
+
+```typescript
+function fee(): FeeConfig
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/configs/kusama/basilisk/configs.ts#L26)
+
+### fee
+
+```typescript
+function fee(): FeeConfig
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/configs/polkadot/hydration/configs.ts#L27)
+
+### FeeAmountBuilder
+
+```typescript
+function FeeAmountBuilder(): { Snowbridge: typeof Snowbridge; Wormhole: typeof Wormhole; }
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/FeeAmountBuilder.ts#L139)
+
+### FeeAssetBuilder
+
+```typescript
+function FeeAssetBuilder(): { multiTransactionPayment: () => { accountCurrencyMap: typeof accountCurrencyMap; }; }
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/FeeAssetBuilder.ts#L29)
+
+### formatAssetIdToERC20
+
+```typescript
+function formatAssetIdToERC20(id: string): string
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/contracts/Xtokens.utils.ts#L74)
+
+### getDerivativeAccount
+
+```typescript
+function getDerivativeAccount(from: Parachain, fromAddress: string, to: Parachain): any
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/xcm/utils/account.ts#L30)
+
+### getDestinationMultilocation
+
+Build destination multilocation
+
+01: AccountId32
+03: AccountKey20
+
+```typescript
+function getDestinationMultilocation(address: string, destination: Parachain): DestinationMultilocation
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/contracts/Xtokens.utils.ts#L53)
+
+### getExtrinsicAccount
+
+```typescript
+function getExtrinsicAccount(address: string): any
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/xcm/utils/account.ts#L9)
+
+### getExtrinsicAssetLocation
+
+Normalizes an asset location to the specified XCM version format
+
+```typescript
+function getExtrinsicAssetLocation(assetLocation: Record<string, any>, version: import("/root/hydration-codex/repos/sdk/...): any
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/xcm/utils/location.ts#L11)
+
+### getTypedApi
+
+Helper to get TypedApi from PolkadotClient using Hydration descriptor
+
+This uses the Hydration descriptor which works for Hydration and compatible chains.
+The descriptor provides full type safety for queries, transactions, and runtime APIs.
+
+```typescript
+function getTypedApi(client: PolkadotClient): TypedApi<any>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/utils/papi.ts#L13)
+
+### locationOrError
+
+```typescript
+function locationOrError(chain: Parachain, asset: Asset): any
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/xcm/utils/guard.ts#L3)
+
+### MoveBuilder
+
+```typescript
+function MoveBuilder(): { Wormhole: typeof import("/root/hydration-codex/repos/sdk/packages/xc-cfg/src/b...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/MoveBuilder.ts#L3)
+
+### normalizeLocation
+
+```typescript
+function normalizeLocation(assetLocation: Record<string, any>): Record<string, any>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/xcm/utils/location.ts#L29)
+
+### padFeeByPercentage
+
+```typescript
+function padFeeByPercentage(fee: bigint, padPercent: bigint): bigint
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/utils/amount.ts#L1)
+
+### parachainLocation
+
+```typescript
+function parachainLocation(paraId: number): { parents: number; interior: any; }
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/xcm/utils/instructions.ts#L22)
+
+### parseAssetId
+
+```typescript
+function parseAssetId(assetId: ChainAssetId): any
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/utils/asset.ts#L3)
+
+### polkadotXcm
+
+```typescript
+function polkadotXcm(): { limitedReserveTransferAssets: () => ExtrinsicConfigBuilder; limitedTeleportAss...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/xcm/polkadotXcm.ts#L419)
+
+### ProgramBuilder
+
+```typescript
+function ProgramBuilder(): { Wormhole: typeof import("/root/hydration-codex/repos/sdk/packages/xc-cfg/src/b...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/ProgramBuilder.ts#L3)
+
+### router
+
+```typescript
+function router(): { buy: (opts: SwapOpts) => ExtrinsicConfigBuilder; }
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/router.ts#L51)
+
+### shouldFeeAssetPrecede
+
+```typescript
+function shouldFeeAssetPrecede(transferAssetLocation: any, transferFeeLocation: any): boolean
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/xcm/utils/fee.ts#L3)
+
+### Snowbridge
+
+```typescript
+function Snowbridge(): { sendToken: () => ContractConfigBuilder; }
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/contracts/Snowbridge.ts#L48)
+
+### solana
+
+```typescript
+function solana(): { native: typeof native; token: typeof token; }
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/balance/solana.ts#L6)
+
+### substrate
+
+```typescript
+function substrate(): { assets: typeof assets; system: typeof system; tokens: typeof tokens; ormlToken...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/balance/substrate.ts#L8)
+
+### sui
+
+```typescript
+function sui(): { native: typeof native; }
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/balance/sui.ts#L3)
+
+### toAsset
+
+```typescript
+function toAsset(external: ExternalAsset): Asset
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/configs/HydrationConfigService.utils.ts#L4)
+
+### toAsset
+
+```typescript
+function toAsset(assetLocation: object, amount: any): { id: object; fun: any; }
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/xcm/polkadotXcm.utils.ts#L123)
+
+### toAsset
+
+```typescript
+function toAsset(assetLocation: object, amount: any): { id: object; fun: any; }
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/xcm/xTokens.utils.ts#L37)
+
+### toAsset
+
+```typescript
+function toAsset(assetLocation: object, amount: any): { id: object; fun: any; }
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/xcm/xTransfer.utils.ts#L18)
+
+### toBeneficiary
+
+```typescript
+function toBeneficiary(version: import("/root/hydration-codex/repos/sdk/..., account: any): { type: import("/root/hydration-codex/repos/sdk/packages/xc-cfg/src/builders/ext...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/xcm/polkadotXcm.utils.ts#L95)
+
+### toBridgeXcmOnDest
+
+Instructions are executed in 2 steps:
+
+1) SetAppendix - Error Handling, return everything to sender on Asset hub
+2) InitiateReserveWithdraw - Initiate the bridged transfer
+
+```typescript
+function toBridgeXcmOnDest(version: import("/root/hydration-codex/repos/sdk/..., account: any, sender: any, transferAssetLocation: { parents: number; interior: XcmV3Junctions; }, messageId: any): { type: import("/root/hydration-codex/repos/sdk/packages/xc-cfg/src/builders/ext...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/xcm/polkadotXcm.utils.ts#L264)
+
+### toDepositXcmOnDest
+
+```typescript
+function toDepositXcmOnDest(version: import("/root/hydration-codex/repos/sdk/..., account: any): { type: import("/root/hydration-codex/repos/sdk/packages/xc-cfg/src/builders/ext...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/xcm/polkadotXcm.utils.ts#L130)
+
+### toDest
+
+```typescript
+function toDest(version: import("/root/hydration-codex/repos/sdk/..., source: Parachain, destination: Parachain): { type: import("/root/hydration-codex/repos/sdk/packages/xc-cfg/src/builders/ext...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/xcm/polkadotXcm.utils.ts#L49)
+
+### toDest
+
+```typescript
+function toDest(version: import("/root/hydration-codex/repos/sdk/..., destination: Parachain, account: any): { type: import("/root/hydration-codex/repos/sdk/packages/xc-cfg/src/builders/ext...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/xcm/xTokens.utils.ts#L10)
+
+### toDest
+
+```typescript
+function toDest(destination: Parachain, account: any): { parents: number; interior: any; }
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/xcm/xTransfer.utils.ts#L8)
+
+### toHubAsset
+
+```typescript
+function toHubAsset(external: ExternalAsset): ChainAssetData
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/configs/HydrationConfigService.utils.ts#L13)
+
+### toHubExtTemplate
+
+```typescript
+function toHubExtTemplate(asset: Asset): AssetRoute
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/configs/polkadot/hydration/templates.ts#L65)
+
+### toHubWithCexFwdTemplate
+
+```typescript
+function toHubWithCexFwdTemplate(asset: Asset, hubFee: number, hubTransfer: ExtrinsicConfigBuilder): AssetRoute
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/configs/polkadot/hydration/templates.ts#L90)
+
+### toHydrationAsset
+
+```typescript
+function toHydrationAsset(external: ExternalAsset): ChainAssetData
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/configs/HydrationConfigService.utils.ts#L38)
+
+### toHydrationErc20Template
+
+```typescript
+function toHydrationErc20Template(asset: Asset, destinationFee: number): AssetRoute
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/configs/polkadot/moonbeam/templates.ts#L65)
+
+### toHydrationExtTemplate
+
+```typescript
+function toHydrationExtTemplate(asset: Asset): AssetRoute
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/configs/polkadot/assethub/templates.ts#L143)
+
+### toHydrationViaSnowbridgeTemplate
+
+```typescript
+function toHydrationViaSnowbridgeTemplate(assetIn: Asset, assetOut: Asset): any
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/configs/evm/ethereum/templates.ts#L46)
+
+### toHydrationViaWormholeTemplate
+
+```typescript
+function toHydrationViaWormholeTemplate(assetIn: Asset, assetOut: Asset): AssetRoute
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/configs/evm/ethereum/templates.ts#L12)
+
+### toHydrationXcTemplate
+
+```typescript
+function toHydrationXcTemplate(asset: Asset, destinationFee: number): AssetRoute
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/configs/polkadot/moonbeam/templates.ts#L72)
+
+### TokenBridge
+
+```typescript
+function TokenBridge(): { transferTokens: () => ContractConfigBuilder; transferTokensWithPayload: () => ...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/contracts/Wormhole/TokenBridge.ts#L156)
+
+### TokenBridge
+
+```typescript
+function TokenBridge(): { transferNativeWithPayload: () => { viaMrl: (opts: TransferMrlOpts) => MoveConfigBuilder; }; }
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/moves/Wormhole/TokenBridge.ts#L132)
+
+### TokenBridge
+
+```typescript
+function TokenBridge(): { transferNativeWithPayload: () => { viaMrl: (opts: TransferMrlOpts) => ProgramC...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/programs/Wormhole/TokenBridge.ts#L219)
+
+### TokenRelayer
+
+```typescript
+function TokenRelayer(): { transferTokensWithRelay: () => ContractConfigBuilder; }
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/contracts/Wormhole/TokenRelayer.ts#L40)
+
+### toMoonbeamErc20Template
+
+```typescript
+function toMoonbeamErc20Template(asset: Asset): AssetRoute
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/configs/polkadot/hydration/templates.ts#L152)
+
+### toMoonbeamExtTemplate
+
+```typescript
+function toMoonbeamExtTemplate(asset: Asset): AssetRoute
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/configs/polkadot/assethub/templates.ts#L147)
+
+### toParaErc20Template
+
+```typescript
+function toParaErc20Template(asset: Asset, destination: AnyChain, destinationFee: number): AssetRoute
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/configs/polkadot/hydration/templates.ts#L123)
+
+### toParaReservesWithSwapTemplate
+
+```typescript
+function toParaReservesWithSwapTemplate(asset: Asset, destination: AnyChain, destinationFee: number): AssetRoute
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/configs/polkadot/assethub/templates.ts#L75)
+
+### toParaStablesTemplate
+
+```typescript
+function toParaStablesTemplate(asset: Asset, destination: AnyChain, destinationFee: number): AssetRoute
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/configs/kusama/assethub/templates.ts#L15)
+
+### toParaStablesTemplate
+
+```typescript
+function toParaStablesTemplate(asset: Asset, destination: AnyChain, destinationFee: number): AssetRoute
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/configs/polkadot/assethub/templates.ts#L110)
+
+### toTransactMessage
+
+Instructions are executed in 3 steps:
+
+1) WithdrawAsset - Withdraw fee asset from the target account
+2) BuyExecution - Buy execution with the fee asset
+3) Transact - Destination (Transact) chain call execution
+
+Note that DepositAsset using AllCounted and not All, since All
+has too high of a gas requirement.
+
+```typescript
+function toTransactMessage(version: import("/root/hydration-codex/repos/sdk/..., account: any, transactFeeLocation: { parents: number; interior: XcmV3Junctions; }, transactFeeAmount: any, transactCall: Binary, transactWeight: TxWeight): { type: import("/root/hydration-codex/repos/sdk/packages/xc-cfg/src/builders/ext...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/xcm/polkadotXcm.utils.ts#L360)
+
+### toTransferMessage
+
+```typescript
+function toTransferMessage(version: import("/root/hydration-codex/repos/sdk/..., account: any, transferAssetLocation: { parents: number; interior: XcmV3Junctions; }, transferAssetAmount: any, transferFeeAmount: any, receiver: any): { type: import("/root/hydration-codex/repos/sdk/packages/xc-cfg/src/builders/ext...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/xcm/polkadotXcm.utils.ts#L404)
+
+### toTransferTemplate
+
+```typescript
+function toTransferTemplate(asset: Asset, destination: AnyChain, destinationFee: number): AssetRoute
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/configs/kusama/basilisk/templates.ts#L7)
+
+### toTransferTemplate
+
+```typescript
+function toTransferTemplate(asset: Asset, destination: AnyChain, destinationFee: number): AssetRoute
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/configs/polkadot/hydration/templates.ts#L39)
+
+### toTransferType
+
+```typescript
+function toTransferType(version: import("/root/hydration-codex/repos/sdk/..., type: import("/root/hydration-codex/repos/sdk/..., assetLocation: any): { type: string; value: { type: import("/root/hydration-codex/repos/sdk/packages/...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/xcm/polkadotXcm.utils.ts#L105)
+
+### toZeitgeistErc20Template
+
+```typescript
+function toZeitgeistErc20Template(asset: Asset): AssetRoute
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/configs/polkadot/hydration/templates.ts#L156)
+
+### utility
+
+```typescript
+function utility(): { batchAll: (configs: ExtrinsicConfigBuilder[]) => { build: (params: ExtrinsicCo...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/utility.ts#L26)
+
+### viaSnowbridgeTemplate
+
+```typescript
+function viaSnowbridgeTemplate(assetIn: Asset, assetOut: Asset, to: AnyChain): AssetRoute
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/configs/polkadot/hydration/templates.ts#L252)
+
+### viaWormholeBridgeTemplate
+
+```typescript
+function viaWormholeBridgeTemplate(assetIn: Asset, assetOut: Asset, to: AnyChain): AssetRoute
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/configs/polkadot/hydration/templates.ts#L208)
+
+### viaWormholeRelayerTemplate
+
+```typescript
+function viaWormholeRelayerTemplate(assetIn: Asset, assetOut: Asset, to: AnyChain): AssetRoute
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/configs/polkadot/hydration/templates.ts#L230)
+
+### Wormhole
+
+```typescript
+function Wormhole(): { TokenBridge: () => { transferTokens: () => ContractConfigBuilder; transferToke...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/contracts/Wormhole/index.ts#L4)
+
+### Wormhole
+
+```typescript
+function Wormhole(): { TokenBridge: () => { transferNativeWithPayload: () => { viaMrl: (opts: Transfe...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/moves/Wormhole/index.ts#L3)
+
+### Wormhole
+
+```typescript
+function Wormhole(): { TokenBridge: () => { transferNativeWithPayload: () => { viaMrl: (opts: Transfe...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/programs/Wormhole/index.ts#L3)
+
+### xTokens
+
+```typescript
+function xTokens(): { transfer: () => ExtrinsicConfigBuilder; transferMultiasset: () => ExtrinsicCon...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/xcm/xTokens.ts#L214)
+
+### Xtokens
+
+```typescript
+function Xtokens(): { transfer: (weight?: bigint) => ContractConfigBuilder; transferMultiCurrencies:...
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/contracts/Xtokens.ts#L17)
+
+### xTransfer
+
+```typescript
+function xTransfer(): { transfer: () => ExtrinsicConfigBuilder; }
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/builders/extrinsics/xcm/xTransfer.ts#L50)
+
+## AcalaEvmResolver
+
+### toH160
+
+```typescript
+async toH160(ss58Addr: string, api: any): Promise<string>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/resolvers/acala.ts#L15)
+
+## AssethubClient
+
+### calculateDeliveryFee
+
+```typescript
+async calculateDeliveryFee(xcm: XcmV4Instruction[], destParachainId: number): Promise<bigint>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/clients/chain/assethub.ts#L92)
+
+### checkIfFrozen
+
+```typescript
+async checkIfFrozen(address: string, asset: Asset): Promise<boolean>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/clients/chain/assethub.ts#L42)
+
+### checkIfSufficient
+
+```typescript
+async checkIfSufficient(asset: Asset): Promise<boolean>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/clients/chain/assethub.ts#L21)
+
+### getAssetMin
+
+```typescript
+async getAssetMin(asset: Asset): Promise<bigint>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/clients/chain/assethub.ts#L61)
+
+### getBridgeDeliveryFee
+
+```typescript
+async getBridgeDeliveryFee(options: { defaultFee: bigint; }): Promise<bigint>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/clients/chain/assethub.ts#L69)
+
+## AssethubDex
+
+### getCalldata
+
+```typescript
+async getCalldata(_account: string, _assetIn: Asset, _assetOut: Asset, _amountOut: AssetAmount): Promise<string>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/dex/assethub.ts#L22)
+
+### getQuote
+
+```typescript
+async getQuote(assetIn: Asset, assetOut: Asset, amountOut: AssetAmount): Promise<SwapQuote>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/dex/assethub.ts#L31)
+
+## BaseClient
+
+### api
+
+```typescript
+api(): TypedApi<C>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/clients/base.ts#L24)
+
+### calculateDestinationFee
+
+```typescript
+async calculateDestinationFee(xcm: XcmV4Instruction[], asset: Asset): Promise<bigint>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/clients/base.ts#L39)
+
+### getSystemAccountBalance
+
+```typescript
+async getSystemAccountBalance(address: string): Promise<bigint>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/clients/base.ts#L32)
+
+## DestFeeValidation
+
+### getMin
+
+```typescript
+async getMin(chain: AnyChain, destFee: AssetAmount): Promise<bigint>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/validations/base.ts#L62)
+
+### validate
+
+```typescript
+async validate(ctx: TransferCtx): Promise<void>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/validations/base.ts#L38)
+
+## FeeValidation
+
+### validate
+
+```typescript
+async validate(ctx: TransferCtx): Promise<void>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/validations/base.ts#L13)
+
+## HubEdValidation
+
+### validate
+
+```typescript
+async validate(ctx: TransferCtx): Promise<void>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/validations/chain/assethub.ts#L21)
+
+## HubFrozenValidation
+
+### validate
+
+```typescript
+async validate(ctx: TransferCtx): Promise<void>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/validations/chain/assethub.ts#L45)
+
+## HydrationClient
+
+### checkIfSufficient
+
+```typescript
+async checkIfSufficient(asset: Asset): Promise<boolean>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/clients/chain/hydration.ts#L11)
+
+### getAssetBalance
+
+```typescript
+async getAssetBalance(address: string, asset: string): Promise<bigint>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/clients/chain/hydration.ts#L35)
+
+### getFeeAsset
+
+```typescript
+async getFeeAsset(address: string): Promise<string>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/clients/chain/hydration.ts#L23)
+
+### getSystemAccountBalance
+
+```typescript
+async getSystemAccountBalance(address: string): Promise<bigint>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/clients/chain/hydration.ts#L42)
+
+### getTokensAccountsBalance
+
+```typescript
+async getTokensAccountsBalance(address: string, asset: string): Promise<bigint>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/clients/chain/hydration.ts#L49)
+
+## HydrationConfigService
+
+### registerExternal
+
+```typescript
+registerExternal(external: ExternalAsset[]): void
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/configs/HydrationConfigService.ts#L14)
+
+## HydrationDex
+
+### getCalldata
+
+```typescript
+async getCalldata(account: string, assetIn: Asset, assetOut: Asset, amountOut: AssetAmount, slippage: number): Promise<string>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/dex/hydration.ts#L44)
+
+### getQuote
+
+```typescript
+async getQuote(assetIn: Asset, assetOut: Asset, amountOut: AssetAmount, fallbackPrice: boolean | undefined): Promise<SwapQuote>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/dex/hydration.ts#L72)
+
+## HydrationEdValidation
+
+### validate
+
+```typescript
+async validate(ctx: TransferCtx): Promise<void>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/validations/chain/hydration.ts#L30)
+
+## HydrationEvmResolver
+
+### toH160
+
+```typescript
+async toH160(ss58Addr: string): Promise<string>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/resolvers/hydration.ts#L7)
+
+## HydrationMrlFeeValidation
+
+### validate
+
+```typescript
+async validate(ctx: TransferCtx): Promise<void>
+```
+
+[Source](https://github.com/galacticcouncil/sdk/blob/f8d2c9384c4deb5998992fd4ed558d04cbd32786/packages/xc-cfg/src/validations/chain/hydration.ts#L69)
+
+## References
+
+### UI (88)
+
+- [useAccountInfo](/reference/hooks/account/useAccountInfo)
+- [useAccountOmnipoolPositions](/reference/hooks/account/useAccountOmnipoolPositions)
+- [useAccountOmnipoolMiningPositions](/reference/hooks/account/useAccountOmnipoolMiningPositions)
+- [useAccountXykMiningPositions](/reference/hooks/account/useAccountXykMiningPositions)
+- [useAccountUniques](/reference/hooks/account/useAccountUniques)
+- [useAccountPermitNonce](/reference/hooks/account/useAccountPermitNonce)
+- [useRelayChainBlockNumber](/reference/hooks/chain/useRelayChainBlockNumber)
+- [useBestNumber](/reference/hooks/chain/useBestNumber)
+- [useInvalidateOnBlock](/reference/hooks/chain/useInvalidateOnBlock)
+- [useEstimateFutureBlockTimestamp](/reference/hooks/chain/useEstimateFutureBlockTimestamp)
+- [useBlockTimestamp](/reference/hooks/chain/useBlockTimestamp)
+- [useChainSpecData](/reference/hooks/chain/useChainSpecData)
+- [useBindEvmAccount](/reference/hooks/transactions/useBindEvmAccount)
+- [usePermitNonce](/reference/hooks/transactions/usePermitNonce)
+- [useOmnipoolAssetsData](/reference/hooks/omnipool/useOmnipoolAssetsData)
+- [useMaxAddLiquidityLimit](/reference/hooks/omnipool/useMaxAddLiquidityLimit)
+- [useOmnipoolMinLiquidity](/reference/hooks/omnipool/useOmnipoolMinLiquidity)
+- [useMinWithdrawalFee](/reference/hooks/omnipool/useMinWithdrawalFee)
+- [useAssetFeeParameters](/reference/hooks/omnipool/useAssetFeeParameters)
+- [useOraclePrice](/reference/hooks/omnipool/useOraclePrice)
+- [useAcceptedFeePaymentAssets](/reference/hooks/transactions/useAcceptedFeePaymentAssets)
+- [useAccountFeePaymentAssetId](/reference/hooks/transactions/useAccountFeePaymentAssetId)
+- [useAccountFeePaymentAssets](/reference/hooks/transactions/useAccountFeePaymentAssets)
+- [useSetFeePaymentAsset](/reference/hooks/transactions/useSetFeePaymentAsset)
+- [useStableswap](/reference/hooks/stableswap/useStableswap)
+- [useStableSwapTradability](/reference/hooks/stableswap/useStableSwapTradability)
+- [useInvalidateStakeData](/reference/hooks/staking/useInvalidateStakeData)
+- [useXYKPoolWithLiquidity](/reference/hooks/xyk/useXYKPoolWithLiquidity)
+- [useXYKConsts](/reference/hooks/xyk/useXYKConsts)
+- [useXykShareTokenEntries](/reference/hooks/xyk/useXykShareTokenEntries)
+- [useBorrowIncentives](/reference/hooks/borrow/useBorrowIncentives)
+- [useBorrowReserves](/reference/hooks/borrow/useBorrowReserves)
+- [userBorrowReservesQuery](/reference/hooks/borrow/userBorrowReservesQuery)
+- [useUserBorrowReserves](/reference/hooks/borrow/useUserBorrowReserves)
+- [useBorrowUserIncentives](/reference/hooks/borrow/useBorrowUserIncentives)
+- [useGhoReserveData](/reference/hooks/borrow/useGhoReserveData)
+- [useGhoUserData](/reference/hooks/borrow/useGhoUserData)
+- [userBorrowSummaryQuery](/reference/hooks/borrow/userBorrowSummaryQuery)
+- [useUserBorrowSummary](/reference/hooks/borrow/useUserBorrowSummary)
+- [useGetClaimAllBorrowRewardsTx](/reference/hooks/borrow/useGetClaimAllBorrowRewardsTx)
+- [useClaimStaking](/reference/hooks/staking/useClaimStaking)
+- [useStake](/reference/hooks/staking/useStake)
+- [useUnstake](/reference/hooks/staking/useUnstake)
+- [useEstimateFee](/reference/hooks/transactions/useEstimateFee)
+- [useAddIsolatedLiquidityZod](/reference/hooks/liquidity/useAddIsolatedLiquidityZod)
+- [useAddIsolatedLiquidity](/reference/hooks/liquidity/useAddIsolatedLiquidity)
+- [useLiquidityOmnipoolShares](/reference/hooks/liquidity/useLiquidityOmnipoolShares)
+- [useCheckJoinOmnipoolFarm](/reference/hooks/liquidity/useCheckJoinOmnipoolFarm)
+- [useAddToOmnipoolZod](/reference/hooks/liquidity/useAddToOmnipoolZod)
+- [useAddLiquidityForm](/reference/hooks/liquidity/useAddLiquidityForm)
+- [useAddLiquidity](/reference/hooks/liquidity/useAddLiquidity)
+- [useStablepoolAddLiquidity](/reference/hooks/liquidity/useStablepoolAddLiquidity)
+- [useStablepoolAddLiquidityForm](/reference/hooks/liquidity/useStablepoolAddLiquidityForm)
+- [useAssetsToAddToMoneyMarket](/reference/hooks/liquidity/useAssetsToAddToMoneyMarket)
+- [useAssetsToAddToStablepool](/reference/hooks/liquidity/useAssetsToAddToStablepool)
+- [useIsolatedPoolForm](/reference/hooks/liquidity/useIsolatedPoolForm)
+- [useSubmitCreateIsolatedPool](/reference/hooks/liquidity/useSubmitCreateIsolatedPool)
+- [useAllowedXYKPoolAssets](/reference/hooks/liquidity/useAllowedXYKPoolAssets)
+- [useSecondsToLeft](/reference/hooks/liquidity/useSecondsToLeft)
+- [useCurrentFarmPeriod](/reference/hooks/liquidity/useCurrentFarmPeriod)
+- [useEnteredDate](/reference/hooks/liquidity/useEnteredDate)
+- [useLoyaltyRates](/reference/hooks/liquidity/useLoyaltyRates)
+- [useDepositAprs](/reference/hooks/liquidity/useDepositAprs)
+- [useExitDepositFarmsMutation](/reference/hooks/liquidity/useExitDepositFarmsMutation)
+- [useJoinOmnipoolFarms](/reference/hooks/liquidity/useJoinOmnipoolFarms)
+- [useXYKFarmMinShares](/reference/hooks/liquidity/useXYKFarmMinShares)
+- [useMinOmnipoolFarmJoin](/reference/hooks/liquidity/useMinOmnipoolFarmJoin)
+- [useJoinIsolatedPoolFarms](/reference/hooks/liquidity/useJoinIsolatedPoolFarms)
+- [useJoinFarmsForm](/reference/hooks/liquidity/useJoinFarmsForm)
+- [useLiquidityMiningRewards](/reference/hooks/liquidity/useLiquidityMiningRewards)
+- [useClaimPositionRewards](/reference/hooks/liquidity/useClaimPositionRewards)
+- [useSummarizeClaimableValues](/reference/hooks/liquidity/useSummarizeClaimableValues)
+- [useClaimFarmRewardsMutation](/reference/hooks/liquidity/useClaimFarmRewardsMutation)
+- [useRemoveSingleOmnipoolPosition](/reference/hooks/liquidity/useRemoveSingleOmnipoolPosition)
+- [useRemoveMultipleOmnipoolPositions](/reference/hooks/liquidity/useRemoveMultipleOmnipoolPositions)
+- [useRemoveLiquidityForm](/reference/hooks/liquidity/useRemoveLiquidityForm)
+- [useStablepoolRemoveLiquidity](/reference/hooks/liquidity/useStablepoolRemoveLiquidity)
+- [useRemoveStablepoolLiquidityForm](/reference/hooks/liquidity/useRemoveStablepoolLiquidityForm)
+- [useTerminateDcaSchedule](/reference/hooks/trade/useTerminateDcaSchedule)
+- [useSubmitCancelOtcOrder](/reference/hooks/trade/useSubmitCancelOtcOrder)
+- [useSubmitFillOrder](/reference/hooks/trade/useSubmitFillOrder)
+- [useSubmitPlaceOrder](/reference/hooks/trade/useSubmitPlaceOrder)
+- [useUnlockNativeLocks](/reference/hooks/wallet/useUnlockNativeLocks)
+- [useClaimAllWalletRewards](/reference/hooks/wallet/useClaimAllWalletRewards)
+- [useInsufficientTransferFee](/reference/hooks/wallet/useInsufficientTransferFee)
+- [usePaymentFees](/reference/hooks/wallet/usePaymentFees)
+- [useTransferPaymentInfo](/reference/hooks/wallet/useTransferPaymentInfo)
+- [useSubmitTransferPosition](/reference/hooks/wallet/useSubmitTransferPosition)

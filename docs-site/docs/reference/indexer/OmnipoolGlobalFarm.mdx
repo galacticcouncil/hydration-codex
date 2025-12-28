@@ -1,0 +1,99 @@
+---
+title: OmnipoolGlobalFarm
+description: Indexer entity documentation
+sidebar_label: OmnipoolGlobalFarm
+---
+
+# OmnipoolGlobalFarm
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 23 |
+| Nullable Fields | 1 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/omnipoolGlobalFarm.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type OmnipoolGlobalFarm {
+  id: ID!
+  ownerAccountId: String!
+  updatedAtRelayBlock: Int!
+  totalSharesZ: BigInt!
+  accumulatedRpz: BigInt!
+  rewardAssetId: String!
+  pendingRewards: BigInt!
+  accumulatedPaidRewards: BigInt!
+  yieldPerPeriod: BigInt!
+  plannedYieldingPeriods: Int!
+  blocksPerPeriod: Int!
+  incentivizedAssetId: String!
+  maxRewardPerPeriod: BigInt!
+  minDeposit: BigInt!
+  liveYieldFarmsCount: Int!
+  totalYieldFarmsCount: Int!
+  priceAdjustment: BigInt!
+  state: FarmState!
+  lrnaPriceAdjustment: BigInt!
+  totalRewards: BigInt!
+  lifeStates: [FarmLifeState!
+  paraBlockHeight: Int!
+  eventId: String
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface OmnipoolGlobalFarm {
+  id: string;
+  ownerAccountId: string;
+  updatedAtRelayBlock: number;
+  totalSharesZ: bigint;
+  accumulatedRpz: bigint;
+  rewardAssetId: string;
+  pendingRewards: bigint;
+  accumulatedPaidRewards: bigint;
+  yieldPerPeriod: bigint;
+  plannedYieldingPeriods: number;
+  blocksPerPeriod: number;
+  incentivizedAssetId: string;
+  maxRewardPerPeriod: bigint;
+  minDeposit: bigint;
+  liveYieldFarmsCount: number;
+  totalYieldFarmsCount: number;
+  priceAdjustment: bigint;
+  state: FarmState;
+  lrnaPriceAdjustment: bigint;
+  totalRewards: bigint;
+  lifeStates: [FarmLifeState;
+  paraBlockHeight: number;
+  eventId: string | null;
+}
+```
+
+## Example Query
+
+```graphql
+query GetOmnipoolGlobalFarms {
+  omnipoolGlobalFarms(limit: 10) {
+    id
+    ownerAccountId
+    updatedAtRelayBlock
+    totalSharesZ
+    accumulatedRpz
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [Omnipool](/reference/pallets/Omnipool)

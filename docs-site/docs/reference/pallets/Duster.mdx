@@ -1,0 +1,93 @@
+---
+title: Duster
+description: Runtime pallet documentation
+sidebar_label: Duster
+---
+
+# Duster
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this pallet does.
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #61** · HydraDX<br/>
+`pallet-duster/4ca470c5/master`
+
+[GitHub](https://github.com/galacticcouncil/HydraDX-node/tree/4ca470c5d613d62ce52eb8645770ef5fff263111/pallets/duster) · [Subscan](https://hydradx.subscan.io/runtime/Duster)
+
+## Storage (1)
+
+### AccountWhitelist
+
+Accounts excluded from dusting.
+
+```rust
+AccountWhitelist: Map<AccountId32 -> Null> [Blake2_128Concat]
+```
+
+## Extrinsics (3)
+
+### dust_account
+
+```rust
+fn dust_account(
+    origin: OriginFor<T>,
+    account: AccountId32,
+    currencyId: u32,
+)
+```
+
+### whitelist_account
+
+```rust
+fn whitelist_account(
+    origin: OriginFor<T>,
+    account: AccountId32,
+)
+```
+
+### remove_from_whitelist
+
+```rust
+fn remove_from_whitelist(
+    origin: OriginFor<T>,
+    account: AccountId32,
+)
+```
+
+## Events (3)
+
+### Dusted
+
+```rust
+Dusted {
+    who: AccountId32,
+    amount: u128,
+}
+```
+
+### Added
+
+```rust
+Added {
+    who: AccountId32,
+}
+```
+
+### Removed
+
+```rust
+Removed {
+    who: AccountId32,
+}
+```
+
+## Constants (1)
+
+### TreasuryAccountId
+
+Treasury account, which receives the dust.
+
+```rust
+const TreasuryAccountId: AccountId32
+```

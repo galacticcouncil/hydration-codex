@@ -1,0 +1,372 @@
+---
+title: Tokens
+description: Runtime pallet documentation
+sidebar_label: Tokens
+---
+
+# Tokens
+
+## Overview
+
+The tokens module provides fungible multi-currencies functionality that implements `MultiCurrency` trait.
+
+The tokens module provides functions for:
+
+- Querying and setting the balance of a given account.
+- Getting and managing total issuance.
+- Balance transfer between accounts.
+- Depositing and withdrawing balance.
+- Slashing an account balance.
+
+<details>
+<summary>Code Documentation</summary>
+
+### Overview
+
+The tokens module provides fungible multi-currency functionality that
+implements `MultiCurrency` trait.
+
+The tokens module provides functions for:
+
+- Querying and setting the balance of a given account.
+- Getting and managing total issuance.
+- Balance transfer between accounts.
+- Depositing and withdrawing balance.
+- Slashing an account balance.
+
+### Implementations
+
+The tokens module provides implementations for following traits.
+
+- `MultiCurrency` - Abstraction over a fungible multi-currency system.
+- `MultiCurrencyExtended` - Extended `MultiCurrency` with additional helper
+ types and methods, like updating balance by a given signed integer amount.
+
+### Interface
+
+### Dispatchable Functions
+
+- `transfer` - Transfer some balance to another account.
+- `transfer_all` - Transfer all balance to another account.
+
+### Genesis Config
+
+The tokens module depends on the `GenesisConfig`. Endowed accounts could be
+configured in genesis configs.
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #77** · ORML<br/>
+`orml-tokens/60b88b84/polkadot-stable2409`
+
+[GitHub](https://github.com/galacticcouncil/open-runtime-module-library/tree/60b88b84a6abbf8e12a884bf1c3774ff2db1f880/tokens) · [docs.rs](https://docs.rs/crate/orml-tokens/1.0.0/source/) · [crates.io](https://crates.io/crates/orml-tokens) · [Subscan](https://hydradx.subscan.io/runtime/Tokens)
+
+## Storage (4)
+
+### TotalIssuance
+
+The total issuance of a token type.
+
+```rust
+TotalIssuance: Map<u32 -> u128> [Twox64Concat]
+```
+
+### Locks
+
+Any liquidity locks of a token type under an account. NOTE: Should only be accessed when setting, changing and freeing a lock.
+
+```rust
+Locks: Map<(AccountId32, u32) -> Vec<OrmlTokensBalanceLock>> [Blake2_128Concat,  Twox64Concat]
+```
+
+### Accounts
+
+The balance of a token type under an account. NOTE: If the total is ever zero, decrease account ref account. NOTE: This is only used in the case that this module is used to store balances.
+
+```rust
+Accounts: Map<(AccountId32,u32) -> {
+    free: u128,
+    reserved: u128,
+    frozen: u128,
+}> [Blake2_128Concat, Twox64Concat]
+```
+
+**Read by SDK:** [BalanceClient.getTokenBalance](/reference/sdk/sdk#balanceclient), [BalanceClient.subscribeTokenBalance](/reference/sdk/sdk#balanceclient), [BalanceClient.subscribeTokenBalances](/reference/sdk/sdk#balanceclient), [BalanceClientV2.getTokenBalance](/reference/sdk/sdk#balanceclientv2), [BalanceClientV2.subscribeTokenBalance](/reference/sdk/sdk#balanceclientv2), [BalanceClient.subscribeTokensBalance](/reference/sdk/sdk-next#balanceclient), [BaseClient.getTokensAccountsBalance](/reference/sdk/xcm-cfg#baseclient)
+
+### Reserves
+
+Named reserves on some account balances.
+
+```rust
+Reserves: Map<(AccountId32, u32) -> Vec<OrmlTokensReserveData>> [Blake2_128Concat,  Twox64Concat]
+```
+
+## Extrinsics (5)
+
+### transfer
+
+```rust
+fn transfer(
+    origin: OriginFor<T>,
+    dest: AccountId32,
+    currencyId: u32,
+    amount: Compact<u128>,
+)
+```
+
+### transfer_all
+
+```rust
+fn transfer_all(
+    origin: OriginFor<T>,
+    dest: AccountId32,
+    currencyId: u32,
+    keepAlive: bool,
+)
+```
+
+### transfer_keep_alive
+
+```rust
+fn transfer_keep_alive(
+    origin: OriginFor<T>,
+    dest: AccountId32,
+    currencyId: u32,
+    amount: Compact<u128>,
+)
+```
+
+### force_transfer
+
+```rust
+fn force_transfer(
+    origin: OriginFor<T>,
+    source: AccountId32,
+    dest: AccountId32,
+    currencyId: u32,
+    amount: Compact<u128>,
+)
+```
+
+### set_balance
+
+```rust
+fn set_balance(
+    origin: OriginFor<T>,
+    who: AccountId32,
+    currencyId: u32,
+    newFree: Compact<u128>,
+    newReserved: Compact<u128>,
+)
+```
+
+## Events (17)
+
+### Endowed
+
+```rust
+Endowed {
+    currencyId: u32,
+    who: AccountId32,
+    amount: u128,
+}
+```
+
+### DustLost
+
+```rust
+DustLost {
+    currencyId: u32,
+    who: AccountId32,
+    amount: u128,
+}
+```
+
+### Transfer
+
+```rust
+Transfer {
+    currencyId: u32,
+    from: AccountId32,
+    to: AccountId32,
+    amount: u128,
+}
+```
+
+### Reserved
+
+```rust
+Reserved {
+    currencyId: u32,
+    who: AccountId32,
+    amount: u128,
+}
+```
+
+### Unreserved
+
+```rust
+Unreserved {
+    currencyId: u32,
+    who: AccountId32,
+    amount: u128,
+}
+```
+
+### ReserveRepatriated
+
+```rust
+ReserveRepatriated {
+    currencyId: u32,
+    from: AccountId32,
+    to: AccountId32,
+    amount: u128,
+    status: Lookup32,
+}
+```
+
+### BalanceSet
+
+```rust
+BalanceSet {
+    currencyId: u32,
+    who: AccountId32,
+    free: u128,
+    reserved: u128,
+}
+```
+
+### TotalIssuanceSet
+
+```rust
+TotalIssuanceSet {
+    currencyId: u32,
+    amount: u128,
+}
+```
+
+### Withdrawn
+
+```rust
+Withdrawn {
+    currencyId: u32,
+    who: AccountId32,
+    amount: u128,
+}
+```
+
+### Slashed
+
+```rust
+Slashed {
+    currencyId: u32,
+    who: AccountId32,
+    freeAmount: u128,
+    reservedAmount: u128,
+}
+```
+
+### Deposited
+
+```rust
+Deposited {
+    currencyId: u32,
+    who: AccountId32,
+    amount: u128,
+}
+```
+
+### LockSet
+
+```rust
+LockSet {
+    lockId: [u8;8],
+    currencyId: u32,
+    who: AccountId32,
+    amount: u128,
+}
+```
+
+### LockRemoved
+
+```rust
+LockRemoved {
+    lockId: [u8;8],
+    currencyId: u32,
+    who: AccountId32,
+}
+```
+
+### Locked
+
+```rust
+Locked {
+    currencyId: u32,
+    who: AccountId32,
+    amount: u128,
+}
+```
+
+### Unlocked
+
+```rust
+Unlocked {
+    currencyId: u32,
+    who: AccountId32,
+    amount: u128,
+}
+```
+
+### Issued
+
+```rust
+Issued {
+    currencyId: u32,
+    amount: u128,
+}
+```
+
+### Rescinded
+
+```rust
+Rescinded {
+    currencyId: u32,
+    amount: u128,
+}
+```
+
+## Constants (2)
+
+### MaxLocks
+
+```rust
+const MaxLocks: u32
+```
+
+### MaxReserves
+
+The maximum number of named reserves that can exist on an account.
+
+```rust
+const MaxReserves: u32
+```
+
+## References
+
+### SDK (3)
+
+- [sdk](/reference/sdk/sdk)
+- [sdk-next](/reference/sdk/sdk-next)
+- [xcm-cfg](/reference/sdk/xcm-cfg)
+
+### UI (6)
+
+- [useReferralRewards](/reference/hooks/utils/useReferralRewards)
+- [useClaimAllWalletRewards](/reference/hooks/wallet/useClaimAllWalletRewards)
+- [useWalletRewardsSectionData](/reference/hooks/wallet/useWalletRewardsSectionData)
+- [useInsufficientTransferFee](/reference/hooks/wallet/useInsufficientTransferFee)
+- [useTransferPaymentInfo](/reference/hooks/wallet/useTransferPaymentInfo)
+- [useSubmitTransferPosition](/reference/hooks/wallet/useSubmitTransferPosition)

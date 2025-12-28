@@ -1,0 +1,69 @@
+---
+title: OmnipoolHistoricalData
+description: Indexer entity documentation
+sidebar_label: OmnipoolHistoricalData
+---
+
+# OmnipoolHistoricalData
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 8 |
+| Nullable Fields | 2 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/omnipoolHistoricalData.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type OmnipoolHistoricalData {
+  id: ID!
+  pool: Omnipool!
+  assetsHistoricalData: [OmnipoolAssetHistoricalData!
+  field: "poolHistoricalData")
+  tvlTotalInRefAssetNorm: String
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  block: Block!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface OmnipoolHistoricalData {
+  id: string;
+  pool: Omnipool;
+  assetsHistoricalData: [OmnipoolAssetHistoricalData;
+  field: "poolHistoricalData") | null;
+  tvlTotalInRefAssetNorm: string | null;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  block: Block;
+}
+```
+
+## Example Query
+
+```graphql
+query GetOmnipoolHistoricalDatas {
+  omnipoolHistoricalDatas(limit: 10) {
+    id
+    pool
+    assetsHistoricalData
+    field
+    tvlTotalInRefAssetNorm
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [Omnipool](/reference/pallets/Omnipool)

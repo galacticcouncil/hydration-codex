@@ -1,0 +1,653 @@
+---
+title: Identity
+description: Runtime pallet documentation
+sidebar_label: Identity
+---
+
+# Identity
+
+- `Config`
+- `Call`
+
+### Overview
+
+A federated naming system, allowing for multiple registrars to be added from a specified origin.
+Registrars can set a fee to provide identity-verification service. Anyone can put forth a
+proposed identity for a fixed deposit and ask for review by any number of registrars (paying
+each of their fees). Registrar judgements are given as an `enum`, allowing for sophisticated,
+multi-tier opinions.
+
+Some judgements are identified as *sticky*, which means they cannot be removed except by
+complete removal of the identity, or by the registrar. Judgements are allowed to represent a
+portion of funds that have been reserved for the registrar.
+
+A super-user can remove accounts and in doing so, slash the deposit.
+
+All accounts may also have a limited number of sub-accounts which may be specified by the owner;
+by definition, these have equivalent ownership and each has an individual name.
+
+The number of registrars should be limited, and the deposit made sufficiently large, to ensure
+no state-bloat attack is viable.
+
+#### Usernames
+
+The pallet provides functionality for username authorities to issue usernames. When an account
+receives a username, they get a default instance of `IdentityInfo`. Usernames also serve as a
+reverse lookup from username to account.
+
+Username authorities are given an allocation by governance to prevent state bloat. Usernames
+impose no cost or deposit on the user.
+
+Users can have multiple usernames that map to the same `AccountId`, however one `AccountId` can
+only map to a single username, known as the *primary*.
+
+### Interface
+
+#### Dispatchable Functions
+
+##### For General Users
+- `set_identity` - Set the associated identity of an account; a small deposit is reserved if not
+ already taken.
+- `clear_identity` - Remove an account's associated identity; the deposit is returned.
+- `request_judgement` - Request a judgement from a registrar, paying a fee.
+- `cancel_request` - Cancel the previous request for a judgement.
+- `accept_username` - Accept a username issued by a username authority.
+- `remove_expired_approval` - Remove a username that was issued but never accepted.
+- `set_primary_username` - Set a given username as an account's primary.
+- `remove_dangling_username` - Remove a username that maps to an account without an identity.
+
+##### For General Users with Sub-Identities
+- `set_subs` - Set the sub-accounts of an identity.
+- `add_sub` - Add a sub-identity to an identity.
+- `remove_sub` - Remove a sub-identity of an identity.
+- `rename_sub` - Rename a sub-identity of an identity.
+- `quit_sub` - Remove a sub-identity of an identity (called by the sub-identity).
+
+##### For Registrars
+- `set_fee` - Set the fee required to be paid for a judgement to be given by the registrar.
+- `set_fields` - Set the fields that a registrar cares about in their judgements.
+- `provide_judgement` - Provide a judgement to an identity.
+
+##### For Username Authorities
+- `set_username_for` - Set a username for a given account. The account must approve it.
+
+##### For Superusers
+- `add_registrar` - Add a new registrar to the system.
+- `kill_identity` - Forcibly remove the associated identity; the deposit is lost.
+- `add_username_authority` - Add an account with the ability to issue usernames.
+- `remove_username_authority` - Remove an account with the ability to issue usernames.
+
+`Call`: ./enum.Call.html
+`Config`: ./trait.Config.html
+
+<details>
+<summary>Code Documentation</summary>
+
+- `Config`
+- `Call`
+
+### Overview
+
+A federated naming system, allowing for multiple registrars to be added from a specified origin.
+Registrars can set a fee to provide identity-verification service. Anyone can put forth a
+proposed identity for a fixed deposit and ask for review by any number of registrars (paying
+each of their fees). Registrar judgements are given as an `enum`, allowing for sophisticated,
+multi-tier opinions.
+
+Some judgements are identified as *sticky*, which means they cannot be removed except by
+complete removal of the identity, or by the registrar. Judgements are allowed to represent a
+portion of funds that have been reserved for the registrar.
+
+A super-user can remove accounts and in doing so, slash the deposit.
+
+All accounts may also have a limited number of sub-accounts which may be specified by the owner;
+by definition, these have equivalent ownership and each has an individual name.
+
+The number of registrars should be limited, and the deposit made sufficiently large, to ensure
+no state-bloat attack is viable.
+
+### Usernames
+
+The pallet provides functionality for username authorities to issue usernames. When an account
+receives a username, they get a default instance of `IdentityInfo`. Usernames also serve as a
+reverse lookup from username to account.
+
+Username authorities are given an allocation by governance to prevent state bloat. Usernames
+impose no cost or deposit on the user.
+
+Users can have multiple usernames that map to the same `AccountId`, however one `AccountId` can
+only map to a single username, known as the _primary_.
+
+### Interface
+
+### Dispatchable Functions
+
+#### For General Users
+* `set_identity` - Set the associated identity of an account; a small deposit is reserved if not
+ already taken.
+* `clear_identity` - Remove an account's associated identity; the deposit is returned.
+* `request_judgement` - Request a judgement from a registrar, paying a fee.
+* `cancel_request` - Cancel the previous request for a judgement.
+* `accept_username` - Accept a username issued by a username authority.
+* `remove_expired_approval` - Remove a username that was issued but never accepted.
+* `set_primary_username` - Set a given username as an account's primary.
+* `remove_dangling_username` - Remove a username that maps to an account without an identity.
+
+#### For General Users with Sub-Identities
+* `set_subs` - Set the sub-accounts of an identity.
+* `add_sub` - Add a sub-identity to an identity.
+* `remove_sub` - Remove a sub-identity of an identity.
+* `rename_sub` - Rename a sub-identity of an identity.
+* `quit_sub` - Remove a sub-identity of an identity (called by the sub-identity).
+
+#### For Registrars
+* `set_fee` - Set the fee required to be paid for a judgement to be given by the registrar.
+* `set_fields` - Set the fields that a registrar cares about in their judgements.
+* `provide_judgement` - Provide a judgement to an identity.
+
+#### For Username Authorities
+* `set_username_for` - Set a username for a given account. The account must approve it.
+
+#### For Superusers
+* `add_registrar` - Add a new registrar to the system.
+* `kill_identity` - Forcibly remove the associated identity; the deposit is lost.
+* `add_username_authority` - Add an account with the ability to issue usernames.
+* `remove_username_authority` - Remove an account with the ability to issue usernames.
+
+`Call`: ./enum.Call.html
+`Config`: ./trait.Config.html
+
+</details>
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #17** · Polkadot SDK<br/>
+`pallet-identity/1ed66275/stable2409-patch6`
+
+[GitHub](https://github.com/galacticcouncil/polkadot-sdk/tree/1ed662757b03c4f17dc2429c1df84e975d98513a/substrate/frame/identity) · [docs.rs](https://docs.rs/crate/pallet-identity/38.0.0/source/) · [crates.io](https://crates.io/crates/pallet-identity) · [Subscan](https://hydradx.subscan.io/runtime/Identity)
+
+## Storage (7)
+
+### IdentityOf
+
+Information that is pertinent to identify the entity behind an account. First item is the registration, second is the account's primary username. TWOX-NOTE: OK ― `AccountId` is a secure hash.
+
+```rust
+IdentityOf: Map<AccountId32 -> (PalletIdentityRegistration, Option<Bytes>)> [Twox64Concat]
+```
+
+### SuperOf
+
+The super-identity of an alternative "sub" identity together with its name, within that context. If the account is not some other account's sub-identity, then just `None`.
+
+```rust
+SuperOf: Map<AccountId32 -> (AccountId32, Data)> [Blake2_128Concat]
+```
+
+### SubsOf
+
+Alternative "sub" identities of this account. The first item is the deposit, the second is a vector of the accounts. TWOX-NOTE: OK ― `AccountId` is a secure hash.
+
+```rust
+SubsOf: Map<AccountId32 -> (u128, Vec<AccountId32>)> [Twox64Concat]
+```
+
+### Registrars
+
+The set of registrars. Not expected to get very big as can only be added through a special origin (likely a council motion). The index into this can be cast to `RegistrarIndex` to get a valid value.
+
+```rust
+Registrars: Value<Vec<Option<PalletIdentityRegistrarInfo>>>
+```
+
+### UsernameAuthorities
+
+A map of the accounts who are authorized to grant usernames.
+
+```rust
+UsernameAuthorities: Map<AccountId32 -> {suffix: Bytes, allocation: u32}> [Twox64Concat]
+```
+
+### AccountOfUsername
+
+Reverse lookup from `username` to the `AccountId` that has registered it. The value should be a key in the `IdentityOf` map, but it may not if the user has cleared their identity. Multiple usernames may map to the same `AccountId`, but `IdentityOf` will only map to one primary username.
+
+```rust
+AccountOfUsername: Map<Bytes -> AccountId32> [Blake2_128Concat]
+```
+
+### PendingUsernames
+
+Usernames that an authority has granted, but that the account controller has not confirmed that they want it. Used primarily in cases where the `AccountId` cannot provide a signature because they are a pure proxy, multisig, etc. In order to confirm it, they should call `Call::accept_username`. First tuple item is the account and second is the acceptance deadline.
+
+```rust
+PendingUsernames: Map<Bytes -> (AccountId32, u32)> [Blake2_128Concat]
+```
+
+## Extrinsics (22)
+
+### add_registrar
+
+```rust
+fn add_registrar(
+    origin: OriginFor<T>,
+    account: AccountId32,
+)
+```
+
+### set_identity
+
+```rust
+fn set_identity(
+    origin: OriginFor<T>,
+    info: Lookup116,
+)
+```
+
+### set_subs
+
+```rust
+fn set_subs(
+    origin: OriginFor<T>,
+    subs: Vec<(AccountId32,Data)>,
+)
+```
+
+### clear_identity
+
+```rust
+fn clear_identity(origin: OriginFor<T>)
+```
+
+### request_judgement
+
+```rust
+fn request_judgement(
+    origin: OriginFor<T>,
+    regIndex: Compact<u32>,
+    maxFee: Compact<u128>,
+)
+```
+
+### cancel_request
+
+```rust
+fn cancel_request(
+    origin: OriginFor<T>,
+    regIndex: u32,
+)
+```
+
+### set_fee
+
+```rust
+fn set_fee(
+    origin: OriginFor<T>,
+    index: Compact<u32>,
+    fee: Compact<u128>,
+)
+```
+
+### set_account_id
+
+```rust
+fn set_account_id(
+    origin: OriginFor<T>,
+    index: Compact<u32>,
+    new_: AccountId32,
+)
+```
+
+### set_fields
+
+```rust
+fn set_fields(
+    origin: OriginFor<T>,
+    index: Compact<u32>,
+    fields: u64,
+)
+```
+
+### provide_judgement
+
+```rust
+fn provide_judgement(
+    origin: OriginFor<T>,
+    regIndex: Compact<u32>,
+    target: AccountId32,
+    judgement: Lookup154,
+    identity: H256,
+)
+```
+
+### kill_identity
+
+```rust
+fn kill_identity(
+    origin: OriginFor<T>,
+    target: AccountId32,
+)
+```
+
+### add_sub
+
+```rust
+fn add_sub(
+    origin: OriginFor<T>,
+    sub: AccountId32,
+    data: Data,
+)
+```
+
+### rename_sub
+
+```rust
+fn rename_sub(
+    origin: OriginFor<T>,
+    sub: AccountId32,
+    data: Data,
+)
+```
+
+### remove_sub
+
+```rust
+fn remove_sub(
+    origin: OriginFor<T>,
+    sub: AccountId32,
+)
+```
+
+### quit_sub
+
+```rust
+fn quit_sub(origin: OriginFor<T>)
+```
+
+### add_username_authority
+
+```rust
+fn add_username_authority(
+    origin: OriginFor<T>,
+    authority: AccountId32,
+    suffix: Bytes,
+    allocation: u32,
+)
+```
+
+### remove_username_authority
+
+```rust
+fn remove_username_authority(
+    origin: OriginFor<T>,
+    authority: AccountId32,
+)
+```
+
+### set_username_for
+
+```rust
+fn set_username_for(
+    origin: OriginFor<T>,
+    who: AccountId32,
+    username: Bytes,
+    signature: Option<SpRuntimeMultiSignature>,
+)
+```
+
+### accept_username
+
+```rust
+fn accept_username(
+    origin: OriginFor<T>,
+    username: Bytes,
+)
+```
+
+### remove_expired_approval
+
+```rust
+fn remove_expired_approval(
+    origin: OriginFor<T>,
+    username: Bytes,
+)
+```
+
+### set_primary_username
+
+```rust
+fn set_primary_username(
+    origin: OriginFor<T>,
+    username: Bytes,
+)
+```
+
+### remove_dangling_username
+
+```rust
+fn remove_dangling_username(
+    origin: OriginFor<T>,
+    username: Bytes,
+)
+```
+
+## Events (17)
+
+### IdentitySet
+
+```rust
+IdentitySet {
+    who: AccountId32,
+}
+```
+
+### IdentityCleared
+
+```rust
+IdentityCleared {
+    who: AccountId32,
+    deposit: u128,
+}
+```
+
+### IdentityKilled
+
+```rust
+IdentityKilled {
+    who: AccountId32,
+    deposit: u128,
+}
+```
+
+### JudgementRequested
+
+```rust
+JudgementRequested {
+    who: AccountId32,
+    registrarIndex: u32,
+}
+```
+
+### JudgementUnrequested
+
+```rust
+JudgementUnrequested {
+    who: AccountId32,
+    registrarIndex: u32,
+}
+```
+
+### JudgementGiven
+
+```rust
+JudgementGiven {
+    target: AccountId32,
+    registrarIndex: u32,
+}
+```
+
+### RegistrarAdded
+
+```rust
+RegistrarAdded {
+    registrarIndex: u32,
+}
+```
+
+### SubIdentityAdded
+
+```rust
+SubIdentityAdded {
+    sub: AccountId32,
+    main: AccountId32,
+    deposit: u128,
+}
+```
+
+### SubIdentityRemoved
+
+```rust
+SubIdentityRemoved {
+    sub: AccountId32,
+    main: AccountId32,
+    deposit: u128,
+}
+```
+
+### SubIdentityRevoked
+
+```rust
+SubIdentityRevoked {
+    sub: AccountId32,
+    main: AccountId32,
+    deposit: u128,
+}
+```
+
+### AuthorityAdded
+
+```rust
+AuthorityAdded {
+    authority: AccountId32,
+}
+```
+
+### AuthorityRemoved
+
+```rust
+AuthorityRemoved {
+    authority: AccountId32,
+}
+```
+
+### UsernameSet
+
+```rust
+UsernameSet {
+    who: AccountId32,
+    username: Bytes,
+}
+```
+
+### UsernameQueued
+
+```rust
+UsernameQueued {
+    who: AccountId32,
+    username: Bytes,
+    expiration: u32,
+}
+```
+
+### PreapprovalExpired
+
+```rust
+PreapprovalExpired {
+    whose: AccountId32,
+}
+```
+
+### PrimaryUsernameSet
+
+```rust
+PrimaryUsernameSet {
+    who: AccountId32,
+    username: Bytes,
+}
+```
+
+### DanglingUsernameRemoved
+
+```rust
+DanglingUsernameRemoved {
+    who: AccountId32,
+    username: Bytes,
+}
+```
+
+## Constants (8)
+
+### BasicDeposit
+
+The amount held on deposit for a registered identity.
+
+```rust
+const BasicDeposit: u128
+```
+
+### ByteDeposit
+
+The amount held on deposit per encoded byte for a registered identity.
+
+```rust
+const ByteDeposit: u128
+```
+
+### SubAccountDeposit
+
+The amount held on deposit for a registered subaccount. This should account for the fact that one storage item's value will increase by the size of an account ID, and there will be another trie item whose value is the size of an account ID plus 32 bytes.
+
+```rust
+const SubAccountDeposit: u128
+```
+
+### MaxSubAccounts
+
+The maximum number of sub-accounts allowed per identified account.
+
+```rust
+const MaxSubAccounts: u32
+```
+
+### MaxRegistrars
+
+Maximum number of registrars allowed in the system. Needed to bound the complexity of, e.g., updating judgements.
+
+```rust
+const MaxRegistrars: u32
+```
+
+### PendingUsernameExpiration
+
+The number of blocks within which a username grant must be accepted.
+
+```rust
+const PendingUsernameExpiration: u32
+```
+
+### MaxSuffixLength
+
+The maximum length of a suffix.
+
+```rust
+const MaxSuffixLength: u32
+```
+
+### MaxUsernameLength
+
+The maximum length of a username, including its suffix and any system-added delimiters.
+
+```rust
+const MaxUsernameLength: u32
+```

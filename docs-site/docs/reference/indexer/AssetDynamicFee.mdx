@@ -1,0 +1,50 @@
+---
+title: AssetDynamicFee
+description: Indexer entity documentation
+sidebar_label: AssetDynamicFee
+---
+
+# AssetDynamicFee
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 3 |
+| Nullable Fields | 0 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/assetDynamicFee.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type AssetDynamicFee {
+  assetFee: Int!
+  protocolFee: Int!
+  timestamp: Int!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface AssetDynamicFee {
+  assetFee: number;
+  protocolFee: number;
+  timestamp: number;
+}
+```
+
+## Example Query
+
+```graphql
+query GetAssetDynamicFees {
+  assetDynamicFees(limit: 10) {
+    assetFee
+    protocolFee
+    timestamp
+  }
+}
+```

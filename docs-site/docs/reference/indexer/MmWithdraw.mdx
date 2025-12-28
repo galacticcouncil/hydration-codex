@@ -1,0 +1,67 @@
+---
+title: MmWithdraw
+description: Indexer entity documentation
+sidebar_label: MmWithdraw
+---
+
+# MmWithdraw
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 10 |
+| Nullable Fields | 2 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/mmWithdraw.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type MmWithdraw {
+  id: ID!
+  traceIds: [String!
+  asset: Asset!
+  accountFrom: Account!
+  accountTo: Account!
+  amount: BigInt
+  initiatedByTrade: RoutedTrade
+  paraBlockHeight: Int!
+  relayBlockHeight: Int!
+  event: Event!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface MmWithdraw {
+  id: string;
+  traceIds: [String;
+  asset: Asset;
+  accountFrom: Account;
+  accountTo: Account;
+  amount: bigint | null;
+  initiatedByTrade: RoutedTrade | null;
+  paraBlockHeight: number;
+  relayBlockHeight: number;
+  event: Event;
+}
+```
+
+## Example Query
+
+```graphql
+query GetMmWithdraws {
+  mmWithdraws(limit: 10) {
+    id
+    traceIds
+    asset
+    accountFrom
+    accountTo
+    # ... more fields
+  }
+}
+```

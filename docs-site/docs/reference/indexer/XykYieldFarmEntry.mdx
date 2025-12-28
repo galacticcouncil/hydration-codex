@@ -1,0 +1,73 @@
+---
+title: XykYieldFarmEntry
+description: Indexer entity documentation
+sidebar_label: XykYieldFarmEntry
+---
+
+# XykYieldFarmEntry
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 10 |
+| Nullable Fields | 0 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/xykYieldFarmEntry.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type XykYieldFarmEntry {
+  id: String!
+  depositId: String!
+  globalFarmId: String!
+  yieldFarmId: String!
+  valuedShares: String!
+  accumulatedRpvs: String!
+  accumulatedClaimedRewards: String!
+  enteredAtRelayBlock: String!
+  updatedAtRelayBlock: String!
+  stoppedAtCreation: String!
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface XykYieldFarmEntry {
+  id: string;
+  depositId: string;
+  globalFarmId: string;
+  yieldFarmId: string;
+  valuedShares: string;
+  accumulatedRpvs: string;
+  accumulatedClaimedRewards: string;
+  enteredAtRelayBlock: string;
+  updatedAtRelayBlock: string;
+  stoppedAtCreation: string;
+}
+```
+
+## Example Query
+
+```graphql
+query GetXykYieldFarmEntrys {
+  xykYieldFarmEntrys(limit: 10) {
+    id
+    depositId
+    globalFarmId
+    yieldFarmId
+    valuedShares
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [XYK](/reference/pallets/XYK)

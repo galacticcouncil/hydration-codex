@@ -1,0 +1,77 @@
+---
+title: OmnipoolYieldFarmDepositEvent
+description: Indexer entity documentation
+sidebar_label: OmnipoolYieldFarmDepositEvent
+---
+
+# OmnipoolYieldFarmDepositEvent
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 12 |
+| Nullable Fields | 8 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/omnipoolYieldFarmDepositEvent.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type OmnipoolYieldFarmDepositEvent {
+  id: ID!
+  depositId: String!
+  eventName: YieldFarmDepositStatus!
+  globalFarmId: String
+  yieldFarmId: String
+  assetId: String
+  accountId: String
+  sharesAmount: BigInt
+  claimedAmount: BigInt
+  rewardAssetId: String
+  paraBlockHeight: Int!
+  eventId: String
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface OmnipoolYieldFarmDepositEvent {
+  id: string;
+  depositId: string;
+  eventName: YieldFarmDepositStatus;
+  globalFarmId: string | null;
+  yieldFarmId: string | null;
+  assetId: string | null;
+  accountId: string | null;
+  sharesAmount: bigint | null;
+  claimedAmount: bigint | null;
+  rewardAssetId: string | null;
+  paraBlockHeight: number;
+  eventId: string | null;
+}
+```
+
+## Example Query
+
+```graphql
+query GetOmnipoolYieldFarmDepositEvents {
+  omnipoolYieldFarmDepositEvents(limit: 10) {
+    id
+    depositId
+    eventName
+    globalFarmId
+    yieldFarmId
+    # ... more fields
+  }
+}
+```
+
+## References
+
+### Runtime (1)
+
+- [Omnipool](/reference/pallets/Omnipool)

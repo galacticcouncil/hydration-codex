@@ -1,0 +1,94 @@
+---
+slug: /
+title: Hydration Codex
+description: Living documentation for the Hydration Protocol ecosystem
+---
+
+# Hydration Codex
+
+Auto-generated, cross-referenced documentation for the entire Hydration Protocol stack.
+
+## Architecture Overview
+
+```mermaid
+flowchart TB
+    subgraph L4["L4: UI Layer"]
+        hooks["226 React Hooks"]
+        components["Components & Pages"]
+    end
+
+    subgraph L3["L3: Indexer Layer"]
+        squid["Squid Indexer"]
+        graphql["GraphQL API"]
+    end
+
+    subgraph L2["L2: SDK Layer"]
+        sdk["TypeScript SDK"]
+        wasm["WASM Bridge"]
+    end
+
+    subgraph L1["L1: Runtime Layer"]
+        pallets["76 Substrate Pallets"]
+        storage["On-chain Storage"]
+        events["Runtime Events"]
+    end
+
+    hooks --> sdk
+    hooks --> graphql
+    squid --> events
+    sdk --> pallets
+    sdk --> wasm
+    wasm --> pallets
+
+    style L4 fill:#fef3c7,stroke:#f59e0b
+    style L3 fill:#dbeafe,stroke:#3b82f6
+    style L2 fill:#dcfce7,stroke:#22c55e
+    style L1 fill:#fce7f3,stroke:#ec4899
+```
+
+## Quick Navigation
+
+| Section | Description |
+|---------|-------------|
+| [Reference](/reference) | Pallets, SDK, Indexer entities, UI hooks |
+| [AI & Agents](/ai) | Context files for AI assistants |
+
+## Data Flow Example
+
+When you call `useOmnipoolAssets()` in the UI:
+
+```mermaid
+flowchart LR
+    subgraph UI["L4: UI"]
+        hook["useOmnipoolAssets"]
+    end
+
+    subgraph SDK["L2: SDK"]
+        method["sdk.api.query.Omnipool.Assets"]
+    end
+
+    subgraph Runtime["L1: Runtime"]
+        storage["Omnipool.Assets"]
+    end
+
+    hook -->|"calls"| method
+    method -->|"queries"| storage
+    storage -->|"returns"| method
+    method -->|"returns"| hook
+```
+
+## Getting Started
+
+1. **Browse Reference** - Use [Reference](/reference) to explore pallets, hooks, SDK methods, and indexer entities
+2. **For AI Assistants** - Load [AI Context](/ai) for structured data files
+
+## About This Documentation
+
+This documentation is **auto-generated** from source code across 4 repositories:
+
+- `hydradx-ui` - React frontend (L4)
+- `hydration-data-indexer` - Squid indexer (L3)
+- `sdk` - TypeScript SDK (L2)
+- `hydration-node` - Substrate runtime (L1)
+
+Pages are regenerated when source code changes, ensuring documentation stays in sync.

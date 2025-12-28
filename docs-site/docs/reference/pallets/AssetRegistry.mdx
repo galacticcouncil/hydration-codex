@@ -1,0 +1,290 @@
+---
+title: AssetRegistry
+description: Runtime pallet documentation
+sidebar_label: AssetRegistry
+---
+
+# AssetRegistry
+
+### Asset registry
+
+## Overview
+Asset registry provides functionality to create, store and keep tracking of existing assets in a system.
+
+### Terminology
+
+- **CoreAssetId** - asset id of native/core asset. Usually 0.
+- **NextAssetId** - asset id to be assigned for next asset added to the system. 
+- **AssetIds** - list of existing asset ids
+- **AssetDetail** - details of an asset such as type, name, symbol, decimals.
+- **AssetLocation** - information of native location of an asset. Used in XCM.
+
+### Implementation detail
+
+For each newly registered asset, a sequential id is assigned to that asset. This id identifies the asset and can be used directly in transfers or any other operation which works with an asset ( without performing any additioanl asset check or asset retrieval).
+
+There is a mapping between the name and asset id stored as well, which helps and is used in AMM Implementation where there is a need to register a pool asset and only name is provided.
+
+An asset has additional details stored on chain such as name and type. 
+
+The registry pallet supports storing of native location of an asset. This can be used in XCM where it is possible to create mapping between native location and local system asset ids. 
+
+The registry pallet implements single ppermissionles extrinsic `register_external` that collects storage deposit for created asset.
+
+<!-- AI_DESCRIPTION_START -->
+<!-- AI_DESCRIPTION_END -->
+
+**Pallet #51** · HydraDX<br/>
+`pallet-asset-registry/4ca470c5/master`
+
+[GitHub](https://github.com/galacticcouncil/HydraDX-node/tree/4ca470c5d613d62ce52eb8645770ef5fff263111/pallets/asset-registry) · [Subscan](https://hydradx.subscan.io/runtime/AssetRegistry)
+
+## Storage (7)
+
+### Assets
+
+Details of an asset.
+
+```rust
+Assets: Map<u32 -> {
+    name: Option<Bytes>,
+    assetType: PalletAssetRegistryAssetType,
+    existentialDeposit: u128,
+    symbol: Option<Bytes>,
+    decimals: Option<u8>,
+    xcmRateLimit: Option<u128>,
+    isSufficient: bool,
+}> [Blake2_128Concat]
+```
+
+**Read by SDK:** [AssetClient.getOnChainAssets](/reference/sdk/sdk#assetclient), [BalanceClient.getBalance](/reference/sdk/sdk#balanceclient), [BalanceClient.subscribeErc20Balance](/reference/sdk/sdk#balanceclient), [BalanceClientV2.getBalance](/reference/sdk/sdk#balanceclientv2), [BalanceClientV2.subscribeErc20Balance](/reference/sdk/sdk#balanceclientv2), [AssetClient.queryAssets](/reference/sdk/sdk-next#assetclient), [LiquidityMiningClient.getAsset](/reference/sdk/sdk-next#liquidityminingclient), [AavePoolClient.loadPools](/reference/sdk/sdk-next#aavepoolclient), [XykPoolClient.loadPools](/reference/sdk/sdk-next#xykpoolclient), [HydrationClient.checkIfSufficient](/reference/sdk/xcm-cfg#hydrationclient)
+
+### NextAssetId
+
+Next available asset id. This is sequential id assigned for each new registered asset.
+
+```rust
+NextAssetId: Value<u32>
+```
+
+### AssetIds
+
+Mapping between asset name and asset id.
+
+```rust
+AssetIds: Map<Bytes -> u32> [Blake2_128Concat]
+```
+
+### AssetLocations
+
+Native location of an asset.
+
+```rust
+AssetLocations: Map<u32 -> Lookup189> [Blake2_128Concat]
+```
+
+**Read by SDK:** [AssetClient.locationsQuery](/reference/sdk/sdk#assetclient), [HsmClient.loadPools](/reference/sdk/sdk#hsmclient), [AssetClient.queryAssetLocations](/reference/sdk/sdk-next#assetclient), [AavePoolClient.loadPools](/reference/sdk/sdk-next#aavepoolclient), [HsmPoolClient.loadPools](/reference/sdk/sdk-next#hsmpoolclient)
+
+### BannedAssets
+
+Non-native assets which transfer is banned.
+
+```rust
+BannedAssets: Map<u32 -> Null> [Blake2_128Concat]
+```
+
+### LocationAssets
+
+Local asset for native location.
+
+```rust
+LocationAssets: Map<Lookup189 -> u32> [Blake2_128Concat]
+```
+
+### ExistentialDepositCounter
+
+Number of accounts that paid existential deposits for insufficient assets. This storage is used by `SufficiencyCheck`.
+
+```rust
+ExistentialDepositCounter: Value<u128>
+```
+
+## Extrinsics (5)
+
+### register
+
+```rust
+fn register(
+    origin: OriginFor<T>,
+    assetId: Option<u32>,
+    name: Option<Bytes>,
+    assetType: Lookup185,
+    existentialDeposit: Option<u128>,
+    symbol: Option<Bytes>,
+    decimals: Option<u8>,
+    location: Option<HydradxRuntimeXcmAssetLocation>,
+    xcmRateLimit: Option<u128>,
+    isSufficient: bool,
+)
+```
+
+### update
+
+```rust
+fn update(
+    origin: OriginFor<T>,
+    assetId: u32,
+    name: Option<Bytes>,
+    assetType: Option<PalletAssetRegistryAssetType>,
+    existentialDeposit: Option<u128>,
+    xcmRateLimit: Option<u128>,
+    isSufficient: Option<bool>,
+    symbol: Option<Bytes>,
+    decimals: Option<u8>,
+    location: Option<HydradxRuntimeXcmAssetLocation>,
+)
+```
+
+### register_external
+
+```rust
+fn register_external(
+    origin: OriginFor<T>,
+    location: Lookup189,
+)
+```
+
+### ban_asset
+
+```rust
+fn ban_asset(
+    origin: OriginFor<T>,
+    assetId: u32,
+)
+```
+
+### unban_asset
+
+```rust
+fn unban_asset(
+    origin: OriginFor<T>,
+    assetId: u32,
+)
+```
+
+## Events (6)
+
+### ExistentialDepositPaid
+
+```rust
+ExistentialDepositPaid {
+    who: AccountId32,
+    feeAsset: u32,
+    amount: u128,
+}
+```
+
+### Registered
+
+```rust
+Registered {
+    assetId: u32,
+    assetName: Option<Bytes>,
+    assetType: Lookup185,
+    existentialDeposit: u128,
+    xcmRateLimit: Option<u128>,
+    symbol: Option<Bytes>,
+    decimals: Option<u8>,
+    isSufficient: bool,
+}
+```
+
+**Indexed by:** [Asset](/reference/indexer/Asset)
+
+### Updated
+
+```rust
+Updated {
+    assetId: u32,
+    assetName: Option<Bytes>,
+    assetType: Lookup185,
+    existentialDeposit: u128,
+    xcmRateLimit: Option<u128>,
+    symbol: Option<Bytes>,
+    decimals: Option<u8>,
+    isSufficient: bool,
+}
+```
+
+**Indexed by:** [Asset](/reference/indexer/Asset)
+
+### LocationSet
+
+```rust
+LocationSet {
+    assetId: u32,
+    location: Lookup189,
+}
+```
+
+**Indexed by:** [Asset](/reference/indexer/Asset)
+
+### AssetBanned
+
+```rust
+AssetBanned {
+    assetId: u32,
+}
+```
+
+### AssetUnbanned
+
+```rust
+AssetUnbanned {
+    assetId: u32,
+}
+```
+
+## Constants (4)
+
+### SequentialIdStartAt
+
+```rust
+const SequentialIdStartAt: u32
+```
+
+### StringLimit
+
+The maximum length of a name or symbol stored on-chain.
+
+```rust
+const StringLimit: u32
+```
+
+### MinStringLimit
+
+The min length of a name or symbol stored on-chain.
+
+```rust
+const MinStringLimit: u32
+```
+
+### RegExternalWeightMultiplier
+
+Weight multiplier for `register_external` extrinsic
+
+```rust
+const RegExternalWeightMultiplier: u64
+```
+
+## References
+
+### SDK (3)
+
+- [sdk](/reference/sdk/sdk)
+- [sdk-next](/reference/sdk/sdk-next)
+- [xcm-cfg](/reference/sdk/xcm-cfg)
+
+### Indexer (1)
+
+- [Asset](/reference/indexer/Asset)

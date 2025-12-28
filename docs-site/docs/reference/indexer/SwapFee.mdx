@@ -1,0 +1,59 @@
+---
+title: SwapFee
+description: Indexer entity documentation
+sidebar_label: SwapFee
+---
+
+# SwapFee
+
+<!-- AI_DESCRIPTION_START -->
+> **TODO**: AI-generated description of what this entity represents.
+<!-- AI_DESCRIPTION_END -->
+
+| Property | Value |
+|----------|-------|
+| Fields | 6 |
+| Nullable Fields | 1 |
+
+**Links:** [GitHub](https://github.com/galacticcouncil/hydration-data-lake/blob/ae6ed3cb9afbcb419ccd9bcf97bddb3a104d1df0/indexers/liquidity-pools/src/model/generated/swapFee.model.ts) | [GraphQL Playground](https://galacticcouncil.squids.live/hydration-pools:unified-prod/api/graphiql)
+
+## Schema
+
+```graphql
+type SwapFee {
+  id: ID!
+  swap: Swap!
+  asset: Asset!
+  amount: BigInt!
+  destinationType: SwapFeeDestinationType!
+  recipient: Account
+}
+```
+
+## TypeScript Interface
+
+```typescript
+interface SwapFee {
+  id: string;
+  swap: Swap;
+  asset: Asset;
+  amount: bigint;
+  destinationType: SwapFeeDestinationType;
+  recipient: Account | null;
+}
+```
+
+## Example Query
+
+```graphql
+query GetSwapFees {
+  swapFees(limit: 10) {
+    id
+    swap
+    asset
+    amount
+    destinationType
+    # ... more fields
+  }
+}
+```
